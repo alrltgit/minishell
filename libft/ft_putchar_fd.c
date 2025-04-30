@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/04/30 14:29:26 by alraltse         ###   ########.fr       */
+/*   Created: 2024/12/10 15:31:43 by alraltse          #+#    #+#             */
+/*   Updated: 2024/12/19 13:16:33 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	ft_putchar_fd(char c, int fd)
 {
-    if (argc < 2)
-        return (0);
-    if (piping(argc, argv) == 1)
-    {
-        exit(1);
-    }
-    return (0);
+	write(fd, &c, 1);
 }

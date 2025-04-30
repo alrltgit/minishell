@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/04/30 14:29:26 by alraltse         ###   ########.fr       */
+/*   Created: 2025/02/13 13:33:32 by alraltse          #+#    #+#             */
+/*   Updated: 2025/03/01 15:38:48 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	del(void *lst_content)
 {
-    if (argc < 2)
-        return (0);
-    if (piping(argc, argv) == 1)
-    {
-        exit(1);
-    }
-    return (0);
+	if (lst_content)
+		lst_content = NULL;
+	free(lst_content);
+}
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*curr;
+
+	while (*lst)
+	{
+		curr = (*lst)->next;
+		del(curr->content);
+		free(*lst);
+		*lst = curr;
+	}
 }

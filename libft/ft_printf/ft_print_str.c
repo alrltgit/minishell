@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_print_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/04/30 14:29:26 by alraltse         ###   ########.fr       */
+/*   Created: 2025/01/02 19:33:55 by apple             #+#    #+#             */
+/*   Updated: 2025/01/31 15:49:27 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "ft_printf.h"
 
-int main(int argc, char **argv)
+int	ft_print_str(char *s)
 {
-    if (argc < 2)
-        return (0);
-    if (piping(argc, argv) == 1)
-    {
-        exit(1);
-    }
-    return (0);
+	int	i;
+	int	str_size;
+
+	str_size = 0;
+	if (s == NULL)
+	{
+		write(1, "(null)", 6);
+		str_size = ft_strlen_pf("(null)");
+		return (str_size);
+	}
+	i = 0;
+	while (s[i])
+	{
+		write(1, &s[i], 1);
+		i++;
+	}
+	str_size = i;
+	return (str_size);
 }

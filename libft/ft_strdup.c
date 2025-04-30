@@ -1,24 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/04/30 14:29:26 by alraltse         ###   ########.fr       */
+/*   Created: 2024/12/07 22:21:49 by apple             #+#    #+#             */
+/*   Updated: 2025/04/09 12:47:25 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv)
+char	*ft_strdup(const char *s1)
 {
-    if (argc < 2)
-        return (0);
-    if (piping(argc, argv) == 1)
-    {
-        exit(1);
-    }
-    return (0);
+	char	*ptr;
+	char	*p;
+	int		i;
+
+	i = 0;
+	while (s1[i])
+		i++;
+	ptr = malloc(i + 1);
+	if (ptr == NULL)
+		return (NULL);
+	p = ptr;
+	i = 0;
+	while (s1[i])
+	{
+		*p = s1[i];
+		p++;
+		i++;
+	}
+	*p = '\0';
+	return (ptr);
 }

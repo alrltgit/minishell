@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/04/30 14:29:26 by alraltse         ###   ########.fr       */
+/*   Created: 2025/04/30 13:19:17 by alraltse          #+#    #+#             */
+/*   Updated: 2025/04/30 14:31:32 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-int main(int argc, char **argv)
+int piping(int argc, char **argv)
 {
-    if (argc < 2)
+    t_cmd *c;
+    
+    c = malloc(sizeof(t_cmd));
+    if (!c)
         return (0);
-    if (piping(argc, argv) == 1)
+    c->argc_count = argc;
+    if (is_command_valid(c, argv) == 0)
     {
-        exit(1);
+        ft_printf("Command doesn't exist.\n");
+        return (1);
     }
-    return (0);
+    ft_printf("The command exist.\n");
+    return(0);
 }

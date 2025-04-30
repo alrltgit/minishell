@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/04/30 14:29:26 by alraltse         ###   ########.fr       */
+/*   Created: 2024/12/08 10:15:51 by apple             #+#    #+#             */
+/*   Updated: 2024/12/19 13:54:02 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-    if (argc < 2)
-        return (0);
-    if (piping(argc, argv) == 1)
-    {
-        exit(1);
-    }
-    return (0);
+	char	*ptr;
+	size_t	i;
+	size_t	length;
+	size_t	end;
+
+	length = ft_strlen(s);
+	end = 0;
+	if (start < length)
+		end = length - start;
+	if (len < end)
+		end = len;
+	ptr = malloc(end + 1);
+	if (ptr == NULL)
+		return (NULL);
+	i = 0;
+	while (i < end)
+	{
+		ptr[i] = s[start + i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }
