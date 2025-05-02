@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/04/30 14:38:24 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:39:36 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,27 @@
 #include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <termios.h>
+#include <dirent.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "../libft/libft.h"
 
-typedef struct s_cmd
+
+
+typedef struct	s_shell
 {
-    char **cmd_folders;
-    int paths_count;
-    char *path;
-    int argc_count;
-    char **cmds;
-}       t_cmd;
+	char	**env;
+	
+}	t_shell;
 
-// piping
-int is_command_valid(t_cmd *c, char **argv);
-int piping(int argc, char **argv);
-char	*ft_strconcat(t_cmd *c, char *path, char *str);
+//main.c
+int	ft_strcmp(char *s1, char *s2);
+
+
+//env.c
+char	**init_env(char **ev);
+int		find_ev_index(char *var_name, char **env_vars);
 
 #endif

@@ -2,10 +2,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC = minishell.c \
-piping/piping.c \
-piping/is_command_valid.c \
-piping/piping_helpers.c
+SRC = main.c env.c
 
 OBJS = $(SRC:.c=.o)
 
@@ -13,19 +10,28 @@ NAME = minishell
 
 RM = rm -f
 
-$(NAME): $(OBJS)
-	make -C libft
-	$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME)
+LDFLAGS = -lreadline
+LIBFT_DIR = ./libft
+
+LIBFT = $(LIBFT_DIR)/libft.a
+
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
 
 all: $(NAME)
 
 clean:
 	make clean -C libft
 	$(RM) $(OBJS)
+	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	$(RM) libft.a
 	$(RM) $(NAME)
+	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
