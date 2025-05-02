@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/02 16:23:40 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/02 16:30:26 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**init_env(char **ev)
 	count = count_vars(ev);
 	env_array = malloc(count * sizeof(char *));
 	copy_vars(ev, &env_array);
-	env_array[count] = '\0';
+	env_array[count] = "\0";
 	index = find_ev_index("OLDPWD", env_array);
 	free(env_array[index]); //free cuz oldpwd gonna get changed
 	pwd = getcwd(NULL, 0);

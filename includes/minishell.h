@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/02 15:39:36 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/02 18:07:20 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
-
-
 
 typedef struct	s_shell
 {

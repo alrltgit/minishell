@@ -11,15 +11,13 @@ NAME = minishell
 RM = rm -f
 
 LDFLAGS = -lreadline
-LIBFT_DIR = ./libft
+LIBFT_DIR = libft
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
-
-$(LIBFT):
+$(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 all: $(NAME)
 
