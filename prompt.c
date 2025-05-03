@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:17:18 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/03 16:49:12 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:45:39 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,103 @@ char *rl is declared inside a shell_loop function because it must be freed when 
 add_history() inside create_prompt function allows saving inputs to the history (use arrow keys to check)
 */
 
+static void skip_whitespace(const char *str, int *i)
+{
+    while (str[*i] == ' ' || str[*i] == '\t')
+        (*i)++;
+}
+
+static void trim_quotes_if_needed(char *token, int len)
+{
+    if ((token[0] == '\'' && token[len - 1] == '\'') 
+            || (token[0] == '"' && token[len - 1] == '"'))
+    {
+            token[len - 1] = '\0';
+            ft_memmove(token, token + 1, len - 1);
+    }
+}
+
+static char *extract_token(const char *str, int *i)
+{
+    int start;
+    int single_q;
+    int double_q;
+    int len;
+    char *token;
+
+    start = *i;
+    single_q = 0;
+    double_q = 0;
+    while (str[*i])
+    {
+        if (str[*i] == '\'' && !double_q)
+            single_q = !single_q;
+        else if (str[*i] == '"' && !single_q)
+            double_q = !double_q;
+        else if ((str[*i] == ' ' || str[*i] == '\t') && !single_q && !double_q)
+            break ;
+        (*i)++;
+    }
+    len = *i - start;
+    token = ft_substr(str, start, len);
+    if (!token)
+        return (NULL);
+    trim_quotes_if_needed(token, len);
+    return (token);
+}
+
+char **split_args(char *str)
+{
+    char **result;
+    char *token;
+    int i;
+    int count;
+
+    result = malloc(sizeof(char *) * 1024);
+    if (!result)
+        return (NULL);
+    i = 0;
+    count = 0;
+    // printf("str: %s\n", str);
+    while (str[i])
+    {
+        // printf("str[i]: %c\n", str[i]);
+        skip_whitespace(str, &i);
+        // printf("str[i]: %c\n", str[i]);
+        if (!str[i])
+            break ;
+        // printf("test1\n");
+        token = extract_token(str, &i);
+        // printf("token: %s\n", token);
+        if (!token)
+            return (NULL);
+        result[count++] = token;
+    }
+    result[count] = NULL;
+    return (result);
+}
+
 void read_the_input(char *rl)
 {
-    printf("%s\n", rl);
+    char **result;
+    
+    // printf("rl: %s\n", rl);
+    result = split_args(rl);
+    // printf("result[0]%s\n", result[1]);
+    int i = 0;
+    while (result[i])
+    {
+        printf("%s\n", result[i]);
+        i++;
+    }
+    // printf("%s\n", rl);
 }
 
 int create_prompt(char *rl)
 {
     rl = readline(PS1);
+    read_the_input(rl);
+    // printf("test\n");
 	if (rl && *rl)
 		add_history(rl);
 	if (rl == NULL)
@@ -33,6 +122,5 @@ int create_prompt(char *rl)
 		printf("No prompt created.\n");
 		return (1);
 	}
-    read_the_input(rl);
     return (0);
 }
