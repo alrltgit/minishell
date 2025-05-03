@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/03 16:29:20 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/03 16:48:22 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int main(int ac, char **av, char **ev)
 	t_shell	shell;
 	(void)av;
 
-	if (ac < 1)
+	if (ac != 1)
 		return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
 	shell.env = init_env(ev);
 	shell_loop(shell);
