@@ -2,7 +2,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC = main.c env.c
+SRC = main.c env.c prompt.c
 
 OBJS = $(SRC:.c=.o)
 

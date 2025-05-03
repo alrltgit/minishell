@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/02 16:30:26 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/03 16:28:26 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	copy_vars(char **ev, char ***env_array)
 	while (ev[++i])
 		(*env_array)[i] = ft_strdup(ev[i]);
 }
+
 int	count_vars(char **ev)
 {
 	int	count;
