@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/01 15:03:02 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/03 16:28:26 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	copy_vars(char **ev, char ***env_array)
 	while (ev[++i])
 		(*env_array)[i] = ft_strdup(ev[i]);
 }
+
 int	count_vars(char **ev)
 {
 	int	count;
@@ -80,7 +81,7 @@ char	**init_env(char **ev)
 	count = count_vars(ev);
 	env_array = malloc(count * sizeof(char *));
 	copy_vars(ev, &env_array);
-	env_array[count] = '\0';
+	env_array[count] = "\0";
 	index = find_ev_index("OLDPWD", env_array);
 	free(env_array[index]); //free cuz oldpwd gonna get changed
 	pwd = getcwd(NULL, 0);
