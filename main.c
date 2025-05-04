@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/02 16:59:53 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/04 15:05:10 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@
 
 //in bash echo ~ prints home folder (/nfs/homes/username)
 // also cd ~ changes directory to home folder
-
-
-//COMPLETE IT
-/* int	handle_quotes(char **str) //it will modify from the original value
-{
-	int	head;
-	int	tail;
-
-	head = 0;
-	tail = ft_strlen(str);
-	
-} */
 
 void	print_environment(t_shell *shell) //delete at the end
 {
@@ -48,62 +36,35 @@ void	print_environment(t_shell *shell) //delete at the end
 	//printf("%d\n", index_from_key("SHLVL", shell->env));
 }
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	while (*s1 == *s2 && *s1)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
-}
-
-/*
-	It just sets user@user:~
-	rest will be dependent on functions
-*/
-char	*set_prompt(t_shell *shell)
-{
-	char	*prompt;
-	char	*user;
-	char	*temp;
-	char	*temp2;
-
-	user = value_from_key("USER", shell);
-	temp = ft_strjoin(user, "@");
-	temp2 = ft_strjoin(user, ":~");
-	prompt = ft_strjoin(temp, temp2);
-	free(temp);
-	free(temp2);
-	return (prompt);
-}
-
 void	shell_loop(t_shell *shell)
 {
 	char	*rl;
-	char	*prompt;
 	char	*pwd;
 
-	prompt = set_prompt(shell);
-	//for prompt the structure will be
-	//at the start of shell username@username:~$
-	//for ex user@user:~/Desktop/minishell$
-	//path side is gonna be changed in related commands
-	//at the beginning it starts from HOME (~)
-	//when it is at home it shows user@user:~$
-	//changed to Desktop -> user@user:~/Desktop$
-	//so path is placed between ~ and $ sign
+	signal(SIGQUIT, SIG_IGN); //ignore ctrl-'\'
+	
+	(void)shell; //JUST FOR NOW
 	while (1)
 	{
 		//handle the cases when path changed
+		//DONT FORGET TO ADD SIGINT HANDLING DURING COMMAND EXEC
+		//CTRL-D JUST EXITS IN THESE CASES
+		//->HERE-DOC (IT PRINTS EXIT AFTER EXITING) (EOF)
+		//->WHILE WAITING FOR INPUT
 		pwd = getcwd(NULL, 0);
-		rl = readline(ft_strcat(prompt, "$ "));
+		signal(SIGINT, activate_ctrlc);
+		rl = readline("minishell$ ");
+		signal(SIGINT, deactivate_ctrlc);
+		sleep(10);
+		//parse the input
+		//we dont need to execute ctrl-c features aftr readline
+		//if there is different pwd, update it
 		//checkargs
 		//process
 		//execute
-
+		add_history(rl);
+		printf("%s\n", rl_line_buffer);
 	}
-	free (prompt);
 	free(pwd);
 }
 
@@ -116,8 +77,10 @@ int main(int ac, char **av, char **ev)
 		return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
 	shell.env = init_env(ev);
 	shell_loop(&shell);
+	/* char *path = "/bin/echo";
+	char *args[] = { "echo", "'helloworld" , NULL };
+	execve(path, args, ev); */
 	//print_environment(&shell);
-	free_double((void **)shell.env);
-
+	//free_double((void **)shell.env);
     return (0);
 }

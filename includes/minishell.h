@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/02 16:59:54 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/04 12:48:48 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <termios.h>
+#include <signal.h>
 #include <dirent.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -36,14 +37,17 @@ typedef struct	s_shell
 //main.c
 int	ft_strcmp(char *s1, char *s2);
 
-
 //env.c
 char	**init_env(char **ev);
 int		index_from_key(char *var_name, char **env_array);
-char	*value_from_key(char *var_name, t_shell *shell);
+//char	*value_from_key(char *var_name, t_shell *shell);
 
 //env2.c
 int		change_env_value(char *var_name, char *new_value, t_shell *shell);
 char	*key_from_index(int	pos, t_shell *shell);
+
+//signal.c
+void	activate_ctrlc(int sig);
+void	deactivate_ctrlc(int sig);
 
 #endif

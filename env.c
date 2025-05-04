@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/02 16:04:50 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/04 12:30:52 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ int	index_from_key(char *var_name, char **env_array)
 	return (-1);
 }
 
-char	*value_from_key(char *var_name, t_shell *shell)
+//getenv() can be used instead
+/* char	*value_from_key(char *var_name, t_shell *shell)
 {
 	int	index;
 
 	index = index_from_key(var_name, shell->env);
 	return (ft_strchr(shell->env[index], '=') + 1);
-}
+} */
 
 void	copy_vars(char **ev, char ***env_array)
 {
