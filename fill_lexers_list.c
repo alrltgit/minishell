@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_lexers_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:05:51 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/04 19:13:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/05 15:58:00 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,28 +59,47 @@ t_lexer *add_lexers_to_list(char **rl)
     return (head);
 }
 
-void read_the_input(char *rl, t_lexer *lexers)
+void divide_into_nodes(t_lexer *input, t_node *node)
+{
+    t_lexer *temp;
+
+    temp = input;
+    while (temp)
+    {
+        printf("temp->data: %s\n", temp->data);
+        if (ft_strcmp(temp->data, "|") == 0 || ft_strcmp(temp->data, "<") == 0
+            || ft_strcmp(temp->data, ">") == 0 || ft_strcmp(temp->data, ">>") == 0
+            || ft_strcmp(temp->data, "<<") == 0)
+            break ;
+        node->cmd = find_command_path(temp->data);
+        printf("node->cmd: %s\n", node->cmd);
+        if (node->cmd)
+            break ;
+        temp = temp->next;
+    }
+}
+
+void count_flags(t_node *node)
+{
+    
+}
+
+void read_the_input(char *rl, t_lexer *input)
 {
     char **result;
-    t_ast *ast;
+    t_node *node;
     
     result = split_args(rl);
-    lexers = add_lexers_to_list(result);
-    if (!lexers)
+    input = add_lexers_to_list(result);
+    if (!input)
         return ;
-    ast = malloc(sizeof(t_ast));
-    find_command_path(lexers, ast);
-    find_operators(lexers, ast);
-    // while (lexers)
+    node = malloc(sizeof(t_node));
+    divide_into_nodes(input, node);
+    // find_operators(input, node);
+    // while (input)
     // {
-    //     printf("lexers: %s\n", lexers->data);
-    //     lexers = lexers->next;
-    // }
-    // int i = 0;
-    // while (result[i])
-    // {
-    //     printf("%s\n", result[i]);
-    //     i++;
+    //     // printf("input->data: %s\n", input->data);
+    //     input = input->next;
     // }
     free(result);
 }

@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_operators.c                                   :+:      :+:    :+:   */
+/*   find_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/04 19:24:42 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/05 15:56:11 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void find_operators(t_lexer *lexers,  t_ast *ast)
+void find_flags(t_lexer *input, t_node *node)
 {
     t_lexer *temp;
+    int i;
 
-    temp = lexers;
-    ast->operators = NULL;
-    while (temp)
+    temp = input;
+    i = 0;
+    if (temp->data[0] == '-')
     {
-        if (temp->data == '+' || temp->data == '-' || temp->data == '*'
-            || temp->data == '/' || temp->data == '%' || temp->data == "**")
-        temp = temp->next;
+        node->flags[i] = temp->data;
     }
-    // while (temp)
-    // {
-    //     printf("temp->data: %s\n", temp->data);
-    //     temp = temp->next;
-    // }
 }

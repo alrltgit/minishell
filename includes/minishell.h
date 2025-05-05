@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/04 19:18:33 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/05 15:34:20 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ typedef struct s_lexer
 	struct s_lexer *next;
 }	t_lexer;
 
-typedef struct s_ast
+typedef struct s_node
 {
 	char *data;
-	t_lexer *operators;
-	t_lexer *cmds;
+	char *cmd;
+	char **flags;
+	char **args;
 	struct s_ast *next;
-}	t_ast;
+}	t_node;
 
 typedef struct	s_shell
 {
@@ -65,9 +66,9 @@ t_lexer *add_lexers_to_list(char **rl);
 void free_arr(char **arr);
 
 //find_commands
-void find_command_path(t_lexer *lexers, t_ast *ast);
-char **get_path();
+char *find_command_path(char *input);
+// char **get_path();
 char *ft_strconcat(char *path, char *cmd);
-void find_operators(t_lexer *lexers, t_ast *ast);
+// void find_operators(t_lexer *lexers, t_node *ast);
 
 #endif

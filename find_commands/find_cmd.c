@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/04 19:18:29 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/05 15:37:44 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,27 @@ char **get_path()
     return (paths);
 }
 
-void find_command_path(t_lexer *lexers, t_ast *ast)
+char *find_command_path(char *input)
 {
     char *temp_result;
     char **paths;
-    t_lexer *temp;
+    char *cmd_path;
     int i;
 
-    ast->cmds = NULL;
-    if (!ast)
-        return ;
+    cmd_path = NULL;
     paths = get_path();
     if (!paths)
-        return ;
-    temp = lexers;
-    while (temp)
+        return (NULL);
+    i = 0;
+    while (paths[i])
     {
-        i = 0;
-        while (paths[i])
+        temp_result = ft_strconcat(paths[i], input);
+        if (access(temp_result, X_OK) == 0)
         {
-            temp_result = ft_strconcat(paths[i], temp->data);
-            if (access(temp_result, X_OK) == 0)
-            {
-                ast->cmds = add_node_to_end(&ast->cmds, temp_result);
-                break ;
-            }
-            i++;
+            cmd_path = ft_strdup(temp_result);
+            break ;
         }
-        temp = temp->next;
+        i++;
     }
     // print cmds_linked_list
     // while (cmd->cmds)
@@ -59,4 +52,5 @@ void find_command_path(t_lexer *lexers, t_ast *ast)
     //     printf("cmd->lexer->data: %s\n", cmd->cmds->data);
     //     cmd->cmds = cmd->cmds->next;
     // }
+    return (cmd_path);
 }
