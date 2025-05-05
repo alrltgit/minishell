@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_lexers_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:05:51 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/04 14:21:17 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:13:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,15 @@ t_lexer *add_lexers_to_list(char **rl)
 void read_the_input(char *rl, t_lexer *lexers)
 {
     char **result;
-    // t_lexer *lexers;
+    t_ast *ast;
     
     result = split_args(rl);
     lexers = add_lexers_to_list(result);
     if (!lexers)
         return ;
-    find_command_path(lexers);
+    ast = malloc(sizeof(t_ast));
+    find_command_path(lexers, ast);
+    find_operators(lexers, ast);
     // while (lexers)
     // {
     //     printf("lexers: %s\n", lexers->data);
