@@ -2,7 +2,9 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = main.c env.c env2.c signals.c
+SRC = main.c env.c env2.c signals.c \
+builtins/ft_pwd.c builtins/ft_env.c \
+
 
 OBJS = $(SRC:.c=.o)
 

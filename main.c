@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/04 15:05:10 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/05 13:50:02 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,24 @@ void	print_environment(t_shell *shell) //delete at the end
 	//printf("%d\n", index_from_key("SHLVL", shell->env));
 }
 
+
+/*
+ NO NEED TO HANDLE UNCLOSED QUOTES!!!
+ AND ALSO SPECIAL CHARACTERS
+*/
 void	shell_loop(t_shell *shell)
 {
 	char	*rl;
 	char	*pwd;
+	t_cmd	cmd;
 
+	cmd.cmd = "env";
+	cmd.args = malloc(3 * sizeof(char *));
+	cmd.shell = shell;
 	signal(SIGQUIT, SIG_IGN); //ignore ctrl-'\'
 	
+	cmd.args[0] = "abcdef";
+	cmd.args[1] = "qwerty";
 	(void)shell; //JUST FOR NOW
 	while (1)
 	{
@@ -53,11 +64,12 @@ void	shell_loop(t_shell *shell)
 		//->WHILE WAITING FOR INPUT
 		pwd = getcwd(NULL, 0);
 		signal(SIGINT, activate_ctrlc);
+		//NO NEED TO UPDATE PROMPT PATH AFTER CD
 		rl = readline("minishell$ ");
 		signal(SIGINT, deactivate_ctrlc);
-		sleep(10);
+		if (ft_strcmp(rl, "env") == 0)
+			ft_env(&cmd);
 		//parse the input
-		//we dont need to execute ctrl-c features aftr readline
 		//if there is different pwd, update it
 		//checkargs
 		//process
