@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 16:52:49 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/06 19:44:07 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void find_command_path(char *input, t_unit *unit, int *cmd_is_found)
         temp_result = ft_strconcat(paths[i], input);
         if (access(temp_result, X_OK) == 0)
         {
-            printf("temp_result: %s\n", temp_result);
             unit->data->cmd = ft_strdup(temp_result);
             *cmd_is_found = 1;
             break ;

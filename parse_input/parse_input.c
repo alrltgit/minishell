@@ -1,75 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_lexers_list.c                                 :+:      :+:    :+:   */
+/*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/04 12:05:51 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 16:40:42 by alraltse         ###   ########.fr       */
+/*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
+/*   Updated: 2025/05/06 19:45:29 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-static t_lexer *create_node(char *data)
-{
-    t_lexer *node;
-
-    node = malloc(sizeof(t_lexer));
-    if (!node)
-        return (NULL);
-    node->data = data;
-    node->next = NULL;
-    return (node);
-}
-
-t_lexer *add_node_to_end(t_lexer **head, char *data)
+void add_cmds_flags_to_linked_list(t_lexer *input, t_unit **unit)
 {
     t_lexer *temp;
-    t_lexer *new_node;
-
-    new_node = create_node(data);
-    if (!new_node)
-        return (NULL);
-    if (!*head)
-        return (new_node);
-    temp = *head;
-    while (temp->next)
-        temp = temp->next;
-    temp->next = new_node;
-    return (*head);
-}
-
-t_lexer *add_lexers_to_list(char **rl)
-{
-    t_lexer *head;
-    int i;
-
-    head = create_node(rl[0]);
-    if (!head)
-        return (NULL);
-    i = 1;
-    while (rl[i])
-    {
-        head = add_node_to_end(&head, rl[i]);
-        i++;
-    }
-    return (head);
-}
-
-void add_cmds_flags_to_linked_list(t_lexer *input, t_unit *unit)
-{
-    t_lexer *temp;
+    t_unit *current_unit;
     int i;
     int cmd_is_found;
 
     i = 0;
     cmd_is_found = 0;
     temp = input;
-    unit->data->cmd = NULL;
-    unit->data->flags = malloc(sizeof(char *) * unit->data->flags_count);
-    if (!unit->data->flags)
+    current_unit = *unit;
+    current_unit->data->flags = malloc(sizeof(char *) * 10);
+    if (!current_unit->data->flags)
         return ;
     while (temp)
     {
@@ -77,17 +32,18 @@ void add_cmds_flags_to_linked_list(t_lexer *input, t_unit *unit)
             || ft_strcmp(temp->data, ">") == 0 || ft_strcmp(temp->data, ">>") == 0
             || ft_strcmp(temp->data, "<<") == 0)
         {
-            unit = unit->next;
+            current_unit = add_unit_to_end(unit);
+            current_unit->data->flags = malloc(sizeof(char *) * 10);
+            if (!current_unit->data->flags)
+                return ;
             i = 0;
             cmd_is_found = 0;
             temp = temp->next;
+            continue ;
         }
-        printf("cmd_is_found: %d\n", cmd_is_found);
-        printf("temp->data: %s\n", temp->data);
         if (cmd_is_found == 0)
-            find_command_path(temp->data, unit, &cmd_is_found);
-        printf("unit->data->cmd: %s\n", unit->data->cmd);
-        find_flags(temp, unit, &i);
+            find_command_path(temp->data, current_unit, &cmd_is_found);
+        find_flags(temp, current_unit, &i);
         temp = temp->next;
     }
 }
@@ -127,21 +83,27 @@ void read_the_input(char *rl, t_lexer *input)
     unit = malloc(sizeof(t_unit));
     unit->data = malloc(sizeof(t_node));
     unit->data->flags_count = count_flags(input);
-    add_cmds_flags_to_linked_list(input, unit);
+    add_cmds_flags_to_linked_list(input, &unit);
     unit->data->args_count = count_args(unit, input);
     add_args_to_linked_list(input, unit);
-    // printf("unit->data->cmd: %s\n", unit->data->cmd);
-    // int i = 0;
-    // while (i < unit->data->flags_count)
-    // {
-    //     printf("unit->data->flags[%d]: %s\n", i, unit->data->flags[i]);
-    //     i++;
-    // }
-    // int j = 0;
-    // while (j < unit->data->args_count)
-    // {
-    //     printf("unit->data->args[%d]: %s\n", j, unit->data->args[j]);
-    //     j++;
-    // }
+    int i;
+    // int j;
+    while (unit)
+    {
+        printf("unit->data->cmd: %s\n", unit->data->cmd);
+        i = 0;
+        while (i < 1)
+        {
+            printf("unit->data->flags[%d]: %s\n", i, unit->data->flags[i]);
+            i++;
+        }
+        // j = 0;
+        // while (j < 1)
+        // {
+        //     printf("unit->data->args[%d]: %s\n", j, unit->data->args[j]);
+        //     j++;
+        // }
+        unit = unit->next;
+    }
     free(result);
 }

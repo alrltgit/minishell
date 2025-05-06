@@ -2,9 +2,10 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC = main.c env.c prompt.c fill_lexers_list.c split_read_line.c \
-find_commands/find_cmd.c find_commands/utils.c find_commands/find_flags.c \
-find_commands/find_args.c
+SRC = main.c env.c prompt.c \
+parse_input/fill_lexers_linked_list.c parse_input/split_read_line.c \
+parse_input/find_cmd.c parse_input/utils.c parse_input/find_flags.c \
+parse_input/find_args.c parse_input/fill_unit_linked_list.c parse_input/parse_input.c
 
 OBJS = $(SRC:.c=.o)
 

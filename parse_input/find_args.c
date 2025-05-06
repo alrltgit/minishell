@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 16:34:02 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/06 19:10:05 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int count_args(t_unit *unit, t_lexer *input)
 
     args_count = 0;
     cmd_name = retrieve_cmd_name(unit->data->cmd);
-    // printf("cmd: %s\n", cmd_name);
     temp = input;
     while (temp)
     {
