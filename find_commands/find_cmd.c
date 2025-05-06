@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/05 15:37:44 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:25:53 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,5 @@ char *find_command_path(char *input)
         }
         i++;
     }
-    // print cmds_linked_list
-    // while (cmd->cmds)
-    // {
-    //     printf("cmd->lexer->data: %s\n", cmd->cmds->data);
-    //     cmd->cmds = cmd->cmds->next;
-    // }
     return (cmd_path);
 }

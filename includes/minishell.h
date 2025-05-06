@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/05 15:34:20 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:16:12 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ typedef struct s_lexer
 
 typedef struct s_node
 {
-	char *data;
 	char *cmd;
 	char **flags;
 	char **args;
-	struct s_ast *next;
 }	t_node;
+
+typedef struct s_unit
+{
+	t_node *data;
+	struct s_ast *next;
+}	t_unit;
 
 typedef struct	s_shell
 {
