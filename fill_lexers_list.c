@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:05:51 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 16:00:39 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:40:42 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,17 @@ void add_cmds_flags_to_linked_list(t_lexer *input, t_unit *unit)
         if (ft_strcmp(temp->data, "|") == 0 || ft_strcmp(temp->data, "<") == 0
             || ft_strcmp(temp->data, ">") == 0 || ft_strcmp(temp->data, ">>") == 0
             || ft_strcmp(temp->data, "<<") == 0)
-            break ;
+        {
+            unit = unit->next;
+            i = 0;
+            cmd_is_found = 0;
+            temp = temp->next;
+        }
+        printf("cmd_is_found: %d\n", cmd_is_found);
+        printf("temp->data: %s\n", temp->data);
         if (cmd_is_found == 0)
             find_command_path(temp->data, unit, &cmd_is_found);
+        printf("unit->data->cmd: %s\n", unit->data->cmd);
         find_flags(temp, unit, &i);
         temp = temp->next;
     }
@@ -99,7 +107,9 @@ void add_args_to_linked_list(t_lexer *input, t_unit *unit)
         if (ft_strcmp(temp->data, "|") == 0 || ft_strcmp(temp->data, "<") == 0
             || ft_strcmp(temp->data, ">") == 0 || ft_strcmp(temp->data, ">>") == 0
             || ft_strcmp(temp->data, "<<") == 0)
+        {
             break ;
+        }
         find_args(unit, temp, &i);
         temp = temp->next;
     }
@@ -120,18 +130,18 @@ void read_the_input(char *rl, t_lexer *input)
     add_cmds_flags_to_linked_list(input, unit);
     unit->data->args_count = count_args(unit, input);
     add_args_to_linked_list(input, unit);
-    printf("unit->data->cmd: %s\n", unit->data->cmd);
-    int i = 0;
-    while (i < unit->data->flags_count)
-    {
-        printf("unit->data->flags[%d]: %s\n", i, unit->data->flags[i]);
-        i++;
-    }
-    int j = 0;
-    while (j < unit->data->args_count)
-    {
-        printf("unit->data->args[%d]: %s\n", j, unit->data->args[j]);
-        j++;
-    }
+    // printf("unit->data->cmd: %s\n", unit->data->cmd);
+    // int i = 0;
+    // while (i < unit->data->flags_count)
+    // {
+    //     printf("unit->data->flags[%d]: %s\n", i, unit->data->flags[i]);
+    //     i++;
+    // }
+    // int j = 0;
+    // while (j < unit->data->args_count)
+    // {
+    //     printf("unit->data->args[%d]: %s\n", j, unit->data->args[j]);
+    //     j++;
+    // }
     free(result);
 }
