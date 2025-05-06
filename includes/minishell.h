@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 15:41:04 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:59:29 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_node
 typedef struct s_unit
 {
 	t_node *data;
-	struct s_ast *next;
+	struct s_unit *next;
 }	t_unit;
 
 typedef struct	s_shell
