@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 13:25:53 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/06 14:20:19 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char **get_path()
     return (paths);
 }
 
-char *find_command_path(char *input)
+char *find_command_path(char *input, t_unit *unit, int *cmd_is_found)
 {
     char *temp_result;
     char **paths;
@@ -42,6 +42,7 @@ char *find_command_path(char *input)
         if (access(temp_result, X_OK) == 0)
         {
             cmd_path = ft_strdup(temp_result);
+            *cmd_is_found = 1;
             break ;
         }
         i++;

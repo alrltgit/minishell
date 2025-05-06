@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_lexers_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:05:51 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 13:30:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/06 14:19:54 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,19 @@ t_lexer *add_lexers_to_list(char **rl)
     return (head);
 }
 
-void divide_into_nodes(t_lexer *input, t_unit *unit)
+void add_to_unit_cmd(t_lexer *input, t_unit *unit)
 {
     t_lexer *temp;
+    int i;
+    int cmd_is_found;
 
+    i = 0;
+    cmd_is_found = 0;
     temp = input;
     unit->data->cmd = NULL;
+    unit->data->flags = malloc(sizeof(char *) * unit->data->flags_count);
+    if (!unit->data->flags)
+        return ;
     while (temp)
     {
         printf("temp->data: %s\n", temp->data);
@@ -72,10 +79,9 @@ void divide_into_nodes(t_lexer *input, t_unit *unit)
             || ft_strcmp(temp->data, ">") == 0 || ft_strcmp(temp->data, ">>") == 0
             || ft_strcmp(temp->data, "<<") == 0)
             break ;
-        unit->data->cmd = find_command_path(temp->data);
-        printf("unit->data->cmd: %s\n", unit->data->cmd);
-        if (unit->data->cmd)
-            break ;
+        if (cmd_is_found == 0)
+            unit->data->cmd = find_command_path(temp->data, unit, &cmd_is_found);
+        find_flags(temp, unit, &i);
         temp = temp->next;
     }
 }
@@ -91,6 +97,15 @@ void read_the_input(char *rl, t_lexer *input)
         return ;
     unit = malloc(sizeof(t_unit));
     unit->data = malloc(sizeof(t_node));
-    divide_into_nodes(input, unit);
+    unit->data->flags_count = count_flags(input);
+    // printf("flags_count: %d\n", unit->data->flags_count);
+    add_to_unit_cmd(input, unit);
+    printf("unit->data->cmd: %s\n", unit->data->cmd);
+    int i = 0;
+    while (i < unit->data->flags_count)
+    {
+        printf("unit->data->flags[%d]: %s\n", i, unit->data->flags[i]);
+        i++;
+    }
     free(result);
 }
