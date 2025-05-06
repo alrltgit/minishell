@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:05:51 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 14:19:54 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:46:43 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,12 @@ t_lexer *add_lexers_to_list(char **rl)
     while (rl[i])
     {
         head = add_node_to_end(&head, rl[i]);
-        // printf("lexer: %s\n", lexer->lexer);
         i++;
     }
     return (head);
 }
 
-void add_to_unit_cmd(t_lexer *input, t_unit *unit)
+void add_cmds_flags_to_linked_list(t_lexer *input, t_unit *unit)
 {
     t_lexer *temp;
     int i;
@@ -74,14 +73,34 @@ void add_to_unit_cmd(t_lexer *input, t_unit *unit)
         return ;
     while (temp)
     {
-        printf("temp->data: %s\n", temp->data);
         if (ft_strcmp(temp->data, "|") == 0 || ft_strcmp(temp->data, "<") == 0
             || ft_strcmp(temp->data, ">") == 0 || ft_strcmp(temp->data, ">>") == 0
             || ft_strcmp(temp->data, "<<") == 0)
             break ;
         if (cmd_is_found == 0)
-            unit->data->cmd = find_command_path(temp->data, unit, &cmd_is_found);
+            find_command_path(temp->data, unit, &cmd_is_found);
         find_flags(temp, unit, &i);
+        temp = temp->next;
+    }
+}
+
+void add_args_to_linked_list(t_lexer *input, t_unit *unit)
+{
+    t_lexer *temp;
+    int i;
+
+    unit->data->args = malloc(sizeof(char *) * unit->data->args_count);
+    if (!unit->data->args)
+        return ;
+    i = 0;
+    temp = input;
+    while (temp)
+    {
+        if (ft_strcmp(temp->data, "|") == 0 || ft_strcmp(temp->data, "<") == 0
+            || ft_strcmp(temp->data, ">") == 0 || ft_strcmp(temp->data, ">>") == 0
+            || ft_strcmp(temp->data, "<<") == 0)
+            break ;
+        find_args(unit, temp, &i);
         temp = temp->next;
     }
 }
@@ -98,14 +117,22 @@ void read_the_input(char *rl, t_lexer *input)
     unit = malloc(sizeof(t_unit));
     unit->data = malloc(sizeof(t_node));
     unit->data->flags_count = count_flags(input);
-    // printf("flags_count: %d\n", unit->data->flags_count);
-    add_to_unit_cmd(input, unit);
-    printf("unit->data->cmd: %s\n", unit->data->cmd);
-    int i = 0;
-    while (i < unit->data->flags_count)
-    {
-        printf("unit->data->flags[%d]: %s\n", i, unit->data->flags[i]);
-        i++;
-    }
+    add_cmds_flags_to_linked_list(input, unit);
+    unit->data->args_count = count_args(unit, input);
+    add_args_to_linked_list(input, unit);
+    // printf("unit->data->cmd: %s\n", unit->data->cmd);
+    // int i = 0;
+    // while (i < unit->data->flags_count)
+    // {
+    //     printf("unit->data->flags[%d]: %s\n", i, unit->data->flags[i]);
+    //     i++;
+    // }
+    // printf("args_count: %d\n", unit->data->args_count);
+    // int j = 0;
+    // while (j < unit->data->args_count)
+    // {
+    //     printf("unit->data->args[%d]: %s\n", j, unit->data->args[j]);
+    //     j++;
+    // }
     free(result);
 }
