@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/05 12:26:40 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 14:29:37 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,40 @@
 #include <readline/history.h>
 #include "../libft/libft.h"
 
-#include <malloc.h> //delete
+#define PS1 "> "
 
+typedef struct s_unit t_unit;
 
 typedef struct	s_shell
 {
 	char	**env;
 	char	*prompt;
+	t_unit	*cmds;
 	int		errcode;
 }	t_shell;
 
-
-typedef struct s_cmd
+/* typedef struct s_lexer
 {
+	char *data;
+	struct s_lexer *next;
+}	t_lexer; */
 
-	char	*cmd;
-	char	*flag;
-	char	**args;
+typedef struct s_node
+{
+	char *cmd;
+	char **flags;
+	char **args;
+	int flags_count;
+	int args_count;
+}	t_node;
+
+typedef struct s_unit
+{
+	t_node *data;
 	t_shell	*shell;
-}	t_cmd;
+	struct s_unit *next;
+}	t_unit;
+
 
 //typedef struct	s_cmd
 //main.c
@@ -61,8 +76,41 @@ void	activate_ctrlc(int sig);
 void	deactivate_ctrlc(int sig);
 
 //BUILTINS
-void	ft_pwd(t_cmd *command);
-void	ft_env(t_cmd *command);
+void	ft_pwd(t_unit *command);
+void	ft_env(t_unit *command);
 
+//ALINA
+//env.c
+char	**init_env(char **ev);
+int		find_ev_index(char *var_name, char **env_vars);
 
+//prompt.c
+int create_prompt(char *rl, t_shell *shell);
+
+// parsing
+char **split_args(char *str);
+void read_the_input(char *rl, t_shell *shll);
+
+//free
+void free_arr(char **arr);
+
+// split the linked list
+void add_cmds_flags_to_linked_list(char **result, t_unit **unit);
+
+// parse_input
+// fill_unit_linked_list
+t_unit *add_unit_to_end(t_unit **head);
+t_unit *create_unit();
+
+// find_cmd.c
+void find_command_path(char *input, t_unit *unit, int *cmd_is_found);
+char *ft_strconcat(char *path, char *cmd);
+
+// find_args.c
+int count_args(t_unit *unit, char **result);
+void find_args(t_unit *unit, char **result, int *i, int *j);
+
+//find_flags.c
+int		count_flags(char **result);
+void 	find_flags(char *result, t_unit *unit, int *i);
 #endif

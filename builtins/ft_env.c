@@ -6,13 +6,13 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 12:04:54 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/05 13:06:05 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 14:26:15 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_env(t_cmd *cmd)
+/* void	ft_env(t_unit *cmd)
 {
 	int		i;
 
@@ -21,7 +21,7 @@ void	ft_env(t_cmd *cmd)
 	//so handle the spaces and characters
 	//or
 	//take cmd already seperated
-	if (count_vars(cmd->args) != 1)
+	if (count_vars(cmd->) != 1)
 	{
 		cmd->shell->errcode = 1;
 		return;
@@ -31,4 +31,4 @@ void	ft_env(t_cmd *cmd)
 	{
 		printf("%s\n", cmd->shell->env[i]);
 	}
-}
+} */

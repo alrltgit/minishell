@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 11:30:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/07 13:59:21 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/03 16:17:18 by alraltse          #+#    #+#             */
+/*   Updated: 2025/05/07 14:26:58 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "includes/minishell.h"
 
-void	ft_pwd(t_unit *cmd)
+int create_prompt(char *rl, t_shell *shell)
 {
-	char	*pwd;
-
-	cmd->shell->errcode = 0;
-	pwd = value_from_key("PWD", cmd->shell);
-	//printf("PWD from custom func-> %s\n", pwd);
-	if (!pwd)
-		perror("pwd error"); //make it detailed with err codes
+    rl = readline(PS1);
+    read_the_input(rl, shell);
+	if (rl && *rl)
+		add_history(rl);
+	if (rl == NULL)
+	{
+		printf("No prompt created.\n");
+		return (1);
+	}
+    return (0);
 }
