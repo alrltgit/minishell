@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:23:13 by alraltse          #+#    #+#             */
-/*   Updated: 2025/03/09 12:34:53 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/07 21:18:45 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,7 @@ char	*get_next_line(int fd);
 char	*ft_str_chr(const char *s, int c);
 
 char	*ft_str_dup(char *str);
+
+void	free_double(void **arr);
 
 #endif

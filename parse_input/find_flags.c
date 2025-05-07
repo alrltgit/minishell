@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/07 13:45:19 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/07 21:04:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int count_flags(char **result)
     return (flags_count);
 }
 
-void find_flags(char *result, t_unit *unit, int *i)
+void find_flags(char *result, t_node *unit, int *i)
 {
     if (result[0] == '-')
     {
-        unit->data->flags[*i] = ft_strdup(result);
+        unit->flags[*i] = ft_strdup(result);
         (*i)++;
     }
 }

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   free_double.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 16:17:18 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 21:13:18 by apple            ###   ########.fr       */
+/*   Created: 2025/05/02 11:38:49 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/07 21:17:59 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-int create_prompt(char *rl, t_shell *shell)
+//parameter is void to handle all types
+void	free_double(void **arr)
 {
-    rl = readline(PS1);
-    read_the_input(rl, shell);
-	if (rl && *rl)
-		add_history(rl);
-	if (rl == NULL)
-	{
-		printf("No prompt created.\n");
-		return (1);
-	}
-    return (0);
+	int	i;
+
+	if (!arr)
+		return ;
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr);
 }

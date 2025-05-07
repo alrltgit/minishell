@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/03 16:28:26 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/07 21:11:47 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,42 @@
 //SO SET OLDPWD AS CURRENT PWD WHILE INITIALIZING AT THE FIRST TIME
 
 //handle
-//->get value from variable (in case of <command> &ENVVARIABLE)
-//need to return the value after = (without =)
-//
+//->get value from variable (in case of <command> &ENVVARIABLE) -----DONE-----
+//need to return the value after = (without =) ----DONE-----
+//->set func that changes the value of specified env var
 
 //ev is original env_array is copy
 
-//> finds the index of specified env variable
-int	find_ev_index(char *var_name, char **env_array)
+//> gets the index of specified env variable
+
+int	index_from_key(char *var_name, char **env_array)
 {
 	int		i;
-	int		var_len;
-	char	*sub_str;
+	char	**var;
 
 	i = -1;
-	var_len = ft_strlen(var_name);
 	while (env_array[++i])
 	{
-		sub_str = ft_substr(env_array[i], 0, var_len);
-		if (ft_strcmp(var_name, sub_str) == 0)
+		var = ft_split(env_array[i], '=');
+		if (ft_strcmp(var_name, var[0]) == 0)
 		{
-			free(sub_str); //check is it properly working?
+			free_double((void **)var); //check is it properly working?
 			return (i);
 		}
+		free_double((void **)var);
 	}
 	return (-1);
+}
+
+//it is used for pwd builtin
+//we couldnt use getcwd cuz getcwd takes from real bash's env
+//but we need to get from our own env
+char	*value_from_key(char *var_name, t_shell *shell)
+{
+	int	index;
+
+	index = index_from_key(var_name, shell->env);
+	return (ft_strchr(shell->env[index], '=') + 1);
 }
 
 void	copy_vars(char **ev, char ***env_array)
@@ -71,21 +82,22 @@ int	count_vars(char **ev)
 	return (count);
 }
 
-char	**init_env(char **ev)
+void	init_env(char **ev, t_shell *shell)
 {
-	char	**env_array;
 	char	*pwd;
 	int		count;
 	int		index;
 
 	count = count_vars(ev);
-	env_array = malloc(count * sizeof(char *));
-	copy_vars(ev, &env_array);
-	env_array[count] = "\0";
-	index = find_ev_index("OLDPWD", env_array);
-	free(env_array[index]); //free cuz oldpwd gonna get changed
+	shell->env = malloc((count + 1) * sizeof(char *));
+	if (!shell->env)
+		return ;
+	copy_vars(ev, &shell->env);
+	shell->env[count] = NULL;
+	index = index_from_key("OLDPWD", shell->env);
+	free(shell->env[index]); //free cuz oldpwd gonna get changed
 	pwd = getcwd(NULL, 0);
-	env_array[index] = ft_strjoin("OLDPWD=", pwd);
+	shell->env[index] = ft_strjoin("OLDPWD=", pwd);
+	change_env_value("SHELL", "/bin/bash", shell);
 	free(pwd);
-	return (env_array);
 }

@@ -6,7 +6,7 @@
 #    By: apple <apple@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 23:43:44 by apple             #+#    #+#              #
-#    Updated: 2025/03/31 15:12:24 by apple            ###   ########.fr        #
+#    Updated: 2025/05/07 21:19:03 by apple            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
 ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
 ft_tolower.c ft_toupper.c ft_lstadd_front.c ft_lstlast.c \
 ft_lstnew.c ft_lstsize.c ft_lstadd_back.c ft_lstclear.c \
-ft_lstdelon.c ft_lstiter.c \
+ft_lstdelon.c ft_lstiter.c free_double.c\
 get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 ft_printf/ft_print_dec.c ft_printf/ft_print_hex_lower.c \
 ft_printf/ft_print_hex_upper.c ft_printf/ft_print_pointer.c \

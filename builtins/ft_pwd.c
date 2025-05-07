@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 16:17:18 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 21:13:18 by apple            ###   ########.fr       */
+/*   Created: 2025/05/05 11:30:03 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/07 21:01:42 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-int create_prompt(char *rl, t_shell *shell)
+void	ft_pwd(t_node *cmd)
 {
-    rl = readline(PS1);
-    read_the_input(rl, shell);
-	if (rl && *rl)
-		add_history(rl);
-	if (rl == NULL)
-	{
-		printf("No prompt created.\n");
-		return (1);
-	}
-    return (0);
+	char	*pwd;
+
+	cmd->shell->errcode = 0;
+	pwd = value_from_key("PWD", cmd->shell);
+	//printf("PWD from custom func-> %s\n", pwd);
+	if (!pwd)
+		perror("pwd error"); //make it detailed with err codes
+		//cmd->shell->errcode = 1;
 }
