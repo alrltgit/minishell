@@ -6,15 +6,16 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/07 14:37:35 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:45:34 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void add_cmds_flags_to_linked_list(char **result, t_unit **unit)
+
+void add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
-    t_unit *current_unit;
+    t_node *current_node;
     int i;
     int j;
     int cmd_is_found;
@@ -22,10 +23,10 @@ void add_cmds_flags_to_linked_list(char **result, t_unit **unit)
     i = 0;
     j = 0;
     cmd_is_found = 0;
-    current_unit = *unit;
-    current_unit->data->flags_count = count_flags(result);
-    current_unit->data->flags = malloc(sizeof(char *) * current_unit->data->flags_count);
-    if (!current_unit->data->flags)
+    current_node = *unit;
+    current_node->flags_count = count_flags(result);
+    current_node->flags = malloc(sizeof(char *) * current_node->flags_count);
+    if (!current_node->flags)
         return ;
     while (result[j])
     {
@@ -33,10 +34,10 @@ void add_cmds_flags_to_linked_list(char **result, t_unit **unit)
             || ft_strcmp(result[j], ">") == 0 || ft_strcmp(result[j], ">>") == 0
             || ft_strcmp(result[j], "<<") == 0)
         {
-            current_unit = add_unit_to_end(unit);
-            current_unit->data->flags_count = count_flags(result);
-            current_unit->data->flags = malloc(sizeof(char *) * current_unit->data->flags_count);
-            if (!current_unit->data->flags)
+            current_node = add_unit_to_end(unit);
+            current_node->flags_count = count_flags(result);
+            current_node->flags = malloc(sizeof(char *) * current_node->flags_count);
+            if (!current_node->flags)
                 return ;
             i = 0;
             cmd_is_found = 0;
@@ -44,19 +45,19 @@ void add_cmds_flags_to_linked_list(char **result, t_unit **unit)
             continue ;
         }
         if (cmd_is_found == 0)
-            find_command_path(result[j], current_unit, &cmd_is_found);
-        find_flags(result[j], current_unit, &i);
+            find_command_path(result[j], current_node, &cmd_is_found);
+        find_flags(result[j], current_node, &i);
         j++;
     }
 }
 
-void add_args_to_linked_list(char **result, t_unit *unit)
+void add_args_to_linked_list(char **result, t_node *unit)
 {
     int i;
     int j;
 
-    unit->data->args = malloc(sizeof(char *) * unit->data->args_count);
-    if (!unit->data->args)
+    unit->args = malloc(sizeof(char *) * unit->args_count);
+    if (!unit->args)
         return ;
     i = 0;
     j = 0;
@@ -76,35 +77,14 @@ void add_args_to_linked_list(char **result, t_unit *unit)
 void read_the_input(char *rl, t_shell *shll)
 {
     char **result;
-    t_unit *unit;
+    t_node *unit;
     
     result = split_args(rl);
     unit = create_unit();
-	unit->shell = malloc(sizeof(t_shell));
 	unit->shell = shll;
-    unit->data = malloc(sizeof(t_node));
+	shll->cmds = unit;
     add_cmds_flags_to_linked_list(result, &unit);
-    unit->data->args_count = count_args(unit, result);
+    unit->args_count = count_args(unit, result);
     add_args_to_linked_list(result, unit);
-	printf("%s\n", unit->shell->cmds[0].data->cmd);
-    // int i;
-    // int j;
-    // while (unit)
-    // {
-    //     printf("unit->data->cmd: %s\n", unit->data->cmd);
-    //     i = 0;
-    //     while (i < unit->data->flags_count)
-    //     {
-    //         printf("unit->data->flags[%d]: %s\n", i, unit->data->flags[i]);
-    //         i++;
-    //     }
-    //     // j = 0;
-    //     // while (j < 1)
-    //     // {
-    //     //     printf("unit->data->args[%d]: %s\n", j, unit->data->args[j]);
-    //     //     j++;
-    //     // }
-    //     unit = unit->next;
-    // }
-    free(result); // unit->data->cmd // unit->data->flags[i]
+    free(result);
 }

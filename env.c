@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/07 14:25:30 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:13:50 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,22 @@ int	count_vars(char **ev)
 	return (count);
 }
 
-char	**init_env(char **ev)
+void	init_env(char **ev, t_shell *shell)
 {
-	char	**env_array;
 	char	*pwd;
 	int		count;
 	int		index;
 
 	count = count_vars(ev);
-	env_array = malloc((count + 1) * sizeof(char *));
-	if (!env_array)
-		return (NULL);
-	copy_vars(ev, &env_array);
-	env_array[count] = NULL;
-	index = index_from_key("OLDPWD", env_array);
-	free(env_array[index]); //free cuz oldpwd gonna get changed
+	shell->env = malloc((count + 1) * sizeof(char *));
+	if (!shell->env)
+		return ;
+	copy_vars(ev, &shell->env);
+	shell->env[count] = NULL;
+	index = index_from_key("OLDPWD", shell->env);
+	free(shell->env[index]); //free cuz oldpwd gonna get changed
 	pwd = getcwd(NULL, 0);
-	env_array[index] = ft_strjoin("OLDPWD=", pwd);
+	shell->env[index] = ft_strjoin("OLDPWD=", pwd);
+	change_env_value("SHELL", "/bin/bash", shell);
 	free(pwd);
-	return (env_array);
 }

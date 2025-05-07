@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 14:33:27 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:49:20 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_environment(t_shell *shell) //delete at the end
 		printf("%d %s\n", index_from_key(key[0], shell->env), shell->env[i]);
 		free_double((void **)key);
 	}
-	change_env_value("ZDOTDIR", "HASAN", shell);
+	//change_env_value("ZDOTDIR", "HASAN", shell);
 	//below it prints the changed env
 	for (int i = 0; shell->env[i] != NULL; i++)
 	{
@@ -59,16 +59,14 @@ void	shell_loop(t_shell *shell)
 		//NO NEED TO UPDATE PROMPT PATH AFTER CD
 		rl = readline("minishell$ ");
 		read_the_input(rl, shell);
-		//printf("%s\n", shell->cmds[0].data->cmd);
+		printf("%s\n", shell->cmds[0].cmd);
 		signal(SIGINT, deactivate_ctrlc);
-		
-		//parse the input
 		//if there is different pwd, update it
 		//checkargs
 		//process
 		//execute
 		add_history(rl);
-		printf("%s\n", rl_line_buffer);
+		//printf("%s\n", rl_line_buffer);
 	}
 	free(pwd);
 }
@@ -80,7 +78,7 @@ int main(int ac, char **av, char **ev)
 
 	if (ac != 1)
 		return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
-	shell.env = init_env(ev);
+	init_env(ev, &shell);
 	shell_loop(&shell);
 	/* char *path = "/bin/echo";
 	char *args[] = { "echo", "'helloworld" , NULL };

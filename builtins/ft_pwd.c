@@ -6,13 +6,13 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:30:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/07 13:59:21 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:43:29 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_pwd(t_unit *cmd)
+void	ft_pwd(t_node *cmd)
 {
 	char	*pwd;
 
@@ -21,4 +21,5 @@ void	ft_pwd(t_unit *cmd)
 	//printf("PWD from custom func-> %s\n", pwd);
 	if (!pwd)
 		perror("pwd error"); //make it detailed with err codes
+		//cmd->shell->errcode = 1;
 }

@@ -6,37 +6,31 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/05/07 14:23:21 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 15:32:35 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_unit *create_unit()
+t_node *create_unit()
 {
-    t_unit *node;
+    t_node *node;
 
-    node = malloc(sizeof(t_unit));
+    node = malloc(sizeof(t_node));
     if (!node)
         return (NULL);
-    node->data = malloc(sizeof(t_node));
-    if (!node->data)
-    {
-        free(node);
-        return (NULL);
-    }
-    node->data->cmd = NULL;
-    node->data->flags = NULL;
-    node->data->args = NULL;
+    node->cmd = NULL;
+    node->flags = NULL;
+    node->args = NULL;
     node->next = NULL;
 	node->shell = NULL;
     return (node);
 }
 
-t_unit *add_unit_to_end(t_unit **head)
+t_node *add_unit_to_end(t_node **head)
 {
-    t_unit *temp;
-    t_unit *new_node;
+    t_node *temp;
+    t_node *new_node;
 
     new_node = create_unit();
     if (!new_node)

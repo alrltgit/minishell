@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 19:44:07 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/07 15:09:33 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char **get_path()
     return (paths);
 }
 
-void find_command_path(char *input, t_unit *unit, int *cmd_is_found)
+void find_command_path(char *input, t_node *unit, int *cmd_is_found)
 {
     char *temp_result;
     char **paths;
@@ -39,7 +39,7 @@ void find_command_path(char *input, t_unit *unit, int *cmd_is_found)
         temp_result = ft_strconcat(paths[i], input);
         if (access(temp_result, X_OK) == 0)
         {
-            unit->data->cmd = ft_strdup(temp_result);
+            unit->cmd = ft_strdup(temp_result);
             *cmd_is_found = 1;
             break ;
         }
