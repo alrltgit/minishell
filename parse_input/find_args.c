@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 19:10:05 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:40:46 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,34 @@ char *retrieve_cmd_name(char *cmd_path)
     return (cmd_name + 1);
 }
 
-int count_args(t_unit *unit, t_lexer *input)
+int count_args(t_unit *unit, char **result)
 {
     int args_count;
-    t_lexer *temp;
     char *cmd_name;
+    int i;
 
     args_count = 0;
     cmd_name = retrieve_cmd_name(unit->data->cmd);
-    temp = input;
-    while (temp)
+    i = 0;
+    while (result[i])
     {
-        if (ft_strcmp(temp->data, cmd_name) != 0 && temp->data[0] != '-')
+        if (ft_strcmp(result[i], cmd_name) != 0 && result[i][0] != '-')
             args_count++;
-        temp = temp->next;
+        i++;
     }
     return (args_count);
 }
 
-void find_args(t_unit *unit, t_lexer *temp, int *i)
+void find_args(t_unit *unit, char **result, int *i, int *j)
 {
     char *cmd_name;
 
     cmd_name = retrieve_cmd_name(unit->data->cmd);
     if (!cmd_name)
         return ;
-    if (ft_strcmp(temp->data, cmd_name) != 0 && temp->data[0] != '-')
+    if (ft_strcmp(result[*j], cmd_name) != 0 && result[*j][0] != '-')
     {
-        unit->data->args[*i] = ft_strdup(temp->data);
+        unit->data->args[*i] = ft_strdup(result[*j]);
         (*i)++;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/04 14:21:09 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:43:24 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,13 @@ int	ft_strcmp(char *s1, char *s2)
 int	shell_loop(t_shell shell)
 {
 	char *rl;
-	t_lexer *lexers;
 	
 	(void) shell;
 	rl = NULL;
-	lexers = NULL;
 	while (1)
 	{
 		// prompt
-		if (create_prompt(rl, lexers) == 1)
+		if (create_prompt(rl) == 1)
 			return (1);
 		// find_command_path(lexers);
 		//checkargs
