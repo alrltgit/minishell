@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 16:08:36 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/08 14:58:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ typedef struct	s_shell
 typedef struct s_node
 {
 	t_shell	*shell;
-	char *cmd;
-	char **flags;
-	char **args;
-	int flags_count;
-	int args_count;
-	t_node *next;
+	char	*cmd;
+	char	**flags;
+	char	**args;
+	char	*path;
+	int		flags_count;
+	int		args_count;
+	t_node	*next;
 }	t_node;
 
 
@@ -67,6 +68,10 @@ void	deactivate_ctrlc(int sig);
 //BUILTINS
 void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
+void	ft_cd(t_node *command);
+
+//execute.c
+void	recognize_command(t_node *command);
 
 //ALINA
 //prompt.c
@@ -94,6 +99,7 @@ char *ft_strconcat(char *path, char *cmd);
 // find_args.c
 int count_args(t_node *cmd, char **result);
 void find_args(t_node *cmd, char **result, int *i, int *j);
+char *retrieve_cmd_name(char *cmd_path);
 
 //find_flags.c
 int		count_flags(char **result);

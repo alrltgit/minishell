@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/07 16:45:34 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/08 14:21:48 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 void add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
     t_node *current_node;
-    int i;
-    int j;
-    int cmd_is_found;
+    int		i;
+    int		j;
+    int		cmd_is_found;
 
     i = 0;
     j = 0;
@@ -86,5 +86,6 @@ void read_the_input(char *rl, t_shell *shll)
     add_cmds_flags_to_linked_list(result, &unit);
     unit->args_count = count_args(unit, result);
     add_args_to_linked_list(result, unit);
+	recognize_command(unit);
     free(result);
 }
