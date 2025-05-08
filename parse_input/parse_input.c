@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/07 21:05:17 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/08 13:08:43 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,23 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
     add_cmds_flags_to_linked_list(result, &unit);
     unit->args_count = count_args(unit, result);
-    add_args_to_linked_list(result, unit);
+    printf("unit->args_count: %d\n", unit->args_count);
+    // add_args_to_linked_list(result, unit);
+    //print cmds and flags
+    t_node *temp;
+    temp = unit;
+    int i;
+    while (temp)
+    {
+        printf("temp->shell->cmds->cmd: %s\n", temp->shell->cmds->cmd);
+        i = 0;
+        printf("temp->shell->cmds->cmd: %d\n", temp->shell->cmds->flags_count);
+        while (i < 3)
+        {
+            printf("temp->shell->cmds->cmd: %s\n", temp->shell->cmds->flags[i]);
+            i++;
+        }
+        temp = temp->next;
+    }
     free(result);
 }

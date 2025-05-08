@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 21:18:17 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/08 12:39:06 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	shell_loop(t_shell *shell)
 		//NO NEED TO UPDATE PROMPT PATH AFTER CD
 		rl = readline("minishell$ ");
 		read_the_input(rl, shell);
-		printf("%s\n", shell->cmds[0].cmd);
+		// printf("%s\n", shell->cmds[0].cmd);
 		signal(SIGINT, deactivate_ctrlc);
 		//if there is different pwd, update it
 		//checkargs

@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 21:04:03 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/08 13:10:38 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ int count_args(t_node *unit, char **result)
 
     args_count = 0;
     cmd_name = retrieve_cmd_name(unit->cmd);
+    printf("cmd_name: %s\n", cmd_name);
     i = 0;
     while (result[i])
     {
         if (ft_strcmp(result[i], cmd_name) != 0 && result[i][0] != '-')
+        {
             args_count++;
+        }
         i++;
     }
     return (args_count);
