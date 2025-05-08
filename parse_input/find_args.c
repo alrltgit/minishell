@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 15:18:51 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:40:40 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ char *retrieve_cmd_name(char *cmd_path)
 
 int count_args(t_node *unit, char **result)
 {
-    int args_count;
-    char *cmd_name;
-    int i;
+    int		args_count;
+    char	*cmd_name;
+    int		i;
 
     args_count = 0;
     cmd_name = retrieve_cmd_name(unit->cmd);

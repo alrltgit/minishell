@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/08 14:21:48 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:38:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ void add_args_to_linked_list(char **result, t_node *unit)
     }
 }
 
+/*
+ command process
+
+ is_valid => is_builtin 
+ yes => execute related builtin, set cmd->isbuiltin = 1
+ no => execute other
+*/
 void read_the_input(char *rl, t_shell *shll)
 {
     char **result;
@@ -86,6 +93,16 @@ void read_the_input(char *rl, t_shell *shll)
     add_cmds_flags_to_linked_list(result, &unit);
     unit->args_count = count_args(unit, result);
     add_args_to_linked_list(result, unit);
-	recognize_command(unit);
+	/* if (!is_valid_command)
+	{
+		ft_putstr_fd(ft_strconcat(rl, ": command not found"), 2);
+		shll->errcode = 1;
+		set proper exit (maybe return;)
+		so according to errcode, it can exit
+	} */
+	//if (is_builtin())
+	//	execute_builtin()
+	/*else
+		execute_other() */
     free(result);
 }

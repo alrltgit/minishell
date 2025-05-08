@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 13:35:35 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:53:05 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,11 @@ int main(int ac, char **av, char **ev)
 {
 	t_shell	shell;
 	(void)av;
-
+	
 	if (ac != 1)
-		return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
+	return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
 	init_env(ev, &shell);
+	//handle $variable expansion
 	shell_loop(&shell);
 	/* char *path = "/bin/echo";
 	char *args[] = { "echo", "'helloworld" , NULL };

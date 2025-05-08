@@ -6,12 +6,21 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/08 15:00:05 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:53:08 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
+int	is_builtin(t_node *cmd)
+{
+	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") ||
+		!ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") ||
+		!ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env") ||
+		!ft_strcmp(cmd, "exit"))
+		return (1);
+	return (0);
+}
 char	**build_argv(t_node *command)
 {
 	char	**argv;
@@ -65,17 +74,14 @@ void	execute_builtin(t_node *command)
 		//ft_export();
 }
 
-void	recognize_command(t_node *command)
+/* void	recognize_command(t_node *command)
 {
 	char	*cmd;
 
-	/*what if it is not a command????*/
+	// what if it is not a command????
 	cmd = command->cmd;
-	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") ||
-		!ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") ||
-		!ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "exit"))
-		execute_builtin(command);
-	else
+	if (is_validcommand)
 		execute_other(command);
-}
+	else
+		perror();
+} */

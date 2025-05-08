@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 14:58:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:17:57 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_node
 	char	*path;
 	int		flags_count;
 	int		args_count;
+	int		is_builtin;
 	t_node	*next;
 }	t_node;
 
@@ -72,6 +73,7 @@ void	ft_cd(t_node *command);
 
 //execute.c
 void	recognize_command(t_node *command);
+int		is_builtin(t_node *cmd);
 
 //ALINA
 //prompt.c

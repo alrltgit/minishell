@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 15:24:21 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/08 16:40:06 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char **get_path()
     return (paths);
 }
 
-//retrieve func has problem
 void find_command_path(char *input, t_node *unit, int *cmd_is_found)
 {
     char 	*temp_result;
