@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 18:08:38 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:22:50 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,23 @@ int count_args_inside_loop(char **result, t_node *current_node, int *i)
 {
     char *cmd_name;
     int args_count;
-    int *temp_i;
+    int temp_i;
 
-    temp_i = i;
+    temp_i = *i;
     args_count = 0;
     cmd_name = retrieve_cmd_name(current_node->cmd);
     current_node->args_count = 0;
-    while (result[*temp_i])
+    while (result[temp_i])
     {
-        if (ft_strcmp(result[*temp_i], "|") == 0 || ft_strcmp(result[*temp_i], "<") == 0
-            || ft_strcmp(result[*temp_i], ">") == 0 || ft_strcmp(result[*temp_i], ">>") == 0
-            || ft_strcmp(result[*temp_i], "<<") == 0)
+        if (ft_strcmp(result[temp_i], "|") == 0 || ft_strcmp(result[temp_i], "<") == 0
+            || ft_strcmp(result[temp_i], ">") == 0 || ft_strcmp(result[temp_i], ">>") == 0
+            || ft_strcmp(result[temp_i], "<<") == 0)
             break ;
-        if (ft_strcmp(result[*temp_i], cmd_name) != 0 && result[*temp_i][0] != '-')
+        if (ft_strcmp(result[temp_i], cmd_name) != 0 && result[temp_i][0] != '-')
             args_count++;
-        (*temp_i)++;
+        temp_i++;
     }
-    printf("temp_i: %d\n", *temp_i);
+    // printf("temp_i: %d\n", *temp_i);
     // printf("TEST2\n");
     return (args_count);
 }
@@ -74,16 +74,15 @@ void find_args(t_node *current_node, char **result, int *i, int *j)
     char *cmd_name;
 
     cmd_name = retrieve_cmd_name(current_node->cmd);
-    printf("i: %d\n", *i);
+    // printf("current_node->cmd: %s\n", current_node->cmd);
     if (!cmd_name)
         return ;
     // printf("result[*i]: %s\n", result[*i]);
-    if (ft_strcmp(result[*i], cmd_name) != 0 && result[*i][0] != '-')
+    if (ft_strcmp(result[*i], cmd_name) != 0 && result[*i][0] != '-') // wc 
     {
-        printf("result[*i]: %s\n", result[*i]); // a != ls 
-        printf("cmd_name: %s\n", cmd_name);
+        // printf("cmd_name: %s\n", cmd_name);
         current_node->args[*j] = ft_strdup(result[*i]);
-        printf("current_node->args[%d]: %s\n", *j, current_node->args[*j]);
+        // printf("current_node->args[%d]: %s\n", *j, current_node->args[*j]);
         (*j)++;
     }
 }
