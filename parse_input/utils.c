@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 14:43:22 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:46:36 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,13 @@ char *ft_strconcat(char *path, char *cmd)
     return (ft_strcpy(cmd_path, cmd, j));
 }
 
+int	is_operator(char *c)
+{
+
+	if (ft_strcmp(c, "|") == 0 || ft_strcmp(c, "<") == 0
+	|| ft_strcmp(c, ">") == 0 || ft_strcmp(c, ">>") == 0
+	|| ft_strcmp(c, "<<") == 0)
+		return (1);
+	return (0);
+}
 

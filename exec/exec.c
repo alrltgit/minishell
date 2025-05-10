@@ -1,26 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/08 16:53:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/10 11:10:53 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	is_builtin(t_node *cmd)
-{
-	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") ||
-		!ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") ||
-		!ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "exit"))
-		return (1);
-	return (0);
-}
 char	**build_argv(t_node *command)
 {
 	char	**argv;

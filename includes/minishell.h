@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 16:17:57 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/10 12:47:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 #define PS1 "> "
 
-typedef struct s_node t_node;
+typedef struct t_node;
 
 typedef struct	s_shell
 {
@@ -71,9 +71,11 @@ void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
 
-//execute.c
+//exec_utils.c
+int		is_builtin(char *cmd); //changed to char
+
+//exec.c
 void	recognize_command(t_node *command);
-int		is_builtin(t_node *cmd);
 
 //ALINA
 //prompt.c
@@ -93,6 +95,9 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit);
 // fill_unit_linked_list
 t_node *add_unit_to_end(t_node **head);
 t_node *create_unit();
+
+//utils.c (parse_input/)
+int	is_operator(char *c); //added to fix parse_input.c norm
 
 // find_cmd.c
 void find_command_path(char *input, t_node *unit, int *cmd_is_found);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/08 16:38:49 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/10 13:08:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
         return ;
     while (result[j])
     {
-        if (ft_strcmp(result[j], "|") == 0 || ft_strcmp(result[j], "<") == 0
-            || ft_strcmp(result[j], ">") == 0 || ft_strcmp(result[j], ">>") == 0
-            || ft_strcmp(result[j], "<<") == 0)
+        if (is_operator(result[j]))
         {
             current_node = add_unit_to_end(unit);
             current_node->flags_count = count_flags(result);
@@ -63,9 +61,7 @@ void add_args_to_linked_list(char **result, t_node *unit)
     j = 0;
     while (result[j])
     {
-        if (ft_strcmp(result[j], "|") == 0 || ft_strcmp(result[j], "<") == 0
-            || ft_strcmp(result[j], ">") == 0 || ft_strcmp(result[j], ">>") == 0
-            || ft_strcmp(result[j], "<<") == 0)
+        if (is_operator(result[j]))
         {
             break ;
         }
