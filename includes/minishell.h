@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/10 15:38:40 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:07:18 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,8 @@ int count_args_inside_loop(char **result, t_node *current_node, int *i);
 //find_flags.c
 int		count_flags(char **result);
 void 	find_flags(char *result, t_node *unit, int *i);
+
+// utils.c
+char *ft_strcat(char *s1, char *s2);
+int is_valid_command(t_node *current_node, char *rl);
 #endif

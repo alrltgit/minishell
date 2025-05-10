@@ -6,11 +6,21 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 21:05:57 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/10 19:06:57 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int is_valid_command(t_node *current_node, char *rl)
+{
+    if (current_node->cmd == NULL)
+    {
+        ft_putstr_fd(ft_strcat(rl , ": command not found\n"), 2);
+        return (1);
+    }
+    return (0);
+}
 
 static char *ft_strcpy(char *cmd_path, char *cmd, int j)
 {
@@ -38,4 +48,25 @@ char *ft_strconcat(char *path, char *cmd)
         cmd_path[j++] = path[i++];
     cmd_path[j++] = '/';
     return (ft_strcpy(cmd_path, cmd, j));
+}
+
+char *ft_strcat(char *s1, char *s2)
+{
+    int i;
+    int j;
+    char *result;
+
+    result = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+    if (!result)
+        return (NULL);
+    i = 0;
+    j = 0;
+    while (s1[i])
+        result[j++] = s1[i++];
+    result[j++] = ' ';
+    i = 0;
+    while (s2[i])
+        result[j++] = s2[i++];
+    result[j] = '\0';
+    return (result);
 }

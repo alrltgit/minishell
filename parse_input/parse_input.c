@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/10 16:01:25 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:07:09 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int is_valid_command(t_node *current_node, char *rl)
-{
-    if (current_node->cmd == NULL)
-    {
-        ft_putstr_fd(ft_strconcat(rl, ": command not found\n"), 2);
-        return (1);
-    }
-    return (0);
-}
 
 t_node *add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
