@@ -24,7 +24,7 @@
 
 #define PS1 "> "
 
-typedef struct t_node;
+typedef struct s_node t_node;
 
 typedef struct	s_shell
 {

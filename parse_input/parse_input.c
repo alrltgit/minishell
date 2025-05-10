@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/10 13:08:49 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/10 13:37:50 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
     int		i;
     int		j;
     int		cmd_is_found;
+	int		is_builtin;
 
     i = 0;
     j = 0;
+	is_builtin = 0;
     cmd_is_found = 0;
     current_node = *unit;
     current_node->flags_count = count_flags(result);
