@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 12:39:06 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/10 15:00:03 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
 
 //in bash echo ~ prints home folder (/nfs/homes/username)
 // also cd ~ changes directory to home folder
@@ -58,7 +59,6 @@ void	shell_loop(t_shell *shell)
 		//NO NEED TO UPDATE PROMPT PATH AFTER CD
 		rl = readline("minishell$ ");
 		read_the_input(rl, shell);
-		// printf("%s\n", shell->cmds[0].cmd);
 		signal(SIGINT, deactivate_ctrlc);
 		//if there is different pwd, update it
 		//checkargs
@@ -74,10 +74,11 @@ int main(int ac, char **av, char **ev)
 {
 	t_shell	shell;
 	(void)av;
-
+	
 	if (ac != 1)
-		return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
+	return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
 	init_env(ev, &shell);
+	//handle $variable expansion
 	shell_loop(&shell);
 	/* char *path = "/bin/echo";
 	char *args[] = { "echo", "'helloworld" , NULL };

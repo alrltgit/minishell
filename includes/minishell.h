@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 16:12:59 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/10 15:38:40 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void read_the_input(char *rl, t_shell *shll);
 void free_arr(char **arr);
 
 // split the linked list
-void add_cmds_flags_to_linked_list(char **result, t_node **unit);
+t_node *add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
 // parse_input
 // fill_unit_linked_list

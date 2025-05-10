@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 11:30:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/10 14:56:41 by alraltse         ###   ########.fr       */
+/*   Created: 2025/05/10 11:08:27 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/10 14:57:34 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_pwd(t_node *cmd)
+int	is_builtin(char *cmd)
 {
-	char	*pwd;
-
-	cmd->shell->errcode = 0;
-	pwd = value_from_key("PWD", cmd->shell);
-	printf("PWD from custom func-> %s\n", pwd);
-	if (!pwd)
-	{
-		cmd->shell->errcode = 1; //DOUBLE CHECK
-		perror("pwd error"); //make it detailed with err codes
-	}
+	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") ||
+		!ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") ||
+		!ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env") ||
+		!ft_strcmp(cmd, "exit"))
+		return (1);
+	return (0);
 }
+
+//int	is_valid_cmd()

@@ -6,13 +6,23 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/10 14:47:49 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/10 15:47:05 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void add_cmds_flags_to_linked_list(char **result, t_node **unit)
+int is_valid_command(t_node *current_node, char *rl)
+{
+    if (current_node->cmd == NULL)
+    {
+        ft_putstr_fd(ft_strconcat(rl, ": command not found\n"), 2);
+        return (1);
+    }
+    return (0);
+}
+
+t_node *add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
     t_node *current_node;
     int i;
@@ -26,7 +36,7 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
     current_node->flags_count = count_flags(result);
     current_node->flags = malloc(sizeof(char *) * current_node->flags_count);
     if (!current_node->flags)
-        return ;
+        return (NULL);
     while (result[j])
     {
         if (ft_strcmp(result[j], "|") == 0 || ft_strcmp(result[j], "<") == 0
@@ -37,7 +47,7 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
             current_node->flags_count = count_flags(result);
             current_node->flags = malloc(sizeof(char *) * current_node->flags_count);
             if (!current_node->flags)
-                return ;
+                return (NULL);
             i = 0;
             cmd_is_found = 0;
             j++;
@@ -48,7 +58,14 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
         find_flags(result[j], current_node, &i);
         j++;
     }
-    current_node->flags[i] = NULL;
+    if (cmd_is_found == 0)
+    {
+        current_node->cmd = NULL;
+        current_node->flags[i] = NULL;
+    }
+    else
+        current_node->flags[i] = NULL;
+    return (current_node);
 }
 
 void add_args_to_linked_list(char **result, t_node **unit)
@@ -89,36 +106,46 @@ void read_the_input(char *rl, t_shell *shll)
 {
     char **result;
     t_node *unit;
+    t_node *current_node;
     
     result = split_args(rl);
     unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
-    add_cmds_flags_to_linked_list(result, &unit);
-    add_args_to_linked_list(result, &unit);
+    current_node = add_cmds_flags_to_linked_list(result, &unit);
+    if (is_valid_command(current_node, rl) == 1)
+    {
+        shll->errcode = 1;
+        return ;
+        // check if the command is a builtin.
+        //if (is_builtin())
+        //	execute_builtin()
+        //else
+        //  execute_other()
+    }
+    else
+        add_args_to_linked_list(result, &unit);
 
     // print cmds, flsgs, args
-    t_node *temp = unit;
-    int i;
-    int j;
-    while (temp)
-    {
-        printf("temp->cmd: %s\n", temp->cmd);
-        // printf("unit->args_count: %d\n", unit->args_count);
-        i = 0;
-        while (temp->flags[i])
-        {
-            printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-            i++;
-        }
-        j = 0;
-        while (temp->args[j])
-        {
-            printf("temp->args[%d]: %s\n", i, temp->args[j]);
-            // printf("temp->args[%d]: %s\n", i, temp->args[i]);
-            j++;
-        }
-        temp = temp->next;
-    }
+    // t_node *temp = unit;
+    // int i;
+    // int j;
+    // while (temp)
+    // {
+    //     printf("temp->cmd: %s\n", temp->cmd);
+    //     i = 0;
+    //     while (temp->flags[i])
+    //     {
+    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
+    //         i++;
+    //     }
+    //     j = 0;
+    //     while (temp->args[j])
+    //     {
+    //         printf("temp->args[%d]: %s\n", i, temp->args[j]);
+    //         j++;
+    //     }
+    //     temp = temp->next;
+    // }
     free(result);
 }
