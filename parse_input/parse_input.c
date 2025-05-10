@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/10 15:47:05 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:01:25 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_node *add_cmds_flags_to_linked_list(char **result, t_node **unit)
     cmd_is_found = 0;
     current_node = *unit;
     current_node->flags_count = count_flags(result);
-    current_node->flags = malloc(sizeof(char *) * current_node->flags_count);
+    current_node->flags = malloc(sizeof(char *) * current_node->flags_count + 1);
     if (!current_node->flags)
         return (NULL);
     while (result[j])
@@ -45,7 +45,7 @@ t_node *add_cmds_flags_to_linked_list(char **result, t_node **unit)
         {
             current_node = add_unit_to_end(unit);
             current_node->flags_count = count_flags(result);
-            current_node->flags = malloc(sizeof(char *) * current_node->flags_count);
+            current_node->flags = malloc(sizeof(char *) * current_node->flags_count + 1);
             if (!current_node->flags)
                 return (NULL);
             i = 0;
@@ -63,8 +63,8 @@ t_node *add_cmds_flags_to_linked_list(char **result, t_node **unit)
         current_node->cmd = NULL;
         current_node->flags[i] = NULL;
     }
-    else
-        current_node->flags[i] = NULL;
+    // else
+    //     current_node->flags[i] = NULL;
     return (current_node);
 }
 
@@ -99,7 +99,7 @@ void add_args_to_linked_list(char **result, t_node **unit)
             find_args(current_node, result, &i, &j);
         i++;
     }
-    current_node->args[j] = NULL;
+    // current_node->args[j] = NULL;
 }
 
 void read_the_input(char *rl, t_shell *shll)

@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/10 15:00:03 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:15:11 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ void	shell_loop(t_shell *shell)
 		signal(SIGINT, activate_ctrlc);
 		//NO NEED TO UPDATE PROMPT PATH AFTER CD
 		rl = readline("minishell$ ");
-		read_the_input(rl, shell);
+		if (ft_strcmp(rl, "") != 0)
+			read_the_input(rl, shell);
+		else
+			continue ;
 		signal(SIGINT, deactivate_ctrlc);
 		//if there is different pwd, update it
 		//checkargs
