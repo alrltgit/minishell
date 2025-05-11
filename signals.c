@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 14:48:55 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/04 11:01:55 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/11 15:01:54 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void free_arr(char **arr)
-{
-    int i;
+#include "./includes/minishell.h"
 
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
+/*
+	In interactive mode, bash will response
+	to signals.
+	In non-interactive mode, it will not response.
+*/
+
+//WHAT CAN I DO FOR CTRL-D
+//CTRL-C SENDS SIGINT SIGNAL
+
+void	activate_ctrlc(int sig)
+{
+	(void)sig;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	deactivate_ctrlc(int sig)
+{
+	(void)sig;
+	//printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }

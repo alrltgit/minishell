@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 14:48:55 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/05 12:04:54 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/10 14:56:30 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-void free_arr(char **arr)
+void	ft_env(t_node *cmd)
 {
-    int i;
+	int		i;
 
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
+	i = -1;
+	while (cmd->shell->env[++i])
+	{
+		printf("%s\n", cmd->shell->env[i]);
+	}
 }
