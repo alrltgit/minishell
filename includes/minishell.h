@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/10 19:07:18 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/11 12:47:12 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ char	*key_from_index(int	pos, t_shell *shell);
 void	activate_ctrlc(int sig);
 void	deactivate_ctrlc(int sig);
 
+//exec_utils.c
+int	is_builtin(char *cmd);
+
 //BUILTINS
 void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
@@ -80,7 +83,7 @@ void read_the_input(char *rl, t_shell *shll);
 void free_arr(char **arr);
 
 // split the linked list
-t_node *add_cmds_flags_to_linked_list(char **result, t_node **unit);
+void add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
 // parse_input
 // fill_unit_linked_list
@@ -88,7 +91,7 @@ t_node *add_unit_to_end(t_node **head);
 t_node *create_unit();
 
 // find_cmd.c
-void find_command_path(char *input, t_node *unit, int *cmd_is_found);
+int find_command_path(char *input, t_node *unit, int *cmd_is_found);
 char *ft_strconcat(char *path, char *cmd);
 
 // find_args.c
