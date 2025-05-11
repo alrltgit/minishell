@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 12:47:12 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:24:08 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include "../libft/libft.h"
 
 #define PS1 "> "
+#define B_IN 1
+#define NON_B_IN 2
 
 typedef struct s_node t_node;
 
@@ -42,6 +44,7 @@ typedef struct s_node
 	char **args;
 	int flags_count;
 	int args_count;
+	int	cmd_type;
 	t_node *next;
 }	t_node;
 
@@ -67,9 +70,14 @@ void	deactivate_ctrlc(int sig);
 //exec_utils.c
 int	is_builtin(char *cmd);
 
+//exec.c
+void	execute_other(t_node *command);
+void	execute_builtin(t_node *command);
+
 //BUILTINS
 void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
+void	ft_cd(t_node *command);
 
 //ALINA
 //prompt.c
@@ -104,6 +112,7 @@ int		count_flags(char **result);
 void 	find_flags(char *result, t_node *unit, int *i);
 
 // utils.c
-char *ft_strcat(char *s1, char *s2);
-int is_valid_command(t_node *current_node, char *rl);
+char 	*ft_strcat(char *s1, char *s2);
+int		is_valid_command(t_node *current_node, char *rl);
+
 #endif

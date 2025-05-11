@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:08:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/10 14:57:34 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:33:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,21 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
+
+/* void process_cmd(int cmd_type, t_node *node)
+{
+    if (cmd_type == B_IN)
+    {
+        // built_in;
+    }
+    else if (cmd_type == NON_B_IN)
+    {
+        // cmd_path;
+    }
+    else // 0
+    {
+        // cmd_not_found;
+    }
+} */
 
 //int	is_valid_cmd()
