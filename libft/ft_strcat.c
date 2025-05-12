@@ -3,29 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:36:06 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/02 16:59:56 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 13:49:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strcat(char *dest, char *src)
+char *ft_strcat(char *s1, char *s2)
 {
-	int	i;
-	int	j;
+    int i;
+    int j;
+    char *result;
 
-	i = 0;
-	while (dest[i] != '\0')
-		i++;
-	j = 0;
-	while (src[j] != '\0')
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	dest[i + j] = '\0';
-	return (dest);
+    result = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+    if (!result)
+        return (NULL);
+    i = 0;
+    j = 0;
+    while (s1[i])
+        result[j++] = s1[i++];
+    i = 0;
+    while (s2[i])
+        result[j++] = s2[i++];
+    result[j] = '\0';
+    return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/12 12:20:09 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:27:34 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ typedef struct s_node
 
 
 //typedef struct	s_cmd
+
 //main.c
-int	ft_strcmp(char *s1, char *s2);
+void	shell_loop(t_shell *shell);
 
 //env.c
 void	init_env(char **ev, t_shell *shell);
@@ -93,10 +94,6 @@ void free_arr(char **arr);
 // split the linked list
 void add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
-//split_read_line.c
-int	is_only_wspc_empty(char *rl);
-
-
 // parse_input
 // fill_unit_linked_list
 t_node *add_unit_to_end(t_node **head);
@@ -104,7 +101,6 @@ t_node *create_unit();
 
 // find_cmd.c
 int find_command_path(char *input, t_node *unit, int *cmd_is_found);
-char *ft_strconcat(char *path, char *cmd);
 
 // find_args.c
 int count_args(char **result, t_node *current_node);
@@ -116,7 +112,8 @@ int		count_flags(char **result);
 void 	find_flags(char *result, t_node *unit, int *i);
 
 // utils.c
-char 	*ft_strcat(char *s1, char *s2);
 int		is_valid_command(t_node *current_node, char *rl);
+int		rl_is_space(char *rl);
+int		is_operator(char *c);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/11 14:53:33 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:35:23 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ void	execute_other(t_node *command)
 	/*
 		THINK ABOUT EDGE CASES
 	*/
-	execve(command->cmd, argv, command->shell->env);
+
+	//NEEDS TO BE FORKED
+	printf("EXEC OTHER PATH: %s\n", command->cmd);
+	if (execve(command->cmd, argv, command->shell->env) == 	-1)
+	{
+		perror("execute other execve error\n");
+	}
 	free_double((void **)argv);
 }
 

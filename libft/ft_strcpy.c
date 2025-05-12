@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 11:08:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/12 13:28:55 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/12 13:52:05 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/12 13:53:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	is_builtin(char *cmd)
+char *ft_strcpy(char *cmd_path, char *cmd, int j)
 {
-	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") ||
-		!ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") ||
-		!ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "exit"))
-		return (1);
-	return (0);
+    int i;
+
+    i = 0;
+    while (cmd[i])
+        cmd_path[j++] = cmd[i++];
+    cmd_path[j] = '\0';
+    return (cmd_path);
 }
