@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:19:19 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/04 14:08:04 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/11 14:48:52 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,6 @@
 //in bash after reopening the terminal env gets refreshed
 //also in subshell, env gets refreshed
 //if the value is in quotes, it will be assigned without quotes -> SHLVL="abc" -> SHLVL=abc
-
-
-//consider SHLVL='123" or SHLVL="123'
-//add quote detection
-//maybe you can return -1 to trigger > operator to close the quote
-// > operator just close with started quote, otherwise it takes it as an input and all input will be in the history
-/*
-for ex
-echo '"'123'
-> "
-> "
-> "
-> "
-> '
-"123
-"
-"
-"
-"
-
-*/
 
 /*
 SHLVL="'     123''" -> it accepts this value but (it consider it as string)

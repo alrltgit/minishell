@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/05/07 15:32:35 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/11 13:29:32 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_node *create_unit()
     node->args = NULL;
     node->next = NULL;
 	node->shell = NULL;
+	node->cmd_type = 0;
     return (node);
 }
 

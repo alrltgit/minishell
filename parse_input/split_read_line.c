@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   split_read_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/06 19:34:27 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/12 12:19:23 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+/*
+	char *c = "" -> ['\0'];
+	char c = '\0'
+	cahr *c = "\0" -> ['\0', '\0'];
+
+*/
+int	is_only_wspc_empty(char *rl)
+{
+	if (ft_strcmp(rl, "") == 0 || ft_strcmp(rl, " ") == 0)
+		return (1);
+	return (0);
+}
 
 static void skip_whitespace(const char *str, int *i)
 {

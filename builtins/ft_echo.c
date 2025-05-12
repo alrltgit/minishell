@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/08 14:37:04 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 21:02:24 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@
 	if it is not in quotes, trim spaces between echo and first
 	arg
 */
-/* void	ft_echo(t_node *command)
-{
+// void	ft_echo(t_cmd *command)
+// {
 	
-	if (command->flags[])
-} */
+// }

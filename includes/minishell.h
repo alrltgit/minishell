@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/10 12:47:30 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 12:20:09 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include "../libft/libft.h"
 
 #define PS1 "> "
+#define B_IN 1
+#define NON_B_IN 2
 
 typedef struct s_node t_node;
 
@@ -37,14 +39,13 @@ typedef struct	s_shell
 typedef struct s_node
 {
 	t_shell	*shell;
-	char	*cmd;
-	char	**flags;
-	char	**args;
-	char	*path;
-	int		flags_count;
-	int		args_count;
-	int		is_builtin;
-	t_node	*next;
+	char *cmd;
+	char **flags;
+	char **args;
+	int flags_count;
+	int args_count;
+	int	cmd_type;
+	t_node *next;
 }	t_node;
 
 
@@ -66,16 +67,17 @@ char	*key_from_index(int	pos, t_shell *shell);
 void	activate_ctrlc(int sig);
 void	deactivate_ctrlc(int sig);
 
+//exec_utils.c
+int	is_builtin(char *cmd);
+
+//exec.c
+void	execute_other(t_node *command);
+void	execute_builtin(t_node *command);
+
 //BUILTINS
 void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
-
-//exec_utils.c
-int		is_builtin(char *cmd); //changed to char
-
-//exec.c
-void	recognize_command(t_node *command);
 
 //ALINA
 //prompt.c
@@ -91,24 +93,30 @@ void free_arr(char **arr);
 // split the linked list
 void add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
+//split_read_line.c
+int	is_only_wspc_empty(char *rl);
+
+
 // parse_input
 // fill_unit_linked_list
 t_node *add_unit_to_end(t_node **head);
 t_node *create_unit();
 
-//utils.c (parse_input/)
-int	is_operator(char *c); //added to fix parse_input.c norm
-
 // find_cmd.c
-void find_command_path(char *input, t_node *unit, int *cmd_is_found);
+int find_command_path(char *input, t_node *unit, int *cmd_is_found);
 char *ft_strconcat(char *path, char *cmd);
 
 // find_args.c
-int count_args(t_node *cmd, char **result);
+int count_args(char **result, t_node *current_node);
 void find_args(t_node *cmd, char **result, int *i, int *j);
-char *retrieve_cmd_name(char *cmd_path);
+int count_args_inside_loop(char **result, t_node *current_node, int *i);
 
 //find_flags.c
 int		count_flags(char **result);
 void 	find_flags(char *result, t_node *unit, int *i);
+
+// utils.c
+char 	*ft_strcat(char *s1, char *s2);
+int		is_valid_command(t_node *current_node, char *rl);
+
 #endif

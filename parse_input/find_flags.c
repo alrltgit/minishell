@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/07 15:09:49 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/11 14:46:24 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,6 @@ void find_flags(char *result, t_node *unit, int *i)
         unit->flags[*i] = ft_strdup(result);
         (*i)++;
     }
+    else
+        return ;
 }

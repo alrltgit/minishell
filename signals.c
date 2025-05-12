@@ -6,9 +6,11 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 11:01:55 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/04 14:52:10 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/11 15:01:54 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "includes/minishell.h"
 
 #include "./includes/minishell.h"
 
@@ -37,4 +39,3 @@ void	deactivate_ctrlc(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 }
-

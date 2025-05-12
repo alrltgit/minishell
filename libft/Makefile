@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+         #
+#    By: apple <apple@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 23:43:44 by apple             #+#    #+#              #
-#    Updated: 2025/05/02 16:38:08 by hceviz           ###   ########.fr        #
+#    Updated: 2025/05/07 21:34:02 by apple            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 ft_printf/ft_print_dec.c ft_printf/ft_print_hex_lower.c \
 ft_printf/ft_print_hex_upper.c ft_printf/ft_print_pointer.c \
 ft_printf/ft_print_str.c ft_printf/ft_print_undec.c \
-ft_printf/ft_printf.c ft_printf/ft_strlen_pf.c \
-ft_strcat.c
+ft_printf/ft_printf.c ft_printf/ft_strlen_pf.c
 
 OBJS = $(SRC:.c=.o)
 

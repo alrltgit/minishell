@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/08 16:53:05 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/11 15:21:48 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	print_environment(t_shell *shell) //delete at the end
 		printf("%d %s\n", index_from_key(key[0], shell->env), shell->env[i]);
 		free_double((void **)key);
 	}
-	//change_env_value("ZDOTDIR", "HASAN", shell);
 	//below it prints the changed env
 	for (int i = 0; shell->env[i] != NULL; i++)
 	{
@@ -59,6 +58,7 @@ void	shell_loop(t_shell *shell)
 		//NO NEED TO UPDATE PROMPT PATH AFTER CD
 		rl = readline("minishell$ ");
 		read_the_input(rl, shell);
+		// 	continue ;
 		signal(SIGINT, deactivate_ctrlc);
 		//if there is different pwd, update it
 		//checkargs

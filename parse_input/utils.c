@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/10 12:46:36 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/11 15:24:03 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+    is_valid_command problem:
+    in case the command doesn't exist, the minishell prints the whole input line + :command not found;
+    bash prints the current node + :the command not found. 
+    Example: ls -l | -l:
+    minishell: ls -l | -l: command not found;
+    bash: -l: command not found;
+*/
+
+int is_valid_command(t_node *current_node, char *rl)
+{
+    if (current_node->cmd == NULL)
+    {
+        ft_putstr_fd(ft_strcat(rl , ": command not found\n"), 2);
+        return (1);
+    }
+    return (0);
+}
 
 static char *ft_strcpy(char *cmd_path, char *cmd, int j)
 {
@@ -40,13 +59,22 @@ char *ft_strconcat(char *path, char *cmd)
     return (ft_strcpy(cmd_path, cmd, j));
 }
 
-int	is_operator(char *c)
+char *ft_strcat(char *s1, char *s2)
 {
+    int i;
+    int j;
+    char *result;
 
-	if (ft_strcmp(c, "|") == 0 || ft_strcmp(c, "<") == 0
-	|| ft_strcmp(c, ">") == 0 || ft_strcmp(c, ">>") == 0
-	|| ft_strcmp(c, "<<") == 0)
-		return (1);
-	return (0);
+    result = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+    if (!result)
+        return (NULL);
+    i = 0;
+    j = 0;
+    while (s1[i])
+        result[j++] = s1[i++];
+    i = 0;
+    while (s2[i])
+        result[j++] = s2[i++];
+    result[j] = '\0';
+    return (result);
 }
-

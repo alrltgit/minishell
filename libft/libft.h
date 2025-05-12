@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:23:13 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/02 16:59:57 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/07 21:34:33 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,8 @@ char	*ft_str_chr(const char *s, int c);
 
 char	*ft_str_dup(char *str);
 
-//ADDED FUNCS
 void	free_double(void **arr);
 
 int	ft_strcmp(char *s1, char *s2);
-
-char	*ft_strcat(char *dest, char *src);
 
 #endif

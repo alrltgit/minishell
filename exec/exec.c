@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/10 11:10:53 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/11 14:53:33 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execute_other(t_node *command)
 	/*
 		THINK ABOUT EDGE CASES
 	*/
-	execve(command->path, argv, command->shell->env);
+	execve(command->cmd, argv, command->shell->env);
 	free_double((void **)argv);
 }
 
