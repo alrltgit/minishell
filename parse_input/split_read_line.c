@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 21:05:39 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/12 13:08:18 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void skip_whitespace(const char *str, int *i)
 {
-    while (str[*i] == ' ' || str[*i] == '\t')
+    while (str[*i] == ' ')
         (*i)++;
 }
 

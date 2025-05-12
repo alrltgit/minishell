@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/11 15:31:51 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 13:33:18 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void add_args_to_linked_list(char **result, t_node **unit)
             if (!current_node)
                 break ;
             current_node->args_count = count_args_inside_loop(result, current_node, &i);
-			printf("current_node->args_count: %d\n", current_node->args_count);
             current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
             if (!current_node->args)
                 return ;
@@ -98,7 +97,7 @@ void read_the_input(char *rl, t_shell *shll)
     t_node *unit;
     t_node *temp;
     
-	if (ft_strcmp(rl, "") == 0)
+	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -125,25 +124,25 @@ void read_the_input(char *rl, t_shell *shll)
 	{
 		//command is not valid case
 	}
-   /*  t_node *temp = unit;
-    int i;
-    int j;
-    while (temp)
-    {
-        printf("temp->cmd: %s\n", temp->cmd);
-        i = 0;
-        while (temp->flags[i])
-        {
-            printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-            i++;
-        }
-        j = 0;
-        while (temp->args[j])
-        {
-            printf("temp->args[%d]: %s\n", j, temp->args[j]);
-            j++;
-        }
-        temp = temp->next;
-    } */
+    // temp = unit;
+    // int i;
+    // int j;
+    // while (temp)
+    // {
+    //     printf("temp->cmd: %s\n", temp->cmd);
+    //     i = 0;
+    //     while (temp->flags[i])
+    //     {
+    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
+    //         i++;
+    //     }
+    //     j = 0;
+    //     while (temp->args[j])
+    //     {
+    //         printf("temp->args[%d]: %s\n", j, temp->args[j]);
+    //         j++;
+    //     }
+    //     temp = temp->next;
+    // }
     free(result);
 }

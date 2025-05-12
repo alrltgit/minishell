@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 15:24:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 13:15:01 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ void 	find_flags(char *result, t_node *unit, int *i);
 // utils.c
 char 	*ft_strcat(char *s1, char *s2);
 int		is_valid_command(t_node *current_node, char *rl);
+int		rl_is_space(char *rl);
 
 #endif

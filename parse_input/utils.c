@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 15:24:03 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 13:16:44 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@
     minishell: ls -l | -l: command not found;
     bash: -l: command not found;
 */
+
+int rl_is_space(char *rl)
+{
+    char *temp;
+
+    temp = rl;
+    while (*temp)
+    {
+        if (*temp != 32)
+            return (1);
+        temp++;
+    }
+    return (0);
+}
 
 int is_valid_command(t_node *current_node, char *rl)
 {
