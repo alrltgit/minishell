@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/10 16:15:11 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:21:48 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	print_environment(t_shell *shell) //delete at the end
 		printf("%d %s\n", index_from_key(key[0], shell->env), shell->env[i]);
 		free_double((void **)key);
 	}
-	//change_env_value("ZDOTDIR", "HASAN", shell);
 	//below it prints the changed env
 	for (int i = 0; shell->env[i] != NULL; i++)
 	{
@@ -58,10 +57,8 @@ void	shell_loop(t_shell *shell)
 		signal(SIGINT, activate_ctrlc);
 		//NO NEED TO UPDATE PROMPT PATH AFTER CD
 		rl = readline("minishell$ ");
-		if (ft_strcmp(rl, "") != 0)
-			read_the_input(rl, shell);
-		else
-			continue ;
+		read_the_input(rl, shell);
+		// 	continue ;
 		signal(SIGINT, deactivate_ctrlc);
 		//if there is different pwd, update it
 		//checkargs
