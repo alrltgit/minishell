@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/11 15:31:51 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:12:18 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ void read_the_input(char *rl, t_shell *shll)
     t_node *unit;
     t_node *temp;
     
-	if (ft_strcmp(rl, "") == 0)
+	if (rl_is_space(rl) == 0)
 	{
+		printf("\n");
 		rl_on_new_line();
-		rl_replace_line("", 0);
-		return ;
+		rl_redisplay();
 	}
     result = split_args(rl);
     unit = create_unit();
@@ -110,20 +110,29 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
 	temp = unit;
 	//Iterate temp to pass all nodes
-    add_cmds_flags_to_linked_list(result, &temp);
-    if (temp->cmd_type == B_IN)
-    {
-		add_args_to_linked_list(result, &temp);
-		// execute_builtin(temp);
-    }
-    else if (temp->cmd_type == NON_B_IN)
+	while (temp)
 	{
-		add_args_to_linked_list(result, &temp);
-		// execute_other(temp);
-	}
-	else
-	{
-		//command is not valid case
+		add_cmds_flags_to_linked_list(result, &temp); //sets cmdtype in here
+		if (temp->cmd_type == B_IN)
+		{
+			add_args_to_linked_list(result, &temp);
+			execute_builtin(temp);
+			break;
+		}
+		else if (temp->cmd_type == NON_B_IN)
+		{
+			add_args_to_linked_list(result, &temp);
+			execute_other(temp);
+			break;
+		}
+		else
+		{
+			ft_printf("%s", result[0]);
+			ft_putstr_fd(" : command not found\n", 2);
+			break;
+		}
+		if (temp->next)
+			temp = temp->next;
 	}
    /*  t_node *temp = unit;
     int i;

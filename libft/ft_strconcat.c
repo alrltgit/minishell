@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strconcat.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 11:08:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/12 13:28:55 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/12 13:50:05 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/12 13:50:48 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	is_builtin(char *cmd)
+char *ft_strconcat(char *path, char *cmd)
 {
-	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") ||
-		!ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") ||
-		!ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env") ||
-		!ft_strcmp(cmd, "exit"))
-		return (1);
-	return (0);
+    char *cmd_path;
+    int i;
+    int j;
+    
+    cmd_path = malloc(sizeof(char) * (ft_strlen(path) + ft_strlen(cmd)) + 2);
+    if (!cmd_path)
+        return (NULL);
+    i = 0;
+    j = 0;
+    while (path[i])
+        cmd_path[j++] = path[i++];
+    cmd_path[j++] = '/';
+    return (ft_strcpy(cmd_path, cmd, j));
 }

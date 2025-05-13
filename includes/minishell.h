@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 15:24:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/13 10:57:33 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,20 @@ typedef struct	s_shell
 typedef struct s_node
 {
 	t_shell	*shell;
-	char *cmd;
-	char **flags;
-	char **args;
-	int flags_count;
-	int args_count;
-	int	cmd_type;
-	t_node *next;
+	char 	*cmd;
+	char 	**flags;
+	char 	**args;
+	int 	flags_count;
+	int 	args_count;
+	int		cmd_type;
+	t_node 	*next;
 }	t_node;
 
 
 //typedef struct	s_cmd
+
 //main.c
-int	ft_strcmp(char *s1, char *s2);
+void	shell_loop(t_shell *shell);
 
 //env.c
 void	init_env(char **ev, t_shell *shell);
@@ -78,6 +79,7 @@ void	execute_builtin(t_node *command);
 void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
+void	ft_echo(t_node *command);
 
 //ALINA
 //prompt.c
@@ -100,7 +102,6 @@ t_node *create_unit();
 
 // find_cmd.c
 int find_command_path(char *input, t_node *unit, int *cmd_is_found);
-char *ft_strconcat(char *path, char *cmd);
 
 // find_args.c
 int count_args(char **result, t_node *current_node);
@@ -112,7 +113,8 @@ int		count_flags(char **result);
 void 	find_flags(char *result, t_node *unit, int *i);
 
 // utils.c
-char 	*ft_strcat(char *s1, char *s2);
 int		is_valid_command(t_node *current_node, char *rl);
+int		rl_is_space(char *rl);
+int		is_operator(char *c);
 
 #endif

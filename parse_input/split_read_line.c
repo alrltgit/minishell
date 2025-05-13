@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_read_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 21:05:39 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/13 11:26:42 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void skip_whitespace(const char *str, int *i)
 {
-    while (str[*i] == ' ' || str[*i] == '\t')
+	//|| str[*i] == '\t' removed from while
+    while (str[*i] == ' ')
         (*i)++;
 }
 

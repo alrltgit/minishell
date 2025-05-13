@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/11 14:53:33 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/13 13:51:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,14 @@ void	execute_other(t_node *command)
 	/*
 		THINK ABOUT EDGE CASES
 	*/
-	execve(command->cmd, argv, command->shell->env);
+
+	
+	//NEEDS TO BE FORKED
+	printf("EXEC OTHER PATH: %s\n", command->cmd);
+	if (execve(command->cmd, argv, command->shell->env) == 	-1)
+	{
+		perror("execute other execve error\n");
+	}
 	free_double((void **)argv);
 }
 
@@ -51,8 +58,8 @@ void	execute_builtin(t_node *command)
 {
 	if (!ft_strcmp(command->cmd, "pwd"))
 		ft_pwd(command);
-	//else if (!ft_strcmp(command->cmd, "echo"))
-		//ft_echo()
+	else if (!ft_strcmp(command->cmd, "echo"))
+		ft_echo(command);
 	else if (!ft_strcmp(command->cmd, "env"))
 		ft_env(command);
 	else if (!ft_strcmp(command->cmd, "cd"))
@@ -64,15 +71,3 @@ void	execute_builtin(t_node *command)
 	//else if (!ft_strcmp(command->cmd, "export"))
 		//ft_export();
 }
-
-/* void	recognize_command(t_node *command)
-{
-	char	*cmd;
-
-	// what if it is not a command????
-	cmd = command->cmd;
-	if (is_validcommand)
-		execute_other(command);
-	else
-		perror();
-} */
