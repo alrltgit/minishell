@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:23:13 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/07 21:34:33 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/12 14:50:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,12 @@ char	*ft_str_dup(char *str);
 
 void	free_double(void **arr);
 
-int	ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
+
+char 	*ft_strconcat(char *path, char *cmd);
+
+char 	*ft_strcpy(char *cmd_path, char *cmd, int j);
+
+char *ft_strcat(char *s1, char *s2);
 
 #endif

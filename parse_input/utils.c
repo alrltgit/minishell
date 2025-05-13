@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/12 13:16:44 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/12 14:57:22 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int is_valid_command(t_node *current_node, char *rl)
     return (0);
 }
 
-static char *ft_strcpy(char *cmd_path, char *cmd, int j)
+static char *ft_strcp(char *cmd_path, char *cmd, int j)
 {
     int i;
 
@@ -70,7 +70,7 @@ char *ft_strconcat(char *path, char *cmd)
     while (path[i])
         cmd_path[j++] = path[i++];
     cmd_path[j++] = '/';
-    return (ft_strcpy(cmd_path, cmd, j));
+    return (ft_strcp(cmd_path, cmd, j));
 }
 
 char *ft_strcat(char *s1, char *s2)

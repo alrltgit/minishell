@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/12 13:33:18 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/12 14:57:31 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void read_the_input(char *rl, t_shell *shll)
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		return ;
 	}
     result = split_args(rl);
@@ -109,20 +109,29 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
 	temp = unit;
 	//Iterate temp to pass all nodes
-    add_cmds_flags_to_linked_list(result, &temp);
-    if (temp->cmd_type == B_IN)
-    {
-		add_args_to_linked_list(result, &temp);
-		// execute_builtin(temp);
-    }
-    else if (temp->cmd_type == NON_B_IN)
+	while (temp)
 	{
-		add_args_to_linked_list(result, &temp);
-		// execute_other(temp);
-	}
-	else
-	{
-		//command is not valid case
+		add_cmds_flags_to_linked_list(result, &temp); //sets cmdtype in here
+		if (temp->cmd_type == B_IN)
+		{
+			add_args_to_linked_list(result, &temp);
+			execute_builtin(temp);
+			break;
+		}
+		else if (temp->cmd_type == NON_B_IN)
+		{
+			add_args_to_linked_list(result, &temp);
+			execute_other(temp);
+			break;
+		}
+		else
+		{
+			ft_printf("%s", result[0]);
+			ft_putstr_fd(" : command not found\n", 2);
+			break;
+		}
+		if (temp->next)
+			temp = temp->next;
 	}
     // temp = unit;
     // int i;
