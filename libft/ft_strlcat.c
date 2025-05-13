@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:10:53 by apple             #+#    #+#             */
-/*   Updated: 2025/05/13 16:17:43 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:58:06 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	if (size_dst_val >= dstsize)
 		return (dstsize + size_src);
 	val = dstsize - size_dst;
-	ft_strcp(dst, src, size_dst, val);
 	ft_strcp(dst, src, size_dst, val);
 	return (size_dst_val + size_src);
 }

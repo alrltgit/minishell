@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:14:38 by apple             #+#    #+#             */
-/*   Updated: 2025/05/13 16:13:37 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:57:53 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ptr = malloc(i + j + 1);
 	if (ptr == NULL)
 		return (NULL);
-	return (ft_strcon(s1, s2, ptr));
 	return (ft_strcon(s1, s2, ptr));
 }

@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 16:10:30 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:40:28 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
     minishell: ls -l | -l: command not found;
     bash: -l: command not found;
 */
+
+int	is_operator(char *c)
+{
+	if (ft_strcmp(c, "|") == 0 || ft_strcmp(c, "<") == 0
+		|| ft_strcmp(c, ">") == 0 || ft_strcmp(c, ">>") == 0
+		|| ft_strcmp(c, "<<") == 0)
+		return (1);
+	return (0);
+}
 
 int rl_is_space(char *rl)
 {
@@ -45,50 +54,3 @@ int is_valid_command(t_node *current_node, char *rl)
     return (0);
 }
 
-static char *ft_strcp(char *cmd_path, char *cmd, int j)
-{
-    int i;
-
-    i = 0;
-    while (cmd[i])
-        cmd_path[j++] = cmd[i++];
-    cmd_path[j] = '\0';
-    return (cmd_path);
-}
-
-char *ft_strconcat(char *path, char *cmd)
-{
-    char *cmd_path;
-    int i;
-    int j;
-    
-    cmd_path = malloc(sizeof(char) * (ft_strlen(path) + ft_strlen(cmd)) + 2);
-    if (!cmd_path)
-        return (NULL);
-    i = 0;
-    j = 0;
-    while (path[i])
-        cmd_path[j++] = path[i++];
-    cmd_path[j++] = '/';
-    return (ft_strcp(cmd_path, cmd, j));
-}
-
-char *ft_strcat(char *s1, char *s2)
-{
-    int i;
-    int j;
-    char *result;
-
-    result = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-    if (!result)
-        return (NULL);
-    i = 0;
-    j = 0;
-    while (s1[i])
-        result[j++] = s1[i++];
-    i = 0;
-    while (s2[i])
-        result[j++] = s2[i++];
-    result[j] = '\0';
-    return (result);
-}

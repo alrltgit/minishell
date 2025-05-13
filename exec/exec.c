@@ -69,15 +69,3 @@ void	execute_builtin(t_node *command)
 	//else if (!ft_strcmp(command->cmd, "export"))
 		//ft_export();
 }
-
-/* void	recognize_command(t_node *command)
-{
-	char	*cmd;
-
-	// what if it is not a command????
-	cmd = command->cmd;
-	if (is_validcommand)
-		execute_other(command);
-	else
-		perror();
-} */

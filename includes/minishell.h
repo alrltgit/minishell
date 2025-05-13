@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 16:14:34 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:25:27 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,19 @@ typedef struct	s_shell
 typedef struct s_node
 {
 	t_shell	*shell;
-	char 	*cmd;
-	char 	**flags;
-	char 	**args;
-	int 	flags_count;
-	int 	args_count;
-	int		cmd_type;
-	t_node 	*next;
+	char *cmd;
+	char **flags;
+	char **args;
+	int flags_count;
+	int args_count;
+	int	cmd_type;
+	t_node *next;
 }	t_node;
 
 
 //typedef struct	s_cmd
 
-
 //main.c
-void	shell_loop(t_shell *shell);
 void	shell_loop(t_shell *shell);
 
 //env.c
@@ -118,8 +116,6 @@ void 	find_flags(char *result, t_node *unit, int *i);
 
 // utils.c
 int		is_valid_command(t_node *current_node, char *rl);
-int		rl_is_space(char *rl);
-int		is_operator(char *c);
 int		rl_is_space(char *rl);
 int		is_operator(char *c);
 
