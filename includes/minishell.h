@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/12 14:47:00 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/13 13:49:05 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <dirent.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/wait.h>
 #include "../libft/libft.h"
 
 #define PS1 "> "
@@ -74,6 +75,7 @@ int	is_builtin(char *cmd);
 //exec.c
 void	execute_other(t_node *command);
 void	execute_builtin(t_node *command);
+char	**build_argv(t_node *node);
 
 //BUILTINS
 void	ft_pwd(t_node *command);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/12 14:57:31 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/13 14:10:00 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
         find_flags(result[j], current_node, &i);
         j++;
     }
-    current_node->flags[i] = NULL;
+    // current_node->flags[i] = NULL;
 }
 
 void add_args_to_linked_list(char **result, t_node **unit)
@@ -88,7 +88,7 @@ void add_args_to_linked_list(char **result, t_node **unit)
             find_args(current_node, result, &i, &j);
         i++;
     }
-    current_node->args[j] = NULL;
+    // current_node->args[j] = NULL;
 }
 
 void read_the_input(char *rl, t_shell *shll)

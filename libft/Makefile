@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apple <apple@student.42.fr>                +#+  +:+       +#+         #
+#    By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 23:43:44 by apple             #+#    #+#              #
-#    Updated: 2025/05/12 14:51:01 by apple            ###   ########.fr        #
+#    Updated: 2025/05/13 14:08:14 by alraltse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ ft_printf/ft_print_dec.c ft_printf/ft_print_hex_lower.c \
 ft_printf/ft_print_hex_upper.c ft_printf/ft_print_pointer.c \
 ft_printf/ft_print_str.c ft_printf/ft_print_undec.c \
 ft_printf/ft_printf.c ft_printf/ft_strlen_pf.c \
-ft_strconcat.c ft_strcat.c ft_strcpy.c
+ft_strconcat.c ft_strcat.c ft_strcpy.c \
+count_arr_size.c join_strings_with_spaces.c
 
 OBJS = $(SRC:.c=.o)
 
