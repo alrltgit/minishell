@@ -3,32 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/07 21:02:24 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/13 13:26:20 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*
-	if echo has -n flag, at least there must be
-	one space between echo and -n. Otherwise, it cannot
-	execute.
-	->echo "            abcdef"
-	->echo             abcdef
-	These 2 are not same
-	First one will be printed with spaces
-	Second one will be printed without spaces
+handled primitively
+thanks to rl_line_buffer
+test with echo -n fsdfsdf -f -l -n fdsfdsaf
 
-	SO
-	if the argument is in quotes, handle the quotes and
-	take everything inside the quotes(space,tab etc)
-	if it is not in quotes, trim spaces between echo and first
-	arg
+check the parsing till argument is done
 */
-// void	ft_echo(t_cmd *command)
-// {
-	
-// }
+void	process_input(char **input_split, int count)
+{
+	int	i;
+
+	if (ft_strcmp(input_split[1], "-n") == 0)
+	{
+		i = 1;
+		while (input_split[++i])
+		{
+			if (i + 1 != count)
+				printf("%s ", input_split[i]);
+			else
+				printf("%s", input_split[i]);
+		}
+	}
+	else
+	{
+		i = 0;
+		while (input_split[++i])
+		{
+			if (i + 1 != count)
+				printf("%s ", input_split[i]);
+			else
+				printf("%s", input_split[i]);
+		}
+		printf("\n");
+	}
+}
+
+void	ft_echo(t_node *command)
+{
+	int		count;
+	char	**input_split;
+
+	(void)command;
+	input_split = split_args(rl_line_buffer);
+	count = -1;
+	while (input_split[++count])
+		;
+	process_input(input_split, count);
+	free_double((void **)input_split);
+}

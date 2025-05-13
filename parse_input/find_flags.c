@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/11 14:46:24 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/13 11:27:13 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int count_flags(char **result)
     i = 0;
     while (result[i])
     {
-        if (ft_strcmp(result[i], "|") == 0 || ft_strcmp(result[i], "<") == 0
-            || ft_strcmp(result[i], ">") == 0 || ft_strcmp(result[i], ">>") == 0
-            || ft_strcmp(result[i], "<<") == 0)
+        if (is_operator(result[i])) //changed to is_operator
             break ;
         if (result[i][0] == '-')
             flags_count++;

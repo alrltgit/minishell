@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/12 14:27:34 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/13 10:57:33 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ typedef struct	s_shell
 typedef struct s_node
 {
 	t_shell	*shell;
-	char *cmd;
-	char **flags;
-	char **args;
-	int flags_count;
-	int args_count;
-	int	cmd_type;
-	t_node *next;
+	char 	*cmd;
+	char 	**flags;
+	char 	**args;
+	int 	flags_count;
+	int 	args_count;
+	int		cmd_type;
+	t_node 	*next;
 }	t_node;
 
 
@@ -79,6 +79,7 @@ void	execute_builtin(t_node *command);
 void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
+void	ft_echo(t_node *command);
 
 //ALINA
 //prompt.c

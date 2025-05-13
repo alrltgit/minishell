@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:23:13 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/12 14:01:44 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:06:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,5 @@ char 	*ft_strconcat(char *path, char *cmd);
 
 char 	*ft_strcpy(char *cmd_path, char *cmd, int j);
 
-char *ft_strcat(char *s1, char *s2);
+char 	*ft_strcat(char *s1, char *s2);
 #endif
