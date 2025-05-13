@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 14:45:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:05:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int count_args_inside_loop(char **result, t_node *current_node, int *i)
     current_node->args_count = 0;
     while (result[temp_i])
     {
-        if (ft_strcmp(result[temp_i], "|") == 0 || ft_strcmp(result[temp_i], "<") == 0
-            || ft_strcmp(result[temp_i], ">") == 0 || ft_strcmp(result[temp_i], ">>") == 0
-            || ft_strcmp(result[temp_i], "<<") == 0)
+        if (is_operator(result[temp_i]))
             break ;
         if (ft_strcmp(result[temp_i], cmd_name) != 0 && result[temp_i][0] != '-')
             args_count++;
@@ -53,9 +51,7 @@ int count_args(char **result, t_node *current_node)
     current_node->args_count = 0;
     while (result[i])
     {
-        if (ft_strcmp(result[i], "|") == 0 || ft_strcmp(result[i], "<") == 0
-            || ft_strcmp(result[i], ">") == 0 || ft_strcmp(result[i], ">>") == 0
-            || ft_strcmp(result[i], "<<") == 0)
+        if (is_operator(result[i]))
             break ;
         if (ft_strcmp(result[i], cmd_name) != 0 && result[i][0] != '-')
 			args_count++;

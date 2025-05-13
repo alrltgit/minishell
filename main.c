@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 15:21:48 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/13 10:27:47 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,12 @@ void	shell_loop(t_shell *shell)
 		//->WHILE WAITING FOR INPUT
 		pwd = getcwd(NULL, 0);
 		signal(SIGINT, activate_ctrlc);
-		//NO NEED TO UPDATE PROMPT PATH AFTER CD
 		rl = readline("minishell$ ");
 		read_the_input(rl, shell);
-		// 	continue ;
 		signal(SIGINT, deactivate_ctrlc);
-		//if there is different pwd, update it
-		//checkargs
-		//process
-		//execute
 		add_history(rl);
-		//printf("%s\n", rl_line_buffer);
 	}
+	//clearhistory?
 	free(pwd);
 }
 

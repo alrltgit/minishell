@@ -56,8 +56,8 @@ void	execute_builtin(t_node *command)
 {
 	if (!ft_strcmp(command->cmd, "pwd"))
 		ft_pwd(command);
-	//else if (!ft_strcmp(command->cmd, "echo"))
-		//ft_echo()
+	else if (!ft_strcmp(command->cmd, "echo"))
+		ft_echo(command);
 	else if (!ft_strcmp(command->cmd, "env"))
 		ft_env(command);
 	else if (!ft_strcmp(command->cmd, "cd"))
