@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/14 10:56:14 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/14 13:17:31 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void read_the_input(char *rl, t_shell *shll)
 	{
         // printf("\n");
 		rl_on_new_line();
-		// rl_replace_line("", 0); can be a reason for a prompt to aapear twice in test "wc -l"
+		rl_replace_line("", 0);
 		return ;
 	}
     result = split_args(rl);
