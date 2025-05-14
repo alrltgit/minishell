@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 14:39:25 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:58:47 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit);
 t_node *add_unit_to_end(t_node **head);
 t_node *create_unit();
 
+//split_readline.c
+char *extract_token(const char *str, int *i);
+char *extract_token_v2(const char *str);
 // find_cmd.c
 int find_command_path(char *input, t_node *unit, int *cmd_is_found);
 

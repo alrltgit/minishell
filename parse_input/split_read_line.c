@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 11:26:42 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:11:21 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,34 @@ static void trim_quotes_if_needed(char *token, int len)
             ft_memmove(token, token + 1, len - 1);
     }
 }
+char *extract_token_v2(const char *str)
+{
+	int i;
+    int single_q;
+    int double_q;
+    char *token;
 
-static char *extract_token(const char *str, int *i)
+	i = 0;
+    single_q = 0;
+    double_q = 0;
+    while (str[i])
+    {
+        if (str[i] == '\'' && !double_q)
+            single_q = !single_q;
+        else if (str[i] == '"' && !single_q)
+            double_q = !double_q;
+        else if ((str[i] == ' ' || str[i] == '\t') && !single_q && !double_q)
+            break ;
+        (i)++;
+    }
+    token = ft_substr(str, 0, i);
+    if (!token)
+        return (NULL);
+    trim_quotes_if_needed(token, i);
+    return (token);
+}
+
+char *extract_token(const char *str, int *i)
 {
     int start;
     int single_q;
