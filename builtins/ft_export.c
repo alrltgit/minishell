@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/14 17:10:19 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 18:57:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,28 @@ char	*extract_key(char *input)
 
 char	*process_value(char	*value)
 {
-	int	count;
+	//int		count;
 	char	*trimmed;
+
 	if (value[0] == ' ')
 		return (" ");
+
+	/*
+		it doesnt handle 
+
+		export abc="'jkfjajfk aksjfkalsd kasjfklas''"
+	*/
+	//fix EXTRACT_TOKEN_V2 
 	trimmed = extract_token_v2(value);
-	if (ft_strcmp(value, trimmed) != 0)
-		return (trimmed);
-	else
+	//if (ft_strcmp(value, trimmed) != 0)
+	return (trimmed);
+/* 	else
 	{
 		count = -1;
 		while (value[++count] && value[count] != ' ')
 			;
 		return (ft_substr(value, 0, count));
-	}
+	} */
 }
 /*
 	if there is space after first = sign
