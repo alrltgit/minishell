@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 16:25:27 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:04:33 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int find_command_path(char *input, t_node *unit, int *cmd_is_found);
 int count_args(char **result, t_node *current_node);
 void find_args(t_node *cmd, char **result, int *i, int *j);
 int count_args_inside_loop(char **result, t_node *current_node, int *i);
+char *retrieve_cmd_name(t_node *node);
 
 //find_flags.c
 int		count_flags(char **result);
