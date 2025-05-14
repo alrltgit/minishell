@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/12 14:12:18 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 09:55:38 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,10 @@ void read_the_input(char *rl, t_shell *shll)
     
 	if (rl_is_space(rl) == 0)
 	{
-		printf("\n");
+		//printf("\n");
 		rl_on_new_line();
 		rl_redisplay();
+		return ;
 	}
     result = split_args(rl);
     unit = create_unit();
