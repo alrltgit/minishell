@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/14 09:55:38 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 11:41:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,11 @@ void add_args_to_linked_list(char **result, t_node **unit)
     current_node->args_count = count_args(result, current_node);
     current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
     i = 0;
-    if (ft_strcmp(result[i], "|") == 0 || ft_strcmp(result[i], "<") == 0
-    || ft_strcmp(result[i], ">") == 0 || ft_strcmp(result[i], ">>") == 0
-    || ft_strcmp(result[i], "<<") == 0)
+    if (is_operator(result[i]))
         i++;
     while (result[i])
     {
-        if (ft_strcmp(result[i], "|") == 0 || ft_strcmp(result[i], "<") == 0
-            || ft_strcmp(result[i], ">") == 0 || ft_strcmp(result[i], ">>") == 0
-            || ft_strcmp(result[i], "<<") == 0)
+        if (is_operator(result[i]))
         {
             i++;
             j = 0;

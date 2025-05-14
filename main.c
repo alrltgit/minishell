@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 10:27:47 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 13:11:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ int main(int ac, char **av, char **ev)
 	init_env(ev, &shell);
 	//handle $variable expansion
 	shell_loop(&shell);
-	/* char *path = "/bin/echo";
-	char *args[] = { "echo", "'helloworld" , NULL };
-	execve(path, args, ev); */
 	//print_environment(&shell);
 	//free_double((void **)shell.env);
     return (0);

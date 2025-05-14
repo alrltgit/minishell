@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 10:57:33 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 14:39:25 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	init_env(char **ev, t_shell *shell);
 int		index_from_key(char *var_name, char **env_array);
 char	*value_from_key(char *var_name, t_shell *shell);
 int		count_vars(char **ev);
+void	copy_vars(char **ev, char ***env_array);
 
 //env2.c
 int		change_env_value(char *var_name, char *new_value, t_shell *shell);
@@ -80,6 +81,7 @@ void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
 void	ft_echo(t_node *command);
+void	ft_export(t_node *command);
 
 //ALINA
 //prompt.c

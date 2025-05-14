@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 10:15:21 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/14 10:16:52 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/14 10:17:28 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-void free_arr(char **arr)
+void	ft_exit(t_node *command)
 {
-    int i;
+	
 
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
 }

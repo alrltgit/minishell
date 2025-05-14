@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/11 14:48:05 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 10:48:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,16 @@ int	index_from_key(char *var_name, char **env_array)
 	return (-1);
 }
 
+/*
+	Handle what if the key is not valid	
+*/
 char	*value_from_key(char *var_name, t_shell *shell)
 {
 	int	index;
 
 	index = index_from_key(var_name, shell->env);
+	if (index == -1)
+		return (NULL);
 	return (ft_strchr(shell->env[index], '=') + 1);
 }
 
