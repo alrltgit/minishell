@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 11:01:55 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/14 13:26:26 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/14 13:40:43 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	activate_ctrlc(int sig)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	//rl_redisplay();
+	// rl_redisplay();
 }
 
 void	deactivate_ctrlc(int sig)

@@ -21,8 +21,8 @@ void	execute_other(t_node *node)
 
 	pid = fork(); // creates a child process out of a parent process
 	argv = build_argv(node);
-	printf("argv[0]: %s\n", argv[0]);
-	printf("argv[1]: %s\n", argv[1]);
+	// printf("argv[0]: %s\n", argv[0]);
+	// printf("argv[1]: %s\n", argv[1]);
 	/*when the command come here
 	it will be checked if it is valid or not*/
 	/*
