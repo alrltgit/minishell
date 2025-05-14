@@ -12,13 +12,6 @@
 
 #include "../includes/minishell.h"
 
-/*
-handled primitively
-thanks to rl_line_buffer
-test with echo -n fsdfsdf -f -l -n fdsfdsaf
-
-check the parsing till argument is done
-*/
 void	process_input(char **input_split, int count)
 {
 	int	i;

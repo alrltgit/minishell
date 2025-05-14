@@ -12,25 +12,7 @@
 
 #include "./includes/minishell.h"
 
-
-//set
-
-//get_env_var
-
-//need init_env in cd command cuz of pwd changing (actually e)
-//so dont forget to update pwd
-//WHEN OPEN THE TERMINAL AT THE FIRST TIME, THERE IS NO OLDPWD IN env OUTPUT
-//SO SET OLDPWD AS CURRENT PWD WHILE INITIALIZING AT THE FIRST TIME
-
-//handle
-//->get value from variable (in case of <command> &ENVVARIABLE) -----DONE-----
-//need to return the value after = (without =) ----DONE-----
-//->set func that changes the value of specified env var
-
-//ev is original env_array is copy
-
-//> gets the index of specified env variable
-
+/*check if the free double works properly*/
 int	index_from_key(char *var_name, char **env_array)
 {
 	int		i;
@@ -42,7 +24,7 @@ int	index_from_key(char *var_name, char **env_array)
 		var = ft_split(env_array[i], '=');
 		if (ft_strcmp(var_name, var[0]) == 0)
 		{
-			free_double((void **)var); //check is it properly working?
+			free_double((void **)var);
 			return (i);
 		}
 		free_double((void **)var);
@@ -50,9 +32,6 @@ int	index_from_key(char *var_name, char **env_array)
 	return (-1);
 }
 
-//it is used for pwd builtin
-//we couldnt use getcwd cuz getcwd takes from real bash's env
-//but we need to get from our own env
 char	*value_from_key(char *var_name, t_shell *shell)
 {
 	int	index;
@@ -95,7 +74,7 @@ void	init_env(char **ev, t_shell *shell)
 	copy_vars(ev, &shell->env);
 	shell->env[count] = NULL;
 	index = index_from_key("OLDPWD", shell->env);
-	free(shell->env[index]); //free cuz oldpwd gonna get changed
+	free(shell->env[index]);
 	pwd = getcwd(NULL, 0);
 	shell->env[index] = ft_strjoin("OLDPWD=", pwd);
 	change_env_value("SHELL", "/bin/bash", shell);

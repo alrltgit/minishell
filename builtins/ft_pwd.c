@@ -12,6 +12,10 @@
 
 #include "../includes/minishell.h"
 
+/*
+ *Double check the errcode
+ you might need to customize the perror
+ */
 void	ft_pwd(t_node *cmd)
 {
 	char	*pwd;
@@ -21,7 +25,7 @@ void	ft_pwd(t_node *cmd)
 	printf("PWD from custom func-> %s\n", pwd);
 	if (!pwd)
 	{
-		cmd->shell->errcode = 1; //DOUBLE CHECK
-		perror("pwd error"); //make it detailed with err codes
+		cmd->shell->errcode = 1;
+		perror("pwd error");
 	}
 }
