@@ -1,24 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   join_strings_with_spaces.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 12:04:54 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/13 16:21:01 by alraltse         ###   ########.fr       */
+/*   Created: 2025/05/13 14:07:32 by alraltse          #+#    #+#             */
+/*   Updated: 2025/05/13 14:09:11 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	ft_env(t_node *cmd)
+char *join_strings_with_spaces(int size, int count, char **arr)
 {
-	int		i;
+	char *str;
+	int i;
+	int j;
+	int k;
 
-	i = -1;
-	while (cmd->shell->env[++i])
+	str = malloc(sizeof(char) * (size + count));
+	if (!str)
+		return (NULL);
+	i = 0;
+	k = 0;
+	while (i < count)
 	{
-		printf("%s\n", cmd->shell->env[i]);
+		j = 0;
+		while (arr[i][j])
+		{
+			str[k++] = arr[i][j++]; 
+		}
+		if (i < count - 1)
+		{
+			str[k++] = ' ';
+		}
+		i++;
 	}
+	str[k] = '\0';
+	return (str);
 }

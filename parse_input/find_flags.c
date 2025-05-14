@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/13 11:27:13 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:34:05 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int count_flags(char **result)
     i = 0;
     while (result[i])
     {
-        if (is_operator(result[i])) //changed to is_operator
+        if (is_operator(result[i]))
             break ;
         if (result[i][0] == '-')
             flags_count++;

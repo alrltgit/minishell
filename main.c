@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 10:27:47 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:53:37 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	shell_loop(t_shell *shell)
 		signal(SIGINT, deactivate_ctrlc);
 		add_history(rl);
 	}
-	//clearhistory?
 	free(pwd);
 }
 
