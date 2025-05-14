@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 13:11:26 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:26:02 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	shell_loop(t_shell *shell)
 		signal(SIGINT, deactivate_ctrlc);
 		add_history(rl);
 	}
-	//clearhistory?
 	free(pwd);
 }
 

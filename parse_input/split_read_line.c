@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 17:11:21 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:25:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void skip_whitespace(const char *str, int *i)
 {
-	//|| str[*i] == '\t' removed from while
     while (str[*i] == ' ')
         (*i)++;
 }

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/14 10:16:04 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:24:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int count_flags(char **result)
     i = 0;
     while (result[i])
     {
-        if (is_operator(result[i])) //changed to is_operator
+        if (is_operator(result[i]))
             break ;
         if (result[i][0] == '-')
             flags_count++;
@@ -40,3 +40,4 @@ void find_flags(char *result, t_node *unit, int *i)
     else
         return ;
 }
+

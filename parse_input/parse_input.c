@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/14 11:41:27 by hceviz           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/05/14 17:24:53 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/minishell.h"
 
@@ -50,7 +51,7 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
         find_flags(result[j], current_node, &i);
         j++;
     }
-    current_node->flags[i] = NULL;
+    // current_node->flags[i] = NULL;
 }
 
 void add_args_to_linked_list(char **result, t_node **unit)
@@ -76,7 +77,6 @@ void add_args_to_linked_list(char **result, t_node **unit)
             if (!current_node)
                 break ;
             current_node->args_count = count_args_inside_loop(result, current_node, &i);
-			printf("current_node->args_count: %d\n", current_node->args_count);
             current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
             if (!current_node->args)
                 return ;
@@ -85,7 +85,7 @@ void add_args_to_linked_list(char **result, t_node **unit)
             find_args(current_node, result, &i, &j);
         i++;
     }
-    current_node->args[j] = NULL;
+    // current_node->args[j] = NULL;
 }
 
 void read_the_input(char *rl, t_shell *shll)
@@ -94,11 +94,11 @@ void read_the_input(char *rl, t_shell *shll)
     t_node *unit;
     t_node *temp;
     
-	if (rl_is_space(rl) == 0)
+	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		//printf("\n");
+        // printf("\n");
 		rl_on_new_line();
-		rl_redisplay();
+		rl_replace_line("", 0);
 		return ;
 	}
     result = split_args(rl);
@@ -131,25 +131,25 @@ void read_the_input(char *rl, t_shell *shll)
 		if (temp->next)
 			temp = temp->next;
 	}
-   /*  t_node *temp = unit;
-    int i;
-    int j;
-    while (temp)
-    {
-        printf("temp->cmd: %s\n", temp->cmd);
-        i = 0;
-        while (temp->flags[i])
-        {
-            printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-            i++;
-        }
-        j = 0;
-        while (temp->args[j])
-        {
-            printf("temp->args[%d]: %s\n", j, temp->args[j]);
-            j++;
-        }
-        temp = temp->next;
-    } */
+    // temp = unit;
+    // int i;
+    // int j;
+    // while (temp)
+    // {
+    //     printf("temp->cmd: %s\n", temp->cmd);
+    //     i = 0;
+    //     while (temp->flags[i])
+    //     {
+    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
+    //         i++;
+    //     }
+    //     j = 0;
+    //     while (temp->args[j])
+    //     {
+    //         printf("temp->args[%d]: %s\n", j, temp->args[j]);
+    //         j++;
+    //     }
+    //     temp = temp->next;
+    // }
     free(result);
 }

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 10:16:20 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:23:50 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,3 +71,4 @@ void find_args(t_node *current_node, char **result, int *i, int *j)
         (*j)++;
     }
 }
+

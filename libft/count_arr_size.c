@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   count_arr_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 12:04:54 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/13 16:21:01 by alraltse         ###   ########.fr       */
+/*   Created: 2025/05/13 14:02:14 by alraltse          #+#    #+#             */
+/*   Updated: 2025/05/13 14:04:09 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	ft_env(t_node *cmd)
+int count_arr_size(char **arr, int arr_count)
 {
-	int		i;
+	int i;
+	int j;
+	int count;
 
-	i = -1;
-	while (cmd->shell->env[++i])
+	i = 0;
+	count = 0;
+	while (i < arr_count)
 	{
-		printf("%s\n", cmd->shell->env[i]);
+		j = 0;
+		while (arr[i][j])
+		{
+			count++;
+			j++;
+		}
+		i++;
 	}
+	return (count);
 }

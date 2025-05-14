@@ -1,9 +1,10 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
 /*   Updated: 2025/05/14 13:01:03 by hceviz           ###   ########.fr       */
@@ -12,44 +13,41 @@
 
 #include "../includes/minishell.h"
 
-char	**build_argv(t_node *command)
+void	execute_other(t_node *node)
 {
 	char	**argv;
-	int		i;
-	int		j;
+	pid_t 	pid; // pid_t type is able to store id of a process
+	int		status;
 
-	argv = malloc(sizeof(char *) *
-		(command->args_count + command->flags_count + 1));
-	if (!argv)
-		return (NULL); //MAYBE YOU CAN SET STH FOR ERRCODE
-	i = 0;
-	j = 0;
-	while (j < command->args_count)
-		argv[i++] = command->args[j++];
-	j = 0;
-	while (j < command->flags_count)
-		argv[i++] = command->flags[j++];
-	argv[i] = NULL;
-	return (argv);
-}
-
-void	execute_other(t_node *command)
-{
-	char	**argv;
-
-	argv = build_argv(command);
+	pid = fork(); // creates a child process out of a parent process
+	argv = build_argv(node);
+	// printf("argv[0]: %s\n", argv[0]);
+	// printf("argv[1]: %s\n", argv[1]);
 	/*when the command come here
 	it will be checked if it is valid or not*/
 	/*
 		THINK ABOUT EDGE CASES
 	*/
 
-	
 	//NEEDS TO BE FORKED
-	printf("EXEC OTHER PATH: %s\n", command->cmd);
-	if (execve(command->cmd, argv, command->shell->env) == 	-1)
+	if (pid == 0) // id of a child process is 0
 	{
-		perror("execute other execve error\n");
+		// printf("EXEC OTHER PATH: %s\n", command->cmd);
+		if (execve(node->cmd, argv, node->shell->env) == -1)
+		{
+			perror("execve failed\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (pid > 0) // id of a parent process is unique, but it's always greater than 0
+	{
+		wait(&status);
+		// printf("Child process finished with status: %d\n", status);
+	}
+	else
+	{
+		perror("Fork failed.\n");
+		exit(1);
 	}
 	free_double((void **)argv);
 }
