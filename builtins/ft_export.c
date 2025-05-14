@@ -95,8 +95,8 @@ void	create_and_set_val(t_shell *shell, char *key, char *val)
 		return ;
 	copy_vars(shell->env, &new_env);
 	//free_double((void **)shell->env);
-	new_env[count + 1] = ft_strjoin(key, new_val);
-	new_env[count + 2] = NULL;
+	new_env[count] = ft_strjoin(key, new_val);
+	new_env[count + 1] = NULL;
 	init_env(new_env, shell);
 	free_double((void **)new_env);
 }
@@ -122,7 +122,7 @@ void	ft_export(t_node *command)
 			command->shell);
 	else
 		create_and_set_val(command->shell, key,
-				ft_strchr(rl_line_buffer, '=') + 1);
+				ft_strchr(rl_line_buffer, '='));
 	free(key);
 }
 		
