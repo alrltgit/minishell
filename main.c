@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/15 17:26:57 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:46:23 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	shell_loop(t_shell *shell)
 		//->HERE-DOC (IT PRINTS EXIT AFTER EXITING) (EOF)
 		//->WHILE WAITING FOR INPUT
 		pwd = getcwd(NULL, 0);
-		//signal(SIGINT, deactivate_ctrlc);
 		signal(SIGINT, activate_ctrlc);
 		rl = readline(PROMPT);
 		if (!rl)
@@ -67,7 +66,6 @@ void	shell_loop(t_shell *shell)
 		add_history(rl);
 	}
 	free(pwd);
-	printf("TEST\n");
 }
 
 int main(int ac, char **av, char **ev)

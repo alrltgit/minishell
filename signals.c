@@ -6,11 +6,9 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 11:01:55 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/15 14:04:51 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:45:29 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "includes/minishell.h"
 
 #include "./includes/minishell.h"
 
@@ -23,24 +21,6 @@
 //WHAT CAN I DO FOR CTRL-D
 //CTRL-C SENDS SIGINT SIGNAL
 
-/* void	activate_ctrlc(int sig)
-{
-	(void)sig;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	//rl_redisplay();
-}
-
-void	deactivate_ctrlc(int sig)
-{
-	(void)sig;
-	// printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	//rl_redisplay();
-} */
-
 void	activate_ctrlc(int sig)
 {
 	(void)sig;
@@ -48,7 +28,6 @@ void	activate_ctrlc(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	//printf("Yazdirdi 2");
 }
 
 void	deactivate_ctrlc(int sig)
