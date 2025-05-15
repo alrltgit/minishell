@@ -6,33 +6,11 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/14 18:57:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/15 10:40:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-
-/*
-	if there is the variable already,
-	update its value
-	if there is not,
-	create the var and set value and append
-	to the end of env
-
-
-	!! export name=             abc
-	it will set empty line
-
-	!! export name=abc def
-	it will set just abc
-
-	!!consider
-	export name = adasda
-	bash: export: `=': not a valid identifier
-
-	so if arg[0]
-*/
 
 int	is_alphanumeric(char *key)
 {
@@ -43,7 +21,7 @@ int	is_alphanumeric(char *key)
 	{
 		if (!(key[i] >= 'a' && key[i] <= 'z') &&
 			!(key[i] >= 'A' && key[i] <= 'Z') &&
-			!(key[i] >= '0' && key[i] <= '9'))
+			!(key[i] >= '0' && key[i] <= '9') && key[i] != '=')
 			return (0);
 	}
 	return (1);
@@ -53,43 +31,35 @@ int	is_alphanumeric(char *key)
 take till first = sign
 and analyze the key
 */
-
 char	*extract_key(char *input)
 {
 	int		key_len;
 	char	*val;
 	char	*key;
 
-	val = ft_strchr(input, '=');
-	key_len = ft_strlen(input) - ft_strlen(val);
+	val = ft_strchr(input, '=') + 1;
+	key_len = ft_strlen(input) - ft_strlen(val) - 1;
 	key = ft_split(ft_substr(input, 0, key_len), ' ')[1];
 	return (key);
 }
 
 char	*process_value(char	*value)
 {
-	//int		count;
+	int		count;
 	char	*trimmed;
 
 	if (value[0] == ' ')
 		return (" ");
-
-	/*
-		it doesnt handle 
-
-		export abc="'jkfjajfk aksjfkalsd kasjfklas''"
-	*/
-	//fix EXTRACT_TOKEN_V2 
 	trimmed = extract_token_v2(value);
-	//if (ft_strcmp(value, trimmed) != 0)
-	return (trimmed);
-/* 	else
+	if (ft_strcmp(value, trimmed) != 0)
+		return (trimmed);
+	else
 	{
 		count = -1;
 		while (value[++count] && value[count] != ' ')
 			;
 		return (ft_substr(value, 0, count));
-	} */
+	}
 }
 /*
 	if there is space after first = sign
@@ -109,17 +79,26 @@ void	create_and_set_val(t_shell *shell, char *key, char *val)
 		return ;
 	copy_vars(shell->env, &new_env);
 	//free_double((void **)shell->env);
-	new_env[count] = ft_strjoin(key, new_val);
+	new_env[count] = ft_strjoin(ft_strjoin(key, "="), new_val);
 	new_env[count + 1] = NULL;
 	init_env(new_env, shell);
 	free_double((void **)new_env);
 }
+/*
+	export abcdef
+
+	in real bash it doesnt export
+	cuz there is no = sign after key
+	HANDLED
+*/
 void	ft_export(t_node *command)
 {
 	char	*str1;
 	char	*str2;
 	char	*key;
 
+	if (!ft_strchr(rl_line_buffer, '=')) //in case of key without = sign
+		return ;
 	key = extract_key(rl_line_buffer);
 	if (!is_alphanumeric(key))
 	{
@@ -136,8 +115,6 @@ void	ft_export(t_node *command)
 			command->shell);
 	else
 		create_and_set_val(command->shell, key,
-				ft_strchr(rl_line_buffer, '='));
+				ft_strchr(rl_line_buffer, '=') + 1);
 	free(key);
 }
-		
-		// printf("VALUE-> %s\n", value_from_key(key, command->shell));
