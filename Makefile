@@ -2,7 +2,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC = main.c env.c env2.c signals.c \
+SRC = main.c env.c env2.c signals.c free.c \
 builtins/ft_pwd.c builtins/ft_env.c builtins/ft_cd.c \
 builtins/ft_echo.c prompt.c \
 parse_input/split_read_line.c \

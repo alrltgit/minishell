@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 11:04:33 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/15 17:10:04 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void read_the_input(char *rl, t_shell *shll);
 
 //free
 void free_arr(char **arr);
+void free_node_arr(char **arr, int arr_length);
+void free_linked_list(t_node *node);
 
 // split the linked list
 void add_cmds_flags_to_linked_list(char **result, t_node **unit);

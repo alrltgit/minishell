@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 16:53:37 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:22:57 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,18 @@ void	shell_loop(t_shell *shell)
 		//->HERE-DOC (IT PRINTS EXIT AFTER EXITING) (EOF)
 		//->WHILE WAITING FOR INPUT
 		pwd = getcwd(NULL, 0);
+		if (!pwd)
+        {
+            perror("getcwd");
+            break;
+        }
 		signal(SIGINT, activate_ctrlc);
 		rl = readline("minishell$ ");
 		read_the_input(rl, shell);
 		signal(SIGINT, deactivate_ctrlc);
 		add_history(rl);
+		free(pwd);
 	}
-	free(pwd);
 }
 
 int main(int ac, char **av, char **ev)

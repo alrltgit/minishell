@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/14 13:17:31 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:34:16 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void read_the_input(char *rl, t_shell *shll)
     char **result;
     t_node *unit;
     t_node *temp;
-    
+
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
         // printf("\n");
@@ -130,6 +130,11 @@ void read_the_input(char *rl, t_shell *shll)
 		if (temp->next)
 			temp = temp->next;
 	}
+    printf("TEST\n");
+    free_arr(result);
+	free_node_arr(unit->flags, unit->flags_count);
+	free_node_arr(unit->args, unit->args_count);
+	free(unit->cmd);
     // temp = unit;
     // int i;
     // int j;
@@ -150,5 +155,4 @@ void read_the_input(char *rl, t_shell *shll)
     //     }
     //     temp = temp->next;
     // }
-    free(result);
 }

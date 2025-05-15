@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 14:46:09 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:13:34 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,14 @@ int find_command_path(char *input, t_node *unit, int *cmd_is_found)
         {
             unit->cmd = ft_strdup(temp_result);
             *cmd_is_found = 1;
+            free(temp_result);
+            free_arr(paths);
             return (2);
             break ;
         }
+        free(temp_result);
         i++;
     }
+    free_arr(paths);
     return (0);
 }
