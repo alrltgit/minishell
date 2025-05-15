@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/15 10:40:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/15 14:14:56 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,16 @@ void	shell_loop(t_shell *shell)
 		//->HERE-DOC (IT PRINTS EXIT AFTER EXITING) (EOF)
 		//->WHILE WAITING FOR INPUT
 		pwd = getcwd(NULL, 0);
+		//signal(SIGINT, deactivate_ctrlc);
 		signal(SIGINT, activate_ctrlc);
-		rl = readline("minishell$ ");
-		read_the_input(rl, shell);
+		rl = readline(PROMPT);
+		if (!rl)
+		{
+			printf("exit\n");
+			return ;
+		}
 		signal(SIGINT, deactivate_ctrlc);
+		read_the_input(rl, shell);
 		add_history(rl);
 	}
 	free(pwd);

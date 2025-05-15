@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 17:23:14 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/15 12:37:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 #define PS1 "> "
 #define B_IN 1
 #define NON_B_IN 2
+#define BOLD_BLUE "\033[1;34m"
+#define ORANGE "\033[38;5;208m"
+#define RESET "\033[0m"
+#define PROMPT BOLD_BLUE "minishell" ORANGE "> " RESET
 
 typedef struct s_node t_node;
 
