@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 11:04:33 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/15 12:37:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 #define PS1 "> "
 #define B_IN 1
 #define NON_B_IN 2
+#define BOLD_BLUE "\033[1;34m"
+#define ORANGE "\033[38;5;208m"
+#define RESET "\033[0m"
+#define PROMPT BOLD_BLUE "minishell" ORANGE "$ " RESET
 
 typedef struct s_node t_node;
 
@@ -60,6 +64,7 @@ void	init_env(char **ev, t_shell *shell);
 int		index_from_key(char *var_name, char **env_array);
 char	*value_from_key(char *var_name, t_shell *shell);
 int		count_vars(char **ev);
+void	copy_vars(char **ev, char ***env_array);
 
 //env2.c
 int		change_env_value(char *var_name, char *new_value, t_shell *shell);
@@ -82,6 +87,7 @@ void	ft_pwd(t_node *command);
 void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
 void	ft_echo(t_node *command);
+void	ft_export(t_node *command);
 
 //ALINA
 //prompt.c
@@ -102,6 +108,9 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit);
 t_node *add_unit_to_end(t_node **head);
 t_node *create_unit();
 
+//split_readline.c
+char *extract_token(const char *str, int *i);
+char *extract_token_v2(const char *str);
 // find_cmd.c
 int find_command_path(char *input, t_node *unit, int *cmd_is_found);
 

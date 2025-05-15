@@ -7,7 +7,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/12 14:35:23 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 13:01:03 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void	execute_builtin(t_node *command)
 		//ft_unset();
 	//else if (!ft_strcmp(command->cmd, "exit"))
 		//ft_exit();
-	//else if (!ft_strcmp(command->cmd, "export"))
-		//ft_export();
+	else if (!ft_strcmp(command->cmd, "export"))
+		ft_export(command);
 }

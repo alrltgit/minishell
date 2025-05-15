@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 16:53:37 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:46:23 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 void	print_environment(t_shell *shell) //delete at the end
 {
 	char	**key;
-	for (int i = 0; shell->env[i] != NULL; i++)
+	/* for (int i = 0; shell->env[i] != NULL; i++)
 	{
 		key = ft_split(shell->env[i], '=');
 		printf("%d %s\n", index_from_key(key[0], shell->env), shell->env[i]);
 		free_double((void **)key);
-	}
+	} */
 	//below it prints the changed env
 	for (int i = 0; shell->env[i] != NULL; i++)
 	{
@@ -55,9 +55,14 @@ void	shell_loop(t_shell *shell)
 		//->WHILE WAITING FOR INPUT
 		pwd = getcwd(NULL, 0);
 		signal(SIGINT, activate_ctrlc);
-		rl = readline("minishell$ ");
-		read_the_input(rl, shell);
+		rl = readline(PROMPT);
+		if (!rl)
+		{
+			printf("exit\n");
+			break ;
+		}
 		signal(SIGINT, deactivate_ctrlc);
+		read_the_input(rl, shell);
 		add_history(rl);
 	}
 	free(pwd);
@@ -73,9 +78,6 @@ int main(int ac, char **av, char **ev)
 	init_env(ev, &shell);
 	//handle $variable expansion
 	shell_loop(&shell);
-	/* char *path = "/bin/echo";
-	char *args[] = { "echo", "'helloworld" , NULL };
-	execve(path, args, ev); */
 	//print_environment(&shell);
 	//free_double((void **)shell.env);
     return (0);

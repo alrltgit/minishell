@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 16:40:28 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:25:53 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,3 @@ int is_valid_command(t_node *current_node, char *rl)
     }
     return (0);
 }
-

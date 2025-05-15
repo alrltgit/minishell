@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/11 14:48:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/15 17:24:53 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,13 @@ void free_arr(char **arr)
     }
     free(arr);
 }
+
+void	free_exit(t_shell *shell)
+{
+	t_node	*temp;
+
+	temp = shell->cmds;
+	free_double(shell->env);
+	free_arr(shell->prompt);
+	
+
