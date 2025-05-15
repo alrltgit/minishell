@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 16:33:07 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:23:50 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int count_args(char **result, t_node *current_node)
         i++;
     }
     return (args_count);
-};
+}
 
 void find_args(t_node *current_node, char **result, int *i, int *j)
 {
@@ -71,3 +71,4 @@ void find_args(t_node *current_node, char **result, int *i, int *j)
         (*j)++;
     }
 }
+

@@ -6,9 +6,10 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/15 17:34:16 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:29:50 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/minishell.h"
 
@@ -95,9 +96,9 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-        // printf("\n");
-		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_redisplay();
+		rl_on_new_line();
 		return ;
 	}
     result = split_args(rl);
@@ -105,10 +106,9 @@ void read_the_input(char *rl, t_shell *shll)
 	unit->shell = shll;
 	shll->cmds = unit;
 	temp = unit;
-	//Iterate temp to pass all nodes
 	while (temp)
 	{
-		add_cmds_flags_to_linked_list(result, &temp); //sets cmdtype in here
+		add_cmds_flags_to_linked_list(result, &temp);
 		if (temp->cmd_type == B_IN)
 		{
 			add_args_to_linked_list(result, &temp);
@@ -130,11 +130,13 @@ void read_the_input(char *rl, t_shell *shll)
 		if (temp->next)
 			temp = temp->next;
 	}
-    printf("TEST\n");
+    // printf("TEST\n");
+    // free_double((void **)unit->shell->env);
     free_arr(result);
 	free_node_arr(unit->flags, unit->flags_count);
 	free_node_arr(unit->args, unit->args_count);
 	free(unit->cmd);
+    free_linked_list(unit);
     // temp = unit;
     // int i;
     // int j;

@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/15 17:10:12 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:13:17 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,3 +49,12 @@ void free_linked_list(t_node *node)
         node = temp;  
     }
 }
+
+// void	free_exit(t_shell *shell)
+// {
+// 	t_node	*temp;
+
+// 	temp = shell->cmds;
+// 	free_double(shell->env);
+// 	free_arr(shell->prompt);
+// }

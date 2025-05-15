@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 11:01:55 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/14 13:40:43 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:45:29 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "includes/minishell.h"
 
 #include "./includes/minishell.h"
 
@@ -29,13 +27,13 @@ void	activate_ctrlc(int sig)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	// rl_redisplay();
+	rl_redisplay();
 }
 
 void	deactivate_ctrlc(int sig)
 {
 	(void)sig;
-	// printf("\n");
+	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 }

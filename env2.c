@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:19:19 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/11 14:48:52 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:39:23 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ int	change_env_value(char *var_name, char *new_value, t_shell *shell)
 	if (!var_name)
 		return (-1);
 	index = index_from_key(var_name, shell->env);
-	//process with handle_quote -> handle_quote(&new_value);
-	//if quote(s) needs to be closed return 0 otherwise 1
 	temp = ft_strjoin(var_name, "=");
-	free(shell->env[index]); //free space for new value
+	free(shell->env[index]);
 	shell->env[index] = ft_strjoin(temp, new_value);
 	free(temp);
 	return (1);

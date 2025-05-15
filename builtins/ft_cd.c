@@ -12,32 +12,13 @@
 
 #include "../includes/minishell.h"
 
-/*
-	for cd command, args_count will be max 1
-
-	if we give multiple spaces after cd, 
-	it should consider like without spaces
-	so, trim spaces(it is trimmed in get_the_input)
-*/
-
 void	ft_cd(t_node *command)
 {
-	//char	*pwd;
-
-	/*
-		#just cd changes to home
-		#cd + arg changes to arg directory
-		#in parsing check arg is directory
-		#arg count must be max 1
-
-		if cd is without args,
-		it will change directory to HOME
-	*/
-	command->shell->errcode = 0; //in case of success
+	command->shell->errcode = 0;
 	if (command->args_count > 1)
 	{
 		ft_putstr_fd("cd: too many arguments", 2);
-		command->shell->errcode = 1; //it is true, checked with $?
+		command->shell->errcode = 1;
 		return ;
 	}
 	if (command->args_count == 1)
