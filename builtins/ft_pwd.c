@@ -22,7 +22,7 @@ void	ft_pwd(t_node *cmd)
 
 	cmd->shell->errcode = 0;
 	pwd = value_from_key("PWD", cmd->shell);
-	printf("PWD from custom func-> %s\n", pwd);
+	printf("%s\n", pwd);
 	if (!pwd)
 	{
 		cmd->shell->errcode = 1;

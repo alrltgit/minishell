@@ -29,7 +29,7 @@
 #define BOLD_BLUE "\033[1;34m"
 #define ORANGE "\033[38;5;208m"
 #define RESET "\033[0m"
-#define PROMPT BOLD_BLUE "minishell" ORANGE "> " RESET
+#define PROMPT BOLD_BLUE "minishell" ORANGE "$ " RESET
 
 typedef struct s_node t_node;
 

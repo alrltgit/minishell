@@ -24,3 +24,12 @@ void free_arr(char **arr)
     }
     free(arr);
 }
+
+void	free_exit(t_shell *shell)
+{
+	t_node	*temp;
+
+	temp = shell->cmds;
+	free_double(env);
+	free_arr(prompt);
+
