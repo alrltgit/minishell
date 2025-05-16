@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/16 11:09:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/16 11:18:16 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 void add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
     t_node *current_node;
-    int i;
-    int j;
-    int cmd_is_found;
+    int 	i;
+    int 	j;
+    int 	cmd_is_found;
 
     cmd_is_found = 0;
     current_node = *unit;
@@ -56,8 +56,8 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
 
 void add_args_to_linked_list(char **result, t_node **unit)
 {
-    int i;
-    int j;
+    int 	i;
+    int 	j;
     t_node *current_node;
 
     j = 0;

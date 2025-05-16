@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/16 11:09:30 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/16 11:18:44 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	shell_loop(t_shell *shell)
 	char	*pwd;
 
 	signal(SIGQUIT, SIG_IGN); //ignore ctrl-'\'
+	shell->cmds = NULL;
 	while (1)
 	{
 		//handle the cases when path changed

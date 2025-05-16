@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/16 10:46:41 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/16 11:28:35 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	iterate_free_nodes(t_node *head)
 
 void	free_exit(t_shell *shell)
 {
-	free_double((void **)shell->env);
 	if (shell->cmds)
 		iterate_free_nodes(shell->cmds);
+	free_double((void **)shell->env);
 	return ;
 }
