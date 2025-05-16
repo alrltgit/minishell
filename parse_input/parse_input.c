@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/15 17:45:46 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/16 11:09:08 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void read_the_input(char *rl, t_shell *shll)
     char	**result;
     t_node 	*unit;
     t_node 	*temp;
-
+	
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
 		rl_replace_line("", 0);
@@ -108,7 +108,7 @@ void read_the_input(char *rl, t_shell *shll)
 	temp = unit;
 	while (temp)
 	{
-		add_cmds_flags_to_linked_list(result, &temp);
+		add_cmds_flags_to_linked_list(result, &temp); 
 		if (temp->cmd_type == B_IN)
 		{
 			add_args_to_linked_list(result, &temp);

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/15 12:37:30 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/16 10:37:46 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_node t_node;
 typedef struct	s_shell
 {
 	char	**env;
-	char	*prompt;
 	t_node	*cmds;
 	int		errcode;
 }	t_shell;
@@ -97,8 +96,8 @@ int create_prompt(char *rl, t_shell *shell);
 char **split_args(char *str);
 void read_the_input(char *rl, t_shell *shll);
 
-//free
-void free_arr(char **arr);
+//free.c
+void	free_exit(t_shell *shell);
 
 // split the linked list
 void add_cmds_flags_to_linked_list(char **result, t_node **unit);

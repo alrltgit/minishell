@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/15 17:46:23 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/16 11:09:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ void	shell_loop(t_shell *shell)
 		{
 			printf("exit\n");
 			break ;
+			// free_exit(shell);
 		}
 		signal(SIGINT, deactivate_ctrlc);
 		read_the_input(rl, shell);
+		//print_environment(shell);
 		add_history(rl);
 	}
 	free(pwd);
+	free_exit(shell);
 }
 
 int main(int ac, char **av, char **ev)
