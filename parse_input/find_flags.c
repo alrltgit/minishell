@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/14 17:24:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:42:40 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int count_flags(char **result)
 
 void find_flags(char *result, t_node *unit, int *i)
 {
+	
     if (result[0] == '-')
     {
         unit->flags[*i] = ft_strdup(result);

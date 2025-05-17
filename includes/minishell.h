@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/16 10:37:46 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:37:40 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
 void	ft_echo(t_node *command);
 void	ft_export(t_node *command);
+
+//expand
+void	search_expansion(t_node *command);
 
 //ALINA
 //prompt.c
