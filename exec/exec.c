@@ -13,23 +13,12 @@
 
 #include "../includes/minishell.h"
 
-void	execute_other(t_node *node)
+void single_command(t_node *node, char **argv)
 {
-	char	**argv;
-	pid_t 	pid; // pid_t type is able to store id of a process
+	pid_t 	pid;
 	int		status;
 
-	pid = fork(); // creates a child process out of a parent process
-	argv = build_argv(node);
-	// printf("argv[0]: %s\n", argv[0]);
-	// printf("argv[1]: %s\n", argv[1]);
-	/*when the command come here
-	it will be checked if it is valid or not*/
-	/*
-		THINK ABOUT EDGE CASES
-	*/
-
-	//NEEDS TO BE FORKED
+	pid = fork();
 	if (pid == 0) // id of a child process is 0
 	{
 		// printf("EXEC OTHER PATH: %s\n", command->cmd);
@@ -49,7 +38,29 @@ void	execute_other(t_node *node)
 		perror("Fork failed.\n");
 		exit(1);
 	}
-	free_arr(argv);
+}
+
+void	execute_other(t_node *node)
+{
+	char	**argv;
+
+	/*when the command come here
+	it will be checked if it is valid or not*/
+	/*
+		THINK ABOUT EDGE CASES
+	*/
+	// if (node->is_pipe == 1)
+	// {
+	// 	create_pipe(node, argv);
+	// }
+	if (node->is_pipe == 0)
+	{
+		argv = build_argv(node);
+		// printf("argv[0]: %s\n", argv[0]);
+		// printf("argv[1]: %s\n", argv[1]);
+		single_command(node, argv);
+		free_arr(argv);
+	}
 	// free_double((void **)argv);
 }
 

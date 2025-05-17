@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/15 18:29:50 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/17 20:42:21 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
         return ;
     i = 0;
     j = 0;
-    if (ft_strcmp(result[j], "|") == 0 || ft_strcmp(result[j], ">>") == 0
-        || ft_strcmp(result[j], "<<") == 0)
-        j++;
+    // if (ft_strcmp(result[j], "|") == 0 || ft_strcmp(result[j], ">>") == 0
+    //     || ft_strcmp(result[j], "<<") == 0)
+    //     j++;
     while (result[j])
     {
-        if (ft_strcmp(result[j], "|") == 0 || ft_strcmp(result[j], ">>") == 0
-            || ft_strcmp(result[j], "<<") == 0)
+        if (ft_strcmp(result[j], "|") == 0)
         {
+            current_node->is_pipe = 1;
             current_node = add_unit_to_end(unit);
             current_node->flags_count = count_flags(result);
             current_node->flags = malloc(sizeof(char *) * current_node->flags_count + 1);
@@ -51,7 +51,6 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
         find_flags(result[j], current_node, &i);
         j++;
     }
-    // current_node->flags[i] = NULL;
 }
 
 void add_args_to_linked_list(char **result, t_node **unit)
@@ -85,7 +84,6 @@ void add_args_to_linked_list(char **result, t_node **unit)
             find_args(current_node, result, &i, &j);
         i++;
     }
-    // current_node->args[j] = NULL;
 }
 
 void read_the_input(char *rl, t_shell *shll)
@@ -96,7 +94,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();
 		return ;
@@ -106,55 +104,25 @@ void read_the_input(char *rl, t_shell *shll)
 	unit->shell = shll;
 	shll->cmds = unit;
 	temp = unit;
-	while (temp)
-	{
-		add_cmds_flags_to_linked_list(result, &temp);
-		if (temp->cmd_type == B_IN)
-		{
-			add_args_to_linked_list(result, &temp);
-			execute_builtin(temp);
-			break;
-		}
-		else if (temp->cmd_type == NON_B_IN)
-		{
-			add_args_to_linked_list(result, &temp);
-			execute_other(temp);
-			break;
-		}
-		else
-		{
-			ft_printf("%s", result[0]);
+    add_cmds_flags_to_linked_list(result, &temp);
+    add_args_to_linked_list(result, &temp);
+    if (unit->is_pipe)
+        create_pipe(unit);
+    else
+    {
+        if (unit->cmd_type == B_IN)
+            execute_builtin(unit);
+        else if (unit->cmd_type == NON_B_IN)
+            execute_other(unit);
+        else
+        {
+            ft_printf("%s", result[0]);
 			ft_putstr_fd(" : command not found\n", 2);
-			break;
-		}
-		if (temp->next)
-			temp = temp->next;
-	}
-    // printf("TEST\n");
-    // free_double((void **)unit->shell->env);
+        }
+    }
     free_arr(result);
-	free_node_arr(unit->flags, unit->flags_count);
-	free_node_arr(unit->args, unit->args_count);
-	free(unit->cmd);
+	// free_node_arr(unit->flags, unit->flags_count);
+	// free_node_arr(unit->args, unit->args_count);
+	// free(unit->cmd);
     free_linked_list(unit);
-    // temp = unit;
-    // int i;
-    // int j;
-    // while (temp)
-    // {
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (temp->flags[i])
-    //     {
-    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     j = 0;
-    //     while (temp->args[j])
-    //     {
-    //         printf("temp->args[%d]: %s\n", j, temp->args[j]);
-    //         j++;
-    //     }
-    //     temp = temp->next;
-    // }
 }

@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:47:58 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/14 11:13:53 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/17 15:58:57 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	**build_argv(t_node *node)
 	argv = malloc(sizeof(char *) * (total_count + 1));
 	if (!argv)
 		return (NULL);
-
 	i = 0;
 	argv[i++] = ft_strdup(retrieve_cmd_name(node));
 	j = 0;

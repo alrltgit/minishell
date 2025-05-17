@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/15 18:11:45 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/17 16:41:01 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_node
 	int flags_count;
 	int args_count;
 	int	cmd_type;
+	int is_pipe;
 	t_node *next;
 }	t_node;
 
@@ -129,5 +130,11 @@ void 	find_flags(char *result, t_node *unit, int *i);
 int		is_valid_command(t_node *current_node, char *rl);
 int		rl_is_space(char *rl);
 int		is_operator(char *c);
+
+// piping.c
+void create_pipe(t_node *node);
+
+// piping_utils.c
+int find_list_len(t_node *node);
 
 #endif
