@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/17 20:42:21 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/18 13:18:21 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,20 +106,39 @@ void read_the_input(char *rl, t_shell *shll)
 	temp = unit;
     add_cmds_flags_to_linked_list(result, &temp);
     add_args_to_linked_list(result, &temp);
+    temp = unit;
+    int i;
+    while (temp)
+    {
+        printf("temp->cmd: %s\n", temp->cmd);
+        i = 0;
+        while (i < temp->flags_count)
+        {
+            printf("temp->flags[%d] %s\n", i, temp->flags[i]);
+            i++;
+        }
+        i = 0;
+        while (i < temp->args_count)
+        {
+            printf("temp->args[%d] %s\n", i, temp->args[i]);
+            i++;
+        }
+        temp = temp->next;
+    }
     if (unit->is_pipe)
         create_pipe(unit);
-    else
-    {
-        if (unit->cmd_type == B_IN)
-            execute_builtin(unit);
-        else if (unit->cmd_type == NON_B_IN)
-            execute_other(unit);
-        else
-        {
-            ft_printf("%s", result[0]);
-			ft_putstr_fd(" : command not found\n", 2);
-        }
-    }
+    // else
+    // {
+    //     if (unit->cmd_type == B_IN)
+    //         execute_builtin(unit);
+    //     else if (unit->cmd_type == NON_B_IN)
+    //         execute_other(unit);
+    //     else
+    //     {
+    //         ft_printf("%s", result[0]);
+	// 		ft_putstr_fd(" : command not found\n", 2);
+    //     }
+    // }
     free_arr(result);
 	// free_node_arr(unit->flags, unit->flags_count);
 	// free_node_arr(unit->args, unit->args_count);

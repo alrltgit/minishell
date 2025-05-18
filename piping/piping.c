@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/17 21:41:13 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/18 12:36:00 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,22 @@ void create_pipe(t_node *node)
     prev_fd = -1;
     while (temp)
     {
-        if (temp->next)
-            pipe(pipe_fd);
+        if (pipe(pipe_fd) == -1)
+        {
+            perror("pipe failed");
+            return;
+        }
+        argv = build_argv(temp);
         pid = fork();
+        if (pid < 0)
+        {
+            perror("fork failed");
+            free_arr(argv);
+            return;
+        }
         if (pid == 0)
         {
-            // Child process
+            fprintf(stderr, "Child process: executing command '%s'\n", temp->cmd);
             if (prev_fd != -1)
             {
                 dup2(prev_fd, STDIN_FILENO);
@@ -40,19 +50,26 @@ void create_pipe(t_node *node)
                 dup2(pipe_fd[1], STDOUT_FILENO);
                 close(pipe_fd[1]);
             }
-            argv = build_argv(temp);
             execve(temp->cmd, argv, temp->shell->env);
             perror("execve failed");
+            free_arr(argv);
             exit(EXIT_FAILURE);
         }
-        if (prev_fd != -1)
-            close(prev_fd);
-        if (temp->next)
+        else
         {
-            close(pipe_fd[1]);         // Parent doesn't write
-            prev_fd = pipe_fd[0]; // Save read end for next loop
+            fprintf(stderr, "Parent process: handling command '%s'\n", temp->cmd);
+            if (prev_fd != -1)
+                close(prev_fd);
+            if (temp->next)
+            {
+                close(pipe_fd[1]);
+                prev_fd = pipe_fd[0];
+            }
+            close(pipe_fd[0]);
+            close(pipe_fd[1]);
+            free_arr(argv);
+            temp = temp->next;
         }
-        while (wait(NULL) > 0);
-        temp = temp->next;
     }
+    while (wait(NULL) > 0);
 }
