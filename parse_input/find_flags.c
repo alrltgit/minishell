@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   find_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/18 17:12:44 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/18 22:53:46 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int count_flags(char **result)
+int count_flags(char **result, int j)
 {
     int flags_count;
-    int i;
 
     flags_count = 0;
-    i = 0;
-    while (result[i])
+    while (result[j])
     {
-        if (is_operator(result[i]))
+        if (is_operator(result[j]))
             break ;
-        if (result[i][0] == '-')
+        if (result[j][0] == '-')
             flags_count++;
-        i++;
+        j++;
     }
     return (flags_count);
 }

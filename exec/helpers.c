@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:47:58 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/18 17:23:32 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/18 22:55:25 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**build_argv(t_node *node)
 		return (NULL);
 	}
 	i++;
-	if (node->flags)
+	if (node->flags_count > 0)
 	{
 		j = 0;
 		while (j < node->flags_count)

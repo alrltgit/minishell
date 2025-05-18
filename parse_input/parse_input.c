@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/18 18:05:09 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/18 22:55:41 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
     t_node *current_node;
     int i;
     int j;
+    int j_temp;
     int cmd_is_found;
 
     cmd_is_found = 0;
     current_node = *unit;
-    current_node->flags_count = count_flags(result);
-    // printf("current_node->flags_count %d\n", current_node->flags_count);
+    j = 0;
+    j_temp = j;
+    current_node->flags_count = count_flags(result, j_temp);
     if (current_node->flags_count > 0)
     {
         current_node->flags = malloc(sizeof(char *) * (current_node->flags_count + 1));
@@ -38,17 +40,15 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
         current_node->flags[0] = NULL;
     }
     i = 0;
-    j = 0;
-    // if (ft_strcmp(result[j], "|") == 0 || ft_strcmp(result[j], ">>") == 0
-    //     || ft_strcmp(result[j], "<<") == 0)
-    //     j++;
     while (result[j])
     {
         if (ft_strcmp(result[j], "|") == 0)
         {
             current_node->is_pipe = 1;
             current_node = add_unit_to_end(unit);
-            current_node->flags_count = count_flags(result);
+            j_temp = j;
+            j_temp++;
+            current_node->flags_count = count_flags(result, j_temp);
             if (current_node->flags_count > 0)
             {
                 current_node->flags = malloc(sizeof(char *) * (current_node->flags_count + 1));
@@ -64,15 +64,11 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
             }
             i = 0;
             cmd_is_found = 0;
-            j++;
-            continue ;
         }
         if (cmd_is_found == 0)
             current_node->cmd_type = find_command_path(result[j], current_node, &cmd_is_found);
         if (current_node->flags_count > 0)
-        {
             find_flags(result[j], current_node, &i);
-        }
         j++;
     }
 }
@@ -119,7 +115,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();
 		return ;
@@ -130,7 +126,6 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
 	temp = unit;
     add_cmds_flags_to_linked_list(result, &temp);
-    printf("temp->cmd: %s\n", temp->cmd);
     add_args_to_linked_list(result, &temp);
     // temp = unit;
     // int i;
