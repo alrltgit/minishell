@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/16 13:13:13 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/18 15:11:10 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	shell_loop(t_shell *shell)
 		free(rl);
 		free(pwd);
 	}
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 int main(int ac, char **av, char **ev)

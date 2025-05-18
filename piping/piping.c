@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/18 12:36:00 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/18 17:16:17 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void create_pipe(t_node *node)
         }
         if (pid == 0)
         {
-            fprintf(stderr, "Child process: executing command '%s'\n", temp->cmd);
+            // fprintf(stderr, "Child process: executing command '%s'\n", temp->cmd);
             if (prev_fd != -1)
             {
                 dup2(prev_fd, STDIN_FILENO);
@@ -50,14 +50,15 @@ void create_pipe(t_node *node)
                 dup2(pipe_fd[1], STDOUT_FILENO);
                 close(pipe_fd[1]);
             }
-            execve(temp->cmd, argv, temp->shell->env);
+            char *const *envp = NULL;
+            execve(temp->cmd, argv, envp);
             perror("execve failed");
             free_arr(argv);
             exit(EXIT_FAILURE);
         }
         else
         {
-            fprintf(stderr, "Parent process: handling command '%s'\n", temp->cmd);
+            // fprintf(stderr, "Parent process: handling command '%s'\n", temp->cmd);
             if (prev_fd != -1)
                 close(prev_fd);
             if (temp->next)
@@ -65,9 +66,7 @@ void create_pipe(t_node *node)
                 close(pipe_fd[1]);
                 prev_fd = pipe_fd[0];
             }
-            close(pipe_fd[0]);
-            close(pipe_fd[1]);
-            free_arr(argv);
+            // free_arr(argv);
             temp = temp->next;
         }
     }

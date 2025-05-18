@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/17 16:41:01 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/18 17:13:08 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,9 @@ char *retrieve_cmd_name(t_node *node);
 
 //find_flags.c
 int		count_flags(char **result);
-void 	find_flags(char *result, t_node *unit, int *i);
+// void 	find_flags(char *result, t_node *unit, int *i);
+int find_flags(char *result, t_node *unit, int *i);
+char	*ft_strdup2(const char *s1);
 
 // utils.c
 int		is_valid_command(t_node *current_node, char *rl);
