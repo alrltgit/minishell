@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/18 17:20:56 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:05:09 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
 	temp = unit;
     add_cmds_flags_to_linked_list(result, &temp);
+    printf("temp->cmd: %s\n", temp->cmd);
     add_args_to_linked_list(result, &temp);
     // temp = unit;
     // int i;

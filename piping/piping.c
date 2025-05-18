@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/18 17:16:17 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:09:04 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void create_pipe(t_node *node)
     pid_t pid;
     char **argv;
 
+    char *const *envp = NULL;
     prev_fd = -1;
     while (temp)
     {
@@ -50,7 +51,6 @@ void create_pipe(t_node *node)
                 dup2(pipe_fd[1], STDOUT_FILENO);
                 close(pipe_fd[1]);
             }
-            char *const *envp = NULL;
             execve(temp->cmd, argv, envp);
             perror("execve failed");
             free_arr(argv);
