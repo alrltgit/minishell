@@ -6,14 +6,14 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/18 22:55:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/19 22:31:05 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/minishell.h"
 
-void add_cmds_flags_to_linked_list(char **result, t_node **unit)
+int add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
     t_node *current_node;
     int i;
@@ -30,16 +30,22 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
     {
         current_node->flags = malloc(sizeof(char *) * (current_node->flags_count + 1));
         if (!current_node->flags)
-            return ;
+            return (1);
     }
     else
     {
         current_node->flags = malloc(sizeof(char *));
         if (!current_node->flags)
-            return;
+            return (1);
         current_node->flags[0] = NULL;
     }
     i = 0;
+    if (ft_strcmp(result[j], "<") == 0)
+    {
+        current_node->stdin_redirect = 1;
+        current_node->file_name = ft_strdup(result[++j]);
+        j++;
+    }
     while (result[j])
     {
         if (ft_strcmp(result[j], "|") == 0)
@@ -53,24 +59,31 @@ void add_cmds_flags_to_linked_list(char **result, t_node **unit)
             {
                 current_node->flags = malloc(sizeof(char *) * (current_node->flags_count + 1));
                 if (!current_node->flags)
-                    return ;
+                    return (1);
             }
             else
             {
                 current_node->flags = malloc(sizeof(char *));
                 if (!current_node->flags)
-                    return;
+                    return (1);
                 current_node->flags[0] = NULL;
             }
             i = 0;
             cmd_is_found = 0;
+            j++;
         }
         if (cmd_is_found == 0)
             current_node->cmd_type = find_command_path(result[j], current_node, &cmd_is_found);
+        if (cmd_is_found == 0)
+        {
+            printf("%s: command not found\n", result[j]);
+            return (1);
+        }
         if (current_node->flags_count > 0)
             find_flags(result[j], current_node, &i);
         j++;
     }
+    return (0);
 }
 
 void add_args_to_linked_list(char **result, t_node **unit)
@@ -84,13 +97,10 @@ void add_args_to_linked_list(char **result, t_node **unit)
     current_node->args_count = count_args(result, current_node);
     current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
     i = 0;
-    if (is_operator(result[i]))
-        i++;
     while (result[i])
     {
-        if (is_operator(result[i]))
+        if (ft_strcmp(result[i], "|") == 0)
         {
-            i++;
             j = 0;
             current_node = current_node->next;
             if (!current_node)
@@ -99,6 +109,7 @@ void add_args_to_linked_list(char **result, t_node **unit)
             current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
             if (!current_node->args)
                 return ;
+            i++;
         }
         if (current_node && result[i])
             find_args(current_node, result, &i, &j);
@@ -125,27 +136,28 @@ void read_the_input(char *rl, t_shell *shll)
 	unit->shell = shll;
 	shll->cmds = unit;
 	temp = unit;
-    add_cmds_flags_to_linked_list(result, &temp);
+    if (add_cmds_flags_to_linked_list(result, &temp) == 1)
+        return ;
     add_args_to_linked_list(result, &temp);
-    // temp = unit;
-    // int i;
-    // while (temp)
-    // {
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (i < temp->flags_count)
-    //     {
-    //         printf("temp->flags[%d] %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->args_count)
-    //     {
-    //         printf("temp->args[%d] %s\n", i, temp->args[i]);
-    //         i++;
-    //     }
-    //     temp = temp->next;
-    // }
+    temp = unit;
+    int i;
+    while (temp)
+    {
+        printf("temp->cmd: %s\n", temp->cmd);
+        i = 0;
+        while (i < temp->flags_count)
+        {
+            printf("temp->flags[%d] %s\n", i, temp->flags[i]);
+            i++;
+        }
+        i = 0;
+        while (i < temp->args_count)
+        {
+            printf("temp->args[%d] %s\n", i, temp->args[i]);
+            i++;
+        }
+        temp = temp->next;
+    }
     if (unit->is_pipe)
         create_pipe(unit);
     else
@@ -153,7 +165,10 @@ void read_the_input(char *rl, t_shell *shll)
         if (unit->cmd_type == B_IN)
             execute_builtin(unit);
         else if (unit->cmd_type == NON_B_IN)
+        {
+            printf("IN\n");
             execute_other(unit);
+        }
         else
         {
             ft_printf("%s", result[0]);

@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/18 22:44:22 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/19 20:07:35 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <termios.h>
 #include <signal.h>
 #include <dirent.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <sys/wait.h>
@@ -46,6 +47,8 @@ typedef struct s_node
 	char *cmd;
 	char **flags;
 	char **args;
+	char *file_name;
+	int stdin_redirect;
 	int flags_count;
 	int args_count;
 	int	cmd_type;
@@ -103,7 +106,7 @@ void free_node_arr(char **arr, int arr_length);
 void free_linked_list(t_node *node);
 
 // split the linked list
-void add_cmds_flags_to_linked_list(char **result, t_node **unit);
+int add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
 // parse_input
 // fill_unit_linked_list
@@ -136,7 +139,8 @@ int		is_operator(char *c);
 // piping.c
 void create_pipe(t_node *node);
 
-// piping_utils.c
-int find_list_len(t_node *node);
+// redirection.c
+int redirect_to_stdin(t_node *node);
+void redirect_to_stdout();
 
 #endif

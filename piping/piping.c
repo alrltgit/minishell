@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/19 12:37:57 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/19 19:55:32 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void create_pipe(t_node *node)
         if (pid == 0)
         {
             // fprintf(stderr, "Child process: executing command '%s'\n", temp->cmd);
+            if (temp == node && temp->stdin_redirect == 1)
+            {
+                if (redirect_to_stdin(temp) == 1)
+                    return ;
+            }
             if (prev_fd != -1)
             {
                 dup2(prev_fd, STDIN_FILENO);
@@ -66,7 +71,6 @@ void create_pipe(t_node *node)
         }
         else
         {
-            // fprintf(stderr, "Parent process: handling command '%s'\n", temp->cmd);
             if (prev_fd != -1)
                 close(prev_fd);
             if (temp->next)

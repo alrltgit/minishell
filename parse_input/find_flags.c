@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/05/18 22:53:46 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/19 19:56:58 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ int count_flags(char **result, int j)
     flags_count = 0;
     while (result[j])
     {
-        if (is_operator(result[j]))
+        if (ft_strcmp(result[j], "|") == 0)
             break ;
         if (result[j][0] == '-')
+        {
             flags_count++;
+        }
         j++;
     }
     return (flags_count);

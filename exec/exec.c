@@ -19,20 +19,21 @@ void single_command(t_node *node, char **argv)
 	int		status;
 
 	pid = fork();
-	if (pid == 0) // id of a child process is 0
+	if (pid == 0)
 	{
-		// printf("EXEC OTHER PATH: %s\n", command->cmd);
+		if (node->stdin_redirect == 1)
+		{
+			if (redirect_to_stdin(node) == 1)
+				return ;
+		}
 		if (execve(node->cmd, argv, node->shell->env) == -1)
 		{
 			perror("execve failed\n");
 			exit(EXIT_FAILURE);
 		}
 	}
-	else if (pid > 0) // id of a parent process is unique, but it's always greater than 0
-	{
+	else if (pid > 0)
 		wait(&status);
-		// printf("Child process finished with status: %d\n", status);
-	}
 	else
 	{
 		perror("Fork failed.\n");
@@ -49,19 +50,12 @@ void	execute_other(t_node *node)
 	/*
 		THINK ABOUT EDGE CASES
 	*/
-	// if (node->is_pipe == 1)
-	// {
-	// 	create_pipe(node, argv);
-	// }
 	if (node->is_pipe == 0)
 	{
 		argv = build_argv(node);
-		// printf("argv[0]: %s\n", argv[0]);
-		// printf("argv[1]: %s\n", argv[1]);
 		single_command(node, argv);
 		free_arr(argv);
 	}
-	// free_double((void **)argv);
 }
 
 void	execute_builtin(t_node *command)

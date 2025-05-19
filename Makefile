@@ -9,7 +9,7 @@ parse_input/split_read_line.c \
 parse_input/find_cmd.c parse_input/utils.c parse_input/find_flags.c \
 parse_input/find_args.c parse_input/fill_unit_linked_list.c parse_input/parse_input.c \
 exec/exec_utils.c exec/exec.c exec/helpers.c \
-piping/piping.c piping/piping_utils.c
+piping/piping.c redirection/redirection.c
 
 OBJS = $(SRC:.c=.o)
 
