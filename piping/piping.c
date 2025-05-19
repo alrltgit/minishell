@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/18 22:54:00 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/19 12:37:57 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,18 @@ void create_pipe(t_node *node)
                 dup2(pipe_fd[1], STDOUT_FILENO);
                 close(pipe_fd[1]);
             }
-            execve(temp->cmd, argv, envp);
-            perror("execve failed");
-            free_arr(argv);
-            exit(EXIT_FAILURE);
+            if (temp->cmd_type == B_IN)
+            {
+                execute_builtin(temp);
+                exit(EXIT_SUCCESS);
+            }
+            else
+            {
+                execve(temp->cmd, argv, envp);
+                perror("execve failed");
+                free_arr(argv);
+                exit(EXIT_FAILURE);
+            }
         }
         else
         {
@@ -66,6 +74,8 @@ void create_pipe(t_node *node)
                 close(pipe_fd[1]);
                 prev_fd = pipe_fd[0];
             }
+            else
+                close(pipe_fd[0]);
             temp = temp->next;
         }
     }
