@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/19 12:08:10 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/20 14:31:44 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ void	shell_loop(t_shell *shell)
 		//->HERE-DOC (IT PRINTS EXIT AFTER EXITING) (EOF)
 		//->WHILE WAITING FOR INPUT
 		pwd = getcwd(NULL, 0);
+		if (!pwd)
+        {
+            perror("getcwd");
+            break;
+        }
 		signal(SIGINT, activate_ctrlc);
 		rl = readline(PROMPT);
 		signal(SIGINT, deactivate_ctrlc);
@@ -81,6 +86,8 @@ void	shell_loop(t_shell *shell)
 		read_the_input(rl, shell);
 		//print_environment(shell);
 		add_history(rl);
+		free(rl);
+		free(pwd);
 	}
 	free(pwd);
 	free_exit(shell);

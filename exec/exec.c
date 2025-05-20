@@ -13,43 +13,50 @@
 
 #include "../includes/minishell.h"
 
-void	execute_other(t_node *node)
+void single_command(t_node *node, char **argv)
 {
-	char	**argv;
-	pid_t 	pid; // pid_t type is able to store id of a process
+	pid_t 	pid;
 	int		status;
 
-	pid = fork(); // creates a child process out of a parent process
-	argv = build_argv(node);
-	// printf("argv[0]: %s\n", argv[0]);
-	// printf("argv[1]: %s\n", argv[1]);
-	/*when the command come here
-	it will be checked if it is valid or not*/
-	/*
-		THINK ABOUT EDGE CASES
-	*/
-
-	//NEEDS TO BE FORKED
-	if (pid == 0) // id of a child process is 0
+	
+	pid = fork();
+	if (pid == 0)
 	{
-		// printf("EXEC OTHER PATH: %s\n", command->cmd);
+		if (node->stdin_redirect == 1)
+		{
+			if (redirect_to_stdin(node) == 1)
+				return ;
+		}
 		if (execve(node->cmd, argv, node->shell->env) == -1)
 		{
 			perror("execve failed\n");
 			exit(EXIT_FAILURE);
 		}
 	}
-	else if (pid > 0) // id of a parent process is unique, but it's always greater than 0
-	{
+	else if (pid > 0)
 		wait(&status);
-		// printf("Child process finished with status: %d\n", status);
-	}
 	else
 	{
 		perror("Fork failed.\n");
 		exit(1);
 	}
-	free_double((void **)argv);
+}
+
+void	execute_other(t_node *node)
+{
+	char	**argv;
+
+	/*when the command come here
+	it will be checked if it is valid or not*/
+	/*
+		THINK ABOUT EDGE CASES
+	*/
+	if (node->is_pipe == 0)
+	{
+		argv = build_argv(node);
+		single_command(node, argv);
+		free_arr(argv);
+	}
 }
 
 void	execute_builtin(t_node *command)

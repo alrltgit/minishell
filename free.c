@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/16 11:28:35 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/20 14:34:02 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+void free_arr(char **arr)
+{
+    int i;
+
+    i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
 
 void	iterate_free_nodes(t_node *head)
 {
@@ -27,6 +40,31 @@ void	iterate_free_nodes(t_node *head)
 		free(temp);
 		temp = next;
 	}
+}
+
+void free_node_arr(char **arr, int arr_length)
+{
+    int i;
+
+    i = 0;
+    while (i < arr_length)
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
+
+void free_linked_list(t_node *node)
+{
+    t_node *temp;
+
+    while (node)
+    {
+        temp = node->next;
+        free(node);
+        node = temp;  
+    }
 }
 
 void	free_exit(t_shell *shell)
