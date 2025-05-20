@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/20 14:48:19 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:08:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 
@@ -46,6 +45,8 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
         current_node->file_name = ft_strdup(result[++j]);
         j++;
     }
+    if (!result[j])
+        return (1);
     while (result[j])
     {
         if (ft_strcmp(result[j], "|") == 0)
@@ -117,15 +118,11 @@ void add_args_to_linked_list(char **result, t_node **unit)
     }
 }
 
-/* void read_the_input(char *rl, t_shell *shll)
+void read_the_input(char *rl, t_shell *shll)
 {
     char	**result;
     t_node 	*unit;
     t_node 	*temp;
-	
-    char **result;
-    t_node *unit;
-    t_node *temp;
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
@@ -139,46 +136,8 @@ void add_args_to_linked_list(char **result, t_node **unit)
 	unit->shell = shll;
 	shll->cmds = unit;
 	temp = unit;
-	add_cmds_flags_to_linked_list(result, &temp);
-	add_args_to_linked_list(result, &temp);
-	if (temp->cmd_type == B_IN)
-	{
-		execute_builtin(temp);
-		printf("builtin cmd-> %s\n", temp->cmd);
-	}
-	else if (temp->cmd_type == NON_B_IN)
-	{
-		execute_other(temp);
-		printf("cmd-> %s\n", temp->cmd);
-	}
-	else
-	{
-		ft_printf("%s", result[0]);
-		printf("cmd-> %s\n", temp->cmd);
-		ft_putstr_fd(" : command not found\n", 2);
-	}
-    free(result);
-} */
-
-void read_the_input(char *rl, t_shell *shll)
-{
-    char	**result;
-    t_node 	*unit;
-    t_node 	*temp;
-
-	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
-	{
-		rl_replace_line("", 0);
-		rl_redisplay();
-		rl_on_new_line();
-		return ;
-	}
-    result = split_args(rl);
-    unit = create_unit();
-	unit->shell = shll;
-	shll->cmds = unit;
-	temp = unit;
-    if (add_cmds_flags_to_linked_list(result, &temp) == 1)
+    int test = add_cmds_flags_to_linked_list(result, &temp);
+    if (test == 1)
         return ;
     add_args_to_linked_list(result, &temp);
     // temp = unit;
@@ -207,10 +166,7 @@ void read_the_input(char *rl, t_shell *shll)
         if (unit->cmd_type == B_IN)
             execute_builtin(unit);
         else if (unit->cmd_type == NON_B_IN)
-        {
-            printf("IN\n");
             execute_other(unit);
-        }
         else
         {
             ft_printf("%s", result[0]);
