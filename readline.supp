@@ -1,0 +1,7 @@
+{
+   readline.supp
+   Memcheck:Leak
+   fun:malloc
+   fun:_rl_add_history
+   fun:readline
+}

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/15 17:46:23 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:08:10 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
 //in bash echo ~ prints home folder (/nfs/homes/username)
 // also cd ~ changes directory to home folder
 
+void	print_node(t_node *command)
+{
+	int	i;
+
+	i = -1;
+	if (command->cmd)
+		printf("CMD: %s // %p\n", command->cmd, (void *)command->cmd);
+	while (++i < command->flags_count)
+		printf("FLAG %d-> %s // %p\n", i, command->flags[i], (void *)command->flags[i]);
+	i = -1;
+	while (++i < command->args_count)
+		printf("ARG %d-> %s // %p\n", i, command->args[i], (void *)command->args[i]);
+}
 void	print_environment(t_shell *shell) //delete at the end
 {
 	char	**key;
@@ -46,6 +59,7 @@ void	shell_loop(t_shell *shell)
 	char	*pwd;
 
 	signal(SIGQUIT, SIG_IGN); //ignore ctrl-'\'
+	//shell->cmds = NULL;
 	while (1)
 	{
 		//handle the cases when path changed
@@ -56,16 +70,20 @@ void	shell_loop(t_shell *shell)
 		pwd = getcwd(NULL, 0);
 		signal(SIGINT, activate_ctrlc);
 		rl = readline(PROMPT);
+		signal(SIGINT, deactivate_ctrlc);
 		if (!rl)
 		{
 			printf("exit\n");
-			break ;
+			//conditional jump was here
+			free_double((void **)shell->env);
+			exit(0);
 		}
-		signal(SIGINT, deactivate_ctrlc);
 		read_the_input(rl, shell);
+		//print_environment(shell);
 		add_history(rl);
 	}
 	free(pwd);
+	free_exit(shell);
 }
 
 int main(int ac, char **av, char **ev)
@@ -74,7 +92,7 @@ int main(int ac, char **av, char **ev)
 	(void)av;
 	
 	if (ac != 1)
-	return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
+		return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
 	init_env(ev, &shell);
 	//handle $variable expansion
 	shell_loop(&shell);

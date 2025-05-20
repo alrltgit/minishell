@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/14 10:48:27 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/16 10:55:10 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ int	count_vars(char **ev)
 
 void	init_env(char **ev, t_shell *shell)
 {
-	char	*pwd;
+//	char	*pwd;
 	int		count;
-	int		index;
+	//int		index;
 
 	count = count_vars(ev);
 	shell->env = malloc((count + 1) * sizeof(char *));
@@ -78,10 +78,11 @@ void	init_env(char **ev, t_shell *shell)
 		return ;
 	copy_vars(ev, &shell->env);
 	shell->env[count] = NULL;
-	index = index_from_key("OLDPWD", shell->env);
-	free(shell->env[index]);
-	pwd = getcwd(NULL, 0);
-	shell->env[index] = ft_strjoin("OLDPWD=", pwd);
+	//index = index_from_key("OLDPWD", shell->env);
+	//free(shell->env[index]);
+	//printf("Freeing env[%d]: %s\n", index, shell->env[index]);
+	//pwd = getcwd(NULL, 0);
+	//shell->env[index] = ft_strjoin("OLDPWD=", pwd);
 	change_env_value("SHELL", "/bin/bash", shell);
-	free(pwd);
+	//free(pwd);
 }
