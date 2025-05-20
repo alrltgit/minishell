@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/17 13:46:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:08:10 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
 //in bash echo ~ prints home folder (/nfs/homes/username)
 // also cd ~ changes directory to home folder
 
+void	print_node(t_node *command)
+{
+	int	i;
+
+	i = -1;
+	if (command->cmd)
+		printf("CMD: %s // %p\n", command->cmd, (void *)command->cmd);
+	while (++i < command->flags_count)
+		printf("FLAG %d-> %s // %p\n", i, command->flags[i], (void *)command->flags[i]);
+	i = -1;
+	while (++i < command->args_count)
+		printf("ARG %d-> %s // %p\n", i, command->args[i], (void *)command->args[i]);
+}
 void	print_environment(t_shell *shell) //delete at the end
 {
 	char	**key;

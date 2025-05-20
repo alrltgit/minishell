@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/17 16:37:40 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:05:00 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #define PS1 "> "
 #define B_IN 1
 #define NON_B_IN 2
+#define EXP 3
 #define BOLD_BLUE "\033[1;34m"
 #define ORANGE "\033[38;5;208m"
 #define RESET "\033[0m"
@@ -49,6 +50,7 @@ typedef struct s_node
 	int flags_count;
 	int args_count;
 	int	cmd_type;
+	int is_pipe;
 	t_node *next;
 }	t_node;
 
@@ -57,6 +59,7 @@ typedef struct s_node
 
 //main.c
 void	shell_loop(t_shell *shell);
+void	print_node(t_node *command);
 
 //env.c
 void	init_env(char **ev, t_shell *shell);
@@ -123,7 +126,7 @@ int count_args_inside_loop(char **result, t_node *current_node, int *i);
 char *retrieve_cmd_name(t_node *node);
 
 //find_flags.c
-int		count_flags(char **result);
+int 	count_flags(char **result, int j);
 void 	find_flags(char *result, t_node *unit, int *i);
 
 // utils.c
