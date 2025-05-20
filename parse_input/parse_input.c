@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/20 14:48:19 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:58:06 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,10 +207,7 @@ void read_the_input(char *rl, t_shell *shll)
         if (unit->cmd_type == B_IN)
             execute_builtin(unit);
         else if (unit->cmd_type == NON_B_IN)
-        {
-            printf("IN\n");
             execute_other(unit);
-        }
         else
         {
             ft_printf("%s", result[0]);
