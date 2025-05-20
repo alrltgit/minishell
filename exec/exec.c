@@ -18,6 +18,7 @@ void single_command(t_node *node, char **argv)
 	pid_t 	pid;
 	int		status;
 
+	
 	pid = fork();
 	if (pid == 0)
 	{

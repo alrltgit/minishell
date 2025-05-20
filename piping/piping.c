@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/19 19:55:32 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/20 14:46:46 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void create_pipe(t_node *node)
     pid_t pid;
     char **argv;
 
-    char *const *envp = NULL;
+    // char *const *envp = NULL;
     prev_fd = -1;
     while (temp)
     {
@@ -63,7 +63,7 @@ void create_pipe(t_node *node)
             }
             else
             {
-                execve(temp->cmd, argv, envp);
+                execve(temp->cmd, argv, node->shell->env);
                 perror("execve failed");
                 free_arr(argv);
                 exit(EXIT_FAILURE);
