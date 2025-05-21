@@ -6,11 +6,70 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/21 12:32:29 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/21 17:24:55 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int alloc_mem_for_flags_arr(t_node *current_node)
+{
+    if (current_node->flags_count > 0)
+    {
+        current_node->flags = malloc(sizeof(char *) * (current_node->flags_count + 1));
+        if (!current_node->flags)
+            return (1);
+    }
+    else
+    {
+        current_node->flags = malloc(sizeof(char *));
+        if (!current_node->flags)
+            return (1);
+        current_node->flags[0] = NULL;
+    }
+    return (0);
+}
+
+int file_exists(t_node *current_node, char **result, int *j)
+{
+    if (access(current_node->file_name, F_OK) != 0)
+    {
+        printf("%s: No such file or directory.\n", result[*j]);
+        return (1);
+    }
+    if (access(current_node->file_name, R_OK) != 0)
+    {
+        printf("%s: Permission denied.\n", result[*j]);
+        return (1);
+    }
+    return (0);
+}
+
+int redirect_input_check(t_node *current_node, char **result, int *j)
+{
+    if (ft_strcmp(result[*j], "<") == 0)
+    {
+        (*j)++;
+        if (!result[*j])
+            return (1);
+        current_node->stdin_redirect = 1;
+        current_node->file_name = ft_strdup(result[*j]);
+        if (file_exists(current_node, result, j) == 1)
+            return (1);
+        (*j)++;
+    }
+    if (!result[*j])
+        return (1);
+    if (ft_strcmp(result[*j], "|") == 0)
+    {
+        (*j)++;
+        if (!result[*j])
+            return (1);
+        current_node->stdin_redirect = 0;
+    }
+    return (0);
+}
+
 
 int add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
@@ -25,38 +84,11 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
     j = 0;
     j_temp = j;
     current_node->flags_count = count_flags(result, j_temp);
-    if (current_node->flags_count > 0)
-    {
-        current_node->flags = malloc(sizeof(char *) * (current_node->flags_count + 1));
-        if (!current_node->flags)
-            return (1);
-    }
-    else
-    {
-        current_node->flags = malloc(sizeof(char *));
-        if (!current_node->flags)
-            return (1);
-        current_node->flags[0] = NULL;
-    }
-    i = 0;
-    if (ft_strcmp(result[j], "<") == 0)
-    {
-        current_node->stdin_redirect = 1;
-        current_node->file_name = ft_strdup(result[++j]);
-        if (access(current_node->file_name, F_OK) != 0)
-        {
-            printf(" %s: No such file or directory.\n", result[j]);
-            return (1);
-        }
-        if (access(current_node->file_name, R_OK) != 0)
-        {
-            printf(" %s: Permission denied.\n", result[j]);
-            return (1);
-        }
-        j++;
-    }
-    if (!result[j])
+    if (alloc_mem_for_flags_arr(current_node) == 1)
         return (1);
+    if (redirect_input_check(current_node, result, &j) == 1)
+        return (1);
+    i = 0;
     while (result[j])
     {
         if (ft_strcmp(result[j], "|") == 0)
@@ -65,6 +97,8 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
             current_node = add_unit_to_end(unit);
             j_temp = j;
             j_temp++;
+            if (!result[j_temp])
+                return (1);
             current_node->flags_count = count_flags(result, j_temp);
             if (current_node->flags_count > 0)
             {
@@ -146,30 +180,10 @@ void read_the_input(char *rl, t_shell *shll)
 	unit->shell = shll;
 	shll->cmds = unit;
 	temp = unit;
-    int test = add_cmds_flags_to_linked_list(result, &temp);
-    // printf("test: %d\n", test);
-    if (test == 1)
+    if (add_cmds_flags_to_linked_list(result, &temp) == 1)
         return ;
-    add_args_to_linked_list(result, &temp);
-    // temp = unit;
-    // int i;
-    // while (temp)
-    // {
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (i < temp->flags_count)
-    //     {
-    //         printf("temp->flags[%d] %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->args_count)
-    //     {
-    //         printf("temp->args[%d] %s\n", i, temp->args[i]);
-    //         i++;
-    //     }
-    //     temp = temp->next;
-    // }
+    else if (add_cmds_flags_to_linked_list(result, &temp) == 0)
+        add_args_to_linked_list(result, &temp);
     if (unit->is_pipe)
         create_pipe(unit);
     else
@@ -177,7 +191,9 @@ void read_the_input(char *rl, t_shell *shll)
         if (unit->cmd_type == B_IN)
             execute_builtin(unit);
         else if (unit->cmd_type == NON_B_IN)
+        {
             execute_other(unit);
+        }
         else
         {
             ft_printf("%s", result[0]);
