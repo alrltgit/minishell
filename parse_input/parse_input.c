@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/20 16:08:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/21 12:32:29 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
     {
         current_node->stdin_redirect = 1;
         current_node->file_name = ft_strdup(result[++j]);
+        if (access(current_node->file_name, F_OK) != 0)
+        {
+            printf(" %s: No such file or directory.\n", result[j]);
+            return (1);
+        }
+        if (access(current_node->file_name, R_OK) != 0)
+        {
+            printf(" %s: Permission denied.\n", result[j]);
+            return (1);
+        }
         j++;
     }
     if (!result[j])
@@ -137,6 +147,7 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
 	temp = unit;
     int test = add_cmds_flags_to_linked_list(result, &temp);
+    // printf("test: %d\n", test);
     if (test == 1)
         return ;
     add_args_to_linked_list(result, &temp);
