@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/20 14:46:46 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:57:02 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ void create_pipe(t_node *node)
                 prev_fd = pipe_fd[0];
             }
             else
-                close(pipe_fd[0]);
+			{
+				close(pipe_fd[0]);	
+			}
             temp = temp->next;
         }
     }

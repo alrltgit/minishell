@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/20 14:30:04 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:49:02 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 #define PS1 "> "
 #define B_IN 1
 #define NON_B_IN 2
-#define EXP 3
 #define BOLD_BLUE "\033[1;34m"
 #define ORANGE "\033[38;5;208m"
 #define RESET "\033[0m"
@@ -93,6 +92,7 @@ void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
 void	ft_echo(t_node *command);
 void	ft_export(t_node *command);
+void	ft_exit(t_node *command);
 
 //expand
 void	search_expansion(t_node *command);
@@ -106,10 +106,11 @@ char **split_args(char *str);
 void read_the_input(char *rl, t_shell *shll);
 
 //free.c
-void free_arr(char **arr);
+void 	free_arr(char **arr);
 void	free_exit(t_shell *shell);
-void free_node_arr(char **arr, int arr_length);
-void free_linked_list(t_node *node);
+void 	free_node_arr(char **arr, int arr_length);
+void 	free_linked_list(t_node *node);
+void	iterate_free_nodes(t_node *head);
 
 // split the linked list
 int add_cmds_flags_to_linked_list(char **result, t_node **unit);

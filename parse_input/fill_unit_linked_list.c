@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/05/11 13:29:32 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/21 14:52:55 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_node *create_unit()
     node->next = NULL;
 	node->shell = NULL;
 	node->cmd_type = 0;
+	node->is_pipe = 0;
     return (node);
 }
 

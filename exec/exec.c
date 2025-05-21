@@ -71,8 +71,8 @@ void	execute_builtin(t_node *command)
 		ft_cd(command);
 	//else if (!ft_strcmp(command->cmd, "unset"))
 		//ft_unset();
-	//else if (!ft_strcmp(command->cmd, "exit"))
-		//ft_exit();
+	else if (!ft_strcmp(command->cmd, "exit"))
+		ft_exit(command);
 	else if (!ft_strcmp(command->cmd, "export"))
 		ft_export(command);
 }
