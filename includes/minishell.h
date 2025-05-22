@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/21 13:49:02 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:01:39 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ typedef struct	s_shell
 typedef struct s_node
 {
 	t_shell	*shell;
-	char *cmd;
-	char **flags;
-	char **args;
-	char *file_name;
-	int stdin_redirect;
-	int flags_count;
-	int args_count;
-	int	cmd_type;
-	int is_pipe;
+	char 	*cmd;
+	char 	**flags;
+	char 	**args;
+	char	*file_name;
+	int 	stdin_redirect;
+	int 	flags_count;
+	int	 	args_count;
+	int		cmd_type;
+	int 	is_pipe;
 	t_node *next;
 }	t_node;
 
@@ -93,6 +93,7 @@ void	ft_cd(t_node *command);
 void	ft_echo(t_node *command);
 void	ft_export(t_node *command);
 void	ft_exit(t_node *command);
+void	ft_unset(t_node *command);
 
 //expand
 void	search_expansion(t_node *command);
@@ -111,6 +112,7 @@ void	free_exit(t_shell *shell);
 void 	free_node_arr(char **arr, int arr_length);
 void 	free_linked_list(t_node *node);
 void	iterate_free_nodes(t_node *head);
+void	free_double_n(void **arr, int n);
 
 // split the linked list
 int add_cmds_flags_to_linked_list(char **result, t_node **unit);
@@ -135,7 +137,7 @@ char *retrieve_cmd_name(t_node *node);
 //find_flags.c
 int		count_flags(char **result, int j);
 // void 	find_flags(char *result, t_node *unit, int *i);
-int find_flags(char *result, t_node *unit, int *i);
+int 	find_flags(char *result, t_node *unit, int *i);
 char	*ft_strdup2(const char *s1);
 
 // utils.c

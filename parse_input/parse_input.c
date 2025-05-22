@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/21 14:52:16 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/22 10:31:06 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,25 +181,7 @@ void read_the_input(char *rl, t_shell *shll)
     if (add_cmds_flags_to_linked_list(result, &temp) == 1)
         return ;
     add_args_to_linked_list(result, &temp);
-    // temp = unit;
-    // int i;
-    // while (temp)
-    // {
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (i < temp->flags_count)
-    //     {
-    //         printf("temp->flags[%d] %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->args_count)
-    //     {
-    //         printf("temp->args[%d] %s\n", i, temp->args[i]);
-    //         i++;
-    //     }
-    //     temp = temp->next;
-    // }
+
     if (unit->is_pipe)
         create_pipe(unit);
     else
