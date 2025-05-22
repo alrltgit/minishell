@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/20 14:30:04 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:29:14 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 
 typedef struct s_node t_node;
 
+typedef struct s_redir
+{
+	char *file_name;
+	struct s_node *next;
+}	t_redir;
+
 typedef struct	s_shell
 {
 	char	**env;
@@ -48,7 +54,7 @@ typedef struct s_node
 	char *cmd;
 	char **flags;
 	char **args;
-	char *file_name;
+	t_redir *redir_files;
 	int stdin_redirect;
 	int flags_count;
 	int args_count;
