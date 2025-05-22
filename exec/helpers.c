@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:47:58 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/18 22:55:25 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/22 17:53:13 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ char	*ft_strdup2(const char *s1)
 
 char	**build_argv(t_node *node)
 {
-	int i;
-	int j;
-	char **argv;
-	int total_count;
+	int		i;
+	int		j;
+	int		total_count;
+	char	**argv;
 
 	total_count = 1 + node->flags_count + node->args_count;
 	argv = malloc(sizeof(char *) * (total_count + 1));
@@ -63,9 +63,7 @@ char	**build_argv(t_node *node)
 		{
 			argv[i] = ft_strdup2(node->flags[j]);
 			if (argv[i] == NULL)
-			{
 				return (NULL);
-			}
 			i++;
 			j++;
 		}

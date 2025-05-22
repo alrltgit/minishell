@@ -6,23 +6,23 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/22 17:05:09 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:22:45 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void free_arr(char **arr)
+void	free_arr(char **arr)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
 void	iterate_free_nodes(t_node *head)

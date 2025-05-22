@@ -1,24 +1,22 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/14 13:01:03 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/22 17:45:21 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void single_command(t_node *node, char **argv)
+void	single_command(t_node *node, char **argv)
 {
-	pid_t 	pid;
+	pid_t	pid;
 	int		status;
 
-	
 	pid = fork();
 	if (pid == 0)
 	{
@@ -46,11 +44,6 @@ void	execute_other(t_node *node)
 {
 	char	**argv;
 
-	/*when the command come here
-	it will be checked if it is valid or not*/
-	/*
-		THINK ABOUT EDGE CASES
-	*/
 	if (node->is_pipe == 0)
 	{
 		argv = build_argv(node);

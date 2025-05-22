@@ -6,12 +6,11 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:35:45 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/22 17:07:01 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:39:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 /*
 	with unset you will remove the whole line of given
@@ -46,6 +45,7 @@
 	unset SHLVL -aksjdfklasj DISPLAY
 	if first arg doesnt throw error, keep going
 */
+
 void	print_environment(t_shell *shell);
 
 void	update_env(char *key, t_shell *shell)
@@ -55,16 +55,16 @@ void	update_env(char *key, t_shell *shell)
 
 	index = index_from_key(key, shell->env);
 	if (index == -1)
-		return;
+		return ;
 	free(shell->env[index]);
 	env_size = 0;
-    while (shell->env[env_size])
-        env_size++;
-    while (index < env_size - 1)
-    {
-        shell->env[index] = shell->env[index + 1];
-        index++;
-    }
+	while (shell->env[env_size])
+		env_size++;
+	while (index < env_size - 1)
+	{
+		shell->env[index] = shell->env[index + 1];
+		index++;
+	}
 	shell->env[index] = NULL;
 }
 
@@ -81,7 +81,7 @@ void	ft_unset(t_node *command)
 		printf("bash: unset: syntax error!\n");
 		free_double_n((void **)command->args, command->args_count);
 		free_double_n((void **)command->flags, command->flags_count);
-		return;
+		return ;
 	}
 	i = 0;
 	while (split[++i])

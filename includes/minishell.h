@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/22 17:01:39 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:21:37 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ void	ft_unset(t_node *command);
 void	search_expansion(t_node *command);
 
 //ALINA
-//prompt.c
-int create_prompt(char *rl, t_shell *shell);
 
 // parsing
 char **split_args(char *str);
