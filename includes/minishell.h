@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/22 16:29:14 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/22 22:46:41 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@
 
 typedef struct s_node t_node;
 
-typedef struct s_redir
-{
-	char *file_name;
-	struct s_node *next;
-}	t_redir;
-
 typedef struct	s_shell
 {
 	char	**env;
 	t_node	*cmds;
 	int		errcode;
 }	t_shell;
+
+typedef struct s_redir
+{
+	char *file_name;
+	struct s_redir *next;
+}	t_redir;
 
 typedef struct s_node
 {
@@ -152,7 +152,7 @@ int		is_operator(char *c);
 void create_pipe(t_node *node);
 
 // redirection.c
-int redirect_to_stdin(t_node *node);
+int redirect_to_stdin(t_redir *node);
 void redirect_to_stdout();
 
 #endif

@@ -24,7 +24,7 @@ void single_command(t_node *node, char **argv)
 	{
 		if (node->stdin_redirect == 1)
 		{
-			if (redirect_to_stdin(node) == 1)
+			if (redirect_to_stdin(node->redir_files) == 1)
 				return ;
 		}
 		if (execve(node->cmd, argv, node->shell->env) == -1)

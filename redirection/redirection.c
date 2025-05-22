@@ -6,13 +6,13 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:43:35 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/19 17:17:46 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/22 22:11:21 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int redirect_to_stdin(t_node *node) // "<" - redirects to STDIN from file
+int redirect_to_stdin(t_redir *node) // "<" - redirects to STDIN from file
 {
     int fd;
 
