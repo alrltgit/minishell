@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/22 23:10:42 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/22 23:16:07 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,20 +190,20 @@ void read_the_input(char *rl, t_shell *shll)
     else if (add_cmds_flags_to_linked_list(result, &temp) == 0)
         add_args_to_linked_list(result, &temp);
         
-    int i;
-    while (temp)
-    {
-        printf("temp->cmd: %s\n", temp->cmd);
-        printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-        i = 0;
-        while (i++ < temp->flags_count)
-            printf("temp->flags[i]: %s\n", temp->flags[i]);
+    // int i;
+    // while (temp)
+    // {
+    //     printf("temp->cmd: %s\n", temp->cmd);
+    //     printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
+    //     i = 0;
+    //     while (i++ < temp->flags_count)
+    //         printf("temp->flags[i]: %s\n", temp->flags[i]);
         
-        i = 0;
-        while (i++ < temp->args_count)
-            printf("temp->args[i]: %s\n", temp->args[i]);
-        temp = temp->next;
-    }
+    //     i = 0;
+    //     while (i++ < temp->args_count)
+    //         printf("temp->args[i]: %s\n", temp->args[i]);
+    //     temp = temp->next;
+    // }
 
     if (unit->is_pipe)
         create_pipe(unit);

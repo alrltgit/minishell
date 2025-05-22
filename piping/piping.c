@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/20 14:46:46 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:13:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void create_pipe(t_node *node)
             // fprintf(stderr, "Child process: executing command '%s'\n", temp->cmd);
             if (temp == node && temp->stdin_redirect == 1)
             {
-                if (redirect_to_stdin(temp) == 1)
+                if (redirect_to_stdin(temp->redir_files) == 1)
                     return ;
             }
             if (prev_fd != -1)
