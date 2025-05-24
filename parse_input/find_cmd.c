@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/20 14:34:21 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/24 12:43:28 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char **get_path()
     return (paths);
 }
 
-int find_command_path(char *input, t_node *unit, int *cmd_is_found)
+int find_command_path(char *input, t_node *unit)
 {
     char *temp_result;
     char **paths;
@@ -32,7 +32,7 @@ int find_command_path(char *input, t_node *unit, int *cmd_is_found)
 
     if (is_builtin(input))
 	{
-		*cmd_is_found = 1;
+		unit->cmd_is_found = 1;
 		unit->cmd = input;
 		return (1);
 	}
@@ -46,7 +46,7 @@ int find_command_path(char *input, t_node *unit, int *cmd_is_found)
         if (access(temp_result, X_OK) == 0)
         {
             unit->cmd = ft_strdup(temp_result);
-            *cmd_is_found = 1;
+            unit->cmd_is_found = 1;
             free(temp_result);
             free_arr(paths);
             return (2);

@@ -17,7 +17,6 @@ void single_command(t_node *node, char **argv)
 {
 	pid_t 	pid;
 	int		status;
-
 	
 	pid = fork();
 	if (pid == 0)
@@ -46,11 +45,6 @@ void	execute_other(t_node *node)
 {
 	char	**argv;
 
-	/*when the command come here
-	it will be checked if it is valid or not*/
-	/*
-		THINK ABOUT EDGE CASES
-	*/
 	if (node->is_pipe == 0)
 	{
 		argv = build_argv(node);

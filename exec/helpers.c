@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:47:58 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/18 22:55:25 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/24 16:30:50 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ char	**build_argv(t_node *node)
 		{
 			argv[i] = ft_strdup2(node->args[j]);
 			if (argv[i] == NULL)
-			{
 				return (NULL);
-			}
 			i++;
 			j++;
 		}

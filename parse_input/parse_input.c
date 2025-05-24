@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/22 23:16:07 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/24 16:50:53 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,52 @@ t_redir *add_new_file(t_redir **head)
     return (new_node);
 }
 
-void check_for_redir(t_node *current_node, char *result)
+int check_for_redir(t_node *current_node, char **result, int *j)
 {
-    if (ft_strcmp(result, "<") == 0)
+    if (ft_strcmp(result[*j], "<") == 0)
     {
         current_node->stdin_redirect = 1;
         current_node->redir_files = add_new_file(&current_node->redir_files);
-        current_node->redir_files->file_name = malloc(sizeof(char) * (ft_strlen(result) + 1));
-        current_node->redir_files->file_name = ft_strdup(result);
+        current_node->redir_files->file_name = malloc(sizeof(char) * (ft_strlen(result[*j]) + 1));
+        current_node->redir_files->file_name = ft_strdup(result[*j + 1]);
+        if (access(current_node->redir_files->file_name, F_OK) != 0)
+        {
+            printf("%s: No such file or directory.\n", current_node->redir_files->file_name);
+            return (1);
+        }
+        if (access(current_node->redir_files->file_name, R_OK) != 0)
+        {
+            printf("%s: Permission denied.\n", current_node->redir_files->file_name);
+            return (1);
+        }
     }
+    return (0);
 }
+
+int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, int *j)
+{
+    int j_temp;
+
+    if (ft_strcmp(result[*j], "|") == 0)
+    {
+        (*current_node)->is_pipe = 1;
+        *current_node = add_unit_to_end(unit);
+        j_temp = *j + 1;
+
+        if (!result[j_temp])
+            return (1);
+
+        (*current_node)->flags_count = count_flags(result, j_temp);
+        if (alloc_mem_for_flags_arr(*current_node) == 1)
+            return (1);
+
+        *i = 0;
+        (*current_node)->cmd_is_found = 0;
+        (*j)++;
+    }
+    return (0);
+}
+
 
 int add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
@@ -82,9 +118,7 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
     int i;
     int j;
     int j_temp;
-    int cmd_is_found;
 
-    cmd_is_found = 0;
     current_node = *unit;
     j = 0;
     j_temp = j;
@@ -95,36 +129,13 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
     i = 0;
     while (result[j])
     {
-        if (ft_strcmp(result[j], "|") == 0)
-        {
-            current_node->is_pipe = 1;
-            current_node = add_unit_to_end(unit);
-            j_temp = j;
-            j_temp++;
-            if (!result[j_temp])
-                return (1);
-            current_node->flags_count = count_flags(result, j_temp);
-            if (current_node->flags_count > 0)
-            {
-                current_node->flags = malloc(sizeof(char *) * (current_node->flags_count + 1));
-                if (!current_node->flags)
-                    return (1);
-            }
-            else
-            {
-                current_node->flags = malloc(sizeof(char *));
-                if (!current_node->flags)
-                    return (1);
-                current_node->flags[0] = NULL;
-            }
-            i = 0;
-            cmd_is_found = 0;
-            j++;
-        }
-        check_for_redir(current_node, result[i]);
-        if (cmd_is_found == 0)
-            current_node->cmd_type = find_command_path(result[j], current_node, &cmd_is_found);
-        if (cmd_is_found == 0)
+        if (check_for_pipe(&current_node, unit, result, &i, &j) == 1)
+            return (1);
+        if (check_for_redir(current_node, result, &j) == 1)
+            return (1);
+        if (current_node->cmd_is_found == 0)
+            current_node->cmd_type = find_command_path(result[j], current_node);
+        if (current_node->cmd_is_found == 0)
         {
             printf("%s: command not found\n", result[j]);
             return (1);
@@ -189,7 +200,6 @@ void read_the_input(char *rl, t_shell *shll)
         return ;
     else if (add_cmds_flags_to_linked_list(result, &temp) == 0)
         add_args_to_linked_list(result, &temp);
-        
     // int i;
     // while (temp)
     // {
@@ -212,9 +222,7 @@ void read_the_input(char *rl, t_shell *shll)
         if (unit->cmd_type == B_IN)
             execute_builtin(unit);
         else if (unit->cmd_type == NON_B_IN)
-        {
             execute_other(unit);
-        }
         else
         {
             ft_printf("%s", result[0]);

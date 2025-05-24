@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/22 22:46:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/24 12:39:17 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_node
 	char **args;
 	t_redir *redir_files;
 	int stdin_redirect;
+	int cmd_is_found;
 	int flags_count;
 	int args_count;
 	int	cmd_type;
@@ -128,8 +129,9 @@ t_node *create_unit();
 //split_readline.c
 char *extract_token(const char *str, int *i);
 char *extract_token_v2(const char *str);
+
 // find_cmd.c
-int find_command_path(char *input, t_node *unit, int *cmd_is_found);
+int find_command_path(char *input, t_node *unit);
 
 // find_args.c
 int count_args(char **result, t_node *current_node);

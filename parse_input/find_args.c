@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/17 16:44:39 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:30:31 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 char *retrieve_cmd_name(t_node *node)
 {
 	if (node->cmd_type == NON_B_IN)
-		return(ft_strrchr(node->cmd, '/') + 1);
+    {
+        return(ft_strrchr(node->cmd, '/') + 1);
+    }
 	return (node->cmd);
 }
 
