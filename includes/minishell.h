@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/23 10:52:59 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/25 14:32:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define PS1 "> "
 # define B_IN 1
 # define NON_B_IN 2
-# define PROMPT "\033[1;34mminishell\033[38;5;208m$\033[0m"
+# define PROMPT "\033[1;34mminishell\033[38;5;208m$ \033[0m"
 
 typedef struct s_node	t_node;
 
@@ -90,7 +90,8 @@ void	ft_exit(t_node *command);
 void	ft_unset(t_node *command);
 
 //expand
-//void	search_expansion(t_node *command);
+void	process_exp(t_node *command);
+void	perfect(t_node *command, char **arr);
 
 //ALINA
 // parsing

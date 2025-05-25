@@ -6,13 +6,13 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/22 17:36:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/24 13:02:12 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_alphanumeric(char *key)
+static int	is_alphanumeric(char *key)
 {
 	int	i;
 
