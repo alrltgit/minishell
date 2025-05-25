@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/25 14:32:42 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/25 16:12:08 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,9 @@ void	read_the_input(char *rl, t_shell *shll)
 		return ; */
 	add_cmds_flags_to_linked_list(result, &temp);
 	add_args_to_linked_list(result, &temp);
-	//process_exp(unit);
-	perfect(unit, &unit->args[0]);
+	//print_node(unit);
+	process_exp(unit);
+	// perfect(unit, &unit->args[0]);
 	if (unit->is_pipe)
 		create_pipe(unit);
 	else

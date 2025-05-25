@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/25 14:27:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/25 17:26:20 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	shell_loop(t_shell *shell)
 			free_double((void **)shell->env);
 			exit(0);
 		}
+		//ft_export line 113 changed cuz of expansion updates on env
 		read_the_input(rl, shell);
 		//print_environment(shell);
 		add_history(rl);

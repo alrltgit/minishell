@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/24 13:02:12 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:57:45 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	ft_export(t_node *command)
 		free(str2);
 		return ;
 	}
-	if (value_from_key(key, command->shell) != NULL)
+	if (ft_strcmp(value_from_key(key, command->shell), " ") != 0)
 		change_env_value(key,
 			process_value(ft_strchr(rl_line_buffer, '=') + 1),
 			command->shell);

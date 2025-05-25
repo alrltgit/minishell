@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/25 15:21:46 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/25 17:24:18 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,9 @@ void	replace_var(t_shell *shell, char **arr, int pos, int len, int in_squote)
 	// l_half = NULL;
 	l_half = ft_strdup(realarr + i);
 	printf("L_HALF -> %s\n", l_half);
-	free(realarr); // or arr
+	//ft_strcat(f_half, ft_strcat(real_var, l_half));
+	/* free(*arr);
+	*arr = ft_strdup(realarr); */
 	realarr = ft_strcat(f_half, ft_strcat(real_var, l_half));
 	printf("DEBUG3 REALARR-> %s\n", realarr);
 }
@@ -149,7 +151,7 @@ void	perfect(t_node *command, char **arr)
 	in_dq = 0;
 	i = -1;
 	//"'$PATH'"
-	printf("ARRRRR %s\n", arr2);
+	//printf("ARRRRR %s\n", arr2);
 	while (arr2[++i])
 	{
 		if (arr2[i] == '$' && is_alphanumeric(arr2[i + 1]))
@@ -160,17 +162,17 @@ void	perfect(t_node *command, char **arr)
 				++len;
 			printf("POS -> %d\n", i + 1);
 			printf("VALUE IN THE POSITION -> %c\n", arr2[i + 1]);
-			replace_var(command->shell, &arr2, i + 1, len, in_dq + in_sq);
+			printf("QUOTE MODE -> %d\n", in_dq + in_sq);
+			replace_var(command->shell, &arr2, i + 1, len, in_sq);
 		}
 		if (arr2[i] == '\'' && in_dq == 0)
-			in_sq = 1;
+			in_sq = 1 - in_sq;
 		if (arr2[i] == '"' && in_sq == 0)
-			in_dq = 2;
-		else if (arr2[i] == '\'' && in_sq == 1)
-			in_sq = 0;
-		else if (arr2[i] == '"' && in_dq == 2)
-			in_dq = 0;
+			in_dq = 2 - in_dq;
 	}
+	/* free(arr);
+	(*arr) = ft_strdup(arr2);
+	free(arr2); */
 }
 
 
@@ -182,7 +184,10 @@ void	process_exp(t_node *command)
 	print_node(command);
 	i = -1;
 	while (++i < command->args_count)
+	{
 		perfect(command, &command->args[i]);
+		print_node(command);
+	}
 	i = -1;
 	while (++i < command->flags_count)
 		perfect(command, &command->flags[i]);
