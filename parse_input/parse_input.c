@@ -187,7 +187,7 @@ void	read_the_input(char *rl, t_shell *shll)
 	add_cmds_flags_to_linked_list(result, &temp);
 	add_args_to_linked_list(result, &temp);
 	//print_node(unit);
-	process_exp(unit);
+//	process_exp(unit);
 	// perfect(unit, &unit->args[0]);
 	if (unit->is_pipe)
 		create_pipe(unit);

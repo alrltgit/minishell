@@ -192,10 +192,17 @@ void	process_exp(t_node *command)
 		free(command->args[i]);
 		command->args[i] = ft_strdup(perfect(command, &temp));
 		printf("DEBUG4 NODE ARG %d -> %s\n", i, command->args[i]);
+		free(temp);
 	}
 	i = -1;
+	//if (temp)
+		//free(temp);
 	while (++i < command->flags_count)
 	{
-		command->flags[i] = perfect(command, &command->flags[i]);
+		temp = ft_strdup(command->flags[i]);
+		free(command->flags[i]);
+		command->flags[i] = ft_strdup(perfect(command, &temp));
+		printf("DEBUG5 NODE FLAG %d -> %s\n", i, command->flags[i]);
+		free(temp);
 	}
 }
