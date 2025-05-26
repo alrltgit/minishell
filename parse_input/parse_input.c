@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/24 16:50:53 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/25 15:58:11 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,6 @@ int alloc_mem_for_flags_arr(t_node *current_node)
     }
     return (0);
 }
-
-// int file_exists(t_node *current_node, char **result, int *j)
-// {
-//     if (access(current_node->file_name, F_OK) != 0)
-//     {
-//         printf("%s: No such file or directory.\n", result[*j]);
-//         return (1);
-//     }
-//     if (access(current_node->file_name, R_OK) != 0)
-//     {
-//         printf("%s: Permission denied.\n", result[*j]);
-//         return (1);
-//     }
-//     return (0);
-// }
 
 t_redir *add_new_file(t_redir **head)
 {
