@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/25 17:24:18 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/26 13:22:00 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,9 @@ void	replace_var(t_shell *shell, char **arr, int pos, int len, int in_squote)
 	/* free(*arr);
 	*arr = ft_strdup(realarr); */
 	realarr = ft_strcat(f_half, ft_strcat(real_var, l_half));
+	arr = &realarr;
 	printf("DEBUG3 REALARR-> %s\n", realarr);
+	// printf("DEBUG4 NODE ARG-> %s\n", shell->cmds->args[0]);
 }
 
 void	perfect(t_node *command, char **arr)
@@ -164,6 +166,7 @@ void	perfect(t_node *command, char **arr)
 			printf("VALUE IN THE POSITION -> %c\n", arr2[i + 1]);
 			printf("QUOTE MODE -> %d\n", in_dq + in_sq);
 			replace_var(command->shell, &arr2, i + 1, len, in_sq);
+			printf("DEBUG4 NODE ARG-> %s\n", command->args[0]);
 		}
 		if (arr2[i] == '\'' && in_dq == 0)
 			in_sq = 1 - in_sq;
