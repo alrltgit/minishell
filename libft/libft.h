@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:23:13 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 14:07:57 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:21:29 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,16 @@ void	free_double(void **arr);
 
 int		ft_strcmp(char *s1, char *s2);
 
-char 	*ft_strconcat(char *path, char *cmd);
+char	*ft_strconcat(char *path, char *cmd);
 
-char 	*ft_strcpy(char *cmd_path, char *cmd, int j);
+char	*ft_strcpy(char *cmd_path, char *cmd, int j);
 
-char *ft_strcat(char *s1, char *s2);
+char	*ft_strcat(char *s1, char *s2);
 
-int count_arr_size(char **arr, int arr_count);
+int		count_arr_size(char **arr, int arr_count);
 
-char *join_strings_with_spaces(int size, int count, char **arr);
+char	*join_strings_with_spaces(int size, int count, char **arr);
+
+char	*update_str(char *str, char c);
 
 #endif

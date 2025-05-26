@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/20 14:34:02 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:22:45 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void free_arr(char **arr)
+void	free_arr(char **arr)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
 void	iterate_free_nodes(t_node *head)
@@ -42,29 +42,16 @@ void	iterate_free_nodes(t_node *head)
 	}
 }
 
-void free_node_arr(char **arr, int arr_length)
+void	free_double_n(void **arr, int n)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i < arr_length)
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
-}
-
-void free_linked_list(t_node *node)
-{
-    t_node *temp;
-
-    while (node)
-    {
-        temp = node->next;
-        free(node);
-        node = temp;  
-    }
+	if (!arr)
+		return ;
+	i = -1;
+	while (++i < n)
+		free(arr[i]);
+	free(arr);
 }
 
 void	free_exit(t_shell *shell)
