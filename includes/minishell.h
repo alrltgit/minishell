@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/25 14:32:14 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/26 13:46:13 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_unset(t_node *command);
 
 //expand
 void	process_exp(t_node *command);
-void	perfect(t_node *command, char **arr);
+char	*perfect(t_node *command, char **arr);
 
 //ALINA
 // parsing
