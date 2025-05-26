@@ -6,22 +6,23 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/20 12:49:16 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:57:45 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_alphanumeric(char *key)
+static int	is_alphanumeric(char *key)
 {
 	int	i;
 
 	i = -1;
 	while (key[++i])
 	{
-		if (!(key[i] >= 'a' && key[i] <= 'z') &&
-			!(key[i] >= 'A' && key[i] <= 'Z') &&
-			!(key[i] >= '0' && key[i] <= '9') && key[i] != '=')
+		if (!(key[i] >= 'a' && key[i] <= 'z')
+			&& !(key[i] >= 'A' && key[i] <= 'Z')
+			&& !(key[i] >= '0' && key[i] <= '9')
+			&& key[i] != '=')
 			return (0);
 	}
 	return (1);
@@ -71,14 +72,13 @@ void	create_and_set_val(t_shell *shell, char *key, char *val)
 	int		count;
 	char	**new_env;
 	char	*new_val;
-	
+
 	count = count_vars(shell->env);
 	new_env = malloc((count + 2) * sizeof(char *));
 	new_val = process_value(val);
 	if (!new_env)
 		return ;
 	copy_vars(shell->env, &new_env);
-	//free_double((void **)shell->env);
 	new_env[count] = ft_strjoin(ft_strjoin(key, "="), new_val);
 	new_env[count + 1] = NULL;
 	init_env(new_env, shell);
@@ -91,13 +91,14 @@ void	create_and_set_val(t_shell *shell, char *key, char *val)
 	cuz there is no = sign after key
 	HANDLED
 */
+
 void	ft_export(t_node *command)
 {
 	char	*str1;
 	char	*str2;
 	char	*key;
 
-	if (!ft_strchr(rl_line_buffer, '=')) //in case of key without = sign
+	if (!ft_strchr(rl_line_buffer, '='))
 		return ;
 	key = extract_key(rl_line_buffer);
 	if (!is_alphanumeric(key))
@@ -109,12 +110,12 @@ void	ft_export(t_node *command)
 		free(str2);
 		return ;
 	}
-	if (value_from_key(key, command->shell) != NULL)
+	if (ft_strcmp(value_from_key(key, command->shell), " ") != 0)
 		change_env_value(key,
 			process_value(ft_strchr(rl_line_buffer, '=') + 1),
 			command->shell);
 	else
 		create_and_set_val(command->shell, key,
-				ft_strchr(rl_line_buffer, '=') + 1);
+			ft_strchr(rl_line_buffer, '=') + 1);
 	free(key);
 }

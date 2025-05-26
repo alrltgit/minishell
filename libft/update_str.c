@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strconcat.c                                     :+:      :+:    :+:   */
+/*   update_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 18:34:42 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/22 18:35:15 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/24 14:11:02 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/25 15:10:58 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strconcat(char *path, char *cmd)
+char	*update_str(char *old, char c)
 {
-	char	*cmd_path;
 	int		i;
-	int		j;
+	char	*res;
 
-	cmd_path = malloc(sizeof(char) * (ft_strlen(path) + ft_strlen(cmd)) + 2);
-	if (!cmd_path)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (path[i])
-		cmd_path[j++] = path[i++];
-	cmd_path[j++] = '/';
-	return (ft_strcpy(cmd_path, cmd, j));
+	if (!c)
+		return (old);
+	if (!old)
+		old = ft_strdup("");
+	res = malloc(ft_strlen(old) + 2);
+	i = -1;
+	while (old[++i])
+		res[i] = old[i];
+	res[i] = c;
+	res[i + 1] = '\0';
+	free(old);
+	return (res);
 }

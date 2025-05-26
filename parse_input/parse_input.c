@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/25 15:58:11 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/26 16:50:02 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,22 @@ int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, 
     return (0);
 }
 
-
 int add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
     t_node *current_node;
     int i;
     int j;
+    int c;
     int j_temp;
 
     current_node = *unit;
     j = 0;
     j_temp = j;
     current_node->flags_count = count_flags(result, j_temp);
+    current_node->vars_count = count_variables(result, &j);
     if (alloc_mem_for_flags_arr(current_node) == 1)
+        return (1);
+    if (alloc_mem_for_vars_arr(current_node) == 1)
         return (1);
     current_node->redir_files = malloc(sizeof(t_redir));
     i = 0;
@@ -122,45 +125,50 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
             current_node->cmd_type = find_command_path(result[j], current_node);
         if (current_node->cmd_is_found == 0)
         {
-            printf("%s: command not found\n", result[j]);
-            return (1);
+            current_node->cmd = NULL;
+        //     printf("%s: command not found\n", result[j]);
+        //     return (1);
         }
         if (current_node->flags_count > 0)
             find_flags(result[j], current_node, &i);
+        if (current_node->vars_count > 0)
+            find_vars(result[j], current_node, &c);
         j++;
     }
     return (0);
 }
 
-void add_args_to_linked_list(char **result, t_node **unit)
+void	add_args_to_linked_list(char **result, t_node **unit)
 {
-    int 	i;
-    int 	j;
-    t_node *current_node;
+	int		i;
+	int		j;
+	t_node	*current_node;
 
-    j = 0;
-    current_node = *unit;
-    current_node->args_count = count_args(result, current_node);
-    current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
-    i = 0;
-    while (result[i])
-    {
-        if (ft_strcmp(result[i], "|") == 0)
-        {
-            j = 0;
-            current_node = current_node->next;
-            if (!current_node)
-                break ;
-            current_node->args_count = count_args_inside_loop(result, current_node, &i);
-            current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
-            if (!current_node->args)
-                return ;
-            i++;
-        }
-        if (current_node && result[i])
-            find_args(current_node, result, &i, &j);
-        i++;
-    }
+	j = 0;
+	current_node = *unit;
+	current_node->args_count = count_args(result, current_node);
+	current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
+	i = 0;
+	while (result[i])
+	{
+		if (ft_strcmp(result[i], "|") == 0)
+		{
+			j = 0;
+			current_node = current_node->next;
+			if (!current_node)
+				break ;
+			current_node->args_count = count_args_inside_loop(result,
+					current_node, &i);
+			current_node->args = malloc(sizeof(char *)
+					* current_node->args_count + 1);
+			if (!current_node->args)
+				return ;
+			i++;
+		}
+		if (current_node && result[i])
+			find_args(current_node, result, &i, &j);
+		i++;
+	}
 }
 
 void read_the_input(char *rl, t_shell *shll)
@@ -181,10 +189,11 @@ void read_the_input(char *rl, t_shell *shll)
 	unit->shell = shll;
 	shll->cmds = unit;
 	temp = unit;
-    if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-        return ;
-    else if (add_cmds_flags_to_linked_list(result, &temp) == 0)
-        add_args_to_linked_list(result, &temp);
+	/* if (add_cmds_flags_to_linked_list(result, &temp) == 1)
+		return ; */
+    
+	add_cmds_flags_to_linked_list(result, &temp);
+	add_args_to_linked_list(result, &temp);
     // int i;
     // while (temp)
     // {
@@ -199,24 +208,21 @@ void read_the_input(char *rl, t_shell *shll)
     //         printf("temp->args[i]: %s\n", temp->args[i]);
     //     temp = temp->next;
     // }
-
-    if (unit->is_pipe)
-        create_pipe(unit);
-    else
-    {
-        if (unit->cmd_type == B_IN)
-            execute_builtin(unit);
-        else if (unit->cmd_type == NON_B_IN)
-            execute_other(unit);
-        else
-        {
-            ft_printf("%s", result[0]);
+	//print_node(unit);
+	// perfect(unit, &unit->args[0]);
+	if (unit->is_pipe)
+		create_pipe(unit);
+	else
+	{
+		if (unit->cmd_type == B_IN)
+			execute_builtin(unit);
+		else if (unit->cmd_type == NON_B_IN)
+			execute_other(unit);
+		else
+		{
+			ft_printf("%s", result[0]);
 			ft_putstr_fd(" : command not found\n", 2);
-        }
-    }
-    free_arr(result);
-	// free_node_arr(unit->flags, unit->flags_count);
-	// free_node_arr(unit->args, unit->args_count);
-	// free(unit->cmd);
-    // free_linked_list(unit);
+		}
+	}
+	free_arr(result);
 }

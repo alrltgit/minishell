@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   join_strings_with_spaces.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:07:32 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/13 14:09:11 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:31:24 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *join_strings_with_spaces(int size, int count, char **arr)
+char	*join_strings_with_spaces(int size, int count, char **arr)
 {
-	char *str;
-	int i;
-	int j;
-	int k;
+	char	*str;
+	int		i;
+	int		j;
+	int		k;
 
 	str = malloc(sizeof(char) * (size + count));
 	if (!str)
@@ -28,13 +28,9 @@ char *join_strings_with_spaces(int size, int count, char **arr)
 	{
 		j = 0;
 		while (arr[i][j])
-		{
-			str[k++] = arr[i][j++]; 
-		}
+			str[k++] = arr[i][j++];
 		if (i < count - 1)
-		{
 			str[k++] = ' ';
-		}
 		i++;
 	}
 	str[k] = '\0';

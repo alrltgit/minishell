@@ -6,21 +6,22 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/22 23:13:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/26 14:04:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void create_pipe(t_node *node)
+void	create_pipe(t_node *node)
 {
-    t_node *temp = node;
-    int prev_fd;
-    int pipe_fd[2];
-    pid_t pid;
-    char **argv;
+	t_node	*temp;
+	int		prev_fd;
+	int		pipe_fd[2];
+	pid_t	pid;
+	char	**argv;
 
     // char *const *envp = NULL;
+    temp = node;
     prev_fd = -1;
     while (temp)
     {

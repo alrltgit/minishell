@@ -6,31 +6,31 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/24 12:43:28 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/26 13:48:04 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char **get_path()
+char	**get_path(void)
 {
-    char *path;
-    char **paths;
+	char	*path;
+	char	**paths;
 
-    path = getenv("PATH");
-    paths = ft_split(path, ':');
-    if (!paths)
-        return (NULL);
-    return (paths);
+	path = getenv("PATH");
+	paths = ft_split(path, ':');
+	if (!paths)
+		return (NULL);
+	return (paths);
 }
 
 int find_command_path(char *input, t_node *unit)
 {
-    char *temp_result;
-    char **paths;
-    int i;
+	char	*temp_result;
+	char	**paths;
+	int		i;
 
-    if (is_builtin(input))
+	if (is_builtin(input))
 	{
 		unit->cmd_is_found = 1;
 		unit->cmd = input;

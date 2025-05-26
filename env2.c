@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:19:19 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/14 17:39:23 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:17:48 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 //in bash after reopening the terminal env gets refreshed
 //also in subshell, env gets refreshed
-//if the value is in quotes, it will be assigned without quotes -> SHLVL="abc" -> SHLVL=abc
+//if the value is in quotes, it will 
+//be assigned without quotes -> SHLVL="abc" -> SHLVL=abc
 
 /*
 SHLVL="'     123''" -> it accepts this value but (it consider it as string)
 SHLVL=    123 -> it doesnt accept
 
 */
-
 
 //HANDLE THE AFFECT OF $ SIGN
 //WHAT IF IT INITIALIZE VARIABLE WITH $
@@ -42,7 +42,7 @@ int	change_env_value(char *var_name, char *new_value, t_shell *shell)
 	return (1);
 }
 
-char	*key_from_index(int	pos, t_shell *shell)
+char	*key_from_index(int pos, t_shell *shell)
 {
 	char	**var;
 	char	*key;
@@ -52,5 +52,5 @@ char	*key_from_index(int	pos, t_shell *shell)
 		return (NULL);
 	key = ft_strdup(var[0]);
 	free_double((void **)var);
-	return (key);	
+	return (key);
 }

@@ -1,23 +1,22 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/14 13:01:03 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/26 13:42:05 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void single_command(t_node *node, char **argv)
+void	single_command(t_node *node, char **argv)
 {
-	pid_t 	pid;
+	pid_t	pid;
 	int		status;
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -63,10 +62,10 @@ void	execute_builtin(t_node *command)
 		ft_env(command);
 	else if (!ft_strcmp(command->cmd, "cd"))
 		ft_cd(command);
-	//else if (!ft_strcmp(command->cmd, "unset"))
-		//ft_unset();
-	//else if (!ft_strcmp(command->cmd, "exit"))
-		//ft_exit();
+	else if (!ft_strcmp(command->cmd, "unset"))
+		ft_unset(command);
+	else if (!ft_strcmp(command->cmd, "exit"))
+		ft_exit(command);
 	else if (!ft_strcmp(command->cmd, "export"))
 		ft_export(command);
 }
