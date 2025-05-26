@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/25 16:12:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/26 12:55:46 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	int		j;
 	t_node	*current_node;
 
+	j = 0;
 	current_node = *unit;
 	current_node->args_count = count_args(result, current_node);
 	current_node->args = malloc(sizeof(char *) * current_node->args_count + 1);
