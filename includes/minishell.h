@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/26 16:45:04 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:52:48 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	ft_unset(t_node *command);
 
 //expand
 void	process_exp(t_node *command);
-void	perfect(t_node *command, char **arr);
+char	*perfect(t_node *command, char **arr);
 
 //ALINA
 // parsing
@@ -110,10 +110,11 @@ void	read_the_input(char *rl, t_shell *shll);
 //free.c
 void	free_arr(char **arr);
 void	free_exit(t_shell *shell);
-void	free_node_arr(char **arr, int arr_length);
-void	free_linked_list(t_node *node);
+// void	free_node_arr(char **arr, int arr_length);
+// void	free_linked_list(t_node *node);
 void	iterate_free_nodes(t_node *head);
 void	free_double_n(void **arr, int n);
+
 
 // split the linked list
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
@@ -130,25 +131,28 @@ char	*extract_token_v2(const char *str);
 int find_command_path(char *input, t_node *unit);
 
 // find_args.c
-int		count_args(char **result, t_node *current_node);
+int	count_args(char **result, t_node *current_node, int j_temp);
 void	find_args(t_node *cmd, char **result, int *i, int *j);
 int		count_args_inside_loop(char **result, t_node *current_node, int *i);
 char	*retrieve_cmd_name(t_node *node);
+int		alloc_mem_for_args_arr(t_node *current_node);
 
 //find_flags.c
 int		count_flags(char **result, int j);
 // void 	find_flags(char *result, t_node *unit, int *i);
-int		find_flags(char *result, t_node *unit, int *i);
+void	find_flags(char *result, t_node *current_node, int *i);
 char	*ft_strdup2(const char *s1);
 
 // find_vars.c
 int count_variables(char **result, int *j);
 int alloc_mem_for_vars_arr(t_node *current_node);
+void find_vars(char *result, t_node *current_node, int *c);
 
 // utils.c
 int		is_valid_command(t_node *current_node, char *rl);
 int		rl_is_space(char *rl);
-int		is_operator(char *c);
+// int		is_operator(char *c);
+int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp);
 
 // piping.c
 void	create_pipe(t_node *node);

@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:36:40 by apple             #+#    #+#             */
-/*   Updated: 2025/05/26 17:03:39 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/27 16:01:48 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@ int count_variables(char **result, int *j)
     vars_count = 0;
 	while (result[i])
 	{
-		if (is_operator(result[i]) == 0)
-			break ;	
+		if (ft_strcmp(result[i], "|") == 0)
+		{
+			break ;
+		}
 		if (result[i][0] == '$')
+		{
+			// printf("IN_1\n");
 			vars_count++;
+		}
 		i++;
 	}
 	return (vars_count);
@@ -48,18 +53,13 @@ int alloc_mem_for_vars_arr(t_node *current_node)
     return (0);
 }
 
-// int find_vars(char *result, t_node *current_node, int *i)
-// {
-//     int     i;
-
-//     i = *j;
-//     vars_count = 0;
-// 	while (result[i])
-// 	{
-// 		if (is_operator(result[i]) == 0)
-// 			break ;	
-// 		if (result[i][0] == '$')
-// 			vars_count++;
-// 		i++;
-// 	}
-// }
+void find_vars(char *result, t_node *current_node, int *c)
+{
+	if (result[0] == '$')
+	{
+		// printf("IN\n");
+		current_node->vars[*c] = ft_strdup2(result);
+		// printf("current_node->vars[*c] %s\n", current_node->vars[*c]);
+		(*c)++;	
+	}
+}

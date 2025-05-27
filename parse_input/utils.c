@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/26 14:54:19 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/27 20:05:20 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,26 @@
     bash: -l: command not found;
 */
 
-int	is_operator(char *c)
+int is_not_arg(t_node *current_node, char *str)
 {
-	if (ft_strcmp(c, "|") == 0 || ft_strcmp(c, "<") == 0
-		|| ft_strcmp(c, ">") == 0 || ft_strcmp(c, ">>") == 0
-		|| ft_strcmp(c, "<<") == 0)
-		return (1);
+	t_node *temp;
+	
+	temp = current_node;
+	while (temp)
+	{
+		if (temp->redir_files && temp->redir_files->file_name && ft_strcmp(temp->redir_files->file_name, str) == 0)
+			return (1);
+		temp = temp->next;
+	}
 	return (0);
+}
+
+int	condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp)
+{
+	if ((cmd_name == NULL && result[j_temp][0] != '-' && result[j_temp][0] != '$' && ft_strcmp(result[j_temp], "<") != 0 && is_not_arg(current_node, result[j_temp]) == 0)
+			|| (cmd_name != NULL && ft_strcmp(result[j_temp], cmd_name) != 0 && result[j_temp][0] != '-' && result[j_temp][0] != '$' && ft_strcmp(result[j_temp], "<") != 0 && is_not_arg(current_node, result[j_temp]) == 0))
+		return (0);
+	return (1);
 }
 
 int	rl_is_space(char *rl)
