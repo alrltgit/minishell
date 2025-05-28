@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/28 16:03:53 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/28 16:45:57 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void read_the_input(char *rl, t_shell *shll)
     //     temp = temp->next;
     // }
 	// print_node(unit);
-    // process_exp(unit);
+    process_exp(unit);
 	// perfect(unit, &unit->vars[0]);
 	if (unit->is_pipe)
 		create_pipe(unit);
