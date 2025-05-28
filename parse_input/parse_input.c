@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/27 20:09:04 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/28 16:03:53 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_redir *add_new_file(t_redir **head)
     new_node = malloc(sizeof(t_redir));
     if (!new_node)
         return (NULL);
+    new_node->file_name = NULL;
     if (!*head)
     {
         *head = new_node;
@@ -47,27 +48,37 @@ t_redir *add_new_file(t_redir **head)
     while (temp->next)
         temp = temp->next;
     temp->next = new_node;
+    // printf("New node added: %p\n", (void *)new_node);
     return (new_node);
 }
 
 int check_for_redir(t_node *current_node, char **result, int *j)
 {
+    t_redir *new_redir;
+    
     if (ft_strcmp(result[*j], "<") == 0)
     {
+        // printf("IN_1\n");
         current_node->stdin_redirect = 1;
-        current_node->redir_files = add_new_file(&current_node->redir_files);
-        current_node->redir_files->file_name = malloc(sizeof(char) * (ft_strlen(result[*j]) + 1));
-        current_node->redir_files->file_name = ft_strdup(result[*j + 1]);
-        if (access(current_node->redir_files->file_name, F_OK) != 0)
+        new_redir = add_new_file(&current_node->redir_files);
+        if (!new_redir)
+            return (1);
+        new_redir->file_name = ft_strdup(result[*j + 1]);
+        // printf("new_redir->file_name_011: %s\n", new_redir->file_name);
+        if (!new_redir->file_name)
+            return (1);
+        // printf("new_redir->file_name: %s\n", new_redir->file_name);
+        if (access(new_redir->file_name, F_OK) != 0)
         {
-            printf("%s: No such file or directory.\n", current_node->redir_files->file_name);
+            printf("%s: No such file or directory.\n", new_redir->file_name);
             return (1);
         }
-        if (access(current_node->redir_files->file_name, R_OK) != 0)
+        if (access(new_redir->file_name, R_OK) != 0)
         {
-            printf("%s: Permission denied.\n", current_node->redir_files->file_name);
+            printf("%s: Permission denied.\n", new_redir->file_name);
             return (1);
         }
+        (*j)++;
     }
     return (0);
 }
@@ -116,7 +127,6 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
         return (1);
     if (alloc_mem_for_vars_arr(current_node) == 1)
         return (1);
-    current_node->redir_files = malloc(sizeof(t_redir));
     i = 0;
     c = 0;
     while (result[j])
@@ -160,17 +170,15 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	{
 		if (ft_strcmp(result[i], "|") == 0)
 		{
-            printf("IN\n");
 			j = 0;
 			current_node = current_node->next;
 			if (!current_node)
             {
-                printf("IN_0\n");
+                // printf("IN_0\n");
                 break ;
             }
 			current_node->args_count = count_args(result,
 					current_node, i + 1);
-            printf("current_node->args_count: %d\n", current_node->args_count);
             if (alloc_mem_for_args_arr(current_node) == 1)
                 return ;
 			if (!current_node->args)
@@ -180,6 +188,7 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 		}
 		if (current_node && result[i])
 			find_args(current_node, result, &i, &j);
+        // printf("current_node->args: %s\n", current_node->args[i]);
 		i++;
 	}
 }
@@ -208,52 +217,53 @@ void read_the_input(char *rl, t_shell *shll)
 	add_cmds_flags_to_linked_list(result, &temp);
     temp = unit;
 	add_args_to_linked_list(result, &temp);
-    int i;
-    while (temp)
-    {
-        printf("temp->cmd: %s\n", temp->cmd);
-        i = 0;
-        while (temp->redir_files)
-        {
-            printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-            temp->redir_files = temp->redir_files->next;
-        }
-        i = 0;
-        while (i < temp->flags_count)
-        {
-            printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-            i++;
-        }
-        i = 0;
-        while (i < temp->args_count)
-        {
-            printf("temp->args[%d]: %s\n", i, temp->args[i]);
-            i++;
-        }
-        i = 0;
-        while (i < temp->vars_count)
-        {
-            printf("temp->vars[%d]: %s\n", i, temp->vars[i]);
-            i++;
-        }
-        temp = temp->next;
-    }
+    // temp = unit;
+    // int i;
+    // while (temp)
+    // {
+    //     printf("temp->cmd: %s\n", temp->cmd);
+    //     i = 0;
+    //     while (i < temp->flags_count)
+    //     {
+    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
+    //         i++;
+    //     }
+    //     i = 0;
+    //     while (i < temp->args_count)
+    //     {
+    //         printf("temp->args[%d]: %s\n", i, temp->args[i]);
+    //         i++;
+    //     }
+    //     i = 0;
+    //     while (i < temp->vars_count)
+    //     {
+    //         printf("temp->vars[%d]: %s\n", i, temp->vars[i]);
+    //         i++;
+    //     }
+    //     i = 0;
+    //     while (temp->redir_files)
+    //     {
+    //         printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
+    //         temp->redir_files = temp->redir_files->next;
+    //     }
+    //     temp = temp->next;
+    // }
 	// print_node(unit);
     // process_exp(unit);
 	// perfect(unit, &unit->vars[0]);
-	// if (unit->is_pipe)
-	// 	create_pipe(unit);
-	// else
-	// {
-	// 	if (unit->cmd_type == B_IN)
-	// 		execute_builtin(unit);
-	// 	else if (unit->cmd_type == NON_B_IN)
-	// 		execute_other(unit);
-	// 	else
-	// 	{
-	// 		ft_printf("%s", result[0]);
-	// 		ft_putstr_fd(" : command not found\n", 2);
-	// 	}
-	// }
+	if (unit->is_pipe)
+		create_pipe(unit);
+	else
+	{
+		if (unit->cmd_type == B_IN)
+			execute_builtin(unit);
+		else if (unit->cmd_type == NON_B_IN)
+			execute_other(unit);
+		else
+		{
+			ft_printf("%s", result[0]);
+			ft_putstr_fd(" : command not found\n", 2);
+		}
+	}
 	free_arr(result);
 }

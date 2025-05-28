@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/27 19:53:14 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/28 16:03:14 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,8 @@ int	count_args(char **result, t_node *current_node, int j_temp)
 			printf("in_break\n");
 			break ;	
 		}
-		// printf("result[i]: %s\n", result[i]);
-		// printf("cmd_name: %s\n", cmd_name);
 		if (condition_is_met(current_node, cmd_name, result, j_temp) == 0)
-		{
-			printf("in\n");
 			args_count++;	
-		}
 		j_temp++;
 	}
 	return (args_count);
@@ -71,8 +66,6 @@ void	find_args(t_node *current_node, char **result, int *i, int *j)
 	char	*cmd_name;
 
 	cmd_name = retrieve_cmd_name(current_node);
-	// printf("cmd_name: %s", cmd_name);
-	// printf("result[i]: %s\n", result[*i]);
 	if (condition_is_met(current_node, cmd_name, result, *i) == 0)
 	{
 		current_node->args[*j] = ft_strdup(result[*i]);

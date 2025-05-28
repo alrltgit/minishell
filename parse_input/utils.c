@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/27 20:05:20 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/28 16:06:26 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ int is_not_arg(t_node *current_node, char *str)
 	temp = current_node;
 	while (temp)
 	{
+		// printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
+		// printf("str: %s\n", str);
 		if (temp->redir_files && temp->redir_files->file_name && ft_strcmp(temp->redir_files->file_name, str) == 0)
-			return (1);
+		{
+			return (1);	
+		}
 		temp = temp->next;
 	}
 	return (0);
@@ -38,9 +42,17 @@ int is_not_arg(t_node *current_node, char *str)
 
 int	condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp)
 {
-	if ((cmd_name == NULL && result[j_temp][0] != '-' && result[j_temp][0] != '$' && ft_strcmp(result[j_temp], "<") != 0 && is_not_arg(current_node, result[j_temp]) == 0)
-			|| (cmd_name != NULL && ft_strcmp(result[j_temp], cmd_name) != 0 && result[j_temp][0] != '-' && result[j_temp][0] != '$' && ft_strcmp(result[j_temp], "<") != 0 && is_not_arg(current_node, result[j_temp]) == 0))
+	if (result[j_temp] == NULL)
+		return (1);
+	if (ft_strcmp(result[j_temp], "<") == 0 || ft_strcmp(result[j_temp], ">") == 0)
+		return (1);
+	// printf("new_redir->file_name_0: %s\n", current_node->redir_files->file_name);
+	// printf("result[j_temp]: %s\n", result[j_temp]);
+	if ((cmd_name == NULL && result[j_temp][0] != '-' && result[j_temp][0] != '$' && is_not_arg(current_node, result[j_temp]) == 0)
+			|| (cmd_name != NULL && ft_strcmp(result[j_temp], cmd_name) != 0 && result[j_temp][0] != '-' && result[j_temp][0] != '$' && is_not_arg(current_node, result[j_temp]) == 0))
+	{
 		return (0);
+	}
 	return (1);
 }
 
