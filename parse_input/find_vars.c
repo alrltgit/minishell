@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_vars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:36:40 by apple             #+#    #+#             */
-/*   Updated: 2025/05/27 16:01:48 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/29 11:58:49 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int count_variables(char **result, int *j)
 		}
 		if (result[i][0] == '$')
 		{
-			// printf("IN_1\n");
 			vars_count++;
 		}
 		i++;

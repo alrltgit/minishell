@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/28 16:03:14 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/29 11:58:32 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	count_args(char **result, t_node *current_node, int j_temp)
 	{
 		if (ft_strcmp(result[j_temp], "|") == 0)
 		{
-			printf("in_break\n");
 			break ;	
 		}
 		if (condition_is_met(current_node, cmd_name, result, j_temp) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/28 16:45:57 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/29 13:01:31 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,25 @@ t_redir *add_new_file(t_redir **head)
     new_node = malloc(sizeof(t_redir));
     if (!new_node)
         return (NULL);
+    
+    // 💥 Initialize ALL members
     new_node->file_name = NULL;
+    new_node->next = NULL;
+
     if (!*head)
     {
         *head = new_node;
         return (new_node);
     }
+
     temp = *head;
     while (temp->next)
         temp = temp->next;
     temp->next = new_node;
-    // printf("New node added: %p\n", (void *)new_node);
+
     return (new_node);
 }
+
 
 int check_for_redir(t_node *current_node, char **result, int *j)
 {
@@ -58,16 +64,13 @@ int check_for_redir(t_node *current_node, char **result, int *j)
     
     if (ft_strcmp(result[*j], "<") == 0)
     {
-        // printf("IN_1\n");
         current_node->stdin_redirect = 1;
         new_redir = add_new_file(&current_node->redir_files);
         if (!new_redir)
             return (1);
         new_redir->file_name = ft_strdup(result[*j + 1]);
-        // printf("new_redir->file_name_011: %s\n", new_redir->file_name);
         if (!new_redir->file_name)
             return (1);
-        // printf("new_redir->file_name: %s\n", new_redir->file_name);
         if (access(new_redir->file_name, F_OK) != 0)
         {
             printf("%s: No such file or directory.\n", new_redir->file_name);
@@ -164,7 +167,9 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	current_node = *unit;
 	current_node->args_count = count_args(result, current_node, j_temp);
     if (alloc_mem_for_args_arr(current_node) == 1)
+    {
         return ;
+    }
 	i = 0;
 	while (result[i])
 	{
@@ -174,7 +179,6 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 			current_node = current_node->next;
 			if (!current_node)
             {
-                // printf("IN_0\n");
                 break ;
             }
 			current_node->args_count = count_args(result,
@@ -188,7 +192,6 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 		}
 		if (current_node && result[i])
 			find_args(current_node, result, &i, &j);
-        // printf("current_node->args: %s\n", current_node->args[i]);
 		i++;
 	}
 }
@@ -201,7 +204,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();
 		return ;
@@ -249,7 +252,7 @@ void read_the_input(char *rl, t_shell *shll)
     //     temp = temp->next;
     // }
 	// print_node(unit);
-    process_exp(unit);
+    // process_exp(unit);
 	// perfect(unit, &unit->vars[0]);
 	if (unit->is_pipe)
 		create_pipe(unit);

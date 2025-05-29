@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/28 16:06:26 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/29 12:11:05 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,17 @@
 
 int is_not_arg(t_node *current_node, char *str)
 {
-	t_node *temp;
-	
-	temp = current_node;
+	t_node *temp = current_node;
+
 	while (temp)
 	{
-		// printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-		// printf("str: %s\n", str);
-		if (temp->redir_files && temp->redir_files->file_name && ft_strcmp(temp->redir_files->file_name, str) == 0)
+		if (temp->redir_files
+			&& temp->redir_files->file_name)
 		{
-			return (1);	
+			if (ft_strcmp(temp->redir_files->file_name, str) == 0)
+			{
+				return (1);
+			}
 		}
 		temp = temp->next;
 	}
@@ -46,8 +47,6 @@ int	condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_
 		return (1);
 	if (ft_strcmp(result[j_temp], "<") == 0 || ft_strcmp(result[j_temp], ">") == 0)
 		return (1);
-	// printf("new_redir->file_name_0: %s\n", current_node->redir_files->file_name);
-	// printf("result[j_temp]: %s\n", result[j_temp]);
 	if ((cmd_name == NULL && result[j_temp][0] != '-' && result[j_temp][0] != '$' && is_not_arg(current_node, result[j_temp]) == 0)
 			|| (cmd_name != NULL && ft_strcmp(result[j_temp], cmd_name) != 0 && result[j_temp][0] != '-' && result[j_temp][0] != '$' && is_not_arg(current_node, result[j_temp]) == 0))
 	{
