@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/26 13:22:00 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/31 14:00:15 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,41 +107,22 @@ try with
 //send the str to expand func if there is valid expansion,
 //it will return the value, else null
 
-void	replace_var(t_shell *shell, char **arr, int pos, int len, int in_squote)
+char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int quote)
 {
-	char	*l_half;
-	int		i;
-	char	*var;
-	char	*f_half;
-	char	*real_var;
-	char	*realarr = *arr;
-	//"'$PATH'"
-	//pos is index of P
-	if (in_squote == 1)
-		return ;
-	var = ft_substr(realarr, pos, len);
-	printf("DEBUG1 VAR -> %s\n", var);
-	i = -1;
-	//Till "' added into f_half (dont add $)
-	// f_half = NULL;
-	f_half = ft_substr(realarr, 0, pos - 1);
-	printf("F_HALF -> %s\n", f_half);
-	real_var = ft_strdup(value_from_key(var, shell));
-	printf("DEBUG2 REAL_VAR -> %s\n", real_var);
-	i = pos + len;
-	// l_half = NULL;
-	l_half = ft_strdup(realarr + i);
-	printf("L_HALF -> %s\n", l_half);
-	//ft_strcat(f_half, ft_strcat(real_var, l_half));
-	/* free(*arr);
-	*arr = ft_strdup(realarr); */
-	realarr = ft_strcat(f_half, ft_strcat(real_var, l_half));
-	arr = &realarr;
-	printf("DEBUG3 REALARR-> %s\n", realarr);
-	// printf("DEBUG4 NODE ARG-> %s\n", shell->cmds->args[0]);
+	char	*tmp;
+	int		j;
+
+	j = -1;
+	if (quote == 1)
+		tmp = ft_substr(var, pos + 1, len - 1);
+	else
+		tmp = value_from_key(ft_substr(var, pos, len), shell);
+	while (tmp && tmp[++j])
+		str = update_str(str, tmp[j]);
+	return (str);
 }
 
-void	perfect(t_node *command, char **arr)
+char	*perfect(t_node *command, char **arr)
 {
 	int	in_sq;
 	int	in_dq;
@@ -149,49 +130,59 @@ void	perfect(t_node *command, char **arr)
 	int	j;
 	int	len;
 	char	*arr2 = *arr;
+	char	*str;
 	in_sq = 0;
 	in_dq = 0;
 	i = -1;
-	//"'$PATH'"
-	//printf("ARRRRR %s\n", arr2);
+	str = NULL;
+
 	while (arr2[++i])
 	{
-		if (arr2[i] == '$' && is_alphanumeric(arr2[i + 1]))
+		if (arr2[i] == '\'' && in_dq == 0)
+			in_sq = 1 - in_sq;
+		if (arr2[i] == '"' && in_sq == 0)
+			in_dq = 2 - in_dq;
+		if (arr2[i] == '$' && in_sq == 0 && arr2[i + 1] != ' ' && arr2[i + 1] != '\0')
 		{
 			j = i;
 			len = 0;
 			while (is_alphanumeric(arr2[++j]))
 				++len;
-			printf("POS -> %d\n", i + 1);
-			printf("VALUE IN THE POSITION -> %c\n", arr2[i + 1]);
-			printf("QUOTE MODE -> %d\n", in_dq + in_sq);
-			replace_var(command->shell, &arr2, i + 1, len, in_sq);
-			printf("DEBUG4 NODE ARG-> %s\n", command->args[0]);
+			str = replace_var(command->shell, str, arr2, i + 1, len, in_sq + in_dq);
+			i += len;
 		}
-		if (arr2[i] == '\'' && in_dq == 0)
-			in_sq = 1 - in_sq;
-		if (arr2[i] == '"' && in_sq == 0)
-			in_dq = 2 - in_dq;
+		else
+			str = update_str(str, arr2[i]);
 	}
-	/* free(arr);
-	(*arr) = ft_strdup(arr2);
-	free(arr2); */
+	return (str);
 }
 
+
+/*
+	when input is given it will go
+	quote handling, expansion, execution
+
+	EXPORT AND ECHO NEEDS IMPROVEMENTS
+*/
 
 void	process_exp(t_node *command)
 {
 	int		i;
-
-	printf("ENTERED PROCESS_EXP with \n");
-	print_node(command);
+	char	*temp;
+	//printf("ENTERED PROCESS_EXP with \n");
+	//print_node(command);
 	i = -1;
 	while (++i < command->args_count)
 	{
-		perfect(command, &command->args[i]);
-		print_node(command);
+		temp = ft_strdup(command->args[i]);
+		free(command->args[i]);
+		command->args[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
 	}
 	i = -1;
 	while (++i < command->flags_count)
-		perfect(command, &command->flags[i]);
+	{
+		temp = ft_strdup(command->flags[i]);
+		free(command->flags[i]);
+		command->flags[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
+	}
 }

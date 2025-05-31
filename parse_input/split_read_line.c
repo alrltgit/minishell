@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_read_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/22 18:16:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/30 18:46:32 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,23 @@ static void	skip_whitespace(const char *str, int *i)
 		(*i)++;
 }
 
-static void	trim_quotes_if_needed(char *token, int len)
+void	trim_outer(char *str)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	if ('\'' == str[i] || '"' == str[i])
+	{
+		temp = ft_strdup(str);
+		free(str);
+		str = ft_strtrim(temp, &temp[ft_strlen(temp) - 1]);
+		free(temp);
+	}	
+	//printf("After trim outer-> %s\n", str);
+}
+
+void	trim_quotes_if_needed(char *token, int len)
 {
 	if ((token[0] == '\'' && token[len - 1] == '\'')
 		|| (token[0] == '"' && token[len - 1] == '"'))
@@ -26,6 +42,7 @@ static void	trim_quotes_if_needed(char *token, int len)
 		token[len - 1] = '\0';
 		ft_memmove(token, token + 1, len - 1);
 	}
+	printf("After trim if needed-> %s\n", token);
 }
 
 char	*extract_token_v2(const char *str)
@@ -80,7 +97,8 @@ char	*extract_token(const char *str, int *i)
 	token = ft_substr(str, start, len);
 	if (!token)
 		return (NULL);
-	trim_quotes_if_needed(token, len);
+	//trim_outer(token);
+	// trim_quotes_if_needed(token, len);
 	return (token);
 }
 

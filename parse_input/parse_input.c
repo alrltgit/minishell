@@ -6,11 +6,53 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/26 12:55:46 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/31 15:23:15 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*handle_quotes(char *str)
+{
+	int	i;
+	int	sq;
+	int	dq;
+	char	*temp;
+
+	i = -1;
+	sq = 0;
+	dq = 0;
+	temp = NULL;
+	// "'"$PATH"'"
+	// printf("BEFORE HANDLING QUOTES -> %s\n", str);
+	while (str[++i])
+	{
+		if (str[i] == '\'' && dq == 0)
+		{
+			sq = 1 - sq;
+			while (str[++i])
+			{
+				if (str[i] == '\'')
+					continue;
+				temp = update_str(temp, str[i]);
+			}
+		}
+		if (str[i] == '"' && sq == 0)
+		{
+			dq = 2 - dq;
+			while (str[i++])
+			{
+				if (str[i] == '"')
+					continue;
+				temp = update_str(temp, str[i]);
+			}
+		}
+		else
+			temp = update_str(temp, str[i]);
+	}
+	// printf("AFTER HANDLING QUOTES -> %s\n", temp);
+	return (temp);
+}
 
 int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
@@ -121,49 +163,6 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	}
 }
 
-/* void read_the_input(char *rl, t_shell *shll)
-{
-    char	**result;
-    t_node 	*unit;
-    t_node 	*temp;
-	
-    char **result;
-    t_node *unit;
-    t_node *temp;
-
-	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
-	{
-		// rl_replace_line("", 0);
-		rl_redisplay();
-		rl_on_new_line();
-		return ;
-	}
-    result = split_args(rl);
-    unit = create_unit();
-	unit->shell = shll;
-	shll->cmds = unit;
-	temp = unit;
-	add_cmds_flags_to_linked_list(result, &temp);
-	add_args_to_linked_list(result, &temp);
-	if (temp->cmd_type == B_IN)
-	{
-		execute_builtin(temp);
-		printf("builtin cmd-> %s\n", temp->cmd);
-	}
-	else if (temp->cmd_type == NON_B_IN)
-	{
-		execute_other(temp);
-		printf("cmd-> %s\n", temp->cmd);
-	}
-	else
-	{
-		ft_printf("%s", result[0]);
-		printf("cmd-> %s\n", temp->cmd);
-		ft_putstr_fd(" : command not found\n", 2);
-	}
-    free(result);
-} */
-
 void	read_the_input(char *rl, t_shell *shll)
 {
 	char	**result;
@@ -182,13 +181,12 @@ void	read_the_input(char *rl, t_shell *shll)
 	unit->shell = shll;
 	shll->cmds = unit;
 	temp = unit;
-	/* if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-		return ; */
+
 	add_cmds_flags_to_linked_list(result, &temp);
 	add_args_to_linked_list(result, &temp);
-	//print_node(unit);
+	// unit->args_count = 0;
 	process_exp(unit);
-	// perfect(unit, &unit->args[0]);
+	//print_node(unit);
 	if (unit->is_pipe)
 		create_pipe(unit);
 	else

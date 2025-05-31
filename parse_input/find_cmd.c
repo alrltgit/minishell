@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/22 18:08:12 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/31 14:19:54 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	find_command_path(char *input, t_node *unit, int *cmd_is_found)
 	char	**paths;
 	int		i;
 
+	/* if (input[0] == '$')
+		return (2); */
 	if (is_builtin(input))
 	{
 		*cmd_is_found = 1;

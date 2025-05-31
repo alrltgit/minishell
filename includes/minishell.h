@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/25 14:32:14 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/31 12:50:43 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,17 @@ void	ft_unset(t_node *command);
 
 //expand
 void	process_exp(t_node *command);
-void	perfect(t_node *command, char **arr);
+char	*perfect(t_node *command, char **arr);
+
+//builtins_utils.c
+// char	**process_rl_line(t_node *command, char *rl_buffer);
+void	process_rl_line(t_node *command, char **rl_buffer);
 
 //ALINA
 // parsing
 char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
+char	*handle_quotes(char *str);
 
 //free.c
 void	free_arr(char **arr);
@@ -117,6 +122,8 @@ t_node	*create_unit(void);
 //split_readline.c
 char	*extract_token(const char *str, int *i);
 char	*extract_token_v2(const char *str);
+void	trim_quotes_if_needed(char *token, int len);
+void	trim_outer(char *str);
 // find_cmd.c
 int		find_command_path(char *input, t_node *unit, int *cmd_is_found);
 
