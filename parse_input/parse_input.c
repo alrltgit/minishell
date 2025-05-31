@@ -6,11 +6,53 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/30 21:55:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/31 16:55:00 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*handle_quotes(char *str)
+{
+	int	i;
+	int	sq;
+	int	dq;
+	char	*temp;
+
+	i = -1;
+	sq = 0;
+	dq = 0;
+	temp = NULL;
+	// "'"$PATH"'"
+	// printf("BEFORE HANDLING QUOTES -> %s\n", str);
+	while (str[++i])
+	{
+		if (str[i] == '\'' && dq == 0)
+		{
+			sq = 1 - sq;
+			while (str[++i])
+			{
+				if (str[i] == '\'')
+					continue;
+				temp = update_str(temp, str[i]);
+			}
+		}
+		if (str[i] == '"' && sq == 0)
+		{
+			dq = 2 - dq;
+			while (str[i++])
+			{
+				if (str[i] == '"')
+					continue;
+				temp = update_str(temp, str[i]);
+			}
+		}
+		else
+			temp = update_str(temp, str[i]);
+	}
+	// printf("AFTER HANDLING QUOTES -> %s\n", temp);
+	return (temp);
+}
 
 int alloc_mem_for_flags_arr(t_node *current_node)
 {
@@ -217,8 +259,8 @@ void read_the_input(char *rl, t_shell *shll)
 	/* if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 		return ; */
     
-	add_cmds_flags_to_linked_list(result, &temp);
-    temp = unit;
+    add_cmds_flags_to_linked_list(result, &temp);
+    //temp = unit;
 	add_args_to_linked_list(result, &temp);
     // temp = unit;
     // int i;
@@ -259,14 +301,17 @@ void read_the_input(char *rl, t_shell *shll)
 	else
 	{
 		if (unit->cmd_type == B_IN)
+        {
+            printf("went into builtin exec with cmd of %s and arg %s\n", unit->cmd, unit->args[0]);
 			execute_builtin(unit);
+        }
 		else if (unit->cmd_type == NON_B_IN)
 			execute_other(unit);
-		else
-		{
-			ft_printf("%s", result[0]);
-			ft_putstr_fd(" : command not found\n", 2);
-		}
+		// else
+		// {
+		// 	ft_printf("%s", result[0]);
+		// 	ft_putstr_fd(" : command not found\n", 2);
+		// }
 	}
 	free_arr(result);
 }

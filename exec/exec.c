@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 13:49:18 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/26 13:42:05 by apple            ###   ########.fr       */
+/*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
+/*   Updated: 2025/05/31 16:51:43 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ void	execute_builtin(t_node *command)
 	else if (!ft_strcmp(command->cmd, "cd"))
 		ft_cd(command);
 	else if (!ft_strcmp(command->cmd, "unset"))
+	{
+		printf("TEST_0\n");
 		ft_unset(command);
+	}
 	else if (!ft_strcmp(command->cmd, "exit"))
 		ft_exit(command);
 	else if (!ft_strcmp(command->cmd, "export"))

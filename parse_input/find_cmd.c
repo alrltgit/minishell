@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/26 13:48:04 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/31 16:17:13 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int find_command_path(char *input, t_node *unit)
 	char	**paths;
 	int		i;
 
+	/* if (input[0] == '$')
+		return (2); */
 	if (is_builtin(input))
 	{
 		unit->cmd_is_found = 1;

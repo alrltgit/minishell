@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/25 17:26:20 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/31 17:40:04 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_environment(t_shell *shell) //delete at the end
 	for (int i = 0; shell->env[i] != NULL; i++)
 	{
 		key = ft_split(shell->env[i], '=');
-		printf("%d %s\n", index_from_key(key[0], shell->env), shell->env[i]);
+		// printf("%d %s\n", index_from_key(key[0], shell->env), shell->env[i]);
 		free_double((void **)key);
 	}
 	//printf("%d\n", index_from_key("SHLVL", shell->env));
@@ -104,7 +104,6 @@ int main(int ac, char **av, char **ev)
 	init_env(ev, &shell);
 	//handle $variable expansion
 	shell_loop(&shell);
-	//print_environment(&shell);
 	//free_double((void **)shell.env);
     return (0);
 }

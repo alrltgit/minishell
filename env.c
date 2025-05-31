@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/26 12:51:27 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/31 17:39:07 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	index_from_key(char *var_name, char **env_array)
 	i = -1;
 	while (env_array[++i])
 	{
+		printf("var_name: %s\n", var_name);
+		// printf("var[0]: %s\n", var[0]);
 		var = ft_split(env_array[i], '=');
 		if (ft_strcmp(var_name, var[0]) == 0)
 		{
