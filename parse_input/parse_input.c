@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/05/29 13:01:31 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:55:41 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();
 		return ;
@@ -252,7 +252,7 @@ void read_the_input(char *rl, t_shell *shll)
     //     temp = temp->next;
     // }
 	// print_node(unit);
-    // process_exp(unit);
+    process_exp(unit);
 	// perfect(unit, &unit->vars[0]);
 	if (unit->is_pipe)
 		create_pipe(unit);

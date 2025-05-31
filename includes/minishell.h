@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/27 19:52:48 by apple            ###   ########.fr       */
+/*   Updated: 2025/05/30 16:04:13 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,6 @@ void	create_pipe(t_node *node);
 
 // redirection.c
 int redirect_to_stdin(t_redir *node);
-void redirect_to_stdout();
+int redirect_to_stdout(t_redir *node); 
 
 #endif
