@@ -6,11 +6,38 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/26 14:04:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/01 15:24:13 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, int *j, int *c)
+{
+    int j_temp;
+
+    if (ft_strcmp(result[*j], "|") == 0)
+    {
+        (*current_node)->is_pipe = 1;
+        *current_node = add_unit_to_end(unit);
+        j_temp = *j + 1;
+        
+        if (!result[j_temp])
+            return (1);
+        
+        (*current_node)->flags_count = count_flags(result, j_temp);
+        (*current_node)->vars_count = count_variables(result, &j_temp);
+        if (alloc_mem_for_flags_arr(*current_node) == 1)
+            return (1);
+        if (alloc_mem_for_vars_arr(*current_node) == 1)
+            return (1);
+        *i = 0;
+        *c = 0;
+        (*current_node)->cmd_is_found = 0;
+        (*j)++;
+    }
+    return (0);
+}
 
 void	create_pipe(t_node *node)
 {
@@ -41,11 +68,11 @@ void	create_pipe(t_node *node)
         if (pid == 0)
         {
             // fprintf(stderr, "Child process: executing command '%s'\n", temp->cmd);
-            if (temp == node && temp->stdin_redirect == 1)
-            {
-                if (redirect_to_stdin(temp->redir_files) == 1)
-                    return ;
-            }
+            // if (temp == node && temp->redir_files->type->stdin_redir == 1)
+            // {
+            //     if (redirect_to_stdin(temp->redir_files) == 1)
+            //         return ;
+            // }
             if (prev_fd != -1)
             {
                 dup2(prev_fd, STDIN_FILENO);

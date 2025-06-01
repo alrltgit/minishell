@@ -6,27 +6,34 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 17:39:07 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/01 16:27:22 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
+#include <string.h>
 
 /*check if the free double works properly*/
 int	index_from_key(char *var_name, char **env_array)
 {
 	int		i;
 	char	**var;
+	int temp; // delete after debugging
 
 	i = -1;
 	while (env_array[++i])
 	{
-		printf("var_name: %s\n", var_name);
-		// printf("var[0]: %s\n", var[0]);
+		// printf("env_array[i]: %s", env_array[i]);
 		var = ft_split(env_array[i], '=');
-		if (ft_strcmp(var_name, var[0]) == 0)
+		// printf("var[0]: %s - ", var[0]);
+		// printf("var_name: %s", var_name); // ends with \n, that's why ft_strcmp returns 10
+		temp = ft_strcmp(var_name, var[0]);
+		// printf("temp: %d", temp);
+		if (temp == 0)
 		{
+			// printf("TEST\n");
 			free_double((void **)var);
+			// printf("TEST\n");
 			return (i);
 		}
 		free_double((void **)var);

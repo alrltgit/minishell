@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 16:51:43 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/01 15:22:04 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	single_command(t_node *node, char **argv)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (node->stdin_redirect == 1)
-		{
-			if (redirect_to_stdin(node->redir_files) == 1)
-				return ;
-		}
+		// if (node->redir_files->type->stdin_redir == 1)
+		// {
+		// 	if (redirect_to_stdin(node->redir_files) == 1)
+		// 		return ;
+		// }
 		if (execve(node->cmd, argv, node->shell->env) == -1)
 		{
 			perror("execve failed\n");

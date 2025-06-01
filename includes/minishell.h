@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/31 16:16:58 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/01 15:20:26 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,17 @@ typedef struct s_shell
 	int		errcode;
 }	t_shell;
 
+typedef struct s_redir_type
+{
+	int stdin_redir;
+	int stdout_redir;
+	int append_redir;
+	int heredoc_redir;
+}	t_redir_type;
+
 typedef struct s_redir
 {
+	t_redir_type *type;
 	char *file_name;
 	struct s_redir *next;
 }	t_redir;
@@ -52,7 +61,6 @@ typedef struct s_node
 	char **args;
 	char **vars;
 	t_redir *redir_files;
-	int stdin_redirect;
 	int cmd_is_found;
 	int flags_count;
 	int args_count;
@@ -125,9 +133,10 @@ void	free_double_n(void **arr, int n);
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
 // parse_input
-// fill_unit_linked_list
+
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
+int alloc_mem_for_flags_arr(t_node *current_node);
 
 //split_readline.c
 char	*extract_token(const char *str, int *i);
@@ -163,6 +172,7 @@ int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j
 
 // piping.c
 void	create_pipe(t_node *node);
+int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, int *j, int *c);
 
 // redirection.c
 int redirect_to_stdin(t_redir *node);

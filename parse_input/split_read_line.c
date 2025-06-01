@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_read_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/30 18:46:32 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/01 16:26:43 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	trim_quotes_if_needed(char *token, int len)
 		token[len - 1] = '\0';
 		ft_memmove(token, token + 1, len - 1);
 	}
-	printf("After trim if needed-> %s\n", token);
+	// printf("After trim if needed-> %s\n", token);
 }
 
 char	*extract_token_v2(const char *str)
@@ -94,11 +94,13 @@ char	*extract_token(const char *str, int *i)
 		(*i)++;
 	}
 	len = *i - start;
+	// printf("len: %d", len);
 	token = ft_substr(str, start, len);
+	// printf("token: %s ", token);
 	if (!token)
 		return (NULL);
 	//trim_outer(token);
-	// trim_quotes_if_needed(token, len);
+	trim_quotes_if_needed(token, len);
 	return (token);
 }
 
