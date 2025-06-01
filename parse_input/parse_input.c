@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/01 12:24:27 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/01 14:14:34 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ void read_the_input(char *rl, t_shell *shll)
 		rl_on_new_line();
 		return ;
 	}
-    result = split_args(rl);
+    result = split_args(rl, 1);
     unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
@@ -259,43 +259,11 @@ void read_the_input(char *rl, t_shell *shll)
 	/* if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 		return ; */
     
+	/*handle when only expansion var is passed*/
     add_cmds_flags_to_linked_list(result, &temp);
-    //temp = unit;
 	add_args_to_linked_list(result, &temp);
-    // temp = unit;
-    // int i;
-    // while (temp)
-    // {
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (i < temp->flags_count)
-    //     {
-    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->args_count)
-    //     {
-    //         printf("temp->args[%d]: %s\n", i, temp->args[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->vars_count)
-    //     {
-    //         printf("temp->vars[%d]: %s\n", i, temp->vars[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (temp->redir_files)
-    //     {
-    //         printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-    //         temp->redir_files = temp->redir_files->next;
-    //     }
-    //     temp = temp->next;
-    // }
-	// print_node(unit);
+	printf("CMD-> %s\n", unit->cmd);
     process_exp(unit);
-	// perfect(unit, &unit->vars[0]);
 	if (unit->is_pipe)
 		create_pipe(unit);
 	else
@@ -304,11 +272,11 @@ void read_the_input(char *rl, t_shell *shll)
 			execute_builtin(unit);
 		else if (unit->cmd_type == NON_B_IN)
 			execute_other(unit);
-		// else
-		// {
-		// 	ft_printf("%s", result[0]);
-		// 	ft_putstr_fd(" : command not found\n", 2);
-		// }
+		else
+		{
+			ft_printf("%s", ft_split(rl_line_buffer, ' ')[0]);
+			ft_putstr_fd(" : command not found\n", 2);
+		}
 	}
 	free_arr(result);
 }

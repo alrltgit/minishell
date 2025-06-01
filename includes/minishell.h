@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/31 16:16:58 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/01 14:18:50 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	process_rl_line(t_node *command, char **rl_buffer);
 
 //ALINA
 // parsing
-char	**split_args(char *str);
+char	**split_args(char *str, int skipwspc);
 void	read_the_input(char *rl, t_shell *shll);
 char	*handle_quotes(char *str);
 
@@ -158,7 +158,7 @@ void find_vars(char *result, t_node *current_node, int *c);
 // utils.c
 int		is_valid_command(t_node *current_node, char *rl);
 int		rl_is_space(char *rl);
-// int		is_operator(char *c);
+int		is_operator(char *c);
 int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp);
 
 // piping.c

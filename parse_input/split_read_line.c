@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/30 18:46:32 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/01 14:14:51 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*extract_token(const char *str, int *i)
 	return (token);
 }
 
-char	**split_args(char *str)
+char	**split_args(char *str, int skipwspc)
 {
 	char	**result;
 	char	*token;
@@ -116,7 +116,8 @@ char	**split_args(char *str)
 	count = 0;
 	while (str[i])
 	{
-		skip_whitespace(str, &i);
+		if (skipwspc)
+			skip_whitespace(str, &i);
 		if (!str[i])
 			break ;
 		token = extract_token(str, &i);

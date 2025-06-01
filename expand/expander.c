@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 16:33:25 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/01 12:57:08 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char	*perfect(t_node *command, char **arr)
 	int	i;
 	int	j;
 	int	len;
-	char	*arr2 = *arr;
+	char	*arr2 = *arr; //fix the syntax
 	char	*str;
 	in_sq = 0;
 	in_dq = 0;

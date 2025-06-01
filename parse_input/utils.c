@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/29 12:11:05 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:22:18 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@
     minishell: ls -l | -l: command not found;
     bash: -l: command not found;
 */
+
+int	is_operator(char *c)
+{
+	if (ft_strcmp(c, "|") == 0 || ft_strcmp(c, "<") == 0
+		|| ft_strcmp(c, ">") == 0 || ft_strcmp(c, ">>") == 0
+		|| ft_strcmp(c, "<<") == 0)
+			return (1);
+	return (0);
+}
 
 int is_not_arg(t_node *current_node, char *str)
 {
