@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 15:20:51 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/01 12:23:56 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	single_command(t_node *node, char **argv)
 	{
 		if (node->stdin_redirect == 1)
 		{
-			if (redirect_to_stdin(node) == 1)
+			if (redirect_to_stdin(node->redir_files) == 1)
 				return ;
 		}
 		if (execve(node->cmd, argv, node->shell->env) == -1)
