@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 16:33:25 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/02 14:21:00 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,19 +170,20 @@ void	process_exp(t_node *command)
 	int		i;
 	char	*temp;
 	//printf("ENTERED PROCESS_EXP with \n");
-	//print_node(command);
+	// i = -1;
+	// while (++i < command->args_count)
+	// {
+	// 	temp = ft_strdup(command->args[i]);
+	// 	free(command->args[i]);
+	// 	command->args[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
+	// 	printf("command->args[i] %s\n: ", command->args[i]);
+	// }
 	i = -1;
-	while (++i < command->args_count)
+	while (++i < command->vars_count)
 	{
-		temp = ft_strdup(command->args[i]);
-		free(command->args[i]);
-		command->args[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
-	}
-	i = -1;
-	while (++i < command->flags_count)
-	{
-		temp = ft_strdup(command->flags[i]);
-		free(command->flags[i]);
-		command->flags[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
+		temp = ft_strdup(command->vars[i]);
+		free(command->vars[i]);
+		command->vars[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
+		// printf("bash: %s", command->vars[i]);
 	}
 }

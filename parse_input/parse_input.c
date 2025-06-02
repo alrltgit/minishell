@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 11:31:46 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/02 14:20:50 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,16 +132,16 @@ int check_for_redir(t_node *current_node, char **result, int *j)
         new_redir->file_name = ft_strdup(result[*j + 1]);
         if (!new_redir->file_name)
             return (1);
-        if (access(new_redir->file_name, F_OK) != 0)
-        {
-            printf("%s: No such file or directory.\n", new_redir->file_name);
-            return (1);
-        }
-        if (access(new_redir->file_name, R_OK) != 0)
-        {
-            printf("%s: Permission denied.\n", new_redir->file_name);
-            return (1);
-        }
+        // if (access(new_redir->file_name, F_OK) != 0)
+        // {
+        //     printf("%s: No such file or directory.\n", new_redir->file_name);
+        //     return (1);
+        // }
+        // if (access(new_redir->file_name, R_OK) != 0)
+        // {
+        //     printf("%s: Permission denied.\n", new_redir->file_name);
+        //     return (1);
+        // }
         (*j)++;
     }
     return (0);
@@ -174,22 +174,12 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
             return (1);
         if (current_node->cmd_is_found == 0)
             current_node->cmd_type = find_command_path(result[j], current_node);
-        // if (access(current_node->cmd, F_OK) != 0)
-        // {
-        //     printf("%s: No such file or directory\n", current_node->cmd);
-        //     return (127);
-        // }
-        // else if (access(current_node->cmd, X_OK) != 0)
-        // {
-        //     printf("%s: command not found\n", current_node->cmd);
-        //     return (126);
-        // }  
-        // if (current_node->cmd_is_found == 0)
-        // {
-        //     current_node->cmd = NULL;
-        // //     printf("%s: command not found\n", result[j]);
-        // //     return (1);
-        // }
+        if (current_node->cmd_type == 0)
+        {
+            current_node->cmd = NULL;
+        //     printf("%s: command not found\n", result[j]);
+        //     return (1);
+        }
         if (current_node->flags_count > 0)
             find_flags(result[j], current_node, &i);
         if (current_node->vars_count > 0)
@@ -211,7 +201,9 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	current_node = *unit;
 	current_node->args_count = count_args(result, current_node, j_temp);
     if (alloc_mem_for_args_arr(current_node) == 1)
+    {
         return ;
+    }
 	i = 0;
 	while (result[i])
 	{
@@ -246,7 +238,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();
 		return ;
@@ -293,11 +285,14 @@ void read_the_input(char *rl, t_shell *shll)
     //     }
     //     temp = temp->next;
     // }
-	// print_node(unit);
-    process_exp(unit);
-	// perfect(unit, &unit->vars[0]);
+    if (unit->vars_count  > 0)
+    {
+        process_exp(unit);
+    }
 	if (unit->is_pipe)
-		create_pipe(unit);
+    {
+        create_pipe(unit);
+    }
 	else
 	{
 		if (unit->cmd_type == B_IN)
@@ -307,19 +302,6 @@ void read_the_input(char *rl, t_shell *shll)
         }
 		else if (unit->cmd_type == NON_B_IN)
 			execute_other(unit);
-		else
-		{
-			// if (access(unit->cmd, F_OK) != 0)
-            // {
-            //     printf("%s: No such file or directory\n", unit->cmd);
-            //     return ;
-            // }
-            // else if (access(unit->cmd, X_OK) != 0)
-            // {
-            //     printf("%s: command not found\n", unit->cmd);
-            //     return ;
-            // }  
-		}
 	}
 	free_arr(result);
 }

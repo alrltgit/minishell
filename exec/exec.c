@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/02 11:31:06 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/02 13:17:07 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,15 @@ void	single_command(t_node *node, char **argv)
 		// 	if (redirect_to_stdin(node->redir_files) == 1)
 		// 		return ;
 		// }
-		if (node->cmd != NULL)
+		if (node->cmd == NULL)
 		{
-			if (execve(node->cmd, argv, node->shell->env) == -1)
-			{
-				perror("execve failed\n");
-				exit(EXIT_FAILURE);
-			}
+			printf("%s: command not found", argv[0]);
+			exit(127);
 		}
-		else
+		if (execve(node->cmd, argv, node->shell->env) == -1)
 		{
-			printf("%s : command not found", node->cmd);
+			perror("execve failed\n");
+			exit(EXIT_FAILURE);
 		}
 	}
 	else if (pid > 0)
