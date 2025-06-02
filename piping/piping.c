@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 16:03:11 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/02 16:52:21 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	create_pipe(t_node *node)
 	pid_t	pid;
 	char	**argv;
 
-    // char *const *envp = NULL;
     temp = node;
     prev_fd = -1;
     while (temp)
@@ -55,12 +54,19 @@ void	create_pipe(t_node *node)
             return;
         }
         argv = build_argv(temp);
+        
+        // int i = 0;
+        // while (argv[i++])
+        // {
+        //     printf("argv[i]: %s\n", argv[i]);
+        // }
+        
         pid = fork();
         if (pid < 0)
         {
             perror("fork failed");
             free_arr(argv);
-            return;
+            return ;
         }
         if (pid == 0)
         {
@@ -83,6 +89,13 @@ void	create_pipe(t_node *node)
             }
             if (temp->cmd_type == B_IN)
             {
+                // if (temp->next != NULL) // Redirect output for built-in commands
+                // {
+                //     close(pipe_fd[0]);
+                //     dup2(pipe_fd[1], STDOUT_FILENO);
+                //     close(pipe_fd[1]);
+                // }
+                printf("TEST\n");
                 execute_builtin(temp);
                 exit(EXIT_SUCCESS);
             }

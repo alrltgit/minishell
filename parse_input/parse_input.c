@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 16:21:57 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/02 16:38:54 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,16 +129,16 @@ int check_for_redir(t_node *current_node, char **result, int *j)
         new_redir->file_name = ft_strdup(result[*j + 1]);
         if (!new_redir->file_name)
             return (1);
-        // if (access(new_redir->file_name, F_OK) != 0)
-        // {
-        //     printf("%s: No such file or directory.\n", new_redir->file_name);
-        //     return (1);
-        // }
-        // if (access(new_redir->file_name, R_OK) != 0)
-        // {
-        //     printf("%s: Permission denied.\n", new_redir->file_name);
-        //     return (1);
-        // }
+        if (access(new_redir->file_name, F_OK) != 0)
+        {
+            printf("%s: No such file or directory.\n", new_redir->file_name);
+            return (1);
+        }
+        if (access(new_redir->file_name, R_OK) != 0)
+        {
+            printf("%s: Permission denied.\n", new_redir->file_name);
+            return (1);
+        }
         (*j)++;
     }
     return (0);
@@ -270,7 +270,6 @@ void read_the_input(char *rl, t_shell *shll)
     //     }
     //     temp = temp->next;
     // }
-    // process_exp(unit);
 	if (unit->is_pipe)
     {
         create_pipe(unit);

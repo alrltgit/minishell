@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/02 16:27:34 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/02 16:38:14 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,18 +175,8 @@ void	process_exp(char **result, t_node *unit)
 	{
 		temp = ft_strdup(result[i]);
 		free(result[i]);
-		// printf("result[i]_0 %s\n: ", result[i]);
 		result[i] = ft_strdup(handle_quotes(perfect(unit, &temp)));
-		printf("result[i]_1 %s\n: ", result[i]);
 		free(temp);
 		i++;
 	}
-	// i = -1;
-	// while (++i < command->flags_count)
-	// {
-	// 	temp = ft_strdup(command->flags[i]);
-	// 	free(command->flags[i]);
-	// 	command->flags[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
-	// 	// printf("bash: %s", command->vars[i]);
-	// }
 }
