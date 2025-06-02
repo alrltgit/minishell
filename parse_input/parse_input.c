@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 14:20:50 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:55:08 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ char	*handle_quotes(char *str)
 	sq = 0;
 	dq = 0;
 	temp = NULL;
-	// "'"$PATH"'"
-	// printf("BEFORE HANDLING QUOTES -> %s\n", str);
 	while (str[++i])
 	{
 		if (str[i] == '\'' && dq == 0)
@@ -50,7 +48,6 @@ char	*handle_quotes(char *str)
 		else
 			temp = update_str(temp, str[i]);
 	}
-	// printf("AFTER HANDLING QUOTES -> %s\n", temp);
 	return (temp);
 }
 
@@ -174,11 +171,10 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
             return (1);
         if (current_node->cmd_is_found == 0)
             current_node->cmd_type = find_command_path(result[j], current_node);
-        if (current_node->cmd_type == 0)
+        if (current_node->cmd_type > 2)
         {
             current_node->cmd = NULL;
-        //     printf("%s: command not found\n", result[j]);
-        //     return (1);
+            return (1);
         }
         if (current_node->flags_count > 0)
             find_flags(result[j], current_node, &i);
@@ -248,11 +244,8 @@ void read_the_input(char *rl, t_shell *shll)
 	unit->shell = shll;
 	shll->cmds = unit;
 	temp = unit;
-	/* if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-		return ; */
-    
-    add_cmds_flags_to_linked_list(result, &temp);
-    //temp = unit;
+	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
+		return ;
 	add_args_to_linked_list(result, &temp);
     temp = unit;
     // int i;
@@ -296,10 +289,7 @@ void read_the_input(char *rl, t_shell *shll)
 	else
 	{
 		if (unit->cmd_type == B_IN)
-        {
-            printf("went into builtin exec with cmd of %s and arg %s\n", unit->cmd, unit->args[0]);
 			execute_builtin(unit);
-        }
 		else if (unit->cmd_type == NON_B_IN)
 			execute_other(unit);
 	}
