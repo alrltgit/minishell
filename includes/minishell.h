@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/02 13:47:46 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:44:18 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int find_command_path(char *input, t_node *unit);
 // find_args.c
 int	count_args(char **result, t_node *current_node, int j_temp);
 void	find_args(t_node *cmd, char **result, int *i, int *j);
-int		count_args_inside_loop(char **result, t_node *current_node, int *i);
+// int		count_args_inside_loop(char **result, t_node *current_node, int *i);
 char	*retrieve_cmd_name(t_node *node);
 int		alloc_mem_for_args_arr(t_node *current_node);
 
@@ -169,7 +169,7 @@ void find_vars(char *result, t_node *current_node, int *c);
 int		is_valid_command(t_node *current_node, char *rl);
 int		rl_is_space(char *rl);
 // int		is_operator(char *c);
-int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp);
+int		condition_is_met(char *cmd_name, char **result, int j_temp);
 
 // piping.c
 void	create_pipe(t_node *node);

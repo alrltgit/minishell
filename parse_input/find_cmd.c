@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/02 14:48:19 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:48:39 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int find_command_path(char *input, t_node *unit)
     i = 0;
     while (paths[i])
     {
-        // printf("input: %s\n", input);
         temp_result = ft_strconcat(paths[i], input);
         if (access(temp_result, X_OK) == 0)
         {

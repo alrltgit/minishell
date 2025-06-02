@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 14:55:08 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:52:01 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,11 +156,11 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
     j = 0;
     j_temp = j;
     current_node->flags_count = count_flags(result, j_temp);
-    current_node->vars_count = count_variables(result, &j);
+    // current_node->vars_count = count_variables(result, &j);
     if (alloc_mem_for_flags_arr(current_node) == 1)
         return (1);
-    if (alloc_mem_for_vars_arr(current_node) == 1)
-        return (1);
+    // if (alloc_mem_for_vars_arr(current_node) == 1)
+    //     return (1);
     i = 0;
     c = 0;
     while (result[j])
@@ -178,8 +178,8 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
         }
         if (current_node->flags_count > 0)
             find_flags(result[j], current_node, &i);
-        if (current_node->vars_count > 0)
-            find_vars(result[j], current_node, &c);
+        // if (current_node->vars_count > 0)
+        //     find_vars(result[j], current_node, &c);
         j++;
     }
     return (0);
@@ -245,43 +245,36 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
 	temp = unit;
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-		return ;
+    {
+        return ;
+    }
 	add_args_to_linked_list(result, &temp);
     temp = unit;
-    // int i;
-    // while (temp)
-    // {
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (i < temp->flags_count)
-    //     {
-    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->args_count)
-    //     {
-    //         printf("temp->args[%d]: %s\n", i, temp->args[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->vars_count)
-    //     {
-    //         printf("temp->vars[%d]: %s\n", i, temp->vars[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (temp->redir_files)
-    //     {
-    //         printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-    //         temp->redir_files = temp->redir_files->next;
-    //     }
-    //     temp = temp->next;
-    // }
-    if (unit->vars_count  > 0)
+    int i;
+    while (temp)
     {
-        process_exp(unit);
+        printf("temp->cmd: %s\n", temp->cmd);
+        i = 0;
+        while (i < temp->flags_count)
+        {
+            printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
+            i++;
+        }
+        i = 0;
+        while (i < temp->args_count)
+        {
+            printf("temp->args[%d]: %s\n", i, temp->args[i]);
+            i++;
+        }
+        i = 0;
+        while (temp->redir_files)
+        {
+            printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
+            temp->redir_files = temp->redir_files->next;
+        }
+        temp = temp->next;
     }
+    // process_exp(unit);
 	if (unit->is_pipe)
     {
         create_pipe(unit);

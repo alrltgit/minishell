@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/29 12:11:05 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:43:22 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,33 @@
     bash: -l: command not found;
 */
 
-int is_not_arg(t_node *current_node, char *str)
-{
-	t_node *temp = current_node;
+// int is_not_arg(t_node *current_node, char *str)
+// {
+// 	t_node *temp = current_node;
 
-	while (temp)
-	{
-		if (temp->redir_files
-			&& temp->redir_files->file_name)
-		{
-			if (ft_strcmp(temp->redir_files->file_name, str) == 0)
-			{
-				return (1);
-			}
-		}
-		temp = temp->next;
-	}
-	return (0);
-}
+// 	while (temp)
+// 	{
+// 		if (temp->redir_files
+// 			&& temp->redir_files->file_name)
+// 		{
+// 			if (ft_strcmp(temp->redir_files->file_name, str) == 0)
+// 			{
+// 				return (1);
+// 			}
+// 		}
+// 		temp = temp->next;
+// 	}
+// 	return (0);
+// }
 
-int	condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp)
+int	condition_is_met(char *cmd_name, char **result, int j_temp)
 {
 	if (result[j_temp] == NULL)
 		return (1);
 	if (ft_strcmp(result[j_temp], "<") == 0 || ft_strcmp(result[j_temp], ">") == 0)
 		return (1);
-	if ((cmd_name == NULL && result[j_temp][0] != '-' && result[j_temp][0] != '$' && is_not_arg(current_node, result[j_temp]) == 0)
-			|| (cmd_name != NULL && ft_strcmp(result[j_temp], cmd_name) != 0 && result[j_temp][0] != '-' && result[j_temp][0] != '$' && is_not_arg(current_node, result[j_temp]) == 0))
+	if ((cmd_name == NULL && result[j_temp][0] != '-')
+			|| (cmd_name != NULL && ft_strcmp(result[j_temp], cmd_name) != 0 && result[j_temp][0] != '-'))
 	{
 		return (0);
 	}

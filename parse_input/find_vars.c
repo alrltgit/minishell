@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:36:40 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 14:49:11 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:35:11 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ void find_vars(char *result, t_node *current_node, int *c)
 {
 	if (result[0] == '$')
 	{
-		// printf("IN\n");
 		current_node->vars[*c] = ft_strdup2(result);
-		// printf("current_node->vars[*c] %s\n", current_node->vars[*c]);
 		(*c)++;	
 	}
 }

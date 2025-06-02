@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 14:48:57 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:41:31 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	count_flags(char **result, int j)
 	{
 		if (ft_strcmp(result[j], "|") == 0)
 			break ;
-		if (result[j][0] == '-' && result[j][1] != '$')
+		if (result[j][0] == '-')
 			flags_count++;
 		j++;
 	}
@@ -30,7 +30,7 @@ int	count_flags(char **result, int j)
 
 void	find_flags(char *result, t_node *current_node, int *i)
 {
-	if (result[0] == '-' && result[1] != '$')
+	if (result[0] == '-')
 	{
 		printf("TEST_1\n");
 		current_node->flags[*i] = ft_strdup2(result);

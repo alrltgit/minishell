@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/29 11:58:32 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:43:49 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	count_args(char **result, t_node *current_node, int j_temp)
 		{
 			break ;	
 		}
-		if (condition_is_met(current_node, cmd_name, result, j_temp) == 0)
+		if (condition_is_met(cmd_name, result, j_temp) == 0)
 			args_count++;	
 		j_temp++;
 	}
@@ -65,7 +65,7 @@ void	find_args(t_node *current_node, char **result, int *i, int *j)
 	char	*cmd_name;
 
 	cmd_name = retrieve_cmd_name(current_node);
-	if (condition_is_met(current_node, cmd_name, result, *i) == 0)
+	if (condition_is_met(cmd_name, result, *i) == 0)
 	{
 		current_node->args[*j] = ft_strdup(result[*i]);
 		(*j)++;
