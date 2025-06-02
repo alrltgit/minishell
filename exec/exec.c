@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/01 15:22:04 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/02 11:31:06 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,17 @@ void	single_command(t_node *node, char **argv)
 		// 	if (redirect_to_stdin(node->redir_files) == 1)
 		// 		return ;
 		// }
-		if (execve(node->cmd, argv, node->shell->env) == -1)
+		if (node->cmd != NULL)
 		{
-			perror("execve failed\n");
-			exit(EXIT_FAILURE);
+			if (execve(node->cmd, argv, node->shell->env) == -1)
+			{
+				perror("execve failed\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+		{
+			printf("%s : command not found", node->cmd);
 		}
 	}
 	else if (pid > 0)
