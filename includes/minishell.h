@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/02 15:44:18 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:17:39 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_node
 	char *cmd;
 	char **flags;
 	char **args;
-	char **vars;
 	t_redir *redir_files;
 	int cmd_status;
 	int cmd_is_found;
@@ -108,7 +107,8 @@ void	ft_exit(t_node *command);
 void	ft_unset(t_node *command);
 
 //expand
-void	process_exp(t_node *command);
+// void	process_exp(t_node *command);
+void	process_exp(char **result, t_node *unit);
 char	*perfect(t_node *command, char **arr);
 
 //builtins_utils.c

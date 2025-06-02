@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/01 15:24:13 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/02 16:03:11 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, 
             return (1);
         
         (*current_node)->flags_count = count_flags(result, j_temp);
-        (*current_node)->vars_count = count_variables(result, &j_temp);
         if (alloc_mem_for_flags_arr(*current_node) == 1)
-            return (1);
-        if (alloc_mem_for_vars_arr(*current_node) == 1)
             return (1);
         *i = 0;
         *c = 0;

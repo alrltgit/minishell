@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/02 15:46:27 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:27:34 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,25 +165,28 @@ char	*perfect(t_node *command, char **arr)
 	EXPORT AND ECHO NEEDS IMPROVEMENTS
 */
 
-void	process_exp(t_node *command)
+void	process_exp(char **result, t_node *unit)
 {
 	int		i;
 	char	*temp;
 	//printf("ENTERED PROCESS_EXP with \n");
-	i = -1;
-	while (++i < command->args_count)
+	i = 0;
+	while (result[i])
 	{
-		temp = ft_strdup(command->args[i]);
-		free(command->args[i]);
-		command->args[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
-		// printf("command->args[i] %s\n: ", command->args[i]);
+		temp = ft_strdup(result[i]);
+		free(result[i]);
+		// printf("result[i]_0 %s\n: ", result[i]);
+		result[i] = ft_strdup(handle_quotes(perfect(unit, &temp)));
+		printf("result[i]_1 %s\n: ", result[i]);
+		free(temp);
+		i++;
 	}
-	i = -1;
-	while (++i < command->flags_count)
-	{
-		temp = ft_strdup(command->flags[i]);
-		free(command->flags[i]);
-		command->flags[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
-		// printf("bash: %s", command->vars[i]);
-	}
+	// i = -1;
+	// while (++i < command->flags_count)
+	// {
+	// 	temp = ft_strdup(command->flags[i]);
+	// 	free(command->flags[i]);
+	// 	command->flags[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
+	// 	// printf("bash: %s", command->vars[i]);
+	// }
 }
