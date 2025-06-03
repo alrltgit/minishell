@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/03 12:45:27 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:11:45 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,15 +131,15 @@ void	free_exit(t_shell *shell);
 void	iterate_free_nodes(t_node *head);
 void	free_double_n(void **arr, int n);
 
-
 // split the linked list
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
-// parse_input
-
+// fill_unit_linked_list.c
+int init_t_redir_vars(t_node *current_node);
+// t_redir *add_new_file(t_redir **head);
+t_redir *add_new_file(t_redir **head, char *file_name);
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
-int alloc_mem_for_flags_arr(t_node *current_node);
 
 //split_readline.c
 char	*extract_token(const char *str, int *i);
@@ -153,21 +153,20 @@ int find_command_path(char *input, t_node *unit);
 // find_args.c
 int	count_args(char **result, t_node *current_node, int j_temp);
 void	find_args(t_node *cmd, char **result, int *i, int *j);
-// int		count_args_inside_loop(char **result, t_node *current_node, int *i);
 char	*retrieve_cmd_name(t_node *node);
 int		alloc_mem_for_args_arr(t_node *current_node);
 
 //find_flags.c
 int		count_flags(char **result, int j);
-// void 	find_flags(char *result, t_node *unit, int *i);
 void	find_flags(char *result, t_node *current_node, int *i);
 char	*ft_strdup2(const char *s1);
 
 // utils.c
 int		is_valid_command(t_node *current_node, char *rl);
 int		rl_is_space(char *rl);
-// int		is_operator(char *c);
-int		condition_is_met(char *cmd_name, char **result, int j_temp);
+// int		condition_is_met(char *cmd_name, char **result, int j_temp);
+int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp);
+int		alloc_mem_for_flags_arr(t_node *current_node);
 
 // piping.c
 void	create_pipe(t_node *node);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:43:35 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/01 15:12:39 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/03 15:02:35 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int redirect_to_stdin(t_redir *node) // "<" - redirects to STDIN from file
+int redirect_to_stdin(t_redir *node)
 {
     int fd;
 
@@ -33,11 +33,11 @@ int redirect_to_stdin(t_redir *node) // "<" - redirects to STDIN from file
     return (0);
 }
 
-int redirect_to_stdout(t_redir *node) // ">" - redirects to STDOUT from file
+int redirect_to_stdout(t_redir *node)
 {
     int fd;
 
-    fd = open(node->file_name, O_RDONLY | O_WRONLY | O_TRUNC);
+    fd = open(node->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
     if (fd < 0)
     {
         printf("%s: No such file or directory.\n", node->file_name);
