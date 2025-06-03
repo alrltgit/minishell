@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/02 15:43:49 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:40:29 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	find_args(t_node *current_node, char **result, int *i, int *j)
 	if (condition_is_met(cmd_name, result, *i) == 0)
 	{
 		current_node->args[*j] = ft_strdup(result[*i]);
+		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result[*i]);
 		(*j)++;
 	}
 }

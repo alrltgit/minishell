@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+         #
+#    By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 23:43:44 by apple             #+#    #+#              #
-#    Updated: 2025/05/24 14:21:48 by hceviz           ###   ########.fr        #
+#    Updated: 2025/06/03 12:37:42 by alraltse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ ft_printf/ft_print_str.c ft_printf/ft_print_undec.c \
 ft_printf/ft_printf.c ft_printf/ft_strlen_pf.c \
 ft_strconcat.c ft_strcat.c ft_strcpy.c \
 count_arr_size.c join_strings_with_spaces.c \
-update_str.c \
+update_str.c ft_strjoin_free.c \
 
 OBJS = $(SRC:.c=.o)
 

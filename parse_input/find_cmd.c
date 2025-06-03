@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/02 15:48:39 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:41:49 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int find_command_path(char *input, t_node *unit)
 		unit->cmd_is_found = 1;
 		unit->cmd = input;
         unit->cmd_status = 1;
+        unit->fcmd = ft_strjoin_free(unit->fcmd, input);
 		return (unit->cmd_status);
 	}
     paths = get_path();
@@ -64,6 +65,7 @@ int find_command_path(char *input, t_node *unit)
         if (access(temp_result, X_OK) == 0)
         {
             unit->cmd = ft_strdup(temp_result);
+            unit->fcmd = ft_strjoin_free(unit->fcmd, temp_result);
             unit->cmd_is_found = 1;
             free(temp_result);
             free_arr(paths);

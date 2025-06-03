@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 16:52:21 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:52:39 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,6 @@ void	create_pipe(t_node *node)
             }
             if (temp->cmd_type == B_IN)
             {
-                // if (temp->next != NULL) // Redirect output for built-in commands
-                // {
-                //     close(pipe_fd[0]);
-                //     dup2(pipe_fd[1], STDOUT_FILENO);
-                //     close(pipe_fd[1]);
-                // }
-                printf("TEST\n");
                 execute_builtin(temp);
                 exit(EXIT_SUCCESS);
             }

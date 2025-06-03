@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/02 16:17:39 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/03 12:45:27 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ typedef struct s_redir
 typedef struct s_node
 {
 	t_shell	*shell;
-	char *cmd;
-	char **flags;
-	char **args;
+	char	*cmd;
+	char	*fcmd;
+	char	**flags;
+	char	**args;
 	t_redir *redir_files;
 	int cmd_status;
 	int cmd_is_found;
@@ -113,11 +114,12 @@ char	*perfect(t_node *command, char **arr);
 
 //builtins_utils.c
 // char	**process_rl_line(t_node *command, char *rl_buffer);
-void	process_rl_line(t_node *command, char **rl_buffer);
+void	process_str_exp(t_node *command, char **rl_buffer);
 
 //ALINA
 // parsing
 char	**split_args(char *str);
+// char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
 char	*handle_quotes(char *str);
 
@@ -144,6 +146,7 @@ char	*extract_token(const char *str, int *i);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
 void	trim_outer(char *str);
+
 // find_cmd.c
 int find_command_path(char *input, t_node *unit);
 
@@ -159,11 +162,6 @@ int		count_flags(char **result, int j);
 // void 	find_flags(char *result, t_node *unit, int *i);
 void	find_flags(char *result, t_node *current_node, int *i);
 char	*ft_strdup2(const char *s1);
-
-// find_vars.c
-int count_variables(char **result, int *j);
-int alloc_mem_for_vars_arr(t_node *current_node);
-void find_vars(char *result, t_node *current_node, int *c);
 
 // utils.c
 int		is_valid_command(t_node *current_node, char *rl);

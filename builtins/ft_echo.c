@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/02 17:13:40 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:24:03 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_echo(t_node *command)
 	char	*temp;
 
 	(void)command;
-	input_split = split_args(rl_line_buffer);
+	input_split = split_args(command->fcmd);
 	
 	// int i = 0;
 	// while (input_split[i++])

@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 13:47:56 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:39:34 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_node	*create_unit(void)
 		return (NULL);
 	node->cmd = NULL;
 	node->flags = NULL;
+	node->fcmd = NULL;
 	node->args = NULL;
 	node->next = NULL;
 	node->shell = NULL;

@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/02 16:38:54 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:51:07 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();
 		return ;
@@ -241,9 +241,7 @@ void read_the_input(char *rl, t_shell *shll)
     process_exp(result, unit);
 	temp = unit;
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-    {
         return ;
-    }
 	add_args_to_linked_list(result, &temp);
     temp = unit;
     // int i;

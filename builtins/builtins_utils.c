@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:43:25 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 16:18:44 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/03 12:23:28 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 	return (res);
 } */
 
-void	process_rl_line(t_node *command, char **rl_buffer)
+void	process_str_exp(t_node *command, char **rl_buffer)
 {
 	char	*temp;
 	// int		len;
