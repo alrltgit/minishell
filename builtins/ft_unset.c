@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:35:45 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 17:51:33 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/03 11:30:46 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void    update_env(char *key, t_shell *shell)
     }
     shell->env[index] = NULL;
 }
+
 void    ft_unset(t_node *command)
 {
     char    **split;

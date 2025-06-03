@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_vars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:36:40 by apple             #+#    #+#             */
-/*   Updated: 2025/05/29 11:58:49 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:13:02 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void find_vars(char *result, t_node *current_node, int *c)
 	{
 		// printf("IN\n");
 		current_node->vars[*c] = ft_strdup2(result);
+		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result); //check
 		// printf("current_node->vars[*c] %s\n", current_node->vars[*c]);
 		(*c)++;	
 	}

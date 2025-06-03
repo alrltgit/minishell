@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:23:13 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/24 14:21:29 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 11:10:24 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,7 @@ int		count_arr_size(char **arr, int arr_count);
 char	*join_strings_with_spaces(int size, int count, char **arr);
 
 char	*update_str(char *str, char c);
+
+char	*ft_strjoin_free(char *s1, char *s2);
 
 #endif

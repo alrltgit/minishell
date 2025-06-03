@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 14:06:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 12:12:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_echo(t_node *command)
 	char	*temp;
 
 	(void)command;
-	input_split = split_args(rl_line_buffer);
+	input_split = split_args(command->fcmd);
 	count = -1;
 	len = -1;
 	

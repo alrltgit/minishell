@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/05/29 12:12:12 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:03:21 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_node	*create_unit(void)
 		return (NULL);
 	node->cmd = NULL;
 	node->flags = NULL;
+	node->fcmd = NULL;
 	node->args = NULL;
 	node->next = NULL;
 	node->shell = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/31 16:17:13 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/03 11:17:53 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int find_command_path(char *input, t_node *unit)
 	{
 		unit->cmd_is_found = 1;
 		unit->cmd = input;
+		unit->fcmd = ft_strjoin_free(unit->fcmd, input);
 		return (1);
 	}
     paths = get_path();
@@ -48,6 +49,7 @@ int find_command_path(char *input, t_node *unit)
         if (access(temp_result, X_OK) == 0)
         {
             unit->cmd = ft_strdup(temp_result);
+			unit->fcmd = ft_strjoin_free(unit->fcmd, temp_result);
             unit->cmd_is_found = 1;
             free(temp_result);
             free_arr(paths);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/01 14:18:50 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 12:19:28 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,20 @@ typedef struct s_redir
 typedef struct s_node
 {
 	t_shell	*shell;
-	char *cmd;
-	char **flags;
-	char **args;
-	char **vars;
+	char 	*cmd;
+	char	*fcmd;	
+	char 	**flags;
+	char 	**args;
+	char 	**vars;
 	t_redir *redir_files;
-	int stdin_redirect;
-	int cmd_is_found;
-	int flags_count;
-	int args_count;
-	int vars_count;
-	int	cmd_type;
-	int is_pipe;
-	t_node *next;
+	int 	stdin_redirect;
+	int 	cmd_is_found;
+	int 	flags_count;
+	int 	args_count;
+	int 	vars_count;
+	int		cmd_type;
+	int		is_pipe;
+	t_node 	*next;
 }	t_node;
 
 //main.c
@@ -104,11 +105,11 @@ char	*perfect(t_node *command, char **arr);
 
 //builtins_utils.c
 // char	**process_rl_line(t_node *command, char *rl_buffer);
-void	process_rl_line(t_node *command, char **rl_buffer);
+void	process_str_exp(t_node *command, char **rl_buffer);
 
 //ALINA
 // parsing
-char	**split_args(char *str, int skipwspc);
+char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
 char	*handle_quotes(char *str);
 
@@ -138,7 +139,7 @@ void	trim_outer(char *str);
 int find_command_path(char *input, t_node *unit);
 
 // find_args.c
-int	count_args(char **result, t_node *current_node, int j_temp);
+int		count_args(char **result, t_node *current_node, int j_temp);
 void	find_args(t_node *cmd, char **result, int *i, int *j);
 int		count_args_inside_loop(char **result, t_node *current_node, int *i);
 char	*retrieve_cmd_name(t_node *node);

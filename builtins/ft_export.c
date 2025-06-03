@@ -3,68 +3,113 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 10:35:45 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/01 14:25:39 by hceviz           ###   ########.fr       */
+/*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
+/*   Updated: 2025/06/03 12:12:46 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-/*
-	HANDLE
-
-	export abc
-	export abc=
-	export abc = 5
-	export =
-	export abc= 5
-	export abc =5
-	export abc def g=2
-	export abc def g =2
-	export abc def g= 2
-	export abc=5 def=3
-
-	export qweqwe=5 | echo adasdad | export xcvbxcv=3
-*/
-int	has_equal_sign(char *str)
+static int	is_alphanumeric(char *key)
 {
 	int	i;
 
 	i = -1;
-	while (str[++i])
-		if (str[i] == '=')
-			return (1);
-	return (0);
+	while (key[++i])
+	{
+		if (!(key[i] >= 'a' && key[i] <= 'z')
+			&& !(key[i] >= 'A' && key[i] <= 'Z')
+			&& !(key[i] >= '0' && key[i] <= '9')
+			&& key[i] != '=')
+			return (0);
+	}
+	return (1);
 }
+
+/*
+take till first = sign
+and analyze the key
+*/
+char	*extract_key(char *input)
+{
+	int		key_len;
+	char	*val;
+	char	*key;
+
+	val = ft_strchr(input, '=') + 1;
+	key_len = ft_strlen(input) - ft_strlen(val) - 1;
+	key = ft_split(ft_substr(input, 0, key_len), ' ')[1];
+	return (key);
+}
+
+char	*process_value(char	*value)
+{
+	int		count;
+	char	*trimmed;
+
+	if (value[0] == ' ')
+		return (" ");
+	trimmed = extract_token_v2(value);
+	if (ft_strcmp(value, trimmed) != 0)
+		return (trimmed);
+	else
+	{
+		count = -1;
+		while (value[++count] && value[count] != ' ')
+			;
+		return (ft_substr(value, 0, count));
+	}
+}
+/*
+	if there is space after first = sign
+	set empty line to value
+*/
+
+void	create_and_set_val(t_shell *shell, char *key, char *val)
+{
+	int		count;
+	char	**new_env;
+	char	*new_val;
+
+	count = count_vars(shell->env);
+	new_env = malloc((count + 2) * sizeof(char *));
+	new_val = process_value(val);
+	if (!new_env)
+		return ;
+	copy_vars(shell->env, &new_env);
+	new_env[count] = ft_strjoin(ft_strjoin(key, "="), new_val);
+	new_env[count + 1] = NULL;
+	init_env(new_env, shell);
+	free_double((void **)new_env);
+}
+
 void	ft_export(t_node *command)
 {
-	char	**split;
-	int		i;
-	int		j;
-	char	**res;
+	char	*str1;
+	char	*str2;
+	char	*key;
 
-	process_rl_line(command, &rl_line_buffer);
-	split = split_args(rl_line_buffer, 0);
-	i = -1;
-	while (split[++i])
+	process_str_exp(command, &command->fcmd);
+	if (!ft_strchr(command->fcmd, '='))
+		return ;
+	key = extract_key(rl_line_buffer);
+	if (!is_alphanumeric(key))
 	{
-		if (ft_strcmp(split[i], "export") == 0)
-		{
-			j = 0;
-			res[j] = ft_strdup(split[i]);
-			while (!is_operator(split[++i]))
-				res[++j] = ft_strdup(split[i]);
-		}
-
+		str1 = ft_strcat("bash: ", rl_line_buffer);
+		str2 = ft_strcat(str1, ": not a valid identifier\n");
+		free(str1);
+		ft_putstr_fd(str2, 2);
+		free(str2);
+		return ;
 	}
-	print_node(command);
-	//int	i;
-
-	/* i = -1;
-	if ()
-	while */
-
+	if (ft_strcmp(value_from_key(key, command->shell), " ") != 0)
+		change_env_value(key,
+			process_value(ft_strchr(rl_line_buffer, '=') + 1),
+			command->shell);
+	else
+		create_and_set_val(command->shell, key,
+			ft_strchr(rl_line_buffer, '=') + 1);
+	free(key);
 }

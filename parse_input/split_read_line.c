@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_read_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/01 14:14:51 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 10:50:35 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*extract_token(const char *str, int *i)
 	return (token);
 }
 
-char	**split_args(char *str, int skipwspc)
+char	**split_args(char *str)
 {
 	char	**result;
 	char	*token;
@@ -116,8 +116,7 @@ char	**split_args(char *str, int skipwspc)
 	count = 0;
 	while (str[i])
 	{
-		if (skipwspc)
-			skip_whitespace(str, &i);
+		skip_whitespace(str, &i);
 		if (!str[i])
 			break ;
 		token = extract_token(str, &i);

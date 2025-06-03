@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/01 14:14:34 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 11:26:21 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ void read_the_input(char *rl, t_shell *shll)
 		rl_on_new_line();
 		return ;
 	}
-    result = split_args(rl, 1);
+    result = split_args(rl);
     unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
@@ -262,7 +262,7 @@ void read_the_input(char *rl, t_shell *shll)
 	/*handle when only expansion var is passed*/
     add_cmds_flags_to_linked_list(result, &temp);
 	add_args_to_linked_list(result, &temp);
-	printf("CMD-> %s\n", unit->cmd);
+	printf("FCMD-> %s\n", unit->fcmd);
     process_exp(unit);
 	if (unit->is_pipe)
 		create_pipe(unit);
