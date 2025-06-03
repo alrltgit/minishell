@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/03 12:12:46 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 13:25:04 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,14 @@ char	*extract_key(char *input)
 	char	*key;
 
 	val = ft_strchr(input, '=') + 1;
+	if (val == ' ' || val - 2 == ' ')
+		return 
 	key_len = ft_strlen(input) - ft_strlen(val) - 1;
 	key = ft_split(ft_substr(input, 0, key_len), ' ')[1];
 	return (key);
 }
+
+
 
 char	*process_value(char	*value)
 {
@@ -85,6 +89,27 @@ void	create_and_set_val(t_shell *shell, char *key, char *val)
 	free_double((void **)new_env);
 }
 
+/*
+	if there is invalid identifier for export
+	return the array of invalid identifiers,
+	else return NULL
+*/
+// export abc def kggjdfg should do nothing
+char	*check_invalid_indetifier(char *str)
+{
+	char	**split;
+	int		i;
+
+	split = split_args(str);
+	i = -1;
+	
+
+	
+}
+
+//export abc =5
+
+//firstly check for key after that, check value
 void	ft_export(t_node *command)
 {
 	char	*str1;
