@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/31 12:50:43 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 12:45:27 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,37 @@ typedef struct s_shell
 	int		errcode;
 }	t_shell;
 
+typedef struct s_redir_type
+{
+	int stdin_redir;
+	int stdout_redir;
+	int append_redir;
+	int heredoc_redir;
+}	t_redir_type;
+
+typedef struct s_redir
+{
+	t_redir_type *type;
+	char *file_name;
+	struct s_redir *next;
+}	t_redir;
+
 typedef struct s_node
 {
 	t_shell	*shell;
 	char	*cmd;
+	char	*fcmd;
 	char	**flags;
 	char	**args;
-	char	*file_name;
-	int		stdin_redirect;
-	int		flags_count;
-	int		args_count;
-	int		cmd_type;
-	int		is_pipe;
-	t_node	*next;
+	t_redir *redir_files;
+	int cmd_status;
+	int cmd_is_found;
+	int flags_count;
+	int args_count;
+	int vars_count;
+	int	cmd_type;
+	int is_pipe;
+	t_node *next;
 }	t_node;
 
 //main.c
@@ -90,65 +108,73 @@ void	ft_exit(t_node *command);
 void	ft_unset(t_node *command);
 
 //expand
-void	process_exp(t_node *command);
+// void	process_exp(t_node *command);
+void	process_exp(char **result, t_node *unit);
 char	*perfect(t_node *command, char **arr);
 
 //builtins_utils.c
 // char	**process_rl_line(t_node *command, char *rl_buffer);
-void	process_rl_line(t_node *command, char **rl_buffer);
+void	process_str_exp(t_node *command, char **rl_buffer);
 
 //ALINA
 // parsing
 char	**split_args(char *str);
+// char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
 char	*handle_quotes(char *str);
 
 //free.c
 void	free_arr(char **arr);
 void	free_exit(t_shell *shell);
-void	free_node_arr(char **arr, int arr_length);
-void	free_linked_list(t_node *node);
+// void	free_node_arr(char **arr, int arr_length);
+// void	free_linked_list(t_node *node);
 void	iterate_free_nodes(t_node *head);
 void	free_double_n(void **arr, int n);
+
 
 // split the linked list
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
 // parse_input
-// fill_unit_linked_list
+
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
+int alloc_mem_for_flags_arr(t_node *current_node);
 
 //split_readline.c
 char	*extract_token(const char *str, int *i);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
 void	trim_outer(char *str);
+
 // find_cmd.c
-int		find_command_path(char *input, t_node *unit, int *cmd_is_found);
+int find_command_path(char *input, t_node *unit);
 
 // find_args.c
-int		count_args(char **result, t_node *current_node);
+int	count_args(char **result, t_node *current_node, int j_temp);
 void	find_args(t_node *cmd, char **result, int *i, int *j);
-int		count_args_inside_loop(char **result, t_node *current_node, int *i);
+// int		count_args_inside_loop(char **result, t_node *current_node, int *i);
 char	*retrieve_cmd_name(t_node *node);
+int		alloc_mem_for_args_arr(t_node *current_node);
 
 //find_flags.c
 int		count_flags(char **result, int j);
 // void 	find_flags(char *result, t_node *unit, int *i);
-int		find_flags(char *result, t_node *unit, int *i);
+void	find_flags(char *result, t_node *current_node, int *i);
 char	*ft_strdup2(const char *s1);
 
 // utils.c
 int		is_valid_command(t_node *current_node, char *rl);
 int		rl_is_space(char *rl);
-int		is_operator(char *c);
+// int		is_operator(char *c);
+int		condition_is_met(char *cmd_name, char **result, int j_temp);
 
 // piping.c
 void	create_pipe(t_node *node);
+int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, int *j, int *c);
 
 // redirection.c
-int		redirect_to_stdin(t_node *node);
-void	redirect_to_stdout(void);
+int redirect_to_stdin(t_redir *node);
+int redirect_to_stdout(t_redir *node); 
 
 #endif

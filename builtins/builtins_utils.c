@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:43:25 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 12:51:52 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 12:23:28 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@
 	return (res);
 } */
 
-void	process_rl_line(t_node *command, char **rl_buffer)
+void	process_str_exp(t_node *command, char **rl_buffer)
 {
 	char	*temp;
-	int		len;
+	// int		len;
 
-	len = -1;
+	// len = -1;
 	temp = NULL;
 	temp = ft_strdup(handle_quotes(perfect(command, rl_buffer)));
 	free(*rl_buffer);

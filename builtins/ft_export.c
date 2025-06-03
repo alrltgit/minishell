@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/31 14:03:11 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/03 12:45:48 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,33 @@ void	create_and_set_val(t_shell *shell, char *key, char *val)
 	init_env(new_env, shell);
 	free_double((void **)new_env);
 }
+
+void	ft_export(t_node *command)
+{
+	char	*str1;
+	char	*str2;
+	char	*key;
+
+	process_str_exp(command, &command->fcmd);
+	if (!ft_strchr(command->fcmd, '='))
+		return ;
+	key = extract_key(rl_line_buffer);
+	if (!is_alphanumeric(key))
+	{
+		str1 = ft_strcat("bash: ", rl_line_buffer);
+		str2 = ft_strcat(str1, ": not a valid identifier\n");
+		free(str1);
+		ft_putstr_fd(str2, 2);
+		free(str2);
+		return ;
+	}
+	if (ft_strcmp(value_from_key(key, command->shell), " ") != 0)
+		change_env_value(key, process_value(ft_strchr(rl_line_buffer, '=') + 1), command->shell);
+	else
+		create_and_set_val(command->shell, key,
+			ft_strchr(rl_line_buffer, '=') + 1);
+	free(key);
+}
 /*
 	export abcdef
 
@@ -147,31 +174,3 @@ void	create_and_set_val(t_shell *shell, char *key, char *val)
 			ft_strchr(rl_line_buffer, '=') + 1);
 	free(key);
 } */
-
-void	ft_export(t_node *command)
-{
-	char	*str1;
-	char	*str2;
-	char	*key;
-
-	if (!ft_strchr(rl_line_buffer, '='))
-		return ;
-	key = extract_key(rl_line_buffer);
-	if (!is_alphanumeric(key))
-	{
-		str1 = ft_strcat("bash: ", rl_line_buffer);
-		str2 = ft_strcat(str1, ": not a valid identifier\n");
-		free(str1);
-		ft_putstr_fd(str2, 2);
-		free(str2);
-		return ;
-	}
-	if (ft_strcmp(value_from_key(key, command->shell), " ") != 0)
-		change_env_value(key,
-			process_value(ft_strchr(rl_line_buffer, '=') + 1),
-			command->shell);
-	else
-		create_and_set_val(command->shell, key,
-			ft_strchr(rl_line_buffer, '=') + 1);
-	free(key);
-}

@@ -6,13 +6,13 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:43:35 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/19 17:17:46 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/01 15:12:39 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int redirect_to_stdin(t_node *node) // "<" - redirects to STDIN from file
+int redirect_to_stdin(t_redir *node) // "<" - redirects to STDIN from file
 {
     int fd;
 
@@ -25,7 +25,7 @@ int redirect_to_stdin(t_node *node) // "<" - redirects to STDIN from file
     }
     if (dup2(fd, STDIN_FILENO) == -1)
     {
-        perror("Failed to redirect stdin");
+        perror("Failed to redirect stdin\n");
         close(fd);
         exit(EXIT_FAILURE);
     }
@@ -33,12 +33,22 @@ int redirect_to_stdin(t_node *node) // "<" - redirects to STDIN from file
     return (0);
 }
 
-void redirect_to_stdout() // ">" - redirects to STDOUT from file
+int redirect_to_stdout(t_redir *node) // ">" - redirects to STDOUT from file
 {
     int fd;
 
-    fd = open("output.txt", O_RDONLY | O_WRONLY | O_TRUNC);
+    fd = open(node->file_name, O_RDONLY | O_WRONLY | O_TRUNC);
     if (fd < 0)
-        return ;
-    dup2(fd, STDOUT_FILENO);
+    {
+        printf("%s: No such file or directory.\n", node->file_name);
+        return (1);
+    }
+    if (dup2(fd, STDOUT_FILENO) == -1)
+    {
+        perror("Failed to redirect stdout\n");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+    return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:47:58 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/22 17:53:13 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/05/26 13:42:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,7 @@ char	**build_argv(t_node *node)
 		{
 			argv[i] = ft_strdup2(node->args[j]);
 			if (argv[i] == NULL)
-			{
 				return (NULL);
-			}
 			i++;
 			j++;
 		}
