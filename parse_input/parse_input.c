@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/03 17:22:06 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:36:09 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,20 @@
 
 int check_for_redir(t_node *current_node, char **result, int *j)
 {
-    t_redir *new_redir;
+    // t_redir *new_redir;
 
-    if (init_t_redir_vars(current_node) == 1)
-        return (1);
     if (ft_strcmp(result[*j], "<") == 0)
     {
         if (result[*j + 1] == NULL)
             return (1);
-        new_redir = add_new_file(&current_node->redir_files, result[*j + 1]);
-        if (!new_redir)
-            return (1);
-        printf("new_redir->file_name_1: %s\n", new_redir->file_name);
-        current_node->redir_files->type->stdin_redir = 1;
-        // if (access(new_redir->file_name, F_OK) != 0)
-        // {
-        //     printf("%s: No such file or directory.\n", new_redir->file_name);
+        current_node->redir_files = malloc(sizeof(t_redir));
+        current_node->redir_files->file_name = ft_strdup(result[*j + 1]);
+        // current_node->redir_files->type->stdin_redir = 1;
+        current_node->redir_files->next = NULL;
+        // new_redir = add_new_file(&current_node->redir_files, result[*j + 1]);
+        // if (!new_redir)
         //     return (1);
-        // }
-        // if (access(new_redir->file_name, R_OK) != 0)
-        // {
-        //     printf("%s: Permission denied.\n", new_redir->file_name);
-        //     return (1);
-        // }
-        (*j)++;
-    }
-    else if (ft_strcmp(result[*j], ">") == 0)
-    {
-        if (result[*j + 1] == NULL)
-            return (1);
-        new_redir = add_new_file(&current_node->redir_files, result[*j + 1]);
-        if (!new_redir)
-            return (1);
-        current_node->redir_files->type->stdout_redir = 1;
-        // if (access(new_redir->file_name, F_OK) != 0)
-        // {
-        //     printf("%s: No such file or directory.\n", new_redir->file_name);
-        //     return (1);
-        // }
-        // if (access(new_redir->file_name, R_OK) != 0)
-        // {
-        //     printf("%s: Permission denied.\n", new_redir->file_name);
-        //     return (1);
-        // }
+        // printf("new_redir->file_name_1: %s\n", current_node->redir_files->file_name);
         (*j)++;
     }
     return (0);
@@ -75,6 +46,8 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
     j_temp = j;
     current_node->flags_count = count_flags(result, j_temp);
     if (alloc_mem_for_flags_arr(current_node) == 1)
+        return (1);
+    if (init_t_redir_type(current_node) == 1)
         return (1);
     i = 0;
     c = 0;
@@ -148,7 +121,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();
 		return ;
@@ -163,10 +136,11 @@ void read_the_input(char *rl, t_shell *shll)
         return ;
 	add_args_to_linked_list(result, &temp);
     temp = unit;
+    t_redir *r;
     // int i;
     while (temp)
     {
-        // printf("temp->cmd: %s\n", temp->cmd);
+        printf("temp->cmd: %s\n", temp->cmd);
         // i = 0;
         // while (i < temp->flags_count)
         // {
@@ -179,11 +153,17 @@ void read_the_input(char *rl, t_shell *shll)
         //     printf("temp->args[%d]: %s\n", i, temp->args[i]);
         //     i++;
         // }
-        while (temp->redir_files)
+        r = temp->redir_files;
+        while (r)
         {
-            printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-            temp->redir_files = temp->redir_files->next;
+            printf("temp->redir_files->file_name: %s\n", r->file_name);
+            r = r->next;
         }
+    //     while (temp->redir_files)
+    //     {
+    //         printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
+    //         temp->redir_files = temp->redir_files->next;
+    //     }
         temp = temp->next;
     }
 	// if (unit->is_pipe)

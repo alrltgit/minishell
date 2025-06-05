@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/03 15:29:15 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:29:23 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, 
     {
         (*current_node)->is_pipe = 1;
         *current_node = add_unit_to_end(unit);
+        if (ft_strcmp(result[*j], "<") == 0)
+        {
+            if (result[*j + 1] == NULL)
+                return (1);
+            init_t_redir_type(*current_node);
+            (*current_node)->redir_files->file_name = ft_strdup(result[*j + 1]);
+        }
         j_temp = *j + 1;
         
         if (!result[j_temp])

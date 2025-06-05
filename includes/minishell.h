@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/03 16:11:45 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:08:19 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, 
 
 // redirection.c
 int redirect_to_stdin(t_redir *node);
-int redirect_to_stdout(t_redir *node); 
+int redirect_to_stdout(t_redir *node);
+int init_t_redir_type(t_node *current_node);
 
 #endif

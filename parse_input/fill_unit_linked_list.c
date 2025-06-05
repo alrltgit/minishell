@@ -3,34 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/03 16:10:38 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:09:41 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int init_t_redir_vars(t_node *current_node)
+int init_t_redir_type(t_node *current_node)
 {
+    current_node->redir_files = malloc(sizeof(t_redir));
     if (!current_node->redir_files)
-    {
-        current_node->redir_files = malloc(sizeof(t_redir));
-        if (!current_node->redir_files)
-            return (1);
-        current_node->redir_files->type = NULL;
-        current_node->redir_files->file_name = NULL;
-        current_node->redir_files->next = NULL;
-    }
+        return (1);
+    current_node->redir_files->file_name = NULL;
+    current_node->redir_files->type = malloc(sizeof(t_redir_type));
     if (!current_node->redir_files->type)
-    {
-        current_node->redir_files->type = malloc(sizeof(t_redir_type));
-        if (!current_node->redir_files->type)
-            return (1);
-        current_node->redir_files->type->stdin_redir = 0;
-        current_node->redir_files->type->stdout_redir = 0;
-    }
+        return (1);
+    current_node->redir_files->type->append_redir = 0;
+    current_node->redir_files->type->heredoc_redir = 0;
+    current_node->redir_files->type->stdin_redir = 0;
+    current_node->redir_files->type->stdout_redir = 0;
+    current_node->redir_files->next = NULL;
     return (0);
 }
 
@@ -42,8 +37,19 @@ t_redir *add_new_file(t_redir **head, char *file_name)
     new_node = malloc(sizeof(t_redir));
     if (!new_node)
         return (NULL);
-    new_node->type = NULL;
     new_node->file_name = ft_strdup(file_name);
+    if (!new_node->file_name)
+    {
+        free(new_node);
+        return NULL;
+    }
+    new_node->type = malloc(sizeof(t_redir_type));
+    if (!new_node->type)
+    {
+        free(new_node->file_name);
+        free(new_node);
+        return NULL;
+    }
     new_node->next = NULL;
     if (!*head)
     {
