@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/03 17:18:23 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:37:42 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int is_file_name(t_node *current_node, char *result)
 	temp = current_node;
 	while (temp->redir_files)
 	{
-		printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-		printf("result: %s\n", result);
+		// printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
+		// printf("result: %s\n", result);
 		if (ft_strcmp(temp->redir_files->file_name, result) == 0)
 			return (1);
 		temp->redir_files = temp->redir_files->next;

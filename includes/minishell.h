@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/05 11:08:19 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/05 15:39:44 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ int		rl_is_space(char *rl);
 // int		condition_is_met(char *cmd_name, char **result, int j_temp);
 int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp);
 int		alloc_mem_for_flags_arr(t_node *current_node);
+int		is_file_name(t_node *current_node, char *result);
 
 // piping.c
 void	create_pipe(t_node *node);

@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/05 11:36:09 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/05 15:47:18 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	current_node->args_count = count_args(result, current_node, j_temp);
     printf("current_node->args_count: %d\n", current_node->args_count);
     if (alloc_mem_for_args_arr(current_node) == 1)
-    {
         return ;
-    }
 	i = 0;
 	while (result[i])
 	{
