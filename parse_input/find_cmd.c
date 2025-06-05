@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/05 15:46:36 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/05 16:39:54 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int find_command_path(char *input, t_node *unit)
 	char	**paths;
 	int		i;
 
-    if (ft_strcmp(input, "<") || is_file_name(unit, input) == 0)
+    if (ft_strcmp(input, "<") == 0 || is_file_name(unit, input) == 1)
     {
         unit->cmd_status = 0;
         unit->cmd = NULL;

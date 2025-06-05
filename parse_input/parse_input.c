@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/05 15:47:18 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/05 16:42:28 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int add_cmds_flags_to_linked_list(char **result, t_node **unit)
             return (1);
         if (check_for_redir(current_node, result, &j) == 1)
             return (1);
+        // printf("current_node->redir_files->file_name: %s\n", current_node->redir_files->file_name);
         if (current_node->cmd_is_found == 0)
             current_node->cmd_type = find_command_path(result[j], current_node);
         if (current_node->cmd_type > 2)
@@ -84,7 +85,9 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	current_node->args_count = count_args(result, current_node, j_temp);
     printf("current_node->args_count: %d\n", current_node->args_count);
     if (alloc_mem_for_args_arr(current_node) == 1)
+    {
         return ;
+    }
 	i = 0;
 	while (result[i])
 	{
@@ -119,7 +122,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
 	{
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_on_new_line();
 		return ;
