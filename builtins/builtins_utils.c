@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:43:25 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/03 11:28:15 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/06 14:26:44 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,23 @@ void	process_str_exp(t_node *command, char **rl_buffer)
 	free(*rl_buffer);
 	*rl_buffer = ft_strdup(temp);
 	free(temp);
+	temp = NULL;
 }
+
+/* void	process_str_exp(t_node *command, char **rl_buffer)
+{
+	char	*processed;
+	char	*quoted;
+
+	quoted = handle_quotes(perfect(command, rl_buffer));
+	if (!quoted)
+		return;
+	printf("Before strdup: [%s] (len = %zu)\n", quoted, strlen(quoted));
+	
+	processed = ft_strdup(quoted);
+	if (!processed)
+		return;
+
+	free(*rl_buffer);
+	*rl_buffer = processed;
+} */

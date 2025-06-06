@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/05 16:32:42 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/06 12:06:47 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define B_IN 1
 # define NON_B_IN 2
 # define PROMPT "\033[1;34mminishell\033[38;5;208m$ \033[0m"
+# define EXPERR "\e[0;31mminishell: export: `%s': not a valid identifier\n"
 
 typedef struct s_node	t_node;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/05 16:51:44 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/06 14:15:36 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,19 @@ static int	is_alphanumeric(char *key)
 	return (1);
 }
 
-/* char	*process_value(char	*value)
+static int	value_syntax_ok(char *val)
 {
-	int		count;
-	char	*trimmed;
+	int	i;
 
-	if (value[0] == ' ')
-		return (" ");
-	trimmed = extract_token_v2(value);
-	if (ft_strcmp(value, trimmed) != 0)
-		return (trimmed);
-	else
+	i = -1;
+	while (val[++i])
 	{
-		count = -1;
-		while (value[++count] && value[count] != ' ')
-			;
-		return (ft_substr(value, 0, count));
+		if (val[i] == '!' || val[i] == '('
+			|| val[i] == ')' || val[i] == ';')
+			return (0);
 	}
-} */
+	return (1);
+}
 /*
 	if there is space after first = sign
 	set empty line to value
@@ -73,20 +68,20 @@ int	check_print_error(char *key, char *val, int w_space)
 	{
 		if (w_space)
 		{
-			printf("\e[0;31mminishell: export11: `%s': not a valid identifier\n", key);
-			printf("\e[0;31mminishell: export111: `%s': not a valid identifier\n", val);
+			printf(EXPERR, key);
+			printf(EXPERR, val);
 		}
 		else
-			printf("\e[0;31mminishell: export: `%s': not a valid identifier\n", ft_strcat(key, val));
+			printf(EXPERR, ft_strcat(key, val));
 	}
 	else
 	{
 		if (w_space)
-			printf("\e[0;31mminishell: export: `%s': not a valid identifier\n", val);
+			printf(EXPERR, val);
 		else
 		{
-			if (!is_alphanumeric(val))
-				printf("\e[0;31mminishell: export: `%s': not a valid identifier\n", val);
+			if (!value_syntax_ok(val))
+				printf(EXPERR, ft_strcat(key, val));
 			else
 				return (1);
 		}
@@ -121,13 +116,12 @@ char	**check_invalid_identifier(char *str)
 	after = ft_strdup(temp);
 	free(temp);
 	temp = NULL;
-	i = -1;
 	if (before[b_len - 1] && before[b_len - 1] == ' ')
 	{
 		key_w_skip = 1;
 		--b_len;
 	}
-	while (before[--b_len] != ' ')
+	while (before[--b_len] && before[b_len] != ' ')
 		temp = update_str(temp, before[b_len]);
 	free(before);
 	b_len = ft_strlen(temp) + 1;
@@ -135,11 +129,8 @@ char	**check_invalid_identifier(char *str)
 	while (b_len)
 		before = update_str(before, temp[--b_len]);
 	free(temp);
-	printf("BEFORE DEBUG -> %s\n", before);
 	if (!check_print_error(before, after, key_w_skip))
 		return (NULL);
-	printf("beforeeeee %s\n", before);
-	printf("afterrrrrr %s\n", after);
 	arr = malloc(sizeof(char *) * 2);
 	arr[0] = ft_strdup(before);
 	arr[1] = ft_strdup(after);
@@ -150,19 +141,20 @@ char	**check_invalid_identifier(char *str)
 
 //export abc =5
 
-//firstly check for key after that, check value
+//handle export abc='$SHLVL'
+//if you try to export abc='$SHLVL' or some
+//exp variables in single quote which ends with L, it adds e to the end
+//IT IS LIKELY CUZ OF PROCESS_STR_EXP
 void	ft_export(t_node *command)
 {
-	/* char	*str1;
-	char	*str2;
-	char	*key; */
+	char	**split;
 	int		index;
 	
 	process_str_exp(command, &command->fcmd);
 	printf("Processed fcmd-> %s\n", command->fcmd);
 	if (!ft_strchr(command->fcmd, '='))
 		return ;
-	char	**split = check_invalid_identifier(command->fcmd);
+	split = check_invalid_identifier(command->fcmd);
 	if (!split)
 		return ;
 	index = index_from_key(split[0], command->shell->env);
@@ -171,7 +163,5 @@ void	ft_export(t_node *command)
 		create_and_set_val(command->shell, split[0], split[1]);
 	else
 		change_env_value(split[0], split[1] + 1, command->shell);
-	/* if (index_from_key(split[0], command->env) == -1)
-		create_and_set_val(command->shell, split[0], split[1]); */
-		//might need to change create set value func
+	// free_double((void **)split);
 }
