@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/05 11:09:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/07 12:51:48 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,39 +29,39 @@ int init_t_redir_type(t_node *current_node)
     return (0);
 }
 
-t_redir *add_new_file(t_redir **head, char *file_name)
-{
-    t_redir *new_node;
-    t_redir *temp;
+// t_redir *add_new_file(t_redir **head, char *file_name)
+// {
+//     t_redir *new_node;
+//     t_redir *temp;
 
-    new_node = malloc(sizeof(t_redir));
-    if (!new_node)
-        return (NULL);
-    new_node->file_name = ft_strdup(file_name);
-    if (!new_node->file_name)
-    {
-        free(new_node);
-        return NULL;
-    }
-    new_node->type = malloc(sizeof(t_redir_type));
-    if (!new_node->type)
-    {
-        free(new_node->file_name);
-        free(new_node);
-        return NULL;
-    }
-    new_node->next = NULL;
-    if (!*head)
-    {
-        *head = new_node;
-        return (new_node);
-    }
-    temp = *head;
-    while (temp->next)
-        temp = temp->next;
-    temp->next = new_node;
-    return (new_node);
-}
+//     new_node = malloc(sizeof(t_redir));
+//     if (!new_node)
+//         return (NULL);
+//     new_node->file_name = ft_strdup(file_name);
+//     if (!new_node->file_name)
+//     {
+//         free(new_node);
+//         return NULL;
+//     }
+//     new_node->type = malloc(sizeof(t_redir_type));
+//     if (!new_node->type)
+//     {
+//         free(new_node->file_name);
+//         free(new_node);
+//         return NULL;
+//     }
+//     new_node->next = NULL;
+//     if (!*head)
+//     {
+//         *head = new_node;
+//         return (new_node);
+//     }
+//     temp = *head;
+//     while (temp->next)
+//         temp = temp->next;
+//     temp->next = new_node;
+//     return (new_node);
+// }
 
 t_node	*create_unit(void)
 {

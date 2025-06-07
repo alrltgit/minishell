@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/05 15:39:44 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/07 17:03:26 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ char	**split_args(char *str);
 // char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
 char	*handle_quotes(char *str);
+int		check_for_redir(t_node *current_node, char **result, int *j);
 
 //free.c
 void	free_arr(char **arr);
@@ -135,9 +136,10 @@ void	free_double_n(void **arr, int n);
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
 // fill_unit_linked_list.c
-int init_t_redir_vars(t_node *current_node);
+// int init_t_redir_vars(t_node *current_node);
 // t_redir *add_new_file(t_redir **head);
-t_redir *add_new_file(t_redir **head, char *file_name);
+void add_new_file(t_redir **head, char *file_name);
+// t_redir *add_new_file(t_redir **head, char *file_name);
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
 

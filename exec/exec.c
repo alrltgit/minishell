@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/03 15:04:50 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:07:51 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ void	single_command(t_node *node, char **argv)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (node->redir_files->type->stdin_redir == 1)
-		{
-			if (redirect_to_stdin(node->redir_files) == 1)
-				return ;
-		}
-		if (node->redir_files->type->stdout_redir == 1)
-		{
-			if (redirect_to_stdout(node->redir_files) == 1)
-				return ;
-		}
+		// if (node->redir_files->type->stdin_redir == 1)
+		// {
+		// 	if (redirect_to_stdin(node->redir_files) == 1)
+		// 		return ;
+		// }
+		// if (node->redir_files->type->stdout_redir == 1)
+		// {
+		// 	if (redirect_to_stdout(node->redir_files) == 1)
+		// 		return ;
+		// }
 		if (node->cmd == NULL)
 		{
 			printf("%s: command not found", argv[0]);
