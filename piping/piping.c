@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/07 17:03:45 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:05:56 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, 
     {
         (*current_node)->is_pipe = 1;
         *current_node = add_unit_to_end(unit);
-        check_for_redir(*current_node, result, j);
+        check_for_redir_heredoc(*current_node, result, j);
         // if (ft_strcmp(result[*j], "<") == 0)
         // {
         //     if (result[*j + 1] == NULL)
@@ -62,13 +62,6 @@ void	create_pipe(t_node *node)
             return;
         }
         argv = build_argv(temp);
-        
-        // int i = 0;
-        // while (argv[i++])
-        // {
-        //     printf("argv[i]: %s\n", argv[i]);
-        // }
-        
         pid = fork();
         if (pid < 0)
         {
@@ -79,11 +72,19 @@ void	create_pipe(t_node *node)
         if (pid == 0)
         {
             // fprintf(stderr, "Child process: executing command '%s'\n", temp->cmd);
-            // if (temp == node && temp->redir_files->type->stdin_redir == 1)
-            // {
-            //     if (redirect_to_stdin(temp->redir_files) == 1)
-            //         return ;
-            // }
+            if (temp->redir_files && temp->redir_files->type->stdin_redir == 1)
+            {
+                if (redirect_to_stdin(temp->redir_files) == 1)
+                    return ;
+                temp->redir_files->type->stdin_redir = 0;
+            }
+            if (temp->redir_files && temp->redir_files->type->stdout_redir == 1)
+            {
+                node->redir_files = node->redir_files->next;
+                if (redirect_to_stdout(temp->redir_files) == 1)
+                    return ;
+                temp->redir_files->type->stdout_redir = 0;
+            }
             if (prev_fd != -1)
             {
                 dup2(prev_fd, STDIN_FILENO);

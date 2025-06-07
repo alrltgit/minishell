@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/07 17:03:26 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:13:16 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,9 @@ void	process_str_exp(t_node *command, char **rl_buffer);
 //ALINA
 // parsing
 char	**split_args(char *str);
-// char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
 char	*handle_quotes(char *str);
-int		check_for_redir(t_node *current_node, char **result, int *j);
+int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
 
 //free.c
 void	free_arr(char **arr);
@@ -138,7 +137,7 @@ int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
 // fill_unit_linked_list.c
 // int init_t_redir_vars(t_node *current_node);
 // t_redir *add_new_file(t_redir **head);
-void add_new_file(t_redir **head, char *file_name);
+void	add_new_file(t_redir **head, char *file_name);
 // t_redir *add_new_file(t_redir **head, char *file_name);
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
@@ -150,10 +149,10 @@ void	trim_quotes_if_needed(char *token, int len);
 void	trim_outer(char *str);
 
 // find_cmd.c
-int find_command_path(char *input, t_node *unit);
+int		find_command_path(char *input, t_node *unit);
 
 // find_args.c
-int	count_args(char **result, t_node *current_node, int j_temp);
+int		count_args(char **result, t_node *current_node, int j_temp);
 void	find_args(t_node *cmd, char **result, int *i, int *j);
 char	*retrieve_cmd_name(t_node *node);
 int		alloc_mem_for_args_arr(t_node *current_node);
@@ -166,18 +165,17 @@ char	*ft_strdup2(const char *s1);
 // utils.c
 int		is_valid_command(t_node *current_node, char *rl);
 int		rl_is_space(char *rl);
-// int		condition_is_met(char *cmd_name, char **result, int j_temp);
 int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp);
 int		alloc_mem_for_flags_arr(t_node *current_node);
 int		is_file_name(t_node *current_node, char *result);
 
 // piping.c
 void	create_pipe(t_node *node);
-int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, int *j, int *c);
+int		check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, int *j, int *c);
 
 // redirection.c
-int redirect_to_stdin(t_redir *node);
-int redirect_to_stdout(t_redir *node);
-int init_t_redir_type(t_node *current_node);
+int		redirect_to_stdin(t_redir *node);
+int		redirect_to_stdout(t_redir *node);
+void	init_t_redir_type(t_redir *new_node);
 
 #endif

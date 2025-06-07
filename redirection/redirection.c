@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:43:35 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/03 15:02:35 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:11:03 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int redirect_to_stdin(t_redir *node)
 {
     int fd;
 
-    // printf("node->file_name: %s\n", node->file_name);
     fd = open(node->file_name, O_RDONLY);
     if (fd < 0)
     {
@@ -37,7 +36,7 @@ int redirect_to_stdout(t_redir *node)
 {
     int fd;
 
-    fd = open(node->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    fd = open(node->file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
     if (fd < 0)
     {
         printf("%s: No such file or directory.\n", node->file_name);
