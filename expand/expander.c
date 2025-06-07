@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/06 14:11:56 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/07 11:18:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,15 @@ char	*perfect(t_node *command, char **arr)
 	while (arr2[++i])
 	{
 		if (arr2[i] == '\'' && in_dq == 0)
+		{
 			in_sq = 1 - in_sq;
+			continue;
+		}
 		if (arr2[i] == '"' && in_sq == 0)
+		{
 			in_dq = 2 - in_dq;
+			continue;			
+		}
 		if (arr2[i] == '$' && in_sq == 0 && arr2[i + 1] != ' ' && arr2[i + 1] != '\0')
 		{
 			j = i;
@@ -156,6 +162,65 @@ char	*perfect(t_node *command, char **arr)
 	}
 	return (str);
 }
+
+/* char *replace_var(t_shell *shell, char *str, char *var, int pos, int len)
+{
+    char *key = ft_substr(var, pos, len);
+    char *val = value_from_key(key, shell);
+    free(key);
+
+    if (val)
+    {
+        for (int j = 0; val[j]; ++j)
+            str = update_str(str, val[j]);
+    }
+    return str;
+}
+
+char *perfect(t_node *command, char **arr)
+{
+    int     in_sq = 0;
+    int     in_dq = 0;
+    int     i = -1;
+    int     j;
+    int     len;
+    char    *arr2 = *arr;
+    char    *str = NULL;
+
+    while (arr2[++i])
+    {
+        if (arr2[i] == '\'' && in_dq == 0)
+        {
+            in_sq = !in_sq;
+            continue; // skip quote
+        }
+        if (arr2[i] == '"' && in_sq == 0)
+        {
+            in_dq = !in_dq;
+            continue; // skip quote
+        }
+
+        if (arr2[i] == '$' && in_sq == 0 && ft_isalpha(arr2[i + 1]))
+        {
+            j = i + 1;
+            len = 0;
+            while (arr2[j] && (ft_isalnum(arr2[j]) || arr2[j] == '_'))
+            {
+                ++j;
+                ++len;
+            }
+            str = replace_var(command->shell, str, arr2, i + 1, len);
+            i += len;
+        }
+        else
+        {
+            str = update_str(str, arr2[i]);
+        }
+    }
+
+    return str;
+} */
+
 
 
 /*
