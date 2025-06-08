@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/03 12:12:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/08 14:12:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,29 @@ void	ft_echo(t_node *command)
 
 	(void)command;
 	input_split = split_args(command->fcmd);
-	count = -1;
+	// count = -1;
 	len = -1;
-	
+	printf("PROCESSED FCMD -> %s\n", command->fcmd);
 	if (ft_strcmp(input_split[0], "echo") == 0 && !input_split[1])
 	{
 		printf("\n");
 		return ;
 	}
+	
 	while (input_split[++len])
 		;
 	while (++count < len)
 	{
 		temp = ft_strdup(input_split[count]);
 		free(input_split[count]);
-		input_split[count] = ft_strdup(handle_quotes(perfect(command, &temp)));
+		input_split[count] = ft_strdup(handle_quotes(perfect(command, temp)));
 		//trim_outer(input_split[count]);
+		free(temp);
+		temp = NULL;
 	}
-	while (input_split[++count])
-		;
-	process_input(input_split, count);
+	/* while (input_split[++count])
+		; */
+	process_input(input_split, len);
 	free_double((void **)input_split);
 }
 

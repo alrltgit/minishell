@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/06 12:06:47 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/08 14:08:59 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void	ft_unset(t_node *command);
 
 //expand
 void	process_exp(t_node *command);
-char	*perfect(t_node *command, char **arr);
+char	*perfect(t_node *command, char *arr);
+int		fake_perfect(t_node *command, char *arr);
 
 //builtins_utils.c
 // char	**process_rl_line(t_node *command, char *rl_buffer);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/07 11:18:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/08 14:19:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,107 +122,94 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	return (str);
 }
 
-char	*perfect(t_node *command, char **arr)
+char	*perfect(t_node *command, char *arr)
 {
-	int	in_sq;
-	int	in_dq;
-	int	i;
-	int	j;
-	int	len;
-	char	*arr2 = *arr; //fix the syntax
+	int		in_sq;
+	int		in_dq;
+	int		i;
+	int		j;
+	int		len;
 	char	*str;
+
 	in_sq = 0;
 	in_dq = 0;
 	i = -1;
 	str = NULL;
 
-	while (arr2[++i])
+	while (arr[++i])
 	{
-		if (arr2[i] == '\'' && in_dq == 0)
+		if (arr[i] == '\'' && in_dq == 0)
 		{
 			in_sq = 1 - in_sq;
-			continue;
 		}
-		if (arr2[i] == '"' && in_sq == 0)
+		if (arr[i] == '"' && in_sq == 0)
 		{
-			in_dq = 2 - in_dq;
-			continue;			
+			in_dq = 2 - in_dq;	
 		}
-		if (arr2[i] == '$' && in_sq == 0 && arr2[i + 1] != ' ' && arr2[i + 1] != '\0')
+		if (arr[i] == '$' && in_sq == 0 && arr[i + 1] != ' ' && arr[i + 1] != '\0')
 		{
 			j = i;
 			len = 0;
-			while (is_alphanumeric(arr2[++j]))
+			while (is_alphanumeric(arr[++j]))
 				++len;
-			str = replace_var(command->shell, str, arr2, i + 1, len, in_sq + in_dq);
+			print_node(command);
+			str = replace_var(command->shell, str, arr, i + 1, len, in_sq + in_dq);
 			i += len;
 		}
 		else
-			str = update_str(str, arr2[i]);
+			str = update_str(str, arr[i]);
 	}
 	return (str);
 }
 
-/* char *replace_var(t_shell *shell, char *str, char *var, int pos, int len)
+int	fake_perfect(t_node *command, char *arr)
 {
-    char *key = ft_substr(var, pos, len);
-    char *val = value_from_key(key, shell);
-    free(key);
+	int		in_sq;
+	int		in_dq;
+	int		i;
+	int		j;
+	int		len;
+	int		sq_count;
+	int		dq_count;
+	char	*str;
 
-    if (val)
-    {
-        for (int j = 0; val[j]; ++j)
-            str = update_str(str, val[j]);
-    }
-    return str;
+	in_sq = 0;
+	in_dq = 0;
+	dq_count = 0;
+	sq_count = 0;
+	i = -1;
+	str = NULL;
+
+	while (arr[++i])
+	{
+		if (arr[i] == '\'' && in_dq == 0)
+		{
+			++sq_count;
+			in_sq = 1 - in_sq;
+			// continue;
+		}
+		if (arr[i] == '"' && in_sq == 0)
+		{
+			++dq_count;
+			in_dq = 2 - in_dq;
+			// continue;			
+		}
+		if (arr[i] == '$' && in_sq == 0 && arr[i + 1] != ' ' && arr[i + 1] != '\0')
+		{
+			j = i;
+			len = 0;
+			while (is_alphanumeric(arr[++j]))
+				++len;
+			str = replace_var(command->shell, str, arr, i + 1, len, in_sq + in_dq);
+			i += len;
+		}
+		else
+			str = update_str(str, arr[i]);
+	}
+	if ((dq_count % 2 == 1) || (sq_count % 2 == 1))
+		return (0);
+	return (1);
 }
-
-char *perfect(t_node *command, char **arr)
-{
-    int     in_sq = 0;
-    int     in_dq = 0;
-    int     i = -1;
-    int     j;
-    int     len;
-    char    *arr2 = *arr;
-    char    *str = NULL;
-
-    while (arr2[++i])
-    {
-        if (arr2[i] == '\'' && in_dq == 0)
-        {
-            in_sq = !in_sq;
-            continue; // skip quote
-        }
-        if (arr2[i] == '"' && in_sq == 0)
-        {
-            in_dq = !in_dq;
-            continue; // skip quote
-        }
-
-        if (arr2[i] == '$' && in_sq == 0 && ft_isalpha(arr2[i + 1]))
-        {
-            j = i + 1;
-            len = 0;
-            while (arr2[j] && (ft_isalnum(arr2[j]) || arr2[j] == '_'))
-            {
-                ++j;
-                ++len;
-            }
-            str = replace_var(command->shell, str, arr2, i + 1, len);
-            i += len;
-        }
-        else
-        {
-            str = update_str(str, arr2[i]);
-        }
-    }
-
-    return str;
-} */
-
-
-
 /*
 	when input is given it will go
 	quote handling, expansion, execution
@@ -234,20 +221,33 @@ void	process_exp(t_node *command)
 {
 	int		i;
 	char	*temp;
-	//printf("ENTERED PROCESS_EXP with \n");
-	//print_node(command);
+	// printf("ENTERED PROCESS_EXP with \n");
+	// print_node(command);
+
+	if (command->fcmd)
+	{
+		temp = ft_strdup(command->fcmd);
+		free(command->fcmd);
+		command->fcmd = ft_strdup(handle_quotes(perfect(command, temp)));
+		free(temp);
+		temp = NULL;
+	}
 	i = -1;
 	while (++i < command->args_count)
 	{
 		temp = ft_strdup(command->args[i]);
 		free(command->args[i]);
-		command->args[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
+		command->args[i] = ft_strdup(handle_quotes(perfect(command, temp)));
+		free(temp);
+		temp = NULL;
 	}
 	i = -1;
 	while (++i < command->flags_count)
 	{
 		temp = ft_strdup(command->flags[i]);
 		free(command->flags[i]);
-		command->flags[i] = ft_strdup(handle_quotes(perfect(command, &temp)));
+		command->flags[i] = ft_strdup(handle_quotes(perfect(command, temp)));
+		free(temp);
+		temp = NULL;
 	}
 }

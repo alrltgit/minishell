@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/06 14:15:36 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/08 13:37:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,12 @@ char	**check_invalid_identifier(char *str)
 
 //export abc =5
 
-//handle export abc='$SHLVL'
-//if you try to export abc='$SHLVL' or some
-//exp variables in single quote which ends with L, it adds e to the end
-//IT IS LIKELY CUZ OF PROCESS_STR_EXP
 void	ft_export(t_node *command)
 {
 	char	**split;
 	int		index;
 	
-	process_str_exp(command, &command->fcmd);
+	// process_str_exp(command, &command->fcmd);
 	printf("Processed fcmd-> %s\n", command->fcmd);
 	if (!ft_strchr(command->fcmd, '='))
 		return ;
