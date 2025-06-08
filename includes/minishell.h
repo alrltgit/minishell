@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/07 21:13:16 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 13:45:02 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,8 @@ void	free_double_n(void **arr, int n);
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
 // fill_unit_linked_list.c
-// int init_t_redir_vars(t_node *current_node);
-// t_redir *add_new_file(t_redir **head);
-void	add_new_file(t_redir **head, char *file_name);
-// t_redir *add_new_file(t_redir **head, char *file_name);
+// void	add_new_file(t_redir **head, char *file_name);
+t_redir *add_new_file(t_redir **head, char *file_name);
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
 

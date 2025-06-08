@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/07 21:22:56 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 13:45:51 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,29 @@ void add_node(t_redir **head, t_redir *new_node)
     temp->next = new_node;
 }
 
-void add_new_file(t_redir **head, char *file_name)
+t_redir *add_new_file(t_redir **head, char *file_name)
 {
     t_redir *new_node;
 
     new_node = malloc(sizeof(t_redir));
     if (!new_node)
-        return ;
+        return (NULL);
     new_node->file_name = ft_strdup(file_name);
     if (!new_node->file_name)
     {
         free(new_node);
-        return ;
+        return (NULL);
     }
     new_node->type = malloc(sizeof(t_redir_type));
     if (!new_node->type)
     {
         free(new_node);
-        return ;
+        return (NULL);
     }
 	init_t_redir_type(new_node);
     new_node->next = NULL;
 	add_node(head, new_node);
+	return (new_node);
 }
 
 t_node	*create_unit(void)

@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/05 16:39:54 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/08 13:06:35 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void set_error_status(char *input, t_node *unit)
     if (ft_strchr(input, '/'))
     {
         if (access(input, F_OK) != 0)
-            ft_printf("minishell: %s: No such file or directory\n", input);
+            ft_printf("minishell: %s: here No such file or directory\n", input);
         else if (access(input, X_OK) != 0)
             ft_printf("minishell: %s: Permission denied\n", input);
     }

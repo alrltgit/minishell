@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/07 21:07:12 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 13:56:33 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,31 @@ void	single_command(t_node *node, char **argv)
 {
 	pid_t	pid;
 	int		status;
+	t_redir *redir;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		if (node->redir_files && node->redir_files->type->stdin_redir == 1)
+		redir = node->redir_files;
+		while (redir)
 		{
-			if (redirect_to_stdin(node->redir_files) == 1)
-				return ;
-			node->redir_files->type->stdin_redir = 0;
-		}
-		if (node->redir_files && node->redir_files->type->stdout_redir == 1)
-		{
-			node->redir_files = node->redir_files->next;
-			if (redirect_to_stdout(node->redir_files) == 1)
-				return ;
+			printf("redir->type->stdin_redir: %d\n", redir->type->stdin_redir);
+			printf("redir->type->stdout_redir: %d\n", redir->type->stdout_redir);
+			printf("redir->file_name: %s\n", redir->file_name);
+			if (redir->type->stdin_redir == 1)
+			{
+				printf("STDIN TEST\n");
+				if (redirect_to_stdin(redir) == 1)
+					exit(1);
+			}
+			else if (redir->type->stdout_redir == 1)
+			{
+				printf("output redir->file_name: %s\n", redir->file_name);
+				printf("STDOUT TEST\n");
+				if (redirect_to_stdout(redir) == 1)
+					exit(1);
+			}
+			redir = redir->next;
 		}
 		if (node->cmd == NULL)
 		{
