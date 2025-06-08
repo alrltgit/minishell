@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/01 16:26:43 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 19:36:05 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,7 @@ char	*extract_token(const char *str, int *i)
 		(*i)++;
 	}
 	len = *i - start;
-	// printf("len: %d", len);
 	token = ft_substr(str, start, len);
-	// printf("token: %s ", token);
 	if (!token)
 		return (NULL);
 	//trim_outer(token);

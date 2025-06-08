@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/08 13:56:33 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:42:18 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,13 @@ void	single_command(t_node *node, char **argv)
 		redir = node->redir_files;
 		while (redir)
 		{
-			printf("redir->type->stdin_redir: %d\n", redir->type->stdin_redir);
-			printf("redir->type->stdout_redir: %d\n", redir->type->stdout_redir);
-			printf("redir->file_name: %s\n", redir->file_name);
 			if (redir->type->stdin_redir == 1)
 			{
-				printf("STDIN TEST\n");
 				if (redirect_to_stdin(redir) == 1)
 					exit(1);
 			}
 			else if (redir->type->stdout_redir == 1)
 			{
-				printf("output redir->file_name: %s\n", redir->file_name);
-				printf("STDOUT TEST\n");
 				if (redirect_to_stdout(redir) == 1)
 					exit(1);
 			}

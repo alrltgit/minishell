@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/07 16:30:52 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 19:35:41 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int is_file_name(t_node *current_node, char *result)
 	temp = current_node->redir_files;
 	while (temp)
 	{
-		// printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-		// printf("result: %s\n", result);
 		if (ft_strcmp(temp->file_name, result) == 0)
 			return (1);
 		temp = temp->next;

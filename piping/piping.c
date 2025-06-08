@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/08 14:15:02 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:24:26 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, 
     {
         (*current_node)->is_pipe = 1;
         *current_node = add_unit_to_end(unit);
-        check_for_redir_heredoc(*current_node, result, j);
+        if (!*current_node)
+            return (1);
         j_temp = *j + 1;
-        
         if (!result[j_temp])
             return (1);
-        
         (*current_node)->flags_count = count_flags(result, j_temp);
         if (alloc_mem_for_flags_arr(*current_node) == 1)
             return (1);
@@ -65,12 +64,9 @@ void	create_pipe(t_node *node)
         }
         if (pid == 0)
         {
-            redir = node->redir_files;
+            redir = temp->redir_files;
             while (redir)
             {
-                printf("redir->type->stdin_redir: %d\n", redir->type->stdin_redir);
-                printf("redir->type->stdout_redir: %d\n", redir->type->stdout_redir);
-                printf("redir->file_name: %s\n", redir->file_name);
                 if (redir->type->stdin_redir == 1)
                 {
                     if (redirect_to_stdin(redir) == 1)
