@@ -6,24 +6,24 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:10:40 by apple             #+#    #+#             */
-/*   Updated: 2025/06/01 15:12:43 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 22:37:34 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void heredoc(t_node *current_node, char *delimiter)
+int heredoc(char *delimiter)
 {
     char *line;
     int fd_temp;
     pid_t pid;
     int status;
 
-    fd_temp = open(current_node->redir_files->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    fd_temp = open("fd_temp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
     if (fd_temp < 0)
     {
         printf("fd_temp didn't open\n");
-        return ;
+        return (1);
     }
     pid = fork();
     if (pid == 0)
@@ -48,11 +48,12 @@ void heredoc(t_node *current_node, char *delimiter)
         waitpid(pid, &status, 0);
         close(fd_temp);
         if (WIFSIGNALED(status))
-            return ;
+            return (1);
     }
     else
     {
         perror("fork failed");
-        return ;
+        return (1);
     }
+    return (0);
 }

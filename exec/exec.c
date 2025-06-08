@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/08 19:42:18 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 21:53:48 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,20 @@ void	single_command(t_node *node, char **argv)
 				if (redirect_to_stdout(redir) == 1)
 					exit(1);
 			}
+			else if (redir->type->heredoc_redir == 1)
+            {
+                if (heredoc(redir->file_name) == 1)
+        			exit(1);
+    
+				int fd = open("fd_temp", O_RDONLY);
+				if (fd < 0)
+				{
+					perror("open fd_temp failed");
+					exit(1);
+				}
+				dup2(fd, STDIN_FILENO);
+				close(fd);
+            }
 			redir = redir->next;
 		}
 		if (node->cmd == NULL)

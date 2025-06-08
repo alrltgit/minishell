@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/08 18:43:51 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 21:53:09 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,5 +175,6 @@ int		check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i,
 int		redirect_to_stdin(t_redir *node);
 int		redirect_to_stdout(t_redir *node);
 void	init_t_redir_type(t_redir *new_node);
+int		heredoc(char *delimiter);
 
 #endif

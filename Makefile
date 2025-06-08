@@ -11,7 +11,7 @@ builtins/builtins_utils.c \
 parse_input/find_cmd.c parse_input/utils.c parse_input/find_flags.c \
 parse_input/find_args.c parse_input/fill_unit_linked_list.c parse_input/parse_input.c \
 exec/exec_utils.c exec/exec.c exec/helpers.c \
-piping/piping.c redirection/redirection.c
+piping/piping.c redirection/redirection.c redirection/heredoc.c
 
 OBJS = $(SRC:.c=.o)
 

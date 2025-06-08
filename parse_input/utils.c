@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/08 19:35:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/08 22:33:50 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int	condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_
 {
 	if (result[j_temp] == NULL)
 		return (1);
-	if (ft_strcmp(result[j_temp], "<") == 0 || ft_strcmp(result[j_temp], ">") == 0)
+	if (ft_strcmp(result[j_temp], "<") == 0 || ft_strcmp(result[j_temp], ">") == 0
+		|| ft_strcmp(result[j_temp], "<<") == 0 || ft_strcmp(result[j_temp], ">>") == 0)
 		return (1);
 	if ((cmd_name == NULL && result[j_temp][0] != '-' && is_file_name(current_node, result[j_temp]) == 0
 			&& is_file_name(current_node, result[j_temp]) == 0)
