@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/08 21:53:09 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 11:18:42 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
 
 //split_readline.c
-char	*extract_token(const char *str, int *i);
+// char	*extract_token(const char *str, int *i);
+char	*extract_token(const char *str, int *i, char **result, int *count);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
 void	trim_outer(char *str);

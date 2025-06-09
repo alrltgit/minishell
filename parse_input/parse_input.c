@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/08 22:02:38 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 11:39:25 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,10 @@ void read_the_input(char *rl, t_shell *shll)
 	add_args_to_linked_list(result, &temp);
     temp = unit;
     // temp = unit;
-    int i;
-    t_redir *r;
-    while (temp)
-    {
+    // int i;
+    // t_redir *r;
+    // while (temp)
+    // {
     //     printf("temp->cmd: %s\n", temp->cmd);
     //     i = 0;
     //     while (i < temp->flags_count)
@@ -167,20 +167,20 @@ void read_the_input(char *rl, t_shell *shll)
     //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
     //         i++;
     //     }
-        i = 0;
-        while (i < temp->args_count)
-        {
-            printf("temp->args[%d]: %s\n", i, temp->args[i]);
-            i++;
-        }
-        r = temp->redir_files;
-        while (r)
-        {
-            printf("temp->redir_files->file_name: %s\n", r->file_name);
-            r = r->next;
-        }
-        temp = temp->next;
-    }
+    //     i = 0;
+    //     while (i < temp->args_count)
+    //     {
+    //         printf("temp->args[%d]: %s\n", i, temp->args[i]);
+    //         i++;
+    //     }
+    //     r = temp->redir_files;
+    //     while (r)
+    //     {
+    //         printf("temp->redir_files->file_name: %s\n", r->file_name);
+    //         r = r->next;
+    //     }
+    //     temp = temp->next;
+    // }
 	if (unit->is_pipe)
     {
         create_pipe(unit);

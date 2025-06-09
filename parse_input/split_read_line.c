@@ -6,11 +6,28 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/08 19:36:05 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 11:38:46 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void check_for_heredoc_operator(char *token, char **result, int *count, int len)
+{
+	if (ft_strncmp(token, "<<", 2) == 0 && ft_strlen(token) > 2)
+	{
+		char *heredoc_op = ft_strdup("<<");
+		char *heredoc_delim = ft_strdup(token + 2);
+		free(token);
+		result[(*count)++] = heredoc_op;
+		result[(*count)++] = heredoc_delim;
+	}
+	else
+	{
+		trim_quotes_if_needed(token, len);
+		result[(*count)++] = token;
+	}
+}
 
 static void	skip_whitespace(const char *str, int *i)
 {
@@ -72,7 +89,7 @@ char	*extract_token_v2(const char *str)
 	return (token);
 }
 
-char	*extract_token(const char *str, int *i)
+char	*extract_token(const char *str, int *i, char **result, int *count)
 {
 	int		start;
 	int		single_q;
@@ -97,8 +114,7 @@ char	*extract_token(const char *str, int *i)
 	token = ft_substr(str, start, len);
 	if (!token)
 		return (NULL);
-	//trim_outer(token);
-	trim_quotes_if_needed(token, len);
+	check_for_heredoc_operator(token, result, count, len);
 	return (token);
 }
 
@@ -119,10 +135,9 @@ char	**split_args(char *str)
 		skip_whitespace(str, &i);
 		if (!str[i])
 			break ;
-		token = extract_token(str, &i);
+		token = extract_token(str, &i, result, &count);
 		if (!token)
 			return (NULL);
-		result[count++] = token;
 	}
 	result[count] = NULL;
 	return (result);
