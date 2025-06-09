@@ -6,190 +6,112 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/09 13:23:48 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 19:49:41 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int check_for_redir_heredoc(t_node *current_node, char **result, int *j)
+int	check_for_redir_heredoc(t_node *current_node, char **result, int *j)
 {
-    t_redir *new_redir;
-
-    if (ft_strcmp(result[*j], "<") == 0)
-    {
-        if (result[*j + 1] == NULL)
-            return (1);
-        new_redir = add_new_file(&current_node->redir_files, result[*j + 1]); 
-        if (!new_redir)
-            return (1);
-        new_redir->type->stdin_redir = 1;
-        (*j)++;
-    }
-    else if (ft_strcmp(result[*j], ">") == 0)
-    {
-        if (result[*j + 1] == NULL)
-            return (1);
-        new_redir = add_new_file(&current_node->redir_files, result[*j + 1]);
-        if (!new_redir)
-            return (1);
-        new_redir->type->stdout_redir = 1;
-        (*j)++;
-    }
-    else if (ft_strcmp(result[*j], "<<") == 0)
-    {
-        if (result[*j + 1] == NULL)
-            return (1);
-        new_redir = add_new_file(&current_node->redir_files, result[*j + 1]);
-        current_node->redir_files->type->heredoc_redir = 1;
-        (*j)++;
-    }
-    else if (ft_strcmp(result[*j], ">>") == 0)
-    {
-        if (result[*j + 1] == NULL)
-            return (1);
-        new_redir = add_new_file(&current_node->redir_files, result[*j + 1]);
-        current_node->redir_files->type->append_redir = 1;
-        // printf("current_node->redir_files->type->append_redir: %d\n", current_node->redir_files->type->append_redir);
-        (*j)++;
-    }
-    return (0);
+	if (ft_strcmp(result[*j], "<") == 0)
+		return (is_input_redir(current_node, result, j));
+	else if (ft_strcmp(result[*j], ">") == 0)
+		return (is_output_redir(current_node, result, j));
+	else if (ft_strcmp(result[*j], "<<") == 0)
+		return (is_heredoc_redir(current_node, result, j));
+	else if (ft_strcmp(result[*j], ">>") == 0)
+		return (is_append_redir(current_node, result, j));
+	return (0);
 }
 
-int add_cmds_flags_to_linked_list(char **result, t_node **unit)
+int	check_for_cmd_flags(t_node *current_node, char *result, int *i)
 {
-    t_node *current_node;
-    int i;
-    int j;
-    int c;
-    int j_temp;
+	if (current_node->cmd_is_found == 0)
+		current_node->cmd_type = find_command_path(result, current_node);
+	if (current_node->cmd_type > 2)
+	{
+		current_node->cmd = NULL;
+		return (1);
+	}
+	if (current_node->flags_count > 0)
+		find_flags(result, current_node, i);
+	return (0);
+}
 
-    current_node = *unit;
-    j = 0;
-    j_temp = j;
-    current_node->flags_count = count_flags(result, j_temp);
-    if (alloc_mem_for_flags_arr(current_node) == 1)
-        return (1);
-    i = 0;
-    c = 0;
-    while (result[j])
-    {
-        if (check_for_pipe(&current_node, unit, result, &i, &j, &c) == 1)
-            return (1);
-        if (check_for_redir_heredoc(current_node, result, &j) == 1)
-            return (1);
-        if (current_node->cmd_is_found == 0)
-            current_node->cmd_type = find_command_path(result[j], current_node);
-        if (current_node->cmd_type > 2)
-        {
-            current_node->cmd = NULL;
-            return (1);
-        }
-        if (current_node->flags_count > 0)
-            find_flags(result[j], current_node, &i);
-        j++;
-    }
-    return (0);
+int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
+{
+	t_node	*current_node;
+	int		i;
+	int		j;
+	int		c;
+	int		j_temp;
+
+	current_node = *unit;
+	j = 0;
+	j_temp = j;
+	current_node->flags_count = count_flags(result, j_temp);
+	if (alloc_mem_for_flags_arr(current_node) == 1)
+		return (1);
+	i = 0;
+	c = 0;
+	while (result[j])
+	{
+		if (check_for_pipe(&current_node, unit, result, &i, &j, &c) == 1)
+			return (1);
+		if (check_for_redir_heredoc(current_node, result, &j) == 1)
+			return (1);
+		if (check_for_cmd_flags(current_node, result[j], &i) == 1)
+			return (1);
+		j++;
+	}
+	return (0);
 }
 
 void	add_args_to_linked_list(char **result, t_node **unit)
 {
 	int		i;
 	int		j;
-    int     j_temp;
+	int		j_temp;
 	t_node	*current_node;
 
 	j = 0;
-    j_temp = j;
+	j_temp = j;
 	current_node = *unit;
-	current_node->args_count = count_args(result, current_node, j_temp);
-    if (alloc_mem_for_args_arr(current_node) == 1)
-        return ;
+	if (allocate_args_memory(current_node, result, j_temp) == 1)
+		return ;
 	i = 0;
 	while (result[i])
 	{
 		if (ft_strcmp(result[i], "|") == 0)
 		{
 			j = 0;
-			current_node = current_node->next;
-			if (!current_node)
-            {
-                break ;
-            }
-			current_node->args_count = count_args(result,
-					current_node, i + 1);
-            if (alloc_mem_for_args_arr(current_node) == 1)
-                return ;
-			if (!current_node->args)
-				return ;
+			if (handle_pipe(&current_node, result, i) == 1)
+				break ;
 			i++;
-            continue ;
+			continue ;
 		}
-		if (current_node && result[i] && current_node->args_count > 0)
-			find_args(current_node, result, &i, &j);
+		find_and_add_args(current_node, result, &i, &j);
 		i++;
 	}
 }
 
-void read_the_input(char *rl, t_shell *shll)
+void	read_the_input(char *rl, t_shell *shll)
 {
-    char	**result;
-    t_node 	*unit;
-    t_node 	*temp;
+	char	**result;
+	t_node	*unit;
+	t_node	*temp;
 
-	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
-	{
-		// rl_replace_line("", 0);
-		rl_redisplay();
-		rl_on_new_line();
-		return ;
-	}
-    result = split_args(rl);
-    unit = create_unit();
+	check_for_empty_line(rl);
+	result = split_args(rl);
+	unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
-    process_exp(result, unit);
+	process_exp(result, unit);
 	temp = unit;
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-        return ;
+		return ;
 	add_args_to_linked_list(result, &temp);
-    temp = unit;
-    // temp = unit;
-    // int i;
-    // t_redir *r;
-    // while (temp)
-    // {
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (i < temp->flags_count)
-    //     {
-    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->args_count)
-    //     {
-    //         printf("temp->args[%d]: %s\n", i, temp->args[i]);
-    //         i++;
-    //     }
-    //     r = temp->redir_files;
-    //     while (r)
-    //     {
-    //         printf("temp->redir_files->file_name: %s\n", r->file_name);
-    //         r = r->next;
-    //     }
-    //     temp = temp->next;
-    // }
-	if (unit->is_pipe)
-    {
-        create_pipe(unit);
-    }
-	else
-	{
-		if (unit->cmd_type == B_IN)
-			execute_builtin(unit);
-		else if (unit->cmd_type == NON_B_IN)
-			execute_other(unit);
-	}
+	go_to_execute(unit);
 	free_arr(result);
 }

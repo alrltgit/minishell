@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:47:58 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/26 13:42:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 17:00:13 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ char	*ft_strdup2(const char *s1)
 
 	i = 0;
 	if (!s1)
-	{
 		return (NULL);
-	}
 	while (s1[i])
 		i++;
 	ptr = malloc(i + 1);
@@ -37,10 +35,46 @@ char	*ft_strdup2(const char *s1)
 	return (ptr);
 }
 
+void	include_flags(t_node *node, char **argv, int *i)
+{
+	int	j;
+
+	j = 0;
+	if (node->flags_count > 0)
+	{
+		j = 0;
+		while (j < node->flags_count)
+		{
+			argv[*i] = ft_strdup2(node->flags[j]);
+			if (argv[*i] == NULL)
+				return ;
+			(*i)++;
+			j++;
+		}
+	}
+}
+
+void	include_args(t_node *node, char **argv, int *i)
+{
+	int	j;
+
+	j = 0;
+	if (node->args)
+	{
+		while (j < node->args_count)
+		{
+			argv[*i] = ft_strdup2(node->args[j]);
+			if (argv[*i] == NULL)
+				return ;
+			(*i)++;
+			j++;
+		}
+	}
+}
+
 char	**build_argv(t_node *node)
 {
 	int		i;
-	int		j;
 	int		total_count;
 	char	**argv;
 
@@ -56,30 +90,8 @@ char	**build_argv(t_node *node)
 		return (NULL);
 	}
 	i++;
-	if (node->flags_count > 0)
-	{
-		j = 0;
-		while (j < node->flags_count)
-		{
-			argv[i] = ft_strdup2(node->flags[j]);
-			if (argv[i] == NULL)
-				return (NULL);
-			i++;
-			j++;
-		}
-	}
-	j = 0;
-	if (node->args)
-	{
-		while (j < node->args_count)
-		{
-			argv[i] = ft_strdup2(node->args[j]);
-			if (argv[i] == NULL)
-				return (NULL);
-			i++;
-			j++;
-		}
-	}
+	include_flags(node, argv, &i);
+	include_args(node, argv, &i);
 	argv[i] = NULL;
 	return (argv);
 }

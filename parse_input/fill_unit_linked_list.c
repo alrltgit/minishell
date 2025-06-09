@@ -12,50 +12,50 @@
 
 #include "../includes/minishell.h"
 
-void init_t_redir_type(t_redir *new_node)
+void	init_t_redir_type(t_redir *new_node)
 {
 	new_node->type->stdin_redir = 0;
-    new_node->type->stdout_redir = 0;
-    new_node->type->append_redir = 0;
-    new_node->type->heredoc_redir = 0;
+	new_node->type->stdout_redir = 0;
+	new_node->type->append_redir = 0;
+	new_node->type->heredoc_redir = 0;
 }
 
-void add_node(t_redir **head, t_redir *new_node)
+void	add_node(t_redir **head, t_redir *new_node)
 {
-	t_redir *temp;
-	
+	t_redir	*temp;
+
 	if (!*head)
-    {
-        *head = new_node;
-        return ;
-    }
-    temp = *head;
-    while (temp->next)
-        temp = temp->next;
-    temp->next = new_node;
+	{
+		*head = new_node;
+		return ;
+	}
+	temp = *head;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new_node;
 }
 
-t_redir *add_new_file(t_redir **head, char *file_name)
+t_redir	*add_new_file(t_redir **head, char *file_name)
 {
-    t_redir *new_node;
+	t_redir	*new_node;
 
-    new_node = malloc(sizeof(t_redir));
-    if (!new_node)
-        return (NULL);
-    new_node->file_name = ft_strdup(file_name);
-    if (!new_node->file_name)
-    {
-        free(new_node);
-        return (NULL);
-    }
-    new_node->type = malloc(sizeof(t_redir_type));
-    if (!new_node->type)
-    {
-        free(new_node);
-        return (NULL);
-    }
+	new_node = malloc(sizeof(t_redir));
+	if (!new_node)
+		return (NULL);
+	new_node->file_name = ft_strdup(file_name);
+	if (!new_node->file_name)
+	{
+		free(new_node);
+		return (NULL);
+	}
+	new_node->type = malloc(sizeof(t_redir_type));
+	if (!new_node->type)
+	{
+		free(new_node);
+		return (NULL);
+	}
 	init_t_redir_type(new_node);
-    new_node->next = NULL;
+	new_node->next = NULL;
 	add_node(head, new_node);
 	return (new_node);
 }
@@ -76,9 +76,9 @@ t_node	*create_unit(void)
 	node->redir_files = NULL;
 	node->cmd_status = 0;
 	node->cmd_type = 0;
-    node->is_pipe = 0;
-    node->cmd_is_found = 0;
-    return (node);
+	node->is_pipe = 0;
+	node->cmd_is_found = 0;
+	return (node);
 }
 
 t_node	*add_unit_to_end(t_node **head)

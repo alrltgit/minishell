@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/03 15:49:50 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:27:52 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	allocate_args_memory(t_node *current_node, char **result, int j_temp)
+{
+	current_node->args_count = count_args(result, current_node, j_temp);
+	if (alloc_mem_for_args_arr(current_node) == 1)
+		return (1);
+	return (0);
+}
+
+void	find_and_add_args(t_node *current_node, char **result, int *i, int *j)
+{
+	if (current_node && result[*i] && current_node->args_count > 0)
+		find_args(current_node, result, i, j);
+}
 
 char	*retrieve_cmd_name(t_node *node)
 {
@@ -19,24 +33,6 @@ char	*retrieve_cmd_name(t_node *node)
 	if (node->cmd_type == NON_B_IN)
 		return (ft_strrchr(node->cmd, '/') + 1);
 	return (node->cmd);
-}
-
-int alloc_mem_for_args_arr(t_node *current_node)
-{
-    if (current_node->args_count > 0)
-    {
-        current_node->args = malloc(sizeof(char *) * current_node->args_count);
-        if (!current_node->args)
-            return (1);
-    }
-    else
-    {
-        current_node->args = malloc(sizeof(char *));
-        if (!current_node->args)
-            return (1);
-        current_node->args[0] = NULL;
-    }
-    return (0);
 }
 
 int	count_args(char **result, t_node *current_node, int j_temp)
@@ -50,11 +46,9 @@ int	count_args(char **result, t_node *current_node, int j_temp)
 	while (result[j_temp])
 	{
 		if (ft_strcmp(result[j_temp], "|") == 0)
-		{
-			break ;	
-		}
+			break ;
 		if (condition_is_met(current_node, cmd_name, result, j_temp) == 0)
-			args_count++;	
+			args_count++;
 		j_temp++;
 	}
 	return (args_count);
