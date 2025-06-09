@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/08 21:53:48 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 10:48:47 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	single_command(t_node *node, char **argv)
 	pid_t	pid;
 	int		status;
 	t_redir *redir;
+	int		fd;
 
 	pid = fork();
 	if (pid == 0)
@@ -39,7 +40,7 @@ void	single_command(t_node *node, char **argv)
                 if (heredoc(redir->file_name) == 1)
         			exit(1);
     
-				int fd = open("fd_temp", O_RDONLY);
+				fd = open("fd_temp", O_RDONLY);
 				if (fd < 0)
 				{
 					perror("open fd_temp failed");
@@ -62,7 +63,10 @@ void	single_command(t_node *node, char **argv)
 		}
 	}
 	else if (pid > 0)
+	{
 		wait(&status);
+		unlink("fd_temp");
+	}
 	else
 	{
 		perror("Fork failed.\n");

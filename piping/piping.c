@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/08 19:24:26 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 10:54:56 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	create_pipe(t_node *node)
 	t_node	*temp;
 	int		prev_fd;
 	int		pipe_fd[2];
+    int     fd;
 	pid_t	pid;
 	char	**argv;
     t_redir *redir;
@@ -76,6 +77,19 @@ void	create_pipe(t_node *node)
                 {
                     if (redirect_to_stdout(redir) == 1)
                         exit(1);
+                }
+                else if (redir->type->heredoc_redir == 1)
+                {
+                    if (heredoc(redir->file_name) == 1)
+                        exit(1);
+                    fd = open("fd_temp", O_RDONLY);
+                    if (fd < 0)
+                    {
+                        perror("open fd_temp failed");
+                        exit(1);
+                    }
+                    dup2(fd, STDIN_FILENO);
+                    close(fd);
                 }
                 redir = redir->next;
             }
@@ -118,4 +132,5 @@ void	create_pipe(t_node *node)
         }
     }
     while (wait(NULL) > 0);
+    unlink("fd_temp");
 }
