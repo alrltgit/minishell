@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/09 11:37:34 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 13:32:40 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ void	single_command(t_node *node, char **argv)
 				dup2(fd, STDIN_FILENO);
 				close(fd);
             }
+			else if (redir->type->append_redir == 1)
+			{
+				if (append(redir) == 1)
+					exit(1);
+			}
 			redir = redir->next;
 		}
 		if (node->cmd == NULL)

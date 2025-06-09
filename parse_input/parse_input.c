@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/09 11:39:25 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 13:23:48 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,17 @@ int check_for_redir_heredoc(t_node *current_node, char **result, int *j)
             return (1);
         new_redir = add_new_file(&current_node->redir_files, result[*j + 1]);
         current_node->redir_files->type->heredoc_redir = 1;
-        // printf("current_node->redir_files->type->heredoc_redir: %d\n", current_node->redir_files->type->heredoc_redir);
         (*j)++;
     }
-    // else if (ft_strcmp(result[*j], ">>") == 0)
-    // {
-    //     if (result[*j + 1] == NULL)
-    //         return (1);
-    //     add_new_file(&current_node->redir_files, result[*j + 1]);
-    //     current_node->redir_files->type->append_redir = 1;
-    //     // printf("current_node->redir_files->type->append_redir: %d\n", current_node->redir_files->type->append_redir);
-    //     (*j)++;
-    // }
+    else if (ft_strcmp(result[*j], ">>") == 0)
+    {
+        if (result[*j + 1] == NULL)
+            return (1);
+        new_redir = add_new_file(&current_node->redir_files, result[*j + 1]);
+        current_node->redir_files->type->append_redir = 1;
+        // printf("current_node->redir_files->type->append_redir: %d\n", current_node->redir_files->type->append_redir);
+        (*j)++;
+    }
     return (0);
 }
 

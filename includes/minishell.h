@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 11:18:42 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 13:53:17 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,5 +177,6 @@ int		redirect_to_stdin(t_redir *node);
 int		redirect_to_stdout(t_redir *node);
 void	init_t_redir_type(t_redir *new_node);
 int		heredoc(char *delimiter);
+int		append(t_redir *node);
 
 #endif

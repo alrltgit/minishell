@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/09 10:54:56 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/09 13:44:20 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ void	create_pipe(t_node *node)
                     }
                     dup2(fd, STDIN_FILENO);
                     close(fd);
+                }
+                else if (redir->type->append_redir == 1)
+                {
+                    if (append(redir) == 1)
+                        exit(1);
                 }
                 redir = redir->next;
             }
