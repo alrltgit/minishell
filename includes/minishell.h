@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/03 12:45:27 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/10 10:18:29 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,11 @@ char	*key_from_index(int pos, t_shell *shell);
 void	activate_ctrlc(int sig);
 void	deactivate_ctrlc(int sig);
 
-//exec_utils.c
-int		is_builtin(char *cmd);
-
 //exec.c
 void	execute_other(t_node *command);
 void	execute_builtin(t_node *command);
 char	**build_argv(t_node *node);
+void	handle_redir_heredoc_append(t_redir *redir);
 
 //BUILTINS
 void	ft_pwd(t_node *command);
@@ -117,64 +115,94 @@ char	*perfect(t_node *command, char **arr);
 void	process_str_exp(t_node *command, char **rl_buffer);
 
 //ALINA
-// parsing
+// parse_input.c
 char	**split_args(char *str);
-// char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
-char	*handle_quotes(char *str);
+int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
+
+// parse_input_utils.c
+void	go_to_execute(t_node *unit);
+void	check_for_empty_line(char *rl);
+int		is_input_redir(t_node *current_node, char **result, int *j);
+int		is_output_redir(t_node *current_node, char **result, int *j);
+int		is_heredoc_redir(t_node *current_node, char **result, int *j);
+int		is_append_redir(t_node *current_node, char **result, int *j);
 
 //free.c
 void	free_arr(char **arr);
 void	free_exit(t_shell *shell);
-// void	free_node_arr(char **arr, int arr_length);
-// void	free_linked_list(t_node *node);
 void	iterate_free_nodes(t_node *head);
 void	free_double_n(void **arr, int n);
-
 
 // split the linked list
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
 
-// parse_input
+// exec_utils.c
+int		handle_stdin_redirection(t_redir *redir);
+int		handle_stdout_redirection(t_redir *redir);
+int		handle_heredoc_redirection(t_redir *redir);
+int		handle_append_redirection(t_redir *redir);
+int		is_builtin(char *cmd);
 
+// fill_unit_linked_list.c
+// void	add_new_file(t_redir **head, char *file_name);
+t_redir *add_new_file(t_redir **head, char *file_name);
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
-int alloc_mem_for_flags_arr(t_node *current_node);
 
-//split_readline.c
-char	*extract_token(const char *str, int *i);
+// split_readline_utils.c
+void check_for_operator(char *token, char **result, int *count, int len);
+
+// split_readline.c
+char	*extract_token(const char *str, int *i, char **result, int *count);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
-void	trim_outer(char *str);
 
 // find_cmd.c
-int find_command_path(char *input, t_node *unit);
+int		find_command_path(char *input, t_node *unit);
 
 // find_args.c
-int	count_args(char **result, t_node *current_node, int j_temp);
+int		count_args(char **result, t_node *current_node, int j_temp);
 void	find_args(t_node *cmd, char **result, int *i, int *j);
-// int		count_args_inside_loop(char **result, t_node *current_node, int *i);
 char	*retrieve_cmd_name(t_node *node);
-int		alloc_mem_for_args_arr(t_node *current_node);
+int		allocate_args_memory(t_node *current_node, char **result, int j_temp);
+void	find_and_add_args(t_node *current_node, char **result, int *i, int *j);
 
 //find_flags.c
 int		count_flags(char **result, int j);
-// void 	find_flags(char *result, t_node *unit, int *i);
 void	find_flags(char *result, t_node *current_node, int *i);
 char	*ft_strdup2(const char *s1);
 
 // utils.c
+int		alloc_mem_for_flags_arr(t_node *current_node);
+char	*handle_quotes(char *str);
+
+// utils_2.c
+char	**get_path(void);
+int		handle_pipe(t_node **current_node, char **result, int i);
 int		is_valid_command(t_node *current_node, char *rl);
+void	handle_quotes_in_extract_token(const char *str, int *i, int *single_q, int *double_q);
+
+// utils_3.c
 int		rl_is_space(char *rl);
-// int		is_operator(char *c);
-int		condition_is_met(char *cmd_name, char **result, int j_temp);
+int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp);
+int		is_file_name(t_node *current_node, char *result);
+int		alloc_mem_for_args_arr(t_node *current_node);
 
 // piping.c
 void	create_pipe(t_node *node);
-int check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, int *j, int *c);
+
+// piping_utils.c
+int		check_for_pipe(t_node **current_node, char **result, int *i, int *j);
+void	handle_child(t_node *temp, int *pipe_fd, int prev_fd);
+void	execute_depending_on_type(t_node *temp, char **argv, t_node *node);
+void	handle_parent(t_node *temp, int prev_fd, int *pipe_fd);
 
 // redirection.c
-int redirect_to_stdin(t_redir *node);
-int redirect_to_stdout(t_redir *node); 
+int		redirect_to_stdin(t_redir *node);
+int		redirect_to_stdout(t_redir *node);
+void	init_t_redir_type(t_redir *new_node);
+int		heredoc(char *delimiter);
+int		append(t_redir *node);
 
 #endif

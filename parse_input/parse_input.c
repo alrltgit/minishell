@@ -3,281 +3,113 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/03 12:51:07 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/10 10:18:10 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*handle_quotes(char *str)
+int	check_for_redir_heredoc(t_node *current_node, char **result, int *j)
 {
-	int	i;
-	int	sq;
-	int	dq;
-	char	*temp;
+	if (ft_strcmp(result[*j], "<") == 0)
+		return (is_input_redir(current_node, result, j));
+	else if (ft_strcmp(result[*j], ">") == 0)
+		return (is_output_redir(current_node, result, j));
+	else if (ft_strcmp(result[*j], "<<") == 0)
+		return (is_heredoc_redir(current_node, result, j));
+	else if (ft_strcmp(result[*j], ">>") == 0)
+		return (is_append_redir(current_node, result, j));
+	return (0);
+}
 
-	i = -1;
-	sq = 0;
-	dq = 0;
-	temp = NULL;
-	while (str[++i])
+int	check_for_cmd_flags(t_node *current_node, char *result, int *i)
+{
+	if (current_node->cmd_is_found == 0)
+		current_node->cmd_type = find_command_path(result, current_node);
+	if (current_node->cmd_type > 2)
 	{
-		if (str[i] == '\'' && dq == 0)
-		{
-			sq = 1 - sq;
-			while (str[++i])
-			{
-				if (str[i] == '\'')
-					continue;
-				temp = update_str(temp, str[i]);
-			}
-		}
-		if (str[i] == '"' && sq == 0)
-		{
-			dq = 2 - dq;
-			while (str[i++])
-			{
-				if (str[i] == '"')
-					continue;
-				temp = update_str(temp, str[i]);
-			}
-		}
-		else
-			temp = update_str(temp, str[i]);
+		current_node->cmd = NULL;
+		return (1);
 	}
-	return (temp);
+	if (current_node->flags_count > 0)
+		find_flags(result, current_node, i);
+	return (0);
 }
 
-int alloc_mem_for_flags_arr(t_node *current_node)
+int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 {
-    if (current_node->flags_count > 0)
-    {
-        current_node->flags = malloc(sizeof(char *) * (current_node->flags_count + 1));
-        if (!current_node->flags)
-            return (1);
-    }
-    else
-    {
-        current_node->flags = malloc(sizeof(char *));
-        if (!current_node->flags)
-            return (1);
-        current_node->flags[0] = NULL;
-    }
-    return (0);
-}
+	t_node	*current_node;
+	int		i;
+	int		j;
+	int		j_temp;
 
-t_redir *add_new_file(t_redir **head)
-{
-    t_redir *new_node;
-    t_redir *temp;
-
-    new_node = malloc(sizeof(t_redir));
-    if (!new_node)
-        return (NULL);
-    new_node->type = NULL;
-    new_node->file_name = NULL;
-    new_node->next = NULL;
-    if (!*head)
-    {
-        *head = new_node;
-        return (new_node);
-    }
-
-    temp = *head;
-    while (temp->next)
-        temp = temp->next;
-    temp->next = new_node;
-
-    return (new_node);
-}
-
-
-int check_for_redir(t_node *current_node, char **result, int *j)
-{
-    t_redir *new_redir;
-    
-    if (ft_strcmp(result[*j], "<") == 0)
-    {
-        current_node->redir_files->type->stdin_redir = 1;
-        new_redir = add_new_file(&current_node->redir_files);
-        if (!new_redir)
-            return (1);
-        new_redir->file_name = ft_strdup(result[*j + 1]);
-        if (!new_redir->file_name)
-            return (1);
-        if (access(new_redir->file_name, F_OK) != 0)
-        {
-            printf("%s: No such file or directory.\n", new_redir->file_name);
-            return (1);
-        }
-        if (access(new_redir->file_name, R_OK) != 0)
-        {
-            printf("%s: Permission denied.\n", new_redir->file_name);
-            return (1);
-        }
-        (*j)++;
-    }
-    else if (ft_strcmp(result[*j], ">") == 0)
-    {
-        current_node->redir_files->type->stdout_redir = 1;
-        new_redir = add_new_file(&current_node->redir_files);
-        if (!new_redir)
-            return (1);
-        new_redir->file_name = ft_strdup(result[*j + 1]);
-        if (!new_redir->file_name)
-            return (1);
-        if (access(new_redir->file_name, F_OK) != 0)
-        {
-            printf("%s: No such file or directory.\n", new_redir->file_name);
-            return (1);
-        }
-        if (access(new_redir->file_name, R_OK) != 0)
-        {
-            printf("%s: Permission denied.\n", new_redir->file_name);
-            return (1);
-        }
-        (*j)++;
-    }
-    return (0);
-}
-
-int add_cmds_flags_to_linked_list(char **result, t_node **unit)
-{
-    t_node *current_node;
-    int i;
-    int j;
-    int c;
-    int j_temp;
-
-    current_node = *unit;
-    j = 0;
-    j_temp = j;
-    current_node->flags_count = count_flags(result, j_temp);
-    if (alloc_mem_for_flags_arr(current_node) == 1)
-        return (1);
-    i = 0;
-    c = 0;
-    while (result[j])
-    {
-        if (check_for_pipe(&current_node, unit, result, &i, &j, &c) == 1)
-            return (1);
-        if (check_for_redir(current_node, result, &j) == 1)
-            return (1);
-        if (current_node->cmd_is_found == 0)
-            current_node->cmd_type = find_command_path(result[j], current_node);
-        if (current_node->cmd_type > 2)
-        {
-            current_node->cmd = NULL;
-            return (1);
-        }
-        if (current_node->flags_count > 0)
-            find_flags(result[j], current_node, &i);
-        j++;
-    }
-    return (0);
+	current_node = *unit;
+	j = 0;
+	j_temp = j;
+	current_node->flags_count = count_flags(result, j_temp);
+	if (alloc_mem_for_flags_arr(current_node) == 1)
+		return (1);
+	i = 0;
+	while (result[j])
+	{
+		if (check_for_pipe(&current_node, result, &i, &j) == 1)
+			return (1);
+		if (check_for_redir_heredoc(current_node, result, &j) == 1)
+			return (1);
+		if (check_for_cmd_flags(current_node, result[j], &i) == 1)
+			return (1);
+		j++;
+	}
+	return (0);
 }
 
 void	add_args_to_linked_list(char **result, t_node **unit)
 {
 	int		i;
 	int		j;
-    int     j_temp;
+	int		j_temp;
 	t_node	*current_node;
 
 	j = 0;
-    j_temp = j;
+	j_temp = j;
 	current_node = *unit;
-	current_node->args_count = count_args(result, current_node, j_temp);
-    if (alloc_mem_for_args_arr(current_node) == 1)
-    {
-        return ;
-    }
+	if (allocate_args_memory(current_node, result, j_temp) == 1)
+		return ;
 	i = 0;
 	while (result[i])
 	{
 		if (ft_strcmp(result[i], "|") == 0)
 		{
 			j = 0;
-			current_node = current_node->next;
-			if (!current_node)
-            {
-                break ;
-            }
-			current_node->args_count = count_args(result,
-					current_node, i + 1);
-            if (alloc_mem_for_args_arr(current_node) == 1)
-                return ;
-			if (!current_node->args)
-				return ;
+			if (handle_pipe(&current_node, result, i) == 1)
+				break ;
 			i++;
-            continue ;
+			continue ;
 		}
-		if (current_node && result[i])
-			find_args(current_node, result, &i, &j);
+		find_and_add_args(current_node, result, &i, &j);
 		i++;
 	}
 }
 
-void read_the_input(char *rl, t_shell *shll)
+void	read_the_input(char *rl, t_shell *shll)
 {
-    char	**result;
-    t_node 	*unit;
-    t_node 	*temp;
+	char	**result;
+	t_node	*unit;
+	t_node	*temp;
 
-	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
-	{
-		rl_replace_line("", 0);
-		rl_redisplay();
-		rl_on_new_line();
-		return ;
-	}
-    result = split_args(rl);
-    unit = create_unit();
+	check_for_empty_line(rl);
+	result = split_args(rl);
+	unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
-    process_exp(result, unit);
+	process_exp(result, unit);
 	temp = unit;
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-        return ;
+		return ;
 	add_args_to_linked_list(result, &temp);
-    temp = unit;
-    // int i;
-    // while (temp)
-    // {
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (i < temp->flags_count)
-    //     {
-    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->args_count)
-    //     {
-    //         printf("temp->args[%d]: %s\n", i, temp->args[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (temp->redir_files)
-    //     {
-    //         printf("temp->redir_files->file_name: %s\n", temp->redir_files->file_name);
-    //         temp->redir_files = temp->redir_files->next;
-    //     }
-    //     temp = temp->next;
-    // }
-	if (unit->is_pipe)
-    {
-        create_pipe(unit);
-    }
-	else
-	{
-		if (unit->cmd_type == B_IN)
-			execute_builtin(unit);
-		else if (unit->cmd_type == NON_B_IN)
-			execute_other(unit);
-	}
+	go_to_execute(unit);
 	free_arr(result);
 }
