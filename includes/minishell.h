@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 22:25:57 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/10 10:18:29 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ int		alloc_mem_for_args_arr(t_node *current_node);
 void	create_pipe(t_node *node);
 
 // piping_utils.c
-int		check_for_pipe(t_node **current_node, t_node **unit, char **result, int *i, int *j, int *c);
+int		check_for_pipe(t_node **current_node, char **result, int *i, int *j);
 void	handle_child(t_node *temp, int *pipe_fd, int prev_fd);
 void	execute_depending_on_type(t_node *temp, char **argv, t_node *node);
 void	handle_parent(t_node *temp, int prev_fd, int *pipe_fd);

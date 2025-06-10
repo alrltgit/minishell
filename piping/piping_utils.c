@@ -6,21 +6,20 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 22:32:01 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/10 10:18:22 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_for_pipe(t_node **current_node, t_node **unit,
-	char **result, int *i, int *j, int *c)
+int	check_for_pipe(t_node **current_node, char **result, int *i, int *j)
 {
 	int	j_temp;
 
 	if (ft_strcmp(result[*j], "|") == 0)
 	{
 		(*current_node)->is_pipe = 1;
-		*current_node = add_unit_to_end(unit);
+		*current_node = add_unit_to_end(current_node);
 		if (!*current_node)
 			return (1);
 		j_temp = *j + 1;
@@ -30,7 +29,6 @@ int	check_for_pipe(t_node **current_node, t_node **unit,
 		if (alloc_mem_for_flags_arr(*current_node) == 1)
 			return (1);
 		*i = 0;
-		*c = 0;
 		(*current_node)->cmd_is_found = 0;
 		(*j)++;
 	}

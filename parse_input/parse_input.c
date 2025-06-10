@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/09 19:49:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/10 10:18:10 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 	t_node	*current_node;
 	int		i;
 	int		j;
-	int		c;
 	int		j_temp;
 
 	current_node = *unit;
@@ -54,10 +53,9 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 	if (alloc_mem_for_flags_arr(current_node) == 1)
 		return (1);
 	i = 0;
-	c = 0;
 	while (result[j])
 	{
-		if (check_for_pipe(&current_node, unit, result, &i, &j, &c) == 1)
+		if (check_for_pipe(&current_node, result, &i, &j) == 1)
 			return (1);
 		if (check_for_redir_heredoc(current_node, result, &j) == 1)
 			return (1);
