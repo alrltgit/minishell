@@ -5,12 +5,61 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/01 12:23:56 by hceviz           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/06/12 11:31:44 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
+
 #include "../includes/minishell.h"
+
+void	handle_redir_heredoc_append(t_redir *redir)
+{
+	if (redir->type->stdin_redir == 1)
+	{
+		if (handle_stdin_redirection(redir) == 1)
+			return ;
+	}
+	else if (redir->type->stdout_redir == 1)
+	{
+		if (handle_stdout_redirection(redir) == 1)
+			return ;
+	}
+	else if (redir->type->heredoc_redir == 1)
+	{
+		if (handle_heredoc_redirection(redir) == 1)
+			return ;
+	}
+	else if (redir->type->append_redir == 1)
+	{
+		if (handle_append_redirection(redir) == 1)
+			return ;
+	}
+}
+
+void	handle_child_process(t_node *node, char **argv)
+{
+	t_redir	*redir;
+
+	redir = node->redir_files;
+	while (redir)
+	{
+		handle_redir_heredoc_append(redir);
+		redir = redir->next;
+	}
+	if (node->cmd == NULL)
+	{
+		printf("%s: command not found", argv[0]);
+		exit(127);
+	}
+	if (execve(node->cmd, argv, node->shell->env) == -1)
+	{
+		perror("execve failed\n");
+		exit(EXIT_FAILURE);
+	}
+}
 
 void	single_command(t_node *node, char **argv)
 {
@@ -19,20 +68,12 @@ void	single_command(t_node *node, char **argv)
 
 	pid = fork();
 	if (pid == 0)
-	{
-		if (node->stdin_redirect == 1)
-		{
-			if (redirect_to_stdin(node->redir_files) == 1)
-				return ;
-		}
-		if (execve(node->cmd, argv, node->shell->env) == -1)
-		{
-			perror("execve failed\n");
-			exit(EXIT_FAILURE);
-		}
-	}
+		handle_child_process(node, argv);
 	else if (pid > 0)
+	{
 		wait(&status);
+		unlink("fd_temp");
+	}
 	else
 	{
 		perror("Fork failed.\n");

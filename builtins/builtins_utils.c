@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:43:25 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/07 11:06:41 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/13 14:45:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,20 @@
 	return (res);
 } */
 
-void	process_str_exp(t_node *command, char **rl_buffer)
+/* void	process_str_exp(t_node *command, char **rl_buffer)
 {
 	char	*temp;
 	// int		len;
 
 	// len = -1;
 	temp = NULL;
-	temp = ft_strdup(handle_quotes(perfect(command, rl_buffer)));
+	temp = ft_strdup(handle_quotes(perfect(command, *rl_buffer)));
 	printf("PROCESSED TEMP RL-> %s\n", temp);
 	free(*rl_buffer);
 	*rl_buffer = ft_strdup(temp);
 	free(temp);
 	temp = NULL;
-}
+} */
 
 /* void	process_str_exp(t_node *command, char **rl_buffer)
 {

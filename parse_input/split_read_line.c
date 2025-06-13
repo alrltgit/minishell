@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_read_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/03 10:50:35 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/13 14:30:34 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,6 @@ static void	skip_whitespace(const char *str, int *i)
 		(*i)++;
 }
 
-void	trim_outer(char *str)
-{
-	int		i;
-	char	*temp;
-
-	i = 0;
-	if ('\'' == str[i] || '"' == str[i])
-	{
-		temp = ft_strdup(str);
-		free(str);
-		str = ft_strtrim(temp, &temp[ft_strlen(temp) - 1]);
-		free(temp);
-	}	
-	//printf("After trim outer-> %s\n", str);
-}
-
 void	trim_quotes_if_needed(char *token, int len)
 {
 	if ((token[0] == '\'' && token[len - 1] == '\'')
@@ -42,7 +26,6 @@ void	trim_quotes_if_needed(char *token, int len)
 		token[len - 1] = '\0';
 		ft_memmove(token, token + 1, len - 1);
 	}
-	printf("After trim if needed-> %s\n", token);
 }
 
 char	*extract_token_v2(const char *str)
@@ -57,11 +40,8 @@ char	*extract_token_v2(const char *str)
 	double_q = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' && !double_q)
-			single_q = !single_q;
-		else if (str[i] == '"' && !single_q)
-			double_q = !double_q;
-		else if ((str[i] == ' ' || str[i] == '\t') && !single_q && !double_q)
+		handle_quotes_in_extract_token(str, &i, &single_q, &double_q);
+		if ((str[i] == ' ' || str[i] == '\t') && !single_q && !double_q)
 			break ;
 		(i)++;
 	}
@@ -72,6 +52,29 @@ char	*extract_token_v2(const char *str)
 	return (token);
 }
 
+/* char	*extract_token(const char *str, int *i, char **result, int *count)
+{
+	int		start;
+	int		single_q;
+	int		double_q;
+	char	*token;
+
+	start = *i;
+	single_q = 0;
+	double_q = 0;
+	while (str[*i])
+	{
+		handle_quotes_in_extract_token(str, i, &single_q, &double_q);
+		if ((str[*i] == ' ' || str[*i] == '\t') && !single_q && !double_q)
+			break ;
+		(*i)++;
+	}
+	token = ft_substr(str, start, *i - start);
+	if (!token)
+		return (NULL);
+	check_for_operator(token, result, count, *i - start);
+	return (token);
+} */
 char	*extract_token(const char *str, int *i)
 {
 	int		start;
@@ -83,6 +86,10 @@ char	*extract_token(const char *str, int *i)
 	start = *i;
 	single_q = 0;
 	double_q = 0;
+
+	if ((str[*i] == '\'' && str[*(i + 1)] == '"')
+		|| (str[*i] == '"' && str[*(i + 1)] == '\''))
+		return (NULL);
 	while (str[*i])
 	{
 		if (str[*i] == '\'' && !double_q)
@@ -102,6 +109,30 @@ char	*extract_token(const char *str, int *i)
 	return (token);
 }
 
+/* char	**split_args(char *str)
+{
+	char	**result;
+	char	*token;
+	int		i;
+	int		count;
+
+	result = malloc(sizeof(char *) * 1024);
+	if (!result)
+		return (NULL);
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		skip_whitespace(str, &i);
+		if (!str[i])
+			break ;
+		token = extract_token(str, &i, result, &count);
+		if (!token)
+			return (NULL);
+	}
+	result[count] = NULL;
+	return (result);
+} */
 char	**split_args(char *str)
 {
 	char	**result;

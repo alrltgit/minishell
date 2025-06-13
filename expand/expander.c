@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/08 14:19:01 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/13 14:09:32 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,10 @@ char	*perfect(t_node *command, char *arr)
 
 	in_sq = 0;
 	in_dq = 0;
-	i = -1;
+	i = 0;
 	str = NULL;
 
-	while (arr[++i])
+	while (arr[i])
 	{
 		if (arr[i] == '\'' && in_dq == 0)
 		{
@@ -152,12 +152,13 @@ char	*perfect(t_node *command, char *arr)
 			len = 0;
 			while (is_alphanumeric(arr[++j]))
 				++len;
-			print_node(command);
+			//print_node(command);
 			str = replace_var(command->shell, str, arr, i + 1, len, in_sq + in_dq);
 			i += len;
 		}
 		else
 			str = update_str(str, arr[i]);
+		i++;
 	}
 	return (str);
 }
@@ -186,13 +187,13 @@ int	fake_perfect(t_node *command, char *arr)
 		{
 			++sq_count;
 			in_sq = 1 - in_sq;
-			// continue;
+			continue;
 		}
 		if (arr[i] == '"' && in_sq == 0)
 		{
 			++dq_count;
 			in_dq = 2 - in_dq;
-			// continue;			
+			continue;			
 		}
 		if (arr[i] == '$' && in_sq == 0 && arr[i + 1] != ' ' && arr[i + 1] != '\0')
 		{
@@ -217,37 +218,20 @@ int	fake_perfect(t_node *command, char *arr)
 	EXPORT AND ECHO NEEDS IMPROVEMENTS
 */
 
-void	process_exp(t_node *command)
+char	*process_exp(char **result, t_node *unit)
 {
 	int		i;
 	char	*temp;
-	// printf("ENTERED PROCESS_EXP with \n");
-	// print_node(command);
-
-	if (command->fcmd)
+	//printf("ENTERED PROCESS_EXP with \n");
+	i = 0;
+	while (result[i])
 	{
-		temp = ft_strdup(command->fcmd);
-		free(command->fcmd);
-		command->fcmd = ft_strdup(handle_quotes(perfect(command, temp)));
+		if (!fake_perfect(unit, result[i]))
+			return (result[i]);
+		temp = ft_strdup(result[i]);
+		result[i] = ft_strdup(handle_quotesv2(perfect(unit, temp)));
 		free(temp);
-		temp = NULL;
+		i++;
 	}
-	i = -1;
-	while (++i < command->args_count)
-	{
-		temp = ft_strdup(command->args[i]);
-		free(command->args[i]);
-		command->args[i] = ft_strdup(handle_quotes(perfect(command, temp)));
-		free(temp);
-		temp = NULL;
-	}
-	i = -1;
-	while (++i < command->flags_count)
-	{
-		temp = ft_strdup(command->flags[i]);
-		free(command->flags[i]);
-		command->flags[i] = ft_strdup(handle_quotes(perfect(command, temp)));
-		free(temp);
-		temp = NULL;
-	}
+	return (NULL);
 }

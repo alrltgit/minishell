@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:35:45 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/03 11:30:46 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/12 12:00:15 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void    update_env(char *key, t_shell *shell)
     int index;
     int env_size;
 
-	printf("key: %s\n", key);
+	// printf("key: %s\n", key);
     index = index_from_key(key, shell->env);
-	printf("index: %d\n", index);
+	// printf("index: %d\n", index);
     if (index == -1)
         return ;
     free(shell->env[index]);
@@ -58,15 +58,21 @@ void    update_env(char *key, t_shell *shell)
     }
     shell->env[index] = NULL;
 }
-
 void    ft_unset(t_node *command)
 {
     char    **split;
     char    c;
     int     i;
+    // printf("rl_line_buffer: %s\n", rl_line_buffer);
     split = split_args(rl_line_buffer);
+    
+    // int j = 0;
+    // while (split[j])
+    // {
+    //     printf("split[%d]: %s", j, split[j]); // returns the last string with '\n'
+    //     j++;
+    // }
     c = split[1][0];
-	printf("c: %c\n", c);
     if (c == '-' || c == ')' || c == '(' || c == '&' || c == '!')
     {
         printf("bash: unset: syntax error!\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/08 14:12:26 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/13 14:50:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	process_input(char **input_split, int count)
 	if (ft_strcmp(input_split[1], "-n") == 0)
 	{
 		i = 1;
-		while (input_split[++i])
+		while (input_split[++i] && ft_strcmp(input_split[++i], "|") == 0)
 		{
-			if (i + 1 != count)
+			if (i + 1 != count && ft_strcmp(input_split[i + 1], "|") != 0)
 				printf("%s ", input_split[i]);
 			else
 				printf("%s", input_split[i]);
@@ -29,13 +29,15 @@ void	process_input(char **input_split, int count)
 	}
 	else
 	{
-		i = 0;
-		while (input_split[++i])
+		i = 1;
+		while (input_split[i] && ft_strcmp(input_split[i], "|") != 0)
 		{
-			if (i + 1 != count)
+			// printf("TEST\n");
+			if (i + 1 != count && ft_strcmp(input_split[i + 1], "|") != 0)
 				printf("%s ", input_split[i]);
 			else
 				printf("%s", input_split[i]);
+			i++;
 		}
 		printf("\n");
 	}
@@ -64,9 +66,16 @@ void	ft_echo(t_node *command)
 
 	(void)command;
 	input_split = split_args(command->fcmd);
-	// count = -1;
+	
+/* 	int i = 0;
+	while (input_split[i++])
+	{
+		printf("input_split[i]: %s\n", input_split[i]);	
+	} */
+
+	count = 0;
 	len = -1;
-	printf("PROCESSED FCMD -> %s\n", command->fcmd);
+	
 	if (ft_strcmp(input_split[0], "echo") == 0 && !input_split[1])
 	{
 		printf("\n");
@@ -75,18 +84,19 @@ void	ft_echo(t_node *command)
 	
 	while (input_split[++len])
 		;
-	while (++count < len)
+	while (count < len)
 	{
 		temp = ft_strdup(input_split[count]);
 		free(input_split[count]);
-		input_split[count] = ft_strdup(handle_quotes(perfect(command, temp)));
+		input_split[count] = ft_strdup(handle_quotes(temp));
 		//trim_outer(input_split[count]);
 		free(temp);
 		temp = NULL;
+		count++;
 	}
-	/* while (input_split[++count])
-		; */
-	process_input(input_split, len);
+	while (input_split[count])
+		count++;
+	process_input(input_split, count);
 	free_double((void **)input_split);
 }
 

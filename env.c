@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/05 12:22:06 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/13 11:25:08 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
+#include <string.h>
 
 /*check if the free double works properly*/
 int	index_from_key(char *var_name, char **env_array)
 {
 	int		i;
 	char	**var;
+	int temp; // delete after debugging
 
 	i = -1;
 	while (env_array[++i])
@@ -24,9 +26,15 @@ int	index_from_key(char *var_name, char **env_array)
 		//printf("var_name: %s\n", var_name);
 		// printf("var[0]: %s\n", var[0]);
 		var = ft_split(env_array[i], '=');
-		if (ft_strcmp(var_name, var[0]) == 0)
+		// printf("var[0]: %s - ", var[0]);
+		// printf("var_name: %s", var_name); // ends with \n, that's why ft_strcmp returns 10
+		temp = ft_strcmp(var_name, var[0]);
+		// printf("temp: %d", temp);
+		if (temp == 0)
 		{
+			// printf("TEST\n");
 			free_double((void **)var);
+			// printf("TEST\n");
 			return (i);
 		}
 		free_double((void **)var);
@@ -43,7 +51,7 @@ char	*value_from_key(char *var_name, t_shell *shell)
 
 	index = index_from_key(var_name, shell->env);
 	if (index == -1)
-		return (""); //changed to "" from " "
+		return (" "); //changed to "" from " "
 		// return (NULL);
 	return (ft_strchr(shell->env[index], '=') + 1);
 }

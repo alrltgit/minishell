@@ -3,14 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/05/26 14:04:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/12 11:46:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	manage_child_process(t_node *temp, int pipe_fd[2],
+	int prev_fd, t_node *node)
+{
+	char	**argv;
+
+	argv = build_argv(temp);
+	handle_child(temp, pipe_fd, prev_fd);
+	execute_depending_on_type(temp, argv, node);
+	free_arr(argv);
+}
+
+void	manage_parent_process(t_node *temp, int pipe_fd[2], int *prev_fd)
+{
+	if (*prev_fd != -1)
+		close(*prev_fd);
+	if (temp->next)
+	{
+		close(pipe_fd[1]);
+		*prev_fd = pipe_fd[0];
+	}
+	else
+		close(pipe_fd[0]);
+}
+
+int	create_pipe_fd(int pipe_fd[2])
+{
+	if (pipe(pipe_fd) == -1)
+	{
+		perror("pipe failed");
+		return (1);
+	}
+	return (0);
+}
+
+pid_t	create_fork(void)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork failed");
+	}
+	return (pid);
+}
 
 void	create_pipe(t_node *node)
 {
@@ -18,71 +64,23 @@ void	create_pipe(t_node *node)
 	int		prev_fd;
 	int		pipe_fd[2];
 	pid_t	pid;
-	char	**argv;
 
-    // char *const *envp = NULL;
-    temp = node;
-    prev_fd = -1;
-    while (temp)
-    {
-        if (pipe(pipe_fd) == -1)
-        {
-            perror("pipe failed");
-            return;
-        }
-        argv = build_argv(temp);
-        pid = fork();
-        if (pid < 0)
-        {
-            perror("fork failed");
-            free_arr(argv);
-            return;
-        }
-        if (pid == 0)
-        {
-            // fprintf(stderr, "Child process: executing command '%s'\n", temp->cmd);
-            if (temp == node && temp->stdin_redirect == 1)
-            {
-                if (redirect_to_stdin(temp->redir_files) == 1)
-                    return ;
-            }
-            if (prev_fd != -1)
-            {
-                dup2(prev_fd, STDIN_FILENO);
-                close(prev_fd);
-            }
-            if (temp->next != NULL)
-            {
-                close(pipe_fd[0]);
-                dup2(pipe_fd[1], STDOUT_FILENO);
-                close(pipe_fd[1]);
-            }
-            if (temp->cmd_type == B_IN)
-            {
-                execute_builtin(temp);
-                exit(EXIT_SUCCESS);
-            }
-            else
-            {
-                execve(temp->cmd, argv, node->shell->env);
-                perror("execve failed");
-                free_arr(argv);
-                exit(EXIT_FAILURE);
-            }
-        }
-        else
-        {
-            if (prev_fd != -1)
-                close(prev_fd);
-            if (temp->next)
-            {
-                close(pipe_fd[1]);
-                prev_fd = pipe_fd[0];
-            }
-            else
-                close(pipe_fd[0]);
-            temp = temp->next;
-        }
-    }
-    while (wait(NULL) > 0);
+	temp = node;
+	prev_fd = -1;
+	while (temp)
+	{
+		if (create_pipe_fd(pipe_fd))
+			return ;
+		pid = create_fork();
+		if (pid == 0)
+			manage_child_process(temp, pipe_fd, prev_fd, node);
+		else
+		{
+			manage_parent_process(temp, pipe_fd, &prev_fd);
+			temp = temp->next;
+		}
+	}
+	while (wait(NULL) > 0)
+		;
+	unlink("fd_temp");
 }

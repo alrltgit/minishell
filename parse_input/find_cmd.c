@@ -3,62 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/03 11:17:53 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/13 14:21:52 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	**get_path(void)
+void	set_error_status(char *input, t_node *unit)
 {
-	char	*path;
-	char	**paths;
-
-	path = getenv("PATH");
-	paths = ft_split(path, ':');
-	if (!paths)
-		return (NULL);
-	return (paths);
+	printf("input %s\n", input);
+	/* if (!input)
+		ft_printf("minishell: %s: command not found\n", input); */
+	if (ft_strchr(input, '/'))
+	{
+		if (access(input, F_OK) != 0)
+			ft_printf("minishell: %s: No such file or directory\n", input);
+		else if (access(input, X_OK) != 0)
+			ft_printf("minishell: %s: Permission denied\n", input);
+		else if (!fake_perfect(unit, input))
+			printf("minishell: syntax error\n");
+	}
+	else
+		ft_printf("minishell: %s: command not found\n", input);
+	unit->cmd_status = 127;
 }
 
-int find_command_path(char *input, t_node *unit)
+int	check_builtin_command(char *input, t_node *unit)
 {
-	char	*temp_result;
-	char	**paths;
-	int		i;
-
-	/* if (input[0] == '$')
-		return (2); */
 	if (is_builtin(input))
 	{
 		unit->cmd_is_found = 1;
 		unit->cmd = input;
+		unit->cmd_status = 1;
 		unit->fcmd = ft_strjoin_free(unit->fcmd, input);
 		return (1);
 	}
-    paths = get_path();
-    if (!paths)
-        return (0);
-    i = 0;
-    while (paths[i])
-    {
-        temp_result = ft_strconcat(paths[i], input);
-        if (access(temp_result, X_OK) == 0)
-        {
-            unit->cmd = ft_strdup(temp_result);
-			unit->fcmd = ft_strjoin_free(unit->fcmd, temp_result);
-            unit->cmd_is_found = 1;
-            free(temp_result);
-            free_arr(paths);
-            return (2);
-            break ;
-        }
-        free(temp_result);
-        i++;
-    }
-    free_arr(paths);
-    return (0);
+	return (0);
+}
+
+void	handle_command_init(t_node *unit, char *temp_result, char **paths)
+{
+	unit->cmd = ft_strdup(temp_result);
+	unit->fcmd = ft_strjoin_free(unit->fcmd, temp_result);
+	unit->cmd_is_found = 1;
+	free(temp_result);
+	free_arr(paths);
+	unit->cmd_status = 2;
+}
+
+int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)
+{
+	char	*temp_result;
+	int		i;
+
+	i = 0;
+	while (paths[i])
+	{
+		temp_result = ft_strconcat(paths[i], input);
+		if (access(temp_result, X_OK) == 0)
+		{
+			handle_command_init(unit, temp_result, paths);
+			return (unit->cmd_status);
+		}
+		free(temp_result);
+		i++;
+	}
+	return (0);
+}
+
+int	find_command_path(char *input, t_node *unit)
+{
+	char	**paths;
+
+	if (ft_strcmp(input, "<") == 0 || is_file_name(unit, input) == 1)
+	{
+		unit->cmd_status = 0;
+		unit->cmd = NULL;
+		return (unit->cmd_status);
+	}
+	if (check_builtin_command(input, unit))
+		return (unit->cmd_status);
+	paths = get_path();
+	if (!paths)
+	{
+		set_error_status(input, unit);
+		return (0);
+	}
+	if (resolve_cmd_in_paths(paths, input, unit))
+		return (unit->cmd_status);
+	free_arr(paths);
+	set_error_status(input, unit);
+	return (unit->cmd_status);
 }

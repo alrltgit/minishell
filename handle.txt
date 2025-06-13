@@ -1,0 +1,8 @@
+
+HANDLE echo echo
+
+
+dgsdfgdfsg "" -> seg
+
+
+"" -> seg
