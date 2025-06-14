@@ -1,3 +1,14 @@
+#WORKING#
+1.  echo abcdef | unset PWd -> it works as it should (does nothing)
+
+
+
+
+
+#NOT WORKING#
+if you try to print $? it prints some random number
+it is likely cuz of wait() and child process
+
 
 HANDLE echo echo
 

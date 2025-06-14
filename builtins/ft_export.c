@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/12 12:06:36 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/14 13:20:57 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	check_print_error(char *key, char *val, int w_space)
 	else return NULL
 */
 // export abc def kggjdfg should do nothing
-char	**check_invalid_identifier(char *str)
+char	**check_invalid_identifier(char *str, t_node *node)
 {
 	char	*before;
 	char	*after;
@@ -130,7 +130,10 @@ char	**check_invalid_identifier(char *str)
 		before = update_str(before, temp[--b_len]);
 	free(temp);
 	if (!check_print_error(before, after, key_w_skip))
+	{
+		node->shell->exit_code = 1;
 		return (NULL);
+	}
 	arr = malloc(sizeof(char *) * 2);
 	arr[0] = ft_strdup(before);
 	arr[1] = ft_strdup(after);
@@ -150,7 +153,7 @@ void	ft_export(t_node *command)
 	printf("Processed fcmd-> %s\n", command->fcmd);
 	if (!ft_strchr(command->fcmd, '='))
 		return ;
-	split = check_invalid_identifier(command->fcmd);
+	split = check_invalid_identifier(command->fcmd, command);
 	if (!split)
 		return ;
 	index = index_from_key(split[0], command->shell->env);

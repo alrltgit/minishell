@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/13 14:09:32 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/14 13:45:33 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ extract the expansion
 int	is_alphanumeric(char a)
 {
 	if ((a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z')
-		|| (a >= '0' && a <= '9') || a == '_')
+		|| (a >= '0' && a <= '9') || a == '_' || a == '?')
 		return (1);
 	return (0);
 }
@@ -115,8 +115,14 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	j = -1;
 	if (quote == 1)
 		tmp = ft_substr(var, pos + 1, len - 1);
+	else if (var[pos] == '?')
+		tmp = ft_itoa(shell->exit_code); //exit code added
 	else
+	{
 		tmp = value_from_key(ft_substr(var, pos, len), shell);
+		if (ft_strcmp(tmp, "") == 0)
+			tmp = " ";
+	}
 	while (tmp && tmp[++j])
 		str = update_str(str, tmp[j]);
 	return (str);
@@ -150,6 +156,12 @@ char	*perfect(t_node *command, char *arr)
 		{
 			j = i;
 			len = 0;
+			if (arr[i + 1] == '?')
+			{
+				str = replace_var(command->shell, str, arr, i + 1, 1, in_sq + in_dq);
+				i += 2;
+				continue;
+			}
 			while (is_alphanumeric(arr[++j]))
 				++len;
 			//print_node(command);
@@ -199,6 +211,12 @@ int	fake_perfect(t_node *command, char *arr)
 		{
 			j = i;
 			len = 0;
+			if (arr[i + 1] == '?')
+			{
+				str = replace_var(command->shell, str, arr, i + 1, 1, in_sq + in_dq);
+				i += 2;
+				continue;
+			}
 			while (is_alphanumeric(arr[++j]))
 				++len;
 			str = replace_var(command->shell, str, arr, i + 1, len, in_sq + in_dq);

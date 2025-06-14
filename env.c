@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/13 11:25:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/14 13:46:06 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ char	*value_from_key(char *var_name, t_shell *shell)
 
 	index = index_from_key(var_name, shell->env);
 	if (index == -1)
-		return (" "); //changed to "" from " "
-		// return (NULL);
+		return ("");
 	return (ft_strchr(shell->env[index], '=') + 1);
 }
 

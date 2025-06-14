@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/13 14:43:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/14 14:20:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void read_the_input(char *rl, t_shell *shll)
 	check = process_exp(result, unit);
 	if (check != NULL)
 	{
-		printf("minishell: %s: command not found\n", check);
+		printf("\e[0;31mminishell: %s: command not found\n", check);
+		shll->exit_code = 127;
 		free_arr(result);
 		return ;
 	}

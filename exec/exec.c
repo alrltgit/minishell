@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/12 11:31:44 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/14 14:29:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,14 @@ void	handle_child_process(t_node *node, char **argv)
 	}
 	if (node->cmd == NULL)
 	{
-		printf("%s: command not found", argv[0]);
+		printf("\e[0;31m%s: command not found", argv[0]);
+		node->shell->exit_code = 127; //exit code added
 		exit(127);
 	}
 	if (execve(node->cmd, argv, node->shell->env) == -1)
 	{
 		perror("execve failed\n");
+		node->shell->exit_code = 1; //exit code added
 		exit(EXIT_FAILURE);
 	}
 }
@@ -77,6 +79,7 @@ void	single_command(t_node *node, char **argv)
 	else
 	{
 		perror("Fork failed.\n");
+		node->shell->exit_code = 1;
 		exit(1);
 	}
 }

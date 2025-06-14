@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/13 15:03:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/14 14:11:02 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_shell
 {
 	char	**env;
 	t_node	*cmds;
-	int		errcode;
+	// int		errcode;
+	int		exit_code;
 }	t_shell;
 
 typedef struct s_redir_type

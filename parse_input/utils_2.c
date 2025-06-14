@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 20:51:01 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/14 14:32:48 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	is_valid_command(t_node *current_node, char *rl)
 {
 	if (current_node->cmd == NULL)
 	{
-		ft_putstr_fd(ft_strcat(rl, ": command not found\n"), 2);
+		printf("\e[0;31mminishell: %s\n", ft_strcat(rl, ": command not found\n"));
+		current_node->shell->exit_code = 127;
 		return (1);
 	}
 	return (0);

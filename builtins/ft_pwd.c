@@ -3,30 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:30:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/22 17:37:01 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/14 13:53:17 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
- *Double check the errcode
- you might need to customize the perror
- */
-
 void	ft_pwd(t_node *cmd)
 {
 	char	*pwd;
 
-	cmd->shell->errcode = 0;
 	pwd = value_from_key("PWD", cmd->shell);
-	printf("%s\n", pwd);
-	if (!pwd)
+	if (ft_strcmp(pwd, "") == 0)
 	{
-		cmd->shell->errcode = 1;
-		perror("pwd error");
+		cmd->shell->exit_code = 1;
+		ft_putstr_fd("\e[0;31mminishell: pwd: unable to retrieve\n", 2);
 	}
+	else
+		printf("%s\n", pwd);
 }

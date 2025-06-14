@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:35:45 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/12 12:00:15 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/14 14:04:44 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ void    update_env(char *key, t_shell *shell)
     int index;
     int env_size;
 
-	// printf("key: %s\n", key);
     index = index_from_key(key, shell->env);
-	// printf("index: %d\n", index);
     if (index == -1)
         return ;
     free(shell->env[index]);
@@ -58,28 +56,27 @@ void    update_env(char *key, t_shell *shell)
     }
     shell->env[index] = NULL;
 }
+
 void    ft_unset(t_node *command)
 {
     char    **split;
     char    c;
     int     i;
-    // printf("rl_line_buffer: %s\n", rl_line_buffer);
-    split = split_args(rl_line_buffer);
-    
-    // int j = 0;
-    // while (split[j])
-    // {
-    //     printf("split[%d]: %s", j, split[j]); // returns the last string with '\n'
-    //     j++;
-    // }
-    c = split[1][0];
-    if (c == '-' || c == ')' || c == '(' || c == '&' || c == '!')
-    {
-        printf("bash: unset: syntax error!\n");
-        free_double_n((void **)command->args, command->args_count);
-        free_double_n((void **)command->flags, command->flags_count);
-        return ;
-    }
+
+    split = split_args(command->fcmd);
+	i = -1;
+	while (split[1][++i])
+	{
+		c = split[1][i];
+		if (c == '-' || c == ')' || c == '(' || c == '&' || c == '!')
+		{
+			ft_putstr_fd("\e[0;31mminishell: unset: syntax error\n", 2);
+			command->shell->exit_code = 2;
+			free_double_n((void **)command->args, command->args_count);
+			free_double_n((void **)command->flags, command->flags_count);
+			return ;
+		}
+	}
     i = 0;
     while (split[++i])
         update_env(split[i], command->shell);
