@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/15 17:09:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/15 18:03:11 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ void	read_the_input(char *rl, t_shell *shll)
 	t_node	*unit;
 	t_node	*temp;
 
-	check_for_empty_line(rl);
+	if (check_for_empty_line(rl))
+		return ;
 	result = split_args(rl);
 	unit = create_unit();
 	unit->shell = shll;

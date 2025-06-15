@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/02 16:38:14 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:25:29 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,10 +173,13 @@ void	process_exp(char **result, t_node *unit)
 	i = 0;
 	while (result[i])
 	{
-		temp = ft_strdup(result[i]);
-		free(result[i]);
-		result[i] = ft_strdup(handle_quotes(perfect(unit, &temp)));
-		free(temp);
+		if (result[i][0] == '$')
+		{
+			temp = ft_strdup(result[i]);
+			free(result[i]);
+			result[i] = ft_strdup(handle_quotes(perfect(unit, &temp)));
+			free(temp);	
+		}
 		i++;
 	}
 }

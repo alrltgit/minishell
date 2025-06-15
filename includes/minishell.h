@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/15 17:10:40 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/15 17:34:55 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
 
 // parse_input_utils.c
 void	go_to_execute(t_node *unit);
-void	check_for_empty_line(char *rl);
+int		check_for_empty_line(char *rl);
 int		is_input_redir(t_node *current_node, char **result, int *j);
 int		is_output_redir(t_node *current_node, char **result, int *j);
 int		is_heredoc_redir(t_node *current_node, char **result, int *j);
