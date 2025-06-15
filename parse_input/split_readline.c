@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 20:48:19 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/15 18:23:35 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,19 @@ char	*extract_token(const char *str, int *i, char **result, int *count)
 	while (str[*i])
 	{
 		handle_quotes_in_extract_token(str, i, &single_q, &double_q);
+		if (str[*i] == '|' && !single_q && !double_q)
+        {
+            if (*i == start)
+            {
+                (*i)++;
+                token = ft_strdup("|");
+                if (!token)
+                    return (NULL);
+                result[(*count)++] = token;
+                return (token);
+            }
+            break;
+        }
 		if ((str[*i] == ' ' || str[*i] == '\t') && !single_q && !double_q)
 			break ;
 		(*i)++;
