@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/10 10:18:29 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/15 17:10:40 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_node
 	int vars_count;
 	int	cmd_type;
 	int is_pipe;
+	int cmd_idx;
 	t_node *next;
 }	t_node;
 
@@ -162,11 +163,14 @@ void	trim_quotes_if_needed(char *token, int len);
 int		find_command_path(char *input, t_node *unit);
 
 // find_args.c
-int		count_args(char **result, t_node *current_node, int j_temp);
-void	find_args(t_node *cmd, char **result, int *i, int *j);
+int		count_args(char **result, t_node *current_node, int k);
+void	find_args(t_node *current_node, char **result, int i, int *j);
 char	*retrieve_cmd_name(t_node *node);
 int		allocate_args_memory(t_node *current_node, char **result, int j_temp);
-void	find_and_add_args(t_node *current_node, char **result, int *i, int *j);
+void	find_and_add_args(t_node *current_node, char **result, int i, int *j);
+
+// find_args_v2.c
+int		count_args2(char **result, t_node *current_node, int j_temp);
 
 //find_flags.c
 int		count_flags(char **result, int j);
@@ -179,15 +183,16 @@ char	*handle_quotes(char *str);
 
 // utils_2.c
 char	**get_path(void);
-int		handle_pipe(t_node **current_node, char **result, int i);
+int		handle_pipe(t_node **current_node, char **result, int i, int cmd_idx);
 int		is_valid_command(t_node *current_node, char *rl);
 void	handle_quotes_in_extract_token(const char *str, int *i, int *single_q, int *double_q);
 
 // utils_3.c
 int		rl_is_space(char *rl);
-int		condition_is_met(t_node *current_node, char *cmd_name, char **result, int j_temp);
+int		condition_is_met(t_node *current_node, char **result, int j_temp);
 int		is_file_name(t_node *current_node, char *result);
 int		alloc_mem_for_args_arr(t_node *current_node);
+int		handle_pipe_and_move(t_node **current_node, char **result, int *i, int *j);
 
 // piping.c
 void	create_pipe(t_node *node);

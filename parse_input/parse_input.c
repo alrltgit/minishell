@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/10 10:18:10 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/15 17:09:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,20 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	t_node	*current_node;
 
 	j = 0;
-	j_temp = j;
+	j_temp = j + 1;
 	current_node = *unit;
 	if (allocate_args_memory(current_node, result, j_temp) == 1)
 		return ;
-	i = 0;
+	i = 1;
 	while (result[i])
 	{
 		if (ft_strcmp(result[i], "|") == 0)
 		{
-			j = 0;
-			if (handle_pipe(&current_node, result, i) == 1)
+			if (handle_pipe_and_move(&current_node, result, &i, &j) == 1)
 				break ;
-			i++;
 			continue ;
 		}
-		find_and_add_args(current_node, result, &i, &j);
+		find_and_add_args(current_node, result, i, &j);
 		i++;
 	}
 }

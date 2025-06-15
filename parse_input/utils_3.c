@@ -6,11 +6,21 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:13:57 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 21:28:04 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/15 17:10:15 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	handle_pipe_and_move(t_node **current_node, char **result, int *i, int *j)
+{
+	(*current_node)->cmd_idx = *i + 1;
+	*j = 0;
+	if (handle_pipe(current_node, result, *i, (*current_node)->cmd_idx) == 1)
+		return (1);
+	(*i)++;
+	return (0);
+}
 
 int	is_file_name(t_node *current_node, char *result)
 {
@@ -26,8 +36,7 @@ int	is_file_name(t_node *current_node, char *result)
 	return (0);
 }
 
-int	condition_is_met(t_node *current_node,
-	char *cmd_name, char **result, int j_temp)
+int	condition_is_met(t_node *current_node, char **result, int j_temp)
 {
 	if (result[j_temp] == NULL)
 		return (1);
@@ -36,12 +45,9 @@ int	condition_is_met(t_node *current_node,
 		|| ft_strcmp(result[j_temp], "<<") == 0
 		|| ft_strcmp(result[j_temp], ">>") == 0)
 		return (1);
-	if ((cmd_name == NULL && result[j_temp][0] != '-'
+	if (result[j_temp][0] != '-'
 		&& is_file_name(current_node, result[j_temp]) == 0
 		&& is_file_name(current_node, result[j_temp]) == 0)
-	|| (cmd_name != NULL && ft_strcmp(result[j_temp], cmd_name) != 0
-		&& result[j_temp][0] != '-'
-		&& is_file_name(current_node, result[j_temp]) == 0))
 	{
 		return (0);
 	}

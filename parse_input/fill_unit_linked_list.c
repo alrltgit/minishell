@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/08 19:24:43 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/15 16:40:58 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_node	*create_unit(void)
 	node->cmd_type = 0;
 	node->is_pipe = 0;
 	node->cmd_is_found = 0;
+	node->cmd_idx = 0;
 	return (node);
 }
 
