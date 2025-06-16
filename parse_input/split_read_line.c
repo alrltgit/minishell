@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/13 14:30:34 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 11:07:36 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,19 @@ char	*extract_token_v2(const char *str)
 	while (str[*i])
 	{
 		handle_quotes_in_extract_token(str, i, &single_q, &double_q);
+		if (str[*i] == '|' && !single_q && !double_q)
+        {
+            if (*i == start)
+            {
+                (*i)++;
+                token = ft_strdup("|");
+                if (!token)
+                    return (NULL);
+                result[(*count)++] = token;
+                return (token);
+            }
+            break;
+        }
 		if ((str[*i] == ' ' || str[*i] == '\t') && !single_q && !double_q)
 			break ;
 		(*i)++;

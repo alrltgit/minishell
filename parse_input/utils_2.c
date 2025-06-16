@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/14 14:32:48 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 11:04:07 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ void	go_to_execute(t_node *unit)
 	}
 }
 
-int	handle_pipe(t_node **current_node, char **result, int i)
+int	handle_pipe(t_node **current_node, char **result, int i, int cmd_idx)
 {
 	*current_node = (*current_node)->next;
+	(*current_node)->cmd_idx = cmd_idx;
 	if (!*current_node)
 		return (1);
-	(*current_node)->args_count = count_args(result, *current_node, i + 1);
+	(*current_node)->args_count = count_args(result, *current_node, i);
 	if (alloc_mem_for_args_arr(*current_node) == 1)
 		return (1);
 	if (!(*current_node)->args)

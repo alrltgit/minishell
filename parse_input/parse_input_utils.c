@@ -6,21 +6,22 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:42:26 by apple             #+#    #+#             */
-/*   Updated: 2025/06/13 13:11:35 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 11:08:05 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	check_for_empty_line(char *rl)
+int	check_for_empty_line(char *rl)
 {
-	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 0)
+	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 1)
 	{
 		// rl_replace_line("", 0);
 		// rl_redisplay();
 		// rl_on_new_line();
 		return ;
 	}
+	return (0);
 }
 
 int	is_input_redir(t_node *current_node, char **result, int *j)
