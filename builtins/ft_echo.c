@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/13 14:50:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 17:18:00 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,28 @@
 void	process_input(char **input_split, int count)
 {
 	int	i;
+	int	w_n;
 
+	w_n = 0;
+	i = 0;
 	if (ft_strcmp(input_split[1], "-n") == 0)
 	{
-		i = 1;
-		while (input_split[++i] && ft_strcmp(input_split[++i], "|") == 0)
-		{
-			if (i + 1 != count && ft_strcmp(input_split[i + 1], "|") != 0)
-				printf("%s ", input_split[i]);
-			else
-				printf("%s", input_split[i]);
-		}
+		w_n = 1;
+		++i;
 	}
-	else
+	while (input_split[++i])
 	{
-		i = 1;
-		while (input_split[i] && ft_strcmp(input_split[i], "|") != 0)
+		if (i + 1 != count)
+			printf("%s ", input_split[i]);
+		else
 		{
-			// printf("TEST\n");
-			if (i + 1 != count && ft_strcmp(input_split[i + 1], "|") != 0)
-				printf("%s ", input_split[i]);
-			else
-				printf("%s", input_split[i]);
-			i++;
+			printf("%s", input_split[i]);
+			if (!w_n)
+				printf("\n");
 		}
-		printf("\n");
 	}
 }
+
 
 /*
 	if there is expansion variable somewhere
@@ -61,38 +56,15 @@ void	ft_echo(t_node *command)
 {
 	int		count;
 	char	**input_split;
-	int		len;
-	char	*temp;
 
 	(void)command;
+	// printf("fcmd-> %s\n", command->fcmd);
 	input_split = split_args(command->fcmd);
-	
-/* 	int i = 0;
-	while (input_split[i++])
-	{
-		printf("input_split[i]: %s\n", input_split[i]);	
-	} */
-
 	count = 0;
-	len = -1;
-	
 	if (ft_strcmp(input_split[0], "echo") == 0 && !input_split[1])
 	{
 		printf("\n");
 		return ;
-	}
-	
-	while (input_split[++len])
-		;
-	while (count < len)
-	{
-		temp = ft_strdup(input_split[count]);
-		free(input_split[count]);
-		input_split[count] = ft_strdup(handle_quotes(temp));
-		//trim_outer(input_split[count]);
-		free(temp);
-		temp = NULL;
-		count++;
 	}
 	while (input_split[count])
 		count++;
@@ -100,7 +72,3 @@ void	ft_echo(t_node *command)
 	free_double((void **)input_split);
 }
 
-/* void	ft_echo(t_node *command)
-{
-	
-} */

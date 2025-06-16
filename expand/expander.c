@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/16 11:08:59 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 17:12:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,59 +175,23 @@ char	*perfect(t_node *command, char *arr)
 	return (str);
 }
 
-int	fake_perfect(t_node *command, char *arr)
+int	fake_perfect(char *arr)
 {
-	int		in_sq;
-	int		in_dq;
-	int		i;
-	int		j;
-	int		len;
-	int		sq_count;
-	int		dq_count;
-	char	*str;
+	int	i = 0;
+	int	in_sq = 0;
+	int	in_dq = 0;
 
-	in_sq = 0;
-	in_dq = 0;
-	dq_count = 0;
-	sq_count = 0;
-	i = -1;
-	str = NULL;
-
-	while (arr[++i])
+	while (arr[i])
 	{
 		if (arr[i] == '\'' && in_dq == 0)
-		{
-			++sq_count;
-			in_sq = 1 - in_sq;
-			continue;
-		}
-		if (arr[i] == '"' && in_sq == 0)
-		{
-			++dq_count;
-			in_dq = 2 - in_dq;
-			continue;			
-		}
-		if (arr[i] == '$' && in_sq == 0 && arr[i + 1] != ' ' && arr[i + 1] != '\0')
-		{
-			j = i;
-			len = 0;
-			if (arr[i + 1] == '?')
-			{
-				str = replace_var(command->shell, str, arr, i + 1, 1, in_sq + in_dq);
-				i += 2;
-				continue;
-			}
-			while (is_alphanumeric(arr[++j]))
-				++len;
-			str = replace_var(command->shell, str, arr, i + 1, len, in_sq + in_dq);
-			i += len;
-		}
-		else
-			str = update_str(str, arr[i]);
+			in_sq = !in_sq;
+		else if (arr[i] == '"' && in_sq == 0)
+			in_dq = !in_dq;
+		i++;
 	}
-	if ((dq_count % 2 == 1) || (sq_count % 2 == 1))
-		return (0);
-	return (1);
+	if (in_sq || in_dq)
+		return (0); // Unclosed quote
+	return (1); // All quotes closed
 }
 /*
 	when input is given it will go
@@ -236,20 +200,43 @@ int	fake_perfect(t_node *command, char *arr)
 	EXPORT AND ECHO NEEDS IMPROVEMENTS
 */
 
+/* if the str has syntax error it returns the str.
+if everything is okay, it returns null*/
 char	*process_exp(char **result, t_node *unit)
 {
 	int		i;
 	char	*temp;
-	//printf("ENTERED PROCESS_EXP with \n");
-	i = 0;
-	while (result[i])
+	char	*temp2;
+
+	if (result[0])
 	{
-		if (!fake_perfect(unit, result[i]))
+		if (!fake_perfect(result[0]))
+			return (result[0]);
+		temp = perfect(unit, result[0]);
+		if (ft_strcmp(temp, " ") == 0)
+			return ("");
+		else
+			result[0] = ft_strdup(handle_quotesv2(perfect(unit, temp)));
+	}
+	i = 0;
+	while (result[++i])
+	{
+		//printf("before exp -> %s\n", result[i]);
+		if (!fake_perfect(result[i]))
 			return (result[i]);
 		temp = ft_strdup(result[i]);
-		result[i] = ft_strdup(handle_quotesv2(perfect(unit, temp)));
+		temp2 = perfect(unit, temp);
+		if (ft_strcmp(temp2, "") == 0)
+		{
+			result[i] = ft_strdup("");
+			++i;
+			free(temp2);
+			free(temp);
+			continue;
+		}
+		result[i] = ft_strdup(handle_quotesv2(temp2));
+		//printf("after exp -> %s\n", result[i]);
 		free(temp);
-		i++;
 	}
 	return (NULL);
 }

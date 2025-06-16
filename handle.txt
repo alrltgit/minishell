@@ -3,17 +3,30 @@
 
 
 
-
-
-#NOT WORKING#
 if you try to print $? it prints some random number
-it is likely cuz of wait() and child process
+-in process-
 
 
 HANDLE echo echo
-
+-handled-
 
 dgsdfgdfsg "" -> seg
-
+-handled-
 
 "" -> seg
+-handled-
+
+echo -n abcdef echo -n -> wrong order (-n abcdef echo)
+-NEEDS TO BE HANDLED-
+
+$abcdef echo abc -> abc
+-NEEDS TO BE HANDLED-
+
+handle all exit codes in every possible places
+-NEEDS TO BE HANDLED-
+
+abcdef "' -> it says syntax error for "' but it should say command not found for abcdef
+-handled-
+
+$gdfgsdfgsdf -> it says command not found but it should do nothing
+-handled-

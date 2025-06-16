@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/16 11:04:07 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 12:17:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	is_valid_command(t_node *current_node, char *rl)
 {
 	if (current_node->cmd == NULL)
 	{
-		printf("\e[0;31mminishell: %s\n", ft_strcat(rl, ": command not found\n"));
+		printf("\e[0;31mminishell: %s\n", ft_strcat(rl, ": command not found555\n"));
 		current_node->shell->exit_code = 127;
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/14 13:20:57 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 17:17:51 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,14 +150,14 @@ void	ft_export(t_node *command)
 	int		index;
 	
 	// process_str_exp(command, &command->fcmd);
-	printf("Processed fcmd-> %s\n", command->fcmd);
+	// printf("Processed fcmd-> %s\n", command->fcmd);
 	if (!ft_strchr(command->fcmd, '='))
 		return ;
 	split = check_invalid_identifier(command->fcmd, command);
 	if (!split)
 		return ;
 	index = index_from_key(split[0], command->shell->env);
-	printf("index is -> %d\n", index);
+	// printf("index is -> %d\n", index);
 	if (index == -1)
 		create_and_set_val(command->shell, split[0], split[1]);
 	else

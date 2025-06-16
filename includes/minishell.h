@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/16 11:02:57 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 14:33:10 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ft_unset(t_node *command);
 // void	process_exp(t_node *command);
 char	*process_exp(char **result, t_node *unit);
 char	*perfect(t_node *command, char *arr);
-int		fake_perfect(t_node *command, char *arr);
+int		fake_perfect(char *arr);
 
 
 //ALINA
@@ -126,7 +126,7 @@ int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
 
 // parse_input_utils.c
 void	go_to_execute(t_node *unit);
-int		check_for_empty_line(char *rl);
+void	check_for_empty_line(char *rl);
 int		is_input_redir(t_node *current_node, char **result, int *j);
 int		is_output_redir(t_node *current_node, char **result, int *j);
 int		is_heredoc_redir(t_node *current_node, char **result, int *j);

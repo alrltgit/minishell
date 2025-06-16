@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/14 14:29:30 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/16 12:17:10 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	handle_child_process(t_node *node, char **argv)
 	}
 	if (node->cmd == NULL)
 	{
-		printf("\e[0;31m%s: command not found", argv[0]);
+		printf("\e[0;31m%s: command not found222", argv[0]);
 		node->shell->exit_code = 127; //exit code added
 		exit(127);
 	}
