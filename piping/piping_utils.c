@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/10 10:18:22 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/17 20:51:50 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	execute_depending_on_type(t_node *temp, char **argv, t_node *node)
 	else
 	{
 		execve(temp->cmd, argv, node->shell->env);
-		perror("execve failed");
+		// perror("execve failed");
 		free_arr(argv);
 		exit(EXIT_FAILURE);
 	}

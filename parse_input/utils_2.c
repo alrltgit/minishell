@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/15 16:59:32 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/17 21:04:40 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	go_to_execute(t_node *unit)
 	{
 		if (unit->cmd_type == B_IN)
 			execute_builtin(unit);
-		else if (unit->cmd_type == NON_B_IN)
+		else
+		// else if (unit->cmd_type == NON_B_IN)
 			execute_other(unit);
 	}
 }

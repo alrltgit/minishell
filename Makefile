@@ -6,7 +6,7 @@ SRC = main.c env.c env2.c signals.c free.c \
 builtins/ft_pwd.c builtins/ft_env.c builtins/ft_cd.c \
 builtins/ft_echo.c builtins/ft_export.c builtins/ft_exit.c \
 builtins/ft_unset.c expand/expander.c builtins/builtins_utils.c \
-parse_input/find_cmd.c parse_input/utils.c parse_input/utils_2.c parse_input/utils_3.c \
+parse_input/find_cmd.c parse_input/utils.c parse_input/utils_2.c parse_input/utils_3.c parse_input/utils_4.c \
 parse_input/find_flags.c \
 parse_input/find_args.c parse_input/find_args_v2.c parse_input/fill_unit_linked_list.c parse_input/parse_input.c \
 parse_input/parse_input_utils.c parse_input/split_readline.c parse_input/split_readline_utils.c \

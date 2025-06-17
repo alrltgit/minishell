@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 17:55:00 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/17 19:12:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	find_command_path(char *input, t_node *unit)
 		return (unit->cmd_status);
 	}
 	if (check_builtin_command(input, unit))
+		return (unit->cmd_status);
+	if (check_for_executable(unit, input) != 0)
 		return (unit->cmd_status);
 	paths = get_path();
 	if (!paths)

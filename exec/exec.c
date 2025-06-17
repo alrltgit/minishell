@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/09 16:46:17 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/17 21:28:49 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	handle_redir_heredoc_append(t_redir *redir)
 	}
 	else if (redir->type->heredoc_redir == 1)
 	{
+		printf("IN_1\n");
 		if (handle_heredoc_redirection(redir) == 1)
 			return ;
 	}
@@ -86,7 +87,7 @@ void	execute_other(t_node *node)
 	{
 		argv = build_argv(node);
 		single_command(node, argv);
-		free_arr(argv);
+		// free_arr(argv);
 	}
 }
 

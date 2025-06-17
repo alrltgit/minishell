@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/15 17:34:55 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/17 19:14:01 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,9 @@ int		condition_is_met(t_node *current_node, char **result, int j_temp);
 int		is_file_name(t_node *current_node, char *result);
 int		alloc_mem_for_args_arr(t_node *current_node);
 int		handle_pipe_and_move(t_node **current_node, char **result, int *i, int *j);
+
+// utils_4.c
+int		check_for_executable(t_node *unit, char *input);
 
 // piping.c
 void	create_pipe(t_node *node);

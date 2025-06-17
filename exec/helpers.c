@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:47:58 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 17:00:13 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/17 20:55:02 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ char	**build_argv(t_node *node)
 	i = 0;
 	argv[i] = ft_strdup2(retrieve_cmd_name(node));
 	if (argv[i] == NULL)
-	{
-		printf("argv[i] = NULL\n");
 		return (NULL);
-	}
 	i++;
 	include_flags(node, argv, &i);
 	include_args(node, argv, &i);

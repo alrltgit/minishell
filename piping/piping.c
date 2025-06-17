@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/09 22:34:17 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/17 20:52:12 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ pid_t	create_fork(void)
 
 	pid = fork();
 	if (pid < 0)
-	{
 		perror("fork failed");
-	}
 	return (pid);
 }
 
@@ -74,10 +72,15 @@ void	create_pipe(t_node *node)
 		pid = create_fork();
 		if (pid == 0)
 			manage_child_process(temp, pipe_fd, prev_fd, node);
-		else
+		else if (pid > 0)
 		{
 			manage_parent_process(temp, pipe_fd, &prev_fd);
 			temp = temp->next;
+		}
+		else
+		{
+			perror("fork failed");
+			return ;
 		}
 	}
 	while (wait(NULL) > 0)
