@@ -30,3 +30,5 @@ abcdef "' -> it says syntax error for "' but it should say command not found for
 
 $gdfgsdfgsdf -> it says command not found but it should do nothing
 -handled-
+
+check prompts refreshes itself properly (write delete something and ENTER empty)
