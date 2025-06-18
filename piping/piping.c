@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/18 16:07:39 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:48:58 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,17 @@ int	create_pipe_fd(int pipe_fd[2])
 	return (0);
 }
 
-pid_t	create_fork(void)
+//added t_node as parameter to set shell err code in case of err
+pid_t	create_fork(t_node *node)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid < 0)
+	{
+		node->shell->exit_code = 1;
 		perror("fork failed");
+	}
 	return (pid);
 }
 
@@ -67,9 +71,13 @@ void	create_pipe(t_node *node)
 	prev_fd = -1;
 	while (temp)
 	{
+		//addded errcode line for exit status
 		if (create_pipe_fd(pipe_fd))
+		{
+			node->shell->exit_code = 1;
 			return ;
-		pid = create_fork();
+		}
+		pid = create_fork(node);
 		if (pid == 0)
 			manage_child_process(temp, pipe_fd, prev_fd, node);
 		else if (pid > 0)

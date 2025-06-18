@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:37:21 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/13 16:20:39 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:11:40 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	ft_cd(t_node *command)
 {
-	command->shell->errcode = 0;
 	if (command->args_count > 1)
 	{
 		ft_putstr_fd("cd: too many arguments", 2);
-		command->shell->errcode = 1;
+		command->shell->exit_code = 1;
 		return ;
 	}
 	if (command->args_count == 1)

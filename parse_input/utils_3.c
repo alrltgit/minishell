@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:13:57 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 16:04:24 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:47:08 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,5 @@ int	alloc_mem_for_args_arr(t_node *current_node)
 	}
 	return (0);
 }
+
+// char	*is_empty_quote(char **res)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/01 16:27:22 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/16 17:12:54 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	index_from_key(char *var_name, char **env_array)
 	i = -1;
 	while (env_array[++i])
 	{
-		// printf("env_array[i]: %s", env_array[i]);
+		//printf("var_name: %s\n", var_name);
+		// printf("var[0]: %s\n", var[0]);
 		var = ft_split(env_array[i], '=');
 		// printf("var[0]: %s - ", var[0]);
 		// printf("var_name: %s", var_name); // ends with \n, that's why ft_strcmp returns 10
@@ -50,8 +51,7 @@ char	*value_from_key(char *var_name, t_shell *shell)
 
 	index = index_from_key(var_name, shell->env);
 	if (index == -1)
-		return (" ");
-		// return (NULL);
+		return ("");
 	return (ft_strchr(shell->env[index], '=') + 1);
 }
 

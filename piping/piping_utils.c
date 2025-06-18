@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 16:48:10 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:49:39 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	execute_depending_on_type(t_node *temp, char **argv, t_node *node)
 	{
 		execve(temp->cmd, argv, node->shell->env);
 		free_arr(argv);
-		exit(EXIT_FAILURE);
+		exit(127); //127 is execve fail code
 	}
 }
 

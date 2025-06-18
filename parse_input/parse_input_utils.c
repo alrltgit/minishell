@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:42:26 by apple             #+#    #+#             */
-/*   Updated: 2025/06/18 16:50:57 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:35:34 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	check_for_empty_line(char *rl)
 {
 	if (rl_is_space(rl) == 1)
 	{
-		rl_on_new_line();
-		rl_redisplay();
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_redisplay();
 		return (1);
 	}
 	return (0);

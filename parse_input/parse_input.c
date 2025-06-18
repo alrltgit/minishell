@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/18 16:53:02 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:02:07 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 	i = 0;
 	while (result[j])
 	{
+		/* if (fake_perfect(*unit, result[j]))
+			return (1); */
 		if (check_for_pipe(&current_node, result, &i, &j) == 1)
 			return (1);
 		if (check_for_redir_heredoc(current_node, result, &j) == 1)
@@ -91,18 +93,34 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	}
 }
 
-void	read_the_input(char *rl, t_shell *shll)
+void read_the_input(char *rl, t_shell *shll)
 {
-	char	**result;
-	t_node	*unit;
-	t_node	*temp;
+    char	**result;
+    t_node 	*unit;
+    t_node 	*temp;
+	char	*check;
 
 	check_for_empty_line(rl);
 	result = split_args(rl);
 	unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
-	process_exp(result, unit);
+	
+	//add check for "" and ''
+	//print_node(unit);
+	check = process_exp(result, unit);
+	if (check != NULL)
+	{
+		if (ft_strcmp(check, "") == 0)
+		{
+			free_arr(result);
+			return;
+		}
+		printf("\e[0;31mminishell: %s: syntax error\n", check);
+		shll->exit_code = 127;
+		free_arr(result);
+		return ;
+	}
 	temp = unit;
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 		return ;

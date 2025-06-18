@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 16:42:29 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:56:17 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define B_IN 1
 # define NON_B_IN 2
 # define PROMPT "\033[1;34mminishell\033[38;5;208m$ \033[0m"
+# define EXPERR "\e[0;31mminishell: export: `%s': not a valid identifier\n"
 
 typedef struct s_node	t_node;
 
@@ -36,7 +37,8 @@ typedef struct s_shell
 {
 	char	**env;
 	t_node	*cmds;
-	int		errcode;
+	// int		errcode;
+	int		exit_code;
 }	t_shell;
 
 typedef struct s_redir_type
@@ -94,7 +96,9 @@ void	activate_ctrlc(int sig);
 void	deactivate_ctrlc(int sig);
 
 //exec.c
+void	execute_other(t_node *command);
 void	execute_builtin(t_node *command);
+char	**build_argv(t_node *node);
 
 //BUILTINS
 void	ft_pwd(t_node *command);
@@ -107,12 +111,10 @@ void	ft_unset(t_node *command);
 
 //expand
 // void	process_exp(t_node *command);
-void	process_exp(char **result, t_node *unit);
-char	*perfect(t_node *command, char **arr);
+char	*process_exp(char **result, t_node *unit);
+char	*perfect(t_node *command, char *arr);
+int		fake_perfect(char *arr);
 
-//builtins_utils.c
-// char	**process_rl_line(t_node *command, char *rl_buffer);
-void	process_str_exp(t_node *command, char **rl_buffer);
 
 //ALINA
 // parse_input.c
@@ -124,6 +126,9 @@ int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
 void	execute_other(t_node *command);
 void	execute_builtin(t_node *command);
 char	**build_argv(t_node *node);
+
+// handle_quotes.c
+char 	*handle_quotesv2(char *str);
 
 // parse_input_utils.c
 void	go_to_execute(t_node *unit);
@@ -138,6 +143,7 @@ void	free_arr(char **arr);
 void	free_exit(t_shell *shell);
 void	iterate_free_nodes(t_node *head);
 void	free_double_n(void **arr, int n);
+
 
 // split the linked list
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
@@ -164,6 +170,7 @@ void check_for_operator(char *token, char **result, int *count, int len);
 char	*extract_token(char *str, int *i, char **result, int *count);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
+void	skip_whitespace(const char *str, int *i);
 
 // find_cmd.c
 int		find_command_path(char *input, t_node *unit);

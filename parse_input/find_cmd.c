@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 16:32:11 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:29:56 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,25 @@
 
 void	set_error_status(char *input, t_node *unit)
 {
+	// printf("input %s\n", input);
 	if (ft_strchr(input, '/'))
 	{
 		if (access(input, F_OK) != 0)
-			ft_printf("minishell: %s: No such file or directory\n", input);
+			printf("\e[0;31mminishell: %s: No such file or directory\n", input);
 		else if (access(input, X_OK) != 0)
-			ft_printf("minishell: %s: Permission denied\n", input);
+			printf("\e[0;31mminishell: %s: Permission denied\n", input);
+		else if (!fake_perfect(input))
+			printf("minishell: syntax error\n");
 	}
 	else
-		ft_printf("minishell: %s: command not found\n", input);
+	{
+		if (ft_strcmp(input, " ") == 0)
+			printf("\e[0;31mminishell: '%s': command not found333\n", input);
+		else
+			printf("\e[0;31mminishell: %s: command not found333\n", input);
+	}
 	unit->cmd_status = 127;
+	unit->shell->exit_code = 127; //new exit code logic
 }
 
 int	check_builtin_command(char *input, t_node *unit)
@@ -47,6 +56,7 @@ void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 	free(temp_result);
 	free_arr(paths);
 	unit->cmd_status = 2;
+	//unit->shell->exit_code = 2;
 }
 
 int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)

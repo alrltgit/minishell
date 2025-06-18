@@ -6,9 +6,10 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 11:01:55 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/18 13:18:24 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:50:06 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "./includes/minishell.h"
 

@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/18 16:32:51 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:26:45 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,14 @@ void	handle_child_process(t_node *node, char **argv)
 	if (ft_strcmp(node->cmd, "/usr/local/sbin/") == 0)
 	{
 		printf(": command not found\n");
+		node->shell->exit_code = 127; //exit code added
 		exit(127);
 	}
 	if (execve(node->cmd, argv, node->shell->env) == -1)
+	{
+		node->shell->exit_code = 1; //exit code added
 		exit(EXIT_FAILURE);
+	}
 }
 
 void	single_command(t_node *node, char **argv)
@@ -44,6 +48,7 @@ void	single_command(t_node *node, char **argv)
 	else
 	{
 		perror("Fork failed.\n");
+		node->shell->exit_code = 1;
 		exit(1);
 	}
 }

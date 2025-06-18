@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:43:25 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/03 12:23:28 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:45:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,35 @@
 	return (res);
 } */
 
-void	process_str_exp(t_node *command, char **rl_buffer)
+/* void	process_str_exp(t_node *command, char **rl_buffer)
 {
 	char	*temp;
 	// int		len;
 
 	// len = -1;
 	temp = NULL;
-	temp = ft_strdup(handle_quotes(perfect(command, rl_buffer)));
+	temp = ft_strdup(handle_quotes(perfect(command, *rl_buffer)));
+	printf("PROCESSED TEMP RL-> %s\n", temp);
 	free(*rl_buffer);
 	*rl_buffer = ft_strdup(temp);
 	free(temp);
-}
+	temp = NULL;
+} */
+
+/* void	process_str_exp(t_node *command, char **rl_buffer)
+{
+	char	*processed;
+	char	*quoted;
+
+	quoted = handle_quotes(perfect(command, rl_buffer));
+	if (!quoted)
+		return;
+	printf("Before strdup: [%s] (len = %zu)\n", quoted, strlen(quoted));
+	
+	processed = ft_strdup(quoted);
+	if (!processed)
+		return;
+
+	free(*rl_buffer);
+	*rl_buffer = processed;
+} */

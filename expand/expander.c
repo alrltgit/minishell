@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/15 17:25:29 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/16 17:12:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ extract the expansion
 int	is_alphanumeric(char a)
 {
 	if ((a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z')
-		|| (a >= '0' && a <= '9') || a == '_')
+		|| (a >= '0' && a <= '9') || a == '_' || a == '?')
 		return (1);
 	return (0);
 }
@@ -115,49 +115,84 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	j = -1;
 	if (quote == 1)
 		tmp = ft_substr(var, pos + 1, len - 1);
+	else if (var[pos] == '?')
+		tmp = ft_itoa(shell->exit_code); //exit code added
 	else
+	{
 		tmp = value_from_key(ft_substr(var, pos, len), shell);
+		if (ft_strcmp(tmp, "") == 0)
+			tmp = " ";
+	}
 	while (tmp && tmp[++j])
 		str = update_str(str, tmp[j]);
 	return (str);
 }
 
-char	*perfect(t_node *command, char **arr)
+char	*perfect(t_node *command, char *arr)
 {
-	int	in_sq;
-	int	in_dq;
-	int	i;
-	int	j;
-	int	len;
-	char	*arr2 = *arr;
+	int		in_sq;
+	int		in_dq;
+	int		i;
+	int		j;
+	int		len;
 	char	*str;
+
 	in_sq = 0;
 	in_dq = 0;
-	i = -1;
+	i = 0;
 	str = NULL;
 
-	while (arr2[++i])
+	while (arr[i])
 	{
-		if (arr2[i] == '\'' && in_dq == 0)
+		if (arr[i] == '\'' && in_dq == 0)
+		{
 			in_sq = 1 - in_sq;
-		if (arr2[i] == '"' && in_sq == 0)
-			in_dq = 2 - in_dq;
-		if (arr2[i] == '$' && in_sq == 0 && arr2[i + 1] != ' ' && arr2[i + 1] != '\0')
+		}
+		if (arr[i] == '"' && in_sq == 0)
+		{
+			in_dq = 2 - in_dq;	
+		}
+		if (arr[i] == '$' && in_sq == 0 && arr[i + 1] != ' ' && arr[i + 1] != '\0')
 		{
 			j = i;
 			len = 0;
-			while (is_alphanumeric(arr2[++j]))
+			if (arr[i + 1] == '?')
+			{
+				str = replace_var(command->shell, str, arr, i + 1, 1, in_sq + in_dq);
+				i += 2;
+				continue;
+			}
+			while (is_alphanumeric(arr[++j]))
 				++len;
-			str = replace_var(command->shell, str, arr2, i + 1, len, in_sq + in_dq);
+			//print_node(command);
+			str = replace_var(command->shell, str, arr, i + 1, len, in_sq + in_dq);
 			i += len;
 		}
 		else
-			str = update_str(str, arr2[i]);
+			str = update_str(str, arr[i]);
+		i++;
 	}
 	return (str);
 }
 
+int	fake_perfect(char *arr)
+{
+	int	i = 0;
+	int	in_sq = 0;
+	int	in_dq = 0;
 
+	while (arr[i])
+	{
+		if (arr[i] == '\'' && in_dq == 0)
+			in_sq = !in_sq;
+		else if (arr[i] == '"' && in_sq == 0)
+			in_dq = !in_dq;
+		i++;
+	}
+	if (in_sq || in_dq)
+		return (0); // Unclosed quote
+	return (1); // All quotes closed
+}
 /*
 	when input is given it will go
 	quote handling, expansion, execution
@@ -165,21 +200,43 @@ char	*perfect(t_node *command, char **arr)
 	EXPORT AND ECHO NEEDS IMPROVEMENTS
 */
 
-void	process_exp(char **result, t_node *unit)
+/* if the str has syntax error it returns the str.
+if everything is okay, it returns null*/
+char	*process_exp(char **result, t_node *unit)
 {
 	int		i;
 	char	*temp;
-	//printf("ENTERED PROCESS_EXP with \n");
-	i = 0;
-	while (result[i])
+	char	*temp2;
+
+	if (result[0])
 	{
-		if (result[i][0] == '$')
-		{
-			temp = ft_strdup(result[i]);
-			free(result[i]);
-			result[i] = ft_strdup(handle_quotes(perfect(unit, &temp)));
-			free(temp);	
-		}
-		i++;
+		if (!fake_perfect(result[0]))
+			return (result[0]);
+		temp = perfect(unit, result[0]);
+		if (ft_strcmp(temp, " ") == 0)
+			return ("");
+		else
+			result[0] = ft_strdup(handle_quotesv2(perfect(unit, temp)));
 	}
+	i = 0;
+	while (result[++i])
+	{
+		//printf("before exp -> %s\n", result[i]);
+		if (!fake_perfect(result[i]))
+			return (result[i]);
+		temp = ft_strdup(result[i]);
+		temp2 = perfect(unit, temp);
+		if (ft_strcmp(temp2, "") == 0)
+		{
+			result[i] = ft_strdup("");
+			++i;
+			free(temp2);
+			free(temp);
+			continue;
+		}
+		result[i] = ft_strdup(handle_quotesv2(temp2));
+		//printf("after exp -> %s\n", result[i]);
+		free(temp);
+	}
+	return (NULL);
 }
