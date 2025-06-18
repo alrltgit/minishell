@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/14 14:27:15 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:16:59 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	create_pipe(t_node *node)
 		//addded errcode line for exit status
 		if (create_pipe_fd(pipe_fd))
 		{
-			node->shell->exit_code = 1;
+			node->shell->exit_code = 147;
 			return ;
 		}
 		pid = create_fork(node);

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:19:19 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/16 17:08:48 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:19:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@ int	change_env_value(char *var_name, char *new_value, t_shell *shell)
 		return (-1);
 	index = index_from_key(var_name, shell->env);
 	temp = ft_strjoin(var_name, "=");
-	free(shell->env[index]);
-	shell->env[index] = ft_strjoin(temp, new_value);
+	if (index != -1)
+	{
+		free(shell->env[index]);
+		shell->env[index] = ft_strjoin(temp, new_value);
+	}
 	free(temp);
 	return (1);
 }

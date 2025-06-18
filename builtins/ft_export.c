@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/16 17:17:51 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:42:46 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ char	**check_invalid_identifier(char *str, t_node *node)
 	int		b_len;
 	int		key_w_skip;
 
+	/* if (!str)
+		return (NULL); */
 	key_w_skip = 0;
 	after = ft_strchr(str, '=');
 	b_len = ft_strlen(str) - ft_strlen(after);
@@ -148,14 +150,21 @@ void	ft_export(t_node *command)
 {
 	char	**split;
 	int		index;
+	int		count;
 	
 	// process_str_exp(command, &command->fcmd);
 	// printf("Processed fcmd-> %s\n", command->fcmd);
-	if (!ft_strchr(command->fcmd, '='))
-		return ;
+	/* if (!ft_strchr(command->fcmd, '='))
+		return ; */
 	split = check_invalid_identifier(command->fcmd, command);
 	if (!split)
+	{
+		index = -1;
+		count = count_vars(command->shell->env);
+		while (++index < count)
+			printf("declare -x %s\n", command->shell->env[index]);
 		return ;
+	}
 	index = index_from_key(split[0], command->shell->env);
 	// printf("index is -> %d\n", index);
 	if (index == -1)
