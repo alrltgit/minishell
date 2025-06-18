@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/17 20:52:12 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 16:07:39 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,7 @@ void	create_pipe(t_node *node)
 			temp = temp->next;
 		}
 		else
-		{
-			perror("fork failed");
 			return ;
-		}
 	}
 	while (wait(NULL) > 0)
 		;

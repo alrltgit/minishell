@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/17 19:14:01 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 16:42:29 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include "../libft/libft.h"
 
 # define PS1 "> "
@@ -44,6 +45,7 @@ typedef struct s_redir_type
 	int stdout_redir;
 	int append_redir;
 	int heredoc_redir;
+	int has_out_redir;
 }	t_redir_type;
 
 typedef struct s_redir
@@ -92,10 +94,7 @@ void	activate_ctrlc(int sig);
 void	deactivate_ctrlc(int sig);
 
 //exec.c
-void	execute_other(t_node *command);
 void	execute_builtin(t_node *command);
-char	**build_argv(t_node *node);
-void	handle_redir_heredoc_append(t_redir *redir);
 
 //BUILTINS
 void	ft_pwd(t_node *command);
@@ -121,6 +120,11 @@ char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
 int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
 
+//exec.c
+void	execute_other(t_node *command);
+void	execute_builtin(t_node *command);
+char	**build_argv(t_node *node);
+
 // parse_input_utils.c
 void	go_to_execute(t_node *unit);
 int		check_for_empty_line(char *rl);
@@ -145,8 +149,10 @@ int		handle_heredoc_redirection(t_redir *redir);
 int		handle_append_redirection(t_redir *redir);
 int		is_builtin(char *cmd);
 
+// exec_utils_1.c
+int		handle_redir_heredoc_append(t_redir *redir);
+
 // fill_unit_linked_list.c
-// void	add_new_file(t_redir **head, char *file_name);
 t_redir *add_new_file(t_redir **head, char *file_name);
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
@@ -155,7 +161,7 @@ t_node	*create_unit(void);
 void check_for_operator(char *token, char **result, int *count, int len);
 
 // split_readline.c
-char	*extract_token(const char *str, int *i, char **result, int *count);
+char	*extract_token(char *str, int *i, char **result, int *count);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
 
@@ -196,6 +202,14 @@ int		handle_pipe_and_move(t_node **current_node, char **result, int *i, int *j);
 
 // utils_4.c
 int		check_for_executable(t_node *unit, char *input);
+void	split_token_on_operator(char *token, char **result, int *count);
+void	extra_token_check(char *token, char **result, int *count, int len);
+
+//utils_5.c
+char	*extract_token_helper(char *token, int *count, char **result, int *i);
+void	init_vars_in_func(int *single_q, int *double_q);
+char	*subtract_token(char *token, char *str, int start, int len);
+int		check_executable_errors(t_node *unit, char *input, struct stat *sb);
 
 // piping.c
 void	create_pipe(t_node *node);

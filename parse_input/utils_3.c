@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:13:57 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/15 18:02:16 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 16:04:24 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	condition_is_met(t_node *current_node, char **result, int j_temp)
 int	rl_is_space(char *rl)
 {
 	if (!rl)
-        return (1);
-    while (*rl)
-    {
-        if (*rl != ' ' && *rl != '\t')
-            return (0);
-        rl++;
-    }
-    return (1);
+		return (1);
+	while (*rl)
+	{
+		if (*rl != ' ' && *rl != '\t')
+			return (0);
+		rl++;
+	}
+	return (1);
 }
 
 int	alloc_mem_for_args_arr(t_node *current_node)

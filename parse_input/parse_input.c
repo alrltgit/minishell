@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/17 21:09:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 16:53:02 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 		if (check_for_redir_heredoc(current_node, result, &j) == 1)
 			return (1);
 		check_for_cmd_flags(current_node, result[j], &i);
-		// if (check_for_cmd_flags(current_node, result[j], &i) == 1 && current_node->is_pipe != 1)
-		// 	return (1);
 		j++;
 	}
 	return (0);
@@ -99,8 +97,7 @@ void	read_the_input(char *rl, t_shell *shll)
 	t_node	*unit;
 	t_node	*temp;
 
-	if (check_for_empty_line(rl))
-		return ;
+	check_for_empty_line(rl);
 	result = split_args(rl);
 	unit = create_unit();
 	unit->shell = shll;
@@ -110,32 +107,6 @@ void	read_the_input(char *rl, t_shell *shll)
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 		return ;
 	add_args_to_linked_list(result, &temp);
-	temp = unit;
-    int i;
-    t_redir *r;
-    while (temp)
-    {
-        printf("temp->cmd: %s\n", temp->cmd);
-        i = 0;
-        while (i < temp->flags_count)
-        {
-            printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-            i++;
-        }
-        i = 0;
-        while (i < temp->args_count)
-        {
-            printf("temp->args[%d]: %s\n", i, temp->args[i]);
-            i++;
-        }
-        r = temp->redir_files;
-        while (r)
-        {
-            printf("temp->redir_files->file_name: %s\n", r->file_name);
-            r = r->next;
-        }
-        temp = temp->next;
-    }
 	go_to_execute(unit);
 	free_arr(result);
 }

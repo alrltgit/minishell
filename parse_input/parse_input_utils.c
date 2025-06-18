@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:42:26 by apple             #+#    #+#             */
-/*   Updated: 2025/06/15 18:03:45 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 16:50:57 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	check_for_empty_line(char *rl)
 {
-	if (ft_strcmp(rl, "") == 0 || rl_is_space(rl) == 1)
+	if (rl_is_space(rl) == 1)
 	{
-		// rl_on_new_line();
+		rl_on_new_line();
 		rl_redisplay();
 		return (1);
 	}

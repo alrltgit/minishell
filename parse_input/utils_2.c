@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/17 21:04:40 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 16:01:21 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	go_to_execute(t_node *unit)
 		if (unit->cmd_type == B_IN)
 			execute_builtin(unit);
 		else
-		// else if (unit->cmd_type == NON_B_IN)
 			execute_other(unit);
 	}
 }

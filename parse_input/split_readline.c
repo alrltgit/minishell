@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_readline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/15 18:23:35 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 16:01:05 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*extract_token_v2(const char *str)
 	return (token);
 }
 
-char	*extract_token(const char *str, int *i, char **result, int *count)
+char	*extract_token(char *str, int *i, char **result, int *count)
 {
 	int		start;
 	int		single_q;
@@ -60,32 +60,23 @@ char	*extract_token(const char *str, int *i, char **result, int *count)
 	char	*token;
 
 	start = *i;
-	single_q = 0;
-	double_q = 0;
+	token = NULL;
+	init_vars_in_func(&single_q, &double_q);
 	while (str[*i])
 	{
 		handle_quotes_in_extract_token(str, i, &single_q, &double_q);
 		if (str[*i] == '|' && !single_q && !double_q)
-        {
-            if (*i == start)
-            {
-                (*i)++;
-                token = ft_strdup("|");
-                if (!token)
-                    return (NULL);
-                result[(*count)++] = token;
-                return (token);
-            }
-            break;
-        }
+		{
+			if (*i == start)
+				return (extract_token_helper(token, count, result, i));
+			break ;
+		}
 		if ((str[*i] == ' ' || str[*i] == '\t') && !single_q && !double_q)
 			break ;
 		(*i)++;
 	}
-	token = ft_substr(str, start, *i - start);
-	if (!token)
-		return (NULL);
-	check_for_operator(token, result, count, *i - start);
+	token = subtract_token(token, str, start, *i - start);
+	extra_token_check(token, result, count, *i - start);
 	return (token);
 }
 

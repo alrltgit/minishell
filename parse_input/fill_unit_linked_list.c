@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/15 16:40:58 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 14:17:11 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_t_redir_type(t_redir *new_node)
 	new_node->type->stdout_redir = 0;
 	new_node->type->append_redir = 0;
 	new_node->type->heredoc_redir = 0;
+	new_node->type->has_out_redir = 0;
 }
 
 void	add_node(t_redir **head, t_redir *new_node)

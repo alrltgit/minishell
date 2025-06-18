@@ -3,60 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/17 21:28:49 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 16:32:51 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	handle_redir_heredoc_append(t_redir *redir)
-{
-	if (redir->type->stdin_redir == 1)
-	{
-		if (handle_stdin_redirection(redir) == 1)
-			return ;
-	}
-	else if (redir->type->stdout_redir == 1)
-	{
-		if (handle_stdout_redirection(redir) == 1)
-			return ;
-	}
-	else if (redir->type->heredoc_redir == 1)
-	{
-		printf("IN_1\n");
-		if (handle_heredoc_redirection(redir) == 1)
-			return ;
-	}
-	else if (redir->type->append_redir == 1)
-	{
-		if (handle_append_redirection(redir) == 1)
-			return ;
-	}
-}
 
 void	handle_child_process(t_node *node, char **argv)
 {
 	t_redir	*redir;
 
 	redir = node->redir_files;
-	while (redir)
+	if (handle_redir_heredoc_append(redir) == -1)
+		return ;
+	if (ft_strcmp(node->cmd, "/usr/local/sbin/") == 0)
 	{
-		handle_redir_heredoc_append(redir);
-		redir = redir->next;
-	}
-	if (node->cmd == NULL)
-	{
-		printf("%s: command not found", argv[0]);
+		printf(": command not found\n");
 		exit(127);
 	}
 	if (execve(node->cmd, argv, node->shell->env) == -1)
-	{
-		perror("execve failed\n");
 		exit(EXIT_FAILURE);
-	}
 }
 
 void	single_command(t_node *node, char **argv)
@@ -87,7 +56,6 @@ void	execute_other(t_node *node)
 	{
 		argv = build_argv(node);
 		single_command(node, argv);
-		// free_arr(argv);
 	}
 }
 
