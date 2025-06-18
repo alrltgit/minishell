@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 17:56:17 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:19:43 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ t_node	*create_unit(void);
 void check_for_operator(char *token, char **result, int *count, int len);
 
 // split_readline.c
-char	*extract_token(char *str, int *i, char **result, int *count);
+char	*extract_token(const char *str, int *i);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
 void	skip_whitespace(const char *str, int *i);

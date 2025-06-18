@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/16 17:12:27 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/18 19:15:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ char	*perfect(t_node *command, char *arr)
 	i = 0;
 	str = NULL;
 
+	printf("arr-> %s\n", arr);
 	while (arr[i])
 	{
 		if (arr[i] == '\'' && in_dq == 0)

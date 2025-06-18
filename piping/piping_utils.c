@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 17:49:39 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:04:53 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int	check_for_pipe(t_node **current_node, char **result, int *i, int *j)
 void	handle_child(t_node *temp, int *pipe_fd, int prev_fd)
 {
 	t_redir	*redir;
-	t_redir	*r;
+	// t_redir	*r;
 	int		has_out_redir;
 
 	redir = temp->redir_files;
-	r = redir;
+	// r = redir;
 	has_out_redir = handle_redir_heredoc_append(redir);
 	if (has_out_redir == -1)
 		exit (1);

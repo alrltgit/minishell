@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/18 17:26:45 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:04:12 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,20 @@ void	handle_child_process(t_node *node, char **argv)
 	t_redir	*redir;
 
 	redir = node->redir_files;
-	if (handle_redir_heredoc_append(redir) == -1)
-		return ;
-	if (ft_strcmp(node->cmd, "/usr/local/sbin/") == 0)
+	while (redir)
 	{
-		printf(": command not found\n");
+		handle_redir_heredoc_append(redir);
+		redir = redir->next;
+	}
+	if (node->cmd == NULL)
+	{
+		printf("\e[0;31m%s: command not found222", argv[0]);
 		node->shell->exit_code = 127; //exit code added
 		exit(127);
 	}
 	if (execve(node->cmd, argv, node->shell->env) == -1)
 	{
+		perror("execve failed\n");
 		node->shell->exit_code = 1; //exit code added
 		exit(EXIT_FAILURE);
 	}
