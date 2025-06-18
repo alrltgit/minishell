@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/16 14:33:10 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/18 12:14:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void check_for_operator(char *token, char **result, int *count, int len);
 char	*extract_token(const char *str, int *i);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
+void	skip_whitespace(const char *str, int *i);
 
 // find_cmd.c
 int		find_command_path(char *input, t_node *unit);

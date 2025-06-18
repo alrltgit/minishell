@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_read_line.c                                  :+:      :+:    :+:   */
+/*   split_readline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/16 11:47:03 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/18 12:13:42 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	skip_whitespace(const char *str, int *i)
+void	skip_whitespace(const char *str, int *i)
 {
 	while (str[*i] == ' ')
 		(*i)++;
