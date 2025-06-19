@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 19:19:13 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 15:25:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*extract_token_v2(const char *str)
 	return (token);
 }
 
-/* char	*extract_token(char *str, int *i, char **result, int *count)
+char	*extract_token(char *str, int *i, char **result, int *count)
 {
 	int		start;
 	int		single_q;
@@ -78,8 +78,8 @@ char	*extract_token_v2(const char *str)
 	token = subtract_token(token, str, start, *i - start);
 	extra_token_check(token, result, count, *i - start);
 	return (token);
-} */
-char	*extract_token(const char *str, int *i)
+}
+/* char	*extract_token(const char *str, int *i)
 {
 	int		start;
 	int		single_q;
@@ -111,9 +111,9 @@ char	*extract_token(const char *str, int *i)
 	//trim_outer(token);
 	// trim_quotes_if_needed(token, len);
 	return (token);
-}
+} */
 
-char	**split_args(char *str)
+/* char	**split_args(char *str)
 {
 	char	**result;
 	char	*token;
@@ -137,8 +137,8 @@ char	**split_args(char *str)
 	}
 	result[count] = NULL;
 	return (result);
-}
-/* char	**split_args(char *str)
+} */
+char	**split_args(char *str)
 {
 	char	**result;
 	char	*token;
@@ -161,5 +161,5 @@ char	**split_args(char *str)
 	}
 	result[count] = NULL;
 	return (result);
-} */
+}
 

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/18 19:05:52 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 15:42:36 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 			return (1);
 		if (check_for_redir_heredoc(current_node, result, &j) == 1)
 			return (1);
-		check_for_cmd_flags(current_node, result[j], &i);
+		if (check_for_cmd_flags(current_node, result[j], &i) == 1)
+			return (1);
 		j++;
 	}
 	return (0);
@@ -145,6 +146,7 @@ void read_the_input(char *rl, t_shell *shll)
 	//add check for "" and ''
 	//print_node(unit);
 	check = process_exp(result, unit);
+	printf("check-> %s\n", check);
 	if (check != NULL)
 	{
 		if (ft_strcmp(check, "") == 0)
@@ -161,6 +163,7 @@ void read_the_input(char *rl, t_shell *shll)
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 		return ;
 	add_args_to_linked_list(result, &temp);
+	print_node(unit);
 	go_to_execute(unit);
 	free_arr(result);
 }

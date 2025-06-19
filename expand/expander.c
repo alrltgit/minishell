@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/18 19:15:14 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 15:48:28 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,11 @@ char	*perfect(t_node *command, char *arr)
 	i = 0;
 	str = NULL;
 
-	printf("arr-> %s\n", arr);
+	if (!arr)
+	{
+		arr = update_str(arr, ' ');
+		return (arr);
+	}
 	while (arr[i])
 	{
 		if (arr[i] == '\'' && in_dq == 0)
@@ -219,6 +223,7 @@ char	*process_exp(char **result, t_node *unit)
 		else
 			result[0] = ft_strdup(handle_quotesv2(perfect(unit, temp)));
 	}
+	printf("result[0] = %s\n", result[0]);
 	i = 0;
 	while (result[++i])
 	{
