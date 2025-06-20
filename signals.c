@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 11:01:55 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/19 22:52:08 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 12:25:34 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@
 void	activate_ctrlc(int sig)
 {
 	(void)sig;
-	printf("\n");
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 
 void	deactivate_ctrlc(int sig)
 {
 	(void)sig;
-	printf("\n");
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
 }

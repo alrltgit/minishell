@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/19 23:14:20 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 12:30:07 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ void	handle_child_process(t_node *node, char **argv)
 		handle_redir_heredoc_append(redir);
 		redir = redir->next;
 	}
+	if (node->cmd == NULL)
+    {
+        printf("\e[0;31m%s: command not found222", argv[0]);
+        node->shell->exit_code = 127; //exit code added
+        exit(127);
+    }
 	if (ft_strcmp(node->cmd, "/usr/local/sbin/") == 0)
 	{
 		printf("\e[0;31m: command not found222");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/19 23:35:13 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 12:29:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ void read_the_input(char *rl, t_shell *shll)
 			free_arr(result);
 			return ;
 		}
-		printf("\e[0;31mminishell: %s: syntax error\n", check);
 		shll->exit_code = 127;
 		free_arr(result);
 		return ;
