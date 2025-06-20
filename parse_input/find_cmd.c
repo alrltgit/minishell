@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 17:29:56 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:22:45 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_error_status(char *input, t_node *unit)
 	else
 	{
 		if (ft_strcmp(input, " ") == 0)
-			printf("\e[0;31mminishell: '%s': command not found333\n", input);
+			printf("\e[0;31mminishell: : command not found333\n");
 		else
 			printf("\e[0;31mminishell: %s: command not found333\n", input);
 	}

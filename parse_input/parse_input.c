@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/19 15:42:36 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 23:35:13 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,17 +142,16 @@ void read_the_input(char *rl, t_shell *shll)
 	unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
-	
-	//add check for "" and ''
-	//print_node(unit);
+	unit->shell->exit_code = 0;
 	check = process_exp(result, unit);
 	printf("check-> %s\n", check);
 	if (check != NULL)
 	{
 		if (ft_strcmp(check, "") == 0)
 		{
+			printf("\e[0;31mminishell: : command not found222\n");
 			free_arr(result);
-			return;
+			return ;
 		}
 		printf("\e[0;31mminishell: %s: syntax error\n", check);
 		shll->exit_code = 127;

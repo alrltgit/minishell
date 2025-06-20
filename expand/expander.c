@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/19 15:48:28 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 23:34:47 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ char	*process_exp(char **result, t_node *unit)
 	char	*temp;
 	char	*temp2;
 
+	printf("result[0] = %s\n", result[0]);
 	if (result[0])
 	{
 		if (!fake_perfect(result[0]))

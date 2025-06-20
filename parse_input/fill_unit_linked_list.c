@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/18 17:27:11 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:05:57 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ t_node	*create_unit(void)
 	node->fcmd = NULL;
 	node->args = NULL;
 	node->next = NULL;
-	node->shell = NULL;
+	node->shell = malloc(sizeof(t_shell));
+	node->shell->exit_code = 0;
 	node->redir_files = NULL;
 	node->cmd_status = 0;
 	node->cmd_type = 0;

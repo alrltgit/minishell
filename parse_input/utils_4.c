@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:13:08 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 16:56:18 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:52:26 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	extra_token_check(char *token, char **result, int *count, int len)
 {
-	if (strchr(token, '<') || strchr(token, '>'))
+	if (ft_strchr(token, '<') || ft_strchr(token, '>'))
 		split_token_on_operator(token, result, count);
 	else
 		check_for_operator(token, result, count, len);

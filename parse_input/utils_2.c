@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 17:45:58 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:58:26 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	handle_quotes_in_extract_token(const char *str, int *i,
 		*single_q = !(*single_q);
 	else if (str[*i] == '"' && !(*single_q))
 		*double_q = !(*double_q);
+	
 }
 
 void	go_to_execute(t_node *unit)

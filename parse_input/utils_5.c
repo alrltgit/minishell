@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:51:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 16:58:11 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:52:38 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,13 @@ char	*subtract_token(char *token, char *str, int start, int len)
 	token = ft_substr(str, start, len);
 	if (!token)
 		return (NULL);
+	// printf("token[0]: %c\n", token[0]);
+	// printf("token[len]: %c\n", token[len - 1]);
+	// if ((token[0] == '\'' && token[1] == '\'')
+	// 	&& token[len - 1] == '\'' && token[len - 2] == '\'')
+	// {
+	// 	token[len - 2] = '\0';
+	// 	ft_memmove(token, token + 2, len - 2);
+	// }
 	return (token);
 }
