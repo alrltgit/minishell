@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_readline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/20 00:02:18 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 12:54:56 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ char	*extract_token(char *str, int *i, char **result, int *count)
 	// printf("token: %s\n", token);
 	token = subtract_token(token, str, start, *i - start);
 	printf("token: %s\n", token);
-	trim_quotes_if_needed(token, *i - start);
+	//trim_quotes_if_needed(token, *i - start);
 	printf("token_1: %s\n", token);
 	extra_token_check(token, result, count, *i - start);
+	
 	return (token);
 }
 
@@ -144,6 +145,7 @@ char	**split_args(char *str)
 			break ;
 		printf("IN_0\n");
 		token = extract_token(str, &i, result, &count);
+		printf("token -> %s\n", token);
 		if (!token)
 			return (NULL);
 	}

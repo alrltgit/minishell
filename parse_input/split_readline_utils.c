@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_readline_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 20:10:09 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 20:45:52 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 12:56:11 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	handle_output_operator(char *token, char **result, int *count)
 
 void	check_for_operator(char *token, char **result, int *count, int len)
 {
+	(void)len;
 	if (ft_strncmp(token, "<<", 2) == 0 || ft_strcmp(token, "<<") == 0)
 		handle_heredoc_operator(token, result, count);
 	else if (ft_strncmp(token, "<", 1) == 0 || ft_strcmp(token, "<") == 0)
@@ -108,7 +109,7 @@ void	check_for_operator(char *token, char **result, int *count, int len)
 		handle_output_operator(token, result, count);
 	else
 	{
-		trim_quotes_if_needed(token, len);
+		//trim_quotes_if_needed(token, len);
 		result[(*count)++] = token;
 	}
 }

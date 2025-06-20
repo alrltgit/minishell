@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/19 23:34:47 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 13:25:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	{
 		tmp = value_from_key(ft_substr(var, pos, len), shell);
 		if (ft_strcmp(tmp, "") == 0)
-			tmp = " ";
+			return(NULL);
 	}
 	while (tmp && tmp[++j])
 		str = update_str(str, tmp[j]);
@@ -219,8 +219,8 @@ char	*process_exp(char **result, t_node *unit)
 		if (!fake_perfect(result[0]))
 			return (result[0]);
 		temp = perfect(unit, result[0]);
-		if (ft_strcmp(temp, " ") == 0)
-			return ("");
+		if (ft_strcmp(temp, NULL) == 0)
+			return (" ");
 		else
 			result[0] = ft_strdup(handle_quotesv2(perfect(unit, temp)));
 	}
@@ -228,7 +228,7 @@ char	*process_exp(char **result, t_node *unit)
 	i = 0;
 	while (result[++i])
 	{
-		//printf("before exp -> %s\n", result[i]);
+		printf("before exp -> %s\n", result[i]);
 		if (!fake_perfect(result[i]))
 			return (result[i]);
 		temp = ft_strdup(result[i]);
@@ -242,7 +242,7 @@ char	*process_exp(char **result, t_node *unit)
 			continue;
 		}
 		result[i] = ft_strdup(handle_quotesv2(temp2));
-		//printf("after exp -> %s\n", result[i]);
+		printf("after exp -> %s\n", result[i]);
 		free(temp);
 	}
 	return (NULL);
