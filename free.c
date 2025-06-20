@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/22 17:22:45 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:00:56 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	free_arr(char **arr)
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	
+	while (arr && arr[i])
 	{
+		printf("arr debug %d -> %s\n", i, arr[i]);
 		free(arr[i]);
 		i++;
 	}

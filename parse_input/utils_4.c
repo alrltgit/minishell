@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:13:08 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/20 12:55:21 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:20:21 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ int	check_for_executable(t_node *unit, char *input)
 		if (err)
 			return (err);
 		unit->cmd = ft_strdup(input);
-		unit->cmd_status = 2;
-		return (unit->cmd_status);
+		unit->shell->exit_code = 2;
+		// unit->cmd_status = 2;
+		// return (unit->cmd_status);
+		return (unit->shell->exit_code);
 	}
 	return (0);
 }

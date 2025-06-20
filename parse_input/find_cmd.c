@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/19 23:22:45 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 17:03:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_error_status(char *input, t_node *unit)
 		else
 			printf("\e[0;31mminishell: %s: command not found333\n", input);
 	}
-	unit->cmd_status = 127;
+	// unit->cmd_status = 127;
 	unit->shell->exit_code = 127; //new exit code logic
 }
 
@@ -41,7 +41,8 @@ int	check_builtin_command(char *input, t_node *unit)
 	{
 		unit->cmd_is_found = 1;
 		unit->cmd = input;
-		unit->cmd_status = 1;
+		// unit->cmd_status = 1;
+		unit->shell->exit_code = 1;
 		unit->fcmd = ft_strjoin_free(unit->fcmd, input);
 		return (1);
 	}
@@ -55,8 +56,8 @@ void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 	unit->cmd_is_found = 1;
 	free(temp_result);
 	free_arr(paths);
-	unit->cmd_status = 2;
-	//unit->shell->exit_code = 2;
+	//unit->cmd_status = 2;
+	unit->shell->exit_code = 0; //FIX THIS FAULT
 }
 
 int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)
@@ -71,7 +72,8 @@ int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)
 		if (access(temp_result, X_OK) == 0)
 		{
 			handle_command_init(unit, temp_result, paths);
-			return (unit->cmd_status);
+			return (unit->shell->exit_code);
+			// return (unit->cmd_status);
 		}
 		free(temp_result);
 		i++;
@@ -85,14 +87,17 @@ int	find_command_path(char *input, t_node *unit)
 
 	if (ft_strcmp(input, "<") == 0 || is_file_name(unit, input) == 1)
 	{
-		unit->cmd_status = 0;
+		unit->shell->exit_code = 0;
 		unit->cmd = NULL;
-		return (unit->cmd_status);
+		// return (unit->cmd_status);
+		return (unit->shell->exit_code);
 	}
 	if (check_builtin_command(input, unit))
-		return (unit->cmd_status);
+		return (unit->shell->exit_code);
+		// return (unit->cmd_status);
 	if (check_for_executable(unit, input) != 0)
-		return (unit->cmd_status);
+		return (unit->shell->exit_code);
+		// return (unit->cmd_status);
 	paths = get_path();
 	if (!paths)
 	{
@@ -100,8 +105,10 @@ int	find_command_path(char *input, t_node *unit)
 		return (0);
 	}
 	if (resolve_cmd_in_paths(paths, input, unit))
-		return (unit->cmd_status);
-	free_arr(paths);
+		return (unit->shell->exit_code);
+		// return (unit->cmd_status);
 	set_error_status(input, unit);
-	return (unit->cmd_status);
+	free_arr(paths);
+	return (unit->shell->exit_code);
+	// return (unit->cmd_status);
 }

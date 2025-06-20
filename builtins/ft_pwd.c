@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:30:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/18 19:12:29 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:52:09 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@ void	ft_pwd(t_node *cmd)
 		ft_putstr_fd("\e[0;31mminishell: pwd: unable to retrieve\n", 2);
 	}
 	else
+	{
+		cmd->shell->exit_code = 0;
 		printf("%s\n", pwd);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/20 13:21:05 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:49:46 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,42 +94,6 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	}
 }
 
-/* void read_the_input(char *rl, t_shell *shll)
-{
-    char	**result;
-    t_node 	*unit;
-    t_node 	*temp;
-	char	*check;
-
-	check_for_empty_line(rl);
-	result = split_args(rl);
-	unit = create_unit();
-	unit->shell = shll;
-	shll->cmds = unit;
-	
-	//add check for "" and ''
-	//print_node(unit);
-	check = process_exp(result, unit);
-	if (check != NULL)
-	{
-		if (ft_strcmp(check, "") == 0)
-		{
-			free_arr(result);
-			return;
-		}
-		printf("\e[0;31mminishell: %s: syntax error\n", check);
-		shll->exit_code = 127;
-		free_arr(result);
-		return ;
-	}
-	temp = unit;
-	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-		return ;
-	add_args_to_linked_list(result, &temp);
-	go_to_execute(unit);
-	free_arr(result);
-} */
-
 void read_the_input(char *rl, t_shell *shll)
 {
     char	**result;
@@ -142,7 +106,7 @@ void read_the_input(char *rl, t_shell *shll)
 	unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
-	unit->shell->exit_code = 0;
+	//unit->shell->exit_code = 0;
 	check = process_exp(result, unit);
 	printf("check-> %s\n", check);
 	if (check != NULL)

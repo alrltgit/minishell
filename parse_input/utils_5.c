@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:51:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/20 09:52:38 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 16:21:36 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,26 @@ int	check_executable_errors(t_node *unit, char *input, struct stat *sb)
 	if (stat(input, sb) == 0 && S_ISDIR(sb->st_mode))
 	{
 		ft_printf("minishell: %s: Is a directory\n", input);
-		unit->cmd_status = 126;
-		return (unit->cmd_status);
+		// unit->cmd_status = 126;
+		unit->shell->exit_code = 126;
+		// return (unit->cmd_status);
+		return (unit->shell->exit_code);
 	}
 	if (access(input, F_OK) != 0)
 	{
 		ft_printf("minishell: %s: No such file or directory\n", input);
-		unit->cmd_status = 127;
-		return (unit->cmd_status);
+		// unit->cmd_status = 127;
+		unit->shell->exit_code =127;
+		// return (unit->cmd_status);
+		return (unit->shell->exit_code);
 	}
 	if (access(input, X_OK) != 0)
 	{
 		ft_printf("minishell: %s: Permission denied\n", input);
-		unit->cmd_status = 126;
-		return (unit->cmd_status);
+		// unit->cmd_status = 126;
+		unit->shell->exit_code = 126;
+		// return (unit->cmd_status);
+		return (unit->shell->exit_code);
 	}
 	return (0);
 }

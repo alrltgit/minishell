@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42warsaw.pl>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/19 23:05:57 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/20 16:33:59 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_node	*create_unit(void)
 	node->shell = malloc(sizeof(t_shell));
 	node->shell->exit_code = 0;
 	node->redir_files = NULL;
-	node->cmd_status = 0;
+	//node->cmd_status = 0;
 	node->cmd_type = 0;
 	node->is_pipe = 0;
 	node->cmd_is_found = 0;
