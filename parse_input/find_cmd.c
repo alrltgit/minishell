@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/19 23:22:45 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/21 16:56:25 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 void	set_error_status(char *input, t_node *unit)
 {
-	// printf("input %s\n", input);
-	if (ft_strchr(input, '/'))
+	printf("input %s\n", input);
+	if (!fake_perfect(input))
+		printf("minishell: syntax error\n");
+	else if(ft_strchr(input, '/'))
 	{
 		if (access(input, F_OK) != 0)
 			printf("\e[0;31mminishell: %s: No such file or directory\n", input);
 		else if (access(input, X_OK) != 0)
 			printf("\e[0;31mminishell: %s: Permission denied\n", input);
-		else if (!fake_perfect(input))
-			printf("minishell: syntax error\n");
+		/* else if (!fake_perfect(input))
+			printf("minishell: syntax error\n"); */
 	}
 	else
 	{
 		if (ft_strcmp(input, " ") == 0)
-			printf("\e[0;31mminishell: : command not found333\n");
+			printf("\e[0;31mminishell: ' ': command not found333\n");
 		else
 			printf("\e[0;31mminishell: %s: command not found333\n", input);
 	}

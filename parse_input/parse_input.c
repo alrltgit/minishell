@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/21 16:36:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/21 16:58:00 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,16 +144,28 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
 	unit->shell->exit_code = 0;
 	check = process_exp(result, unit);
-	// printf("check-> %s\n", check);
+	printf("check-> %s\n", check);
 	if (check != NULL)
 	{
-		if (ft_strcmp(check, "") == 0)
+		if (ft_strcmp(check, "") && fake_perfect(check))
+			set_error_status(" ", unit);
+		else
+			set_error_status(check, unit);
+		/* if (check[0] && ((check[0] == '"' && check[ft_strlen(check) - 1] == '\'')
+			|| (check[0] == '\'' && check[ft_strlen(check) - 1] == '"')))
+		{
+			printf("\e[0;31mminishell: syntax error\n");
+			free_arr(result);
+			return ;
+		} */
+			
+		/* if (ft_strcmp(check, "") == 0)
 		{
 			printf("\e[0;31mminishell: : command not found222\n");
 			free_arr(result);
 			return ;
-		}
-		shll->exit_code = 127;
+		} */
+		//shll->exit_code = 127;
 		free_arr(result);
 		return ;
 	}
