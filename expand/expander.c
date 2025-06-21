@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/21 15:05:49 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/21 16:30:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,11 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	j = -1;
 	if (quote == 1)
 		tmp = ft_substr(var, pos + 1, len - 1);
-	/* else if (var[pos] == '?')
+	else if (var[pos] == '?')
 	{
 		tmp = ft_itoa(shell->exit_code); //exit code added
 		printf("exit code printed -> %d\n", shell->exit_code);
-	} */
+	}
 	else
 	{
 		tmp = value_from_key(ft_substr(var, pos, len), shell);
@@ -311,7 +311,7 @@ char *process_exp(char **result, t_node *unit)
     i = 0;
     while (result[++i])
     {
-    //    printf("before exp -> %s\n", result[i]);
+       printf("before exp -> %s\n", result[i]);
         if (!fake_perfect(result[i]))
             return (result[i]);
 
@@ -329,7 +329,7 @@ char *process_exp(char **result, t_node *unit)
 
         free(result[i]);
         result[i] = ft_strdup(handle_quotesv2(temp2));
-        // printf("after exp -> %s\n", result[i]);
+        printf("after exp -> %s\n", result[i]);
 
         // free(temp2);
         free(temp);

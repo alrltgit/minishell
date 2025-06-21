@@ -99,6 +99,8 @@ void	handle_output_operator(char *token, char **result, int *count)
 
 void	check_for_operator(char *token, char **result, int *count, int len)
 {
+	//(void)len;
+	len = len + 1;
 	if (ft_strncmp(token, "<<", 2) == 0 || ft_strcmp(token, "<<") == 0)
 		handle_heredoc_operator(token, result, count);
 	else if (ft_strncmp(token, "<", 1) == 0 || ft_strcmp(token, "<") == 0)
@@ -109,7 +111,7 @@ void	check_for_operator(char *token, char **result, int *count, int len)
 		handle_output_operator(token, result, count);
 	else
 	{
-		trim_quotes_if_needed(token, len);
+		//trim_quotes_if_needed(token, len);
 		result[(*count)++] = token;
 	}
 }

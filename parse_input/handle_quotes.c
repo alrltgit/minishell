@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:50:17 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/16 17:18:14 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/21 16:23:44 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ char 	*handle_quotesv2(char *str)
 		i++;
 	}
 	free(str);
+	return (temp);
+	/* printf("str-> %s temp-> %s\n", str, temp);	
 	str = ft_strdup(temp);
 	free(temp);
 	// printf("returned-> %s\n", str);
-	return (str);
+	return (str); */
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_readline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/21 13:47:01 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/21 16:25:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,11 @@ char	*extract_token(char *str, int *i, char **result, int *count)
 	}
 	// printf("token: %s\n", token);
 	token = subtract_token(token, str, start, *i - start);
-	int len = *i - start;
-    if (token && len > 2 &&
-        ((token[0] == '\'' && token[len - 1] == '\'') ||
-         (token[0] == '"' && token[len - 1] == '"')))
-    {
-        token[len - 1] = '\0';
-        ft_memmove(token, token + 1, len - 1);
-    }
 	// printf("token: %s\n", token);
-	trim_quotes_if_needed(token, ft_strlen(token));
+	//trim_quotes_if_needed(token, *i - start);
 	// printf("token_1: %s\n", token);
 	extra_token_check(token, result, count, *i - start);
+	
 	return (token);
 }
 
@@ -152,10 +145,10 @@ char	**split_args(char *str)
 			break ;
 		// printf("IN_0\n");
 		token = extract_token(str, &i, result, &count);
+		// printf("token -> %s\n", token);
 		if (!token)
 			return (NULL);
 	}
 	result[count] = NULL;
 	return (result);
 }
-

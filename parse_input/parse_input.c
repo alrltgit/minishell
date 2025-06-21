@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/21 14:01:01 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/21 16:36:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 	j = 0;
 	j_temp = j;
 	current_node->flags_count = count_flags(result, j_temp);
-	printf("current_node->flags_count: %d\n", current_node->flags_count);
 	if (alloc_mem_for_flags_arr(current_node) == 1)
 		return (1);
 	i = 0;
@@ -159,11 +158,11 @@ void read_the_input(char *rl, t_shell *shll)
 		return ;
 	}
 	temp = unit;
-	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
+	if (add_cmds_flags_to_linked_list(result, &temp) == 1 || temp->cmd == NULL)
 		return ;
 	add_args_to_linked_list(result, &temp);
-	// print_node(unit);
-	temp = unit;
+	print_node(unit);
+	/* temp = unit;
     int i;
     t_redir *r;
     while (temp)
@@ -188,7 +187,7 @@ void read_the_input(char *rl, t_shell *shll)
             r = r->next;
         }
         temp = temp->next;
-    }
+    } */
 	go_to_execute(unit);
 	free_arr(result);
 }

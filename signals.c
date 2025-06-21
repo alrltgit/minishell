@@ -6,21 +6,12 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 11:01:55 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/21 15:06:16 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/21 16:33:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "./includes/minishell.h"
-
-/*
-	In interactive mode, bash will response
-	to signals.
-	In non-interactive mode, it will not response.
-*/
-
-//WHAT CAN I DO FOR CTRL-D
-//CTRL-C SENDS SIGINT SIGNAL
 
 void	activate_ctrlc(int sig)
 {
