@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 12:14:01 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 15:25:52 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include "../libft/libft.h"
 
 # define PS1 "> "
@@ -46,6 +47,7 @@ typedef struct s_redir_type
 	int stdout_redir;
 	int append_redir;
 	int heredoc_redir;
+	int has_out_redir;
 }	t_redir_type;
 
 typedef struct s_redir
@@ -97,10 +99,6 @@ void	deactivate_ctrlc(int sig);
 void	execute_other(t_node *command);
 void	execute_builtin(t_node *command);
 char	**build_argv(t_node *node);
-void	handle_redir_heredoc_append(t_redir *redir);
-
-//handlequotes.c
-char 	*handle_quotesv2(char *str);
 
 //BUILTINS
 void	ft_pwd(t_node *command);
@@ -124,9 +122,17 @@ char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
 int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
 
+//exec.c
+void	execute_other(t_node *command);
+void	execute_builtin(t_node *command);
+char	**build_argv(t_node *node);
+
+// handle_quotes.c
+char 	*handle_quotesv2(char *str);
+
 // parse_input_utils.c
 void	go_to_execute(t_node *unit);
-void	check_for_empty_line(char *rl);
+int		check_for_empty_line(char *rl);
 int		is_input_redir(t_node *current_node, char **result, int *j);
 int		is_output_redir(t_node *current_node, char **result, int *j);
 int		is_heredoc_redir(t_node *current_node, char **result, int *j);
@@ -149,8 +155,10 @@ int		handle_heredoc_redirection(t_redir *redir);
 int		handle_append_redirection(t_redir *redir);
 int		is_builtin(char *cmd);
 
+// exec_utils_1.c
+int		handle_redir_heredoc_append(t_redir *redir);
+
 // fill_unit_linked_list.c
-// void	add_new_file(t_redir **head, char *file_name);
 t_redir *add_new_file(t_redir **head, char *file_name);
 t_node	*add_unit_to_end(t_node **head);
 t_node	*create_unit(void);
@@ -159,8 +167,8 @@ t_node	*create_unit(void);
 void check_for_operator(char *token, char **result, int *count, int len);
 
 // split_readline.c
-// char	*extract_token(const char *str, int *i, char **result, int *count);
-char	*extract_token(const char *str, int *i);
+// char	*extract_token(const char *str, int *i);
+char	*extract_token(char *str, int *i, char **result, int *count);
 char	*extract_token_v2(const char *str);
 void	trim_quotes_if_needed(char *token, int len);
 void	skip_whitespace(const char *str, int *i);
@@ -183,11 +191,6 @@ int		count_flags(char **result, int j);
 void	find_flags(char *result, t_node *current_node, int *i);
 char	*ft_strdup2(const char *s1);
 
-// find_vars.c
-// int count_variables(char **result, int *j);
-// int alloc_mem_for_vars_arr(t_node *current_node);
-// void find_vars(char *result, t_node *current_node, int *c);
-
 // utils.c
 int		alloc_mem_for_flags_arr(t_node *current_node);
 char	*handle_quotes(char *str);
@@ -204,6 +207,17 @@ int		condition_is_met(t_node *current_node, char **result, int j_temp);
 int		is_file_name(t_node *current_node, char *result);
 int		alloc_mem_for_args_arr(t_node *current_node);
 int		handle_pipe_and_move(t_node **current_node, char **result, int *i, int *j);
+
+// utils_4.c
+int		check_for_executable(t_node *unit, char *input);
+void	split_token_on_operator(char *token, char **result, int *count);
+void	extra_token_check(char *token, char **result, int *count, int len);
+
+//utils_5.c
+char	*extract_token_helper(char *token, int *count, char **result, int *i);
+void	init_vars_in_func(int *single_q, int *double_q);
+char	*subtract_token(char *token, char *str, int start, int len);
+int		check_executable_errors(t_node *unit, char *input, struct stat *sb);
 
 // piping.c
 void	create_pipe(t_node *node);

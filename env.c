@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/16 17:12:54 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 15:56:06 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*value_from_key(char *var_name, t_shell *shell)
 {
 	int	index;
 
+	if (ft_strcmp(var_name, "0") == 0)
+		return ("minishell");
 	index = index_from_key(var_name, shell->env);
 	if (index == -1)
 		return ("");

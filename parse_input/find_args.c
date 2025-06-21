@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/16 11:08:31 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/21 13:46:41 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ int	count_args(char **result, t_node *current_node, int k)
 	current_node->args_count = 0;
 	while (result[k])
 	{
+		if (ft_strcmp(result[k], "-n") == 0)
+		{
+			if (ft_strcmp(current_node->cmd, "/usr/bin/echo") && ft_strcmp(current_node->flags[0], "-n"))
+				args_count++;
+		}
 		if (ft_strcmp(result[k], "|") == 0)
 			k++;
 		if (k == current_node->cmd_idx)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:13:57 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/16 11:06:07 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/20 14:10:00 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,31 @@ int	is_file_name(t_node *current_node, char *result)
 	return (0);
 }
 
+int check_for_echo_flag(t_node *current_node, char **result, int j_temp)
+{
+	int i;
+	int first_n_found;
+
+	i = 0;
+	first_n_found = 0;
+	if (ft_strcmp(current_node->cmd, "echo") == 0 && result[j_temp][0] == '-')
+	{
+		while (i < current_node->flags_count)
+		{
+			if (ft_strcmp(current_node->flags[i], "-n") == 0 && !first_n_found)
+			{
+				first_n_found = 1;
+				i++;
+				continue ;
+			}
+			if (ft_strcmp(current_node->flags[i], "-n") == 0 && first_n_found)
+				return (0); // treat as an argument
+			i++;
+		}
+	}
+	return (1); // skip as a flag
+}
+
 int	condition_is_met(t_node *current_node, char **result, int j_temp)
 {
 	if (result[j_temp] == NULL)
@@ -46,26 +71,36 @@ int	condition_is_met(t_node *current_node, char **result, int j_temp)
 		|| ft_strcmp(result[j_temp], "<<") == 0
 		|| ft_strcmp(result[j_temp], ">>") == 0)
 		return (1);
-	if (result[j_temp][0] != '-'
-		&& is_file_name(current_node, result[j_temp]) == 0
-		&& is_file_name(current_node, result[j_temp]) == 0)
+	// if (check_for_echo_flag(current_node, result, j_temp) == 0 && result[j_temp][0] != '-'
+	// 	&& is_file_name(current_node, result[j_temp]) == 0)
+	// {
+	// 	return (0);
+	// }
+	if (result[j_temp][0] == '-')
 	{
-		return (0);
+		if (check_for_echo_flag(current_node, result, j_temp) == 0)
+		{
+			return (0);	
+		}
+		return (1);
 	}
-	return (1);
+    if (is_file_name(current_node, result[j_temp]) == 1)
+        return (1);
+    return (0); // treat as argument
+	// return (1);
 }
 
 int	rl_is_space(char *rl)
 {
 	if (!rl)
-        return (1);
-    while (*rl)
-    {
-        if (*rl != ' ' && *rl != '\t')
-            return (0);
-        rl++;
-    }
-    return (1);
+		return (1);
+	while (*rl)
+	{
+		if (*rl != ' ' && *rl != '\t')
+			return (0);
+		rl++;
+	}
+	return (1);
 }
 
 int	alloc_mem_for_args_arr(t_node *current_node)

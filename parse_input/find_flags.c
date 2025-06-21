@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/06/12 11:44:22 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/21 13:59:26 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,20 @@
 int	count_flags(char **result, int j)
 {
 	int	flags_count;
+	int n_flag_found;
 
+	n_flag_found = 0;
 	flags_count = 0;
 	while (result[j])
 	{
 		if (ft_strcmp(result[j], "|") == 0)
 			break ;
-		if (result[j][0] == '-' && result[j][1] != '$')
+		if (ft_strcmp(result[0], "echo") == 0 && ft_strcmp(result[1], "-n") == 0 && !n_flag_found)
+		{
+			flags_count++;
+			n_flag_found = 1;
+		}
+		else if (ft_strcmp(result[0], "echo") != 0 && ft_strcmp(result[1], "-n") != 0 && !n_flag_found && result[j][0] == '-' && result[j][1] != '$')
 			flags_count++;
 		j++;
 	}
@@ -30,6 +37,17 @@ int	count_flags(char **result, int j)
 
 void	find_flags(char *result, t_node *current_node, int *i)
 {
+	int n_flag_found;
+
+	n_flag_found = 0;
+	
+	if (ft_strcmp(current_node->cmd, "echo") == 0 && ft_strcmp(result, "-n") == 0 && !n_flag_found)
+	{
+		current_node->flags[*i] = ft_strdup2(result);
+		n_flag_found = 1;
+		(*i)++;
+		return ;
+	}
 	if (result[0] == '-' && result[1] != '$')
 	{
 		current_node->flags[*i] = ft_strdup2(result);

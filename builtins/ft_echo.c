@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/18 13:01:38 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/20 13:18:45 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 	try with echo -$abcdefd
 
 */
+
 void	ft_echo(t_node *command)
 {
 	
@@ -37,6 +38,7 @@ void	ft_echo(t_node *command)
 
 	w_n = 0;
 	i = -1;
+	print_node(command);
 	len = ft_strlen(command->fcmd);	
 	i = 4;
 	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
@@ -50,4 +52,3 @@ void	ft_echo(t_node *command)
 	if (!w_n)
 		printf("\n");
 }
-

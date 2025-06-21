@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/16 21:16:45 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 23:22:45 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_error_status(char *input, t_node *unit)
 	else
 	{
 		if (ft_strcmp(input, " ") == 0)
-			printf("\e[0;31mminishell: '%s': command not found333\n", input);
+			printf("\e[0;31mminishell: : command not found333\n");
 		else
 			printf("\e[0;31mminishell: %s: command not found333\n", input);
 	}
@@ -90,6 +90,8 @@ int	find_command_path(char *input, t_node *unit)
 		return (unit->cmd_status);
 	}
 	if (check_builtin_command(input, unit))
+		return (unit->cmd_status);
+	if (check_for_executable(unit, input) != 0)
 		return (unit->cmd_status);
 	paths = get_path();
 	if (!paths)

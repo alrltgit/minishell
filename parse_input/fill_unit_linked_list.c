@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/16 11:05:43 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/19 23:05:57 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_t_redir_type(t_redir *new_node)
 	new_node->type->stdout_redir = 0;
 	new_node->type->append_redir = 0;
 	new_node->type->heredoc_redir = 0;
+	new_node->type->has_out_redir = 0;
 }
 
 void	add_node(t_redir **head, t_redir *new_node)
@@ -72,7 +73,8 @@ t_node	*create_unit(void)
 	node->fcmd = NULL;
 	node->args = NULL;
 	node->next = NULL;
-	node->shell = NULL;
+	node->shell = malloc(sizeof(t_shell));
+	node->shell->exit_code = 0;
 	node->redir_files = NULL;
 	node->cmd_status = 0;
 	node->cmd_type = 0;

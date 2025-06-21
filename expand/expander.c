@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/18 19:15:40 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/21 15:05:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,24 @@
 extract the expansion 
 
 */
+
+void delete_token_and_shift(char **result, int *count, int index)
+{
+    int j;
+
+    free(result[index]);
+
+    j = index;
+    while (result[j + 1])
+    {
+        result[j] = result[j + 1];
+        j++;
+    }
+
+    result[j] = NULL;
+    (*count)--;
+}
+
 
 int	is_alphanumeric(char a)
 {
@@ -115,13 +133,16 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	j = -1;
 	if (quote == 1)
 		tmp = ft_substr(var, pos + 1, len - 1);
-	else if (var[pos] == '?')
+	/* else if (var[pos] == '?')
+	{
 		tmp = ft_itoa(shell->exit_code); //exit code added
+		printf("exit code printed -> %d\n", shell->exit_code);
+	} */
 	else
 	{
 		tmp = value_from_key(ft_substr(var, pos, len), shell);
-		if (ft_strcmp(tmp, "") == 0)
-			tmp = " ";
+		if (ft_strcmp(tmp, " ") == 0)
+			return(" ");
 	}
 	while (tmp && tmp[++j])
 		str = update_str(str, tmp[j]);
@@ -142,7 +163,11 @@ char	*perfect(t_node *command, char *arr)
 	i = 0;
 	str = NULL;
 
-	printf("arr-> %s\n", arr);
+	if (!arr)
+	{
+		arr = update_str(arr, ' ');
+		return (arr);
+	}
 	while (arr[i])
 	{
 		if (arr[i] == '\'' && in_dq == 0)
@@ -203,26 +228,34 @@ int	fake_perfect(char *arr)
 
 /* if the str has syntax error it returns the str.
 if everything is okay, it returns null*/
-char	*process_exp(char **result, t_node *unit)
+/* char	*process_exp(char **result, t_node *unit)
 {
 	int		i;
 	char	*temp;
 	char	*temp2;
+	int		count;
 
+	count = -1;
+	while (result[++count])
+		;
+	printf("result[0] = %s\n", result[0]);
 	if (result[0])
 	{
-		if (!fake_perfect(result[0]))
+		if (!fake_perfect(result[0]) || ft_strcmp(result[0], "") == 0)
 			return (result[0]);
 		temp = perfect(unit, result[0]);
-		if (ft_strcmp(temp, " ") == 0)
-			return ("");
+		if (ft_strcmp(temp, "") == 0)
+		{
+			
+		}
 		else
 			result[0] = ft_strdup(handle_quotesv2(perfect(unit, temp)));
 	}
+	printf("result[0] = %s\n", result[0]);
 	i = 0;
 	while (result[++i])
 	{
-		//printf("before exp -> %s\n", result[i]);
+		printf("before exp -> %s\n", result[i]);
 		if (!fake_perfect(result[i]))
 			return (result[i]);
 		temp = ft_strdup(result[i]);
@@ -236,8 +269,71 @@ char	*process_exp(char **result, t_node *unit)
 			continue;
 		}
 		result[i] = ft_strdup(handle_quotesv2(temp2));
-		//printf("after exp -> %s\n", result[i]);
+		printf("after exp -void	fill_fcmd_echo(t_node *current_node, char **result)> %s\n", result[i]);
 		free(temp);
 	}
 	return (NULL);
+}
+ */
+char *process_exp(char **result, t_node *unit)
+{
+    int i;
+    char *temp;
+    char *temp2;
+    int count;
+
+    count = -1;
+    while (result[++count])
+        ;
+
+   // printf("result[0] = %s\n", result[0]);
+    if (result[0])
+    {
+        if (!fake_perfect(result[0]) || ft_strcmp(result[0], "") == 0)
+            return (result[0]);
+
+        temp = perfect(unit, result[0]);
+        if (temp == NULL || temp[0] == '\0')
+        {
+            delete_token_and_shift(result, &count, 0);
+            free(temp);
+            return (process_exp(result, unit));
+        }
+        else
+        {
+            free(result[0]);
+            result[0] = ft_strdup(handle_quotesv2(temp));
+           	// free(temp);
+        }
+    }
+
+   // printf("result[0] = %s\n", result[0]);
+    i = 0;
+    while (result[++i])
+    {
+    //    printf("before exp -> %s\n", result[i]);
+        if (!fake_perfect(result[i]))
+            return (result[i]);
+
+        temp = ft_strdup(result[i]);
+        temp2 = perfect(unit, temp);
+
+        if (temp2 == NULL || temp2[0] == '\0')
+        {
+            free(result[i]);
+            result[i] = ft_strdup("");
+            free(temp2);
+            free(temp);
+            continue;
+        }
+
+        free(result[i]);
+        result[i] = ft_strdup(handle_quotesv2(temp2));
+        // printf("after exp -> %s\n", result[i]);
+
+        // free(temp2);
+        free(temp);
+    }
+
+    return (NULL);
 }

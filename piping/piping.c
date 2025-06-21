@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/18 14:16:59 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:48:58 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,19 @@ void	create_pipe(t_node *node)
 		//addded errcode line for exit status
 		if (create_pipe_fd(pipe_fd))
 		{
-			node->shell->exit_code = 147;
+			node->shell->exit_code = 1;
 			return ;
 		}
 		pid = create_fork(node);
 		if (pid == 0)
 			manage_child_process(temp, pipe_fd, prev_fd, node);
-		else
+		else if (pid > 0)
 		{
 			manage_parent_process(temp, pipe_fd, &prev_fd);
 			temp = temp->next;
 		}
+		else
+			return ;
 	}
 	while (wait(NULL) > 0)
 		;
