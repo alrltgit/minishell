@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/22 12:06:07 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/22 19:50:46 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 //in bash echo ~ prints home folder (/nfs/homes/username)
 // also cd ~ changes directory to home folder
+
 
 void	print_node(t_node *command)
 {
