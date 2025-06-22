@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/21 13:46:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/22 12:15:22 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*retrieve_cmd_name(t_node *node)
 	return (node->cmd);
 }
 
-int	count_args(char **result, t_node *current_node, int k)
+/* int	count_args(char **result, t_node *current_node, int k)
 {
 	int		args_count;
 
@@ -55,6 +55,52 @@ int	count_args(char **result, t_node *current_node, int k)
 		if (condition_is_met(current_node, result, k) == 0)
 			args_count++;
 		k++;
+	}
+	return (args_count);
+} */
+
+int	count_args(char **result, t_node *current_node, int k)
+{
+	int		args_count;
+
+	args_count = 0;
+	current_node->args_count = 0;
+	if (ft_strcmp(result[0], "echo") == 0 && ft_strcmp(result[1], "-n") == 0)
+	{
+		k += 1;
+		// printf("k: %d\n", k);
+		while (result[k])
+		{
+			if (ft_strcmp(result[k], "|") == 0)
+				break ;
+			args_count++;
+			k++;
+		}
+	}
+	else
+	{
+		int res = 0;
+		while (result[k])
+		{
+			if (ft_strcmp(result[k], "|") == 0)
+			{
+				// printf("ft_strcmp(result[k], |) == 0\n");
+				break ;	
+			}
+			if (k == current_node->cmd_idx)
+			{
+				// printf("k == current_node->cmd_idx\n");
+				k++ ;	
+			}
+			res = condition_is_met(current_node, result, k);
+			printf("res: %d\n", res);
+			if (res == 0)
+			{
+				// printf("args_count++");
+				args_count++;
+			}
+			k++;
+		}	
 	}
 	return (args_count);
 }

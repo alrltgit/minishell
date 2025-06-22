@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/21 16:58:00 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/22 11:50:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void read_the_input(char *rl, t_shell *shll)
 	unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
-	unit->shell->exit_code = 0;
+	//unit->shell->exit_code = 0;
 	check = process_exp(result, unit);
 	printf("check-> %s\n", check);
 	if (check != NULL)

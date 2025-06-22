@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/21 16:56:25 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/22 12:07:29 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ void	set_error_status(char *input, t_node *unit)
 {
 	printf("input %s\n", input);
 	if (!fake_perfect(input))
-		printf("minishell: syntax error\n");
+	{
+		printf("\e[0;31mminishell: syntax error\n");
+		unit->shell->exit_code = 2;
+		return ;
+	}
 	else if(ft_strchr(input, '/'))
 	{
 		if (access(input, F_OK) != 0)
@@ -34,6 +38,7 @@ void	set_error_status(char *input, t_node *unit)
 			printf("\e[0;31mminishell: %s: command not found333\n", input);
 	}
 	unit->cmd_status = 127;
+	printf("exit code set with 127 in set_err_status\n");
 	unit->shell->exit_code = 127; //new exit code logic
 }
 
@@ -58,7 +63,8 @@ void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 	free(temp_result);
 	free_arr(paths);
 	unit->cmd_status = 2;
-	//unit->shell->exit_code = 2;
+	printf("exit code set with 0 in set_err_status\n");
+	unit->shell->exit_code = 0;
 }
 
 int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/21 16:48:48 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/22 13:25:24 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	copy_vars(char **ev, char ***env_array);
 //env2.c
 int		change_env_value(char *var_name, char *new_value, t_shell *shell);
 char	*key_from_index(int pos, t_shell *shell);
+void	add_key_val(t_shell *shell, char *key, char *val);
 
 //signal.c
 void	activate_ctrlc(int sig);

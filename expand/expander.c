@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/21 16:45:12 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/22 12:55:43 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,6 @@ int	is_alphanumeric(char a)
 		return (1);
 	return (0);
 }
-
-/*
-	return int.
-	if there is valid expansion
-
-	-$abcdef will be considered as flag
-	so, scan everywhere for $ sign
-
-	search for expansion variable, if there is expansion var,
-	take it as long as it is alphanumeric (letters and numbers)
-
-	if expansion var is exist, replace with its value from env
-	if it is not exist, replace with empty string
-*/
-
-//it should be **command because we will pass by reference
-
 /*
 try with
 
@@ -118,12 +101,7 @@ try with
 	print everythin after echo
 
 */
-//handle $? also cuz it is not visible in env
 
-//IF IT IS IN SINGLE QUOTES, DONT REPLACE THE VALUE
-
-//send the str to expand func if there is valid expansion,
-//it will return the value, else null
 
 char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int quote)
 {
@@ -219,62 +197,7 @@ int	fake_perfect(char *arr)
 		return (0); // Unclosed quote
 	return (1); // All quotes closed
 }
-/*
-	when input is given it will go
-	quote handling, expansion, execution
 
-	EXPORT AND ECHO NEEDS IMPROVEMENTS
-*/
-
-/* if the str has syntax error it returns the str.
-if everything is okay, it returns null*/
-/* char	*process_exp(char **result, t_node *unit)
-{
-	int		i;
-	char	*temp;
-	char	*temp2;
-	int		count;
-
-	count = -1;
-	while (result[++count])
-		;
-	printf("result[0] = %s\n", result[0]);
-	if (result[0])
-	{
-		if (!fake_perfect(result[0]) || ft_strcmp(result[0], "") == 0)
-			return (result[0]);
-		temp = perfect(unit, result[0]);
-		if (ft_strcmp(temp, "") == 0)
-		{
-			
-		}
-		else
-			result[0] = ft_strdup(handle_quotesv2(perfect(unit, temp)));
-	}
-	printf("result[0] = %s\n", result[0]);
-	i = 0;
-	while (result[++i])
-	{
-		printf("before exp -> %s\n", result[i]);
-		if (!fake_perfect(result[i]))
-			return (result[i]);
-		temp = ft_strdup(result[i]);
-		temp2 = perfect(unit, temp);
-		if (ft_strcmp(temp2, "") == 0)
-		{
-			result[i] = ft_strdup("");
-			++i;
-			free(temp2);
-			free(temp);
-			continue;
-		}
-		result[i] = ft_strdup(handle_quotesv2(temp2));
-		printf("after exp -void	fill_fcmd_echo(t_node *current_node, char **result)> %s\n", result[i]);
-		free(temp);
-	}
-	return (NULL);
-}
- */
 char *process_exp(char **result, t_node *unit)
 {
     int i;
@@ -311,7 +234,7 @@ char *process_exp(char **result, t_node *unit)
     i = 0;
     while (result[++i])
     {
-       printf("before exp -> %s\n", result[i]);
+       //printf("before exp -> %s\n", result[i]);
         if (!fake_perfect(result[i]))
             return (result[i]);
 
@@ -329,7 +252,7 @@ char *process_exp(char **result, t_node *unit)
 
         free(result[i]);
         result[i] = ft_strdup(handle_quotesv2(temp2));
-        printf("after exp -> %s\n", result[i]);
+       // printf("after exp -> %s\n", result[i]);
 
         // free(temp2);
         free(temp);
