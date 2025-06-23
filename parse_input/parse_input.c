@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/22 11:50:19 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/23 21:03:39 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	check_for_cmd_flags(t_node *current_node, char *result, int *i)
 {
 	if (current_node->cmd_is_found == 0)
 		current_node->cmd_type = find_command_path(result, current_node);
+	// if (current_node->cmd_type > 2 && current_node->is_pipe == 0)
 	if (current_node->cmd_type > 2)
 	{
 		current_node->cmd = NULL;
@@ -50,6 +51,7 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 	j = 0;
 	j_temp = j;
 	current_node->flags_count = count_flags(result, j_temp);
+	printf("current_node->flags_count: %d\n", current_node->flags_count);
 	if (alloc_mem_for_flags_arr(current_node) == 1)
 		return (1);
 	i = 0;
@@ -63,6 +65,20 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 			return (1);
 		if (check_for_cmd_flags(current_node, result[j], &i) == 1)
 			return (1);
+		//! if it is not in if block, even it executes incorretly -$PATH echo abc
+
+
+
+		/* if (current_node->is_pipe == 1)
+		{
+			++j;
+			continue;
+		}
+		int res = check_for_cmd_flags(current_node, result[j], &i);
+		if (res == 1)
+			return (1); */
+		/* if (res == 1 && current_node->is_pipe == 0)
+			return (1); */
 		j++;
 	}
 	return (0);
@@ -73,14 +89,24 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	int		i;
 	int		j;
 	int		j_temp;
+	// int 	r;
 	t_node	*current_node;
 
 	j = 0;
 	j_temp = j + 1;
 	current_node = *unit;
+	if (ft_strcmp(result[0], "echo") == 0)
+	{
+		j_temp = 1;
+		while (ft_strcmp(result[j_temp], "-n") == 0)
+		{
+			j_temp++;
+		}
+	}
 	if (allocate_args_memory(current_node, result, j_temp) == 1)
 		return ;
 	i = 1;
+	int k = i;
 	while (result[i])
 	{
 		if (ft_strcmp(result[i], "|") == 0)
@@ -89,46 +115,18 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 				break ;
 			continue ;
 		}
+		if (ft_strcmp(result[k], "-n") == 0)
+		{
+			while (ft_strcmp(result[k], "-n") == 0)
+			{
+				k++;
+				i++;
+			}
+		}
 		find_and_add_args(current_node, result, i, &j);
 		i++;
 	}
 }
-
-/* void read_the_input(char *rl, t_shell *shll)
-{
-    char	**result;
-    t_node 	*unit;
-    t_node 	*temp;
-	char	*check;
-
-	check_for_empty_line(rl);
-	result = split_args(rl);
-	unit = create_unit();
-	unit->shell = shll;
-	shll->cmds = unit;
-	
-	//add check for "" and ''
-	//print_node(unit);
-	check = process_exp(result, unit);
-	if (check != NULL)
-	{
-		if (ft_strcmp(check, "") == 0)
-		{
-			free_arr(result);
-			return;
-		}
-		printf("\e[0;31mminishell: %s: syntax error\n", check);
-		shll->exit_code = 127;
-		free_arr(result);
-		return ;
-	}
-	temp = unit;
-	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
-		return ;
-	add_args_to_linked_list(result, &temp);
-	go_to_execute(unit);
-	free_arr(result);
-} */
 
 void read_the_input(char *rl, t_shell *shll)
 {
@@ -142,38 +140,25 @@ void read_the_input(char *rl, t_shell *shll)
 	unit = create_unit();
 	unit->shell = shll;
 	shll->cmds = unit;
-	//unit->shell->exit_code = 0;
+	unit->shell->exit_code = 0;
 	check = process_exp(result, unit);
-	printf("check-> %s\n", check);
+	// printf("check-> %s\n", check);
 	if (check != NULL)
 	{
-		if (ft_strcmp(check, "") && fake_perfect(check))
-			set_error_status(" ", unit);
-		else
-			set_error_status(check, unit);
-		/* if (check[0] && ((check[0] == '"' && check[ft_strlen(check) - 1] == '\'')
-			|| (check[0] == '\'' && check[ft_strlen(check) - 1] == '"')))
-		{
-			printf("\e[0;31mminishell: syntax error\n");
-			free_arr(result);
-			return ;
-		} */
-			
-		/* if (ft_strcmp(check, "") == 0)
+		if (ft_strcmp(check, "") == 0)
 		{
 			printf("\e[0;31mminishell: : command not found222\n");
 			free_arr(result);
 			return ;
-		} */
-		//shll->exit_code = 127;
+		}
+		shll->exit_code = 127;
 		free_arr(result);
 		return ;
 	}
 	temp = unit;
-	if (add_cmds_flags_to_linked_list(result, &temp) == 1 || temp->cmd == NULL)
+	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 		return ;
 	add_args_to_linked_list(result, &temp);
-	print_node(unit);
 	/* temp = unit;
     int i;
     t_redir *r;

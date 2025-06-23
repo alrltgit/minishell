@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/22 12:55:43 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/23 21:18:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ int	fake_perfect(char *arr)
 	int	in_sq = 0;
 	int	in_dq = 0;
 
+	printf("AMK COCU -> %s\n", arr);
 	while (arr[i])
 	{
 		if (arr[i] == '\'' && in_dq == 0)

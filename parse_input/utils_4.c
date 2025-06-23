@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:13:08 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/19 22:52:26 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/23 19:28:54 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	check_for_executable(t_node *unit, char *input)
 	if (ft_strchr(input, '/') != NULL)
 	{
 		err = check_executable_errors(unit, input, &sb);
+		printf("executable error-> %d\n", err);
 		if (err)
 			return (err);
 		unit->cmd = ft_strdup(input);

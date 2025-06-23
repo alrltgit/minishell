@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/22 13:25:24 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/23 20:15:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ void	skip_whitespace(const char *str, int *i);
 
 // find_cmd.c
 int		find_command_path(char *input, t_node *unit);
-void	set_error_status(char *input, t_node *unit);
 
 // find_args.c
 int		count_args(char **result, t_node *current_node, int k);

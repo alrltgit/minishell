@@ -6,26 +6,11 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:19:19 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/22 19:47:41 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/23 20:59:15 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
-
-//in bash after reopening the terminal env gets refreshed
-//also in subshell, env gets refreshed
-//if the value is in quotes, it will 
-//be assigned without quotes -> SHLVL="abc" -> SHLVL=abc
-
-/*
-SHLVL="'     123''" -> it accepts this value but (it consider it as string)
-SHLVL=    123 -> it doesnt accept
-
-*/
-
-//HANDLE THE AFFECT OF $ SIGN
-//WHAT IF IT INITIALIZE VARIABLE WITH $
-//OR IF IT TRY TO REACH ENV VAR WITH $
 
 int	change_env_value(char *var_name, char *new_value, t_shell *shell)
 {

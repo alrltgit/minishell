@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/22 12:06:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/23 20:15:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_node	*create_unit(void)
 	node->args = NULL;
 	node->next = NULL;
 	node->shell = malloc(sizeof(t_shell));
-	//node->shell->exit_code = 0;
+	node->shell->exit_code = 0;
 	node->redir_files = NULL;
 	node->cmd_status = 0;
 	node->cmd_type = 0;

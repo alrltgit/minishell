@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args_v2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:30:00 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/21 16:15:39 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/15 16:58:39 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,16 @@
 int	count_args2(char **result, t_node *current_node, int k)
 {
 	int		args_count;
-	int		i;
 
-	i = k;
 	args_count = 0;
 	current_node->args_count = 0;
-	while (result[i])
+	while (result[k])
 	{
-		if (ft_strcmp(result[i], "|") == 0)
+		if (ft_strcmp(result[k], "|") == 0)
 			break ;
-		if (condition_is_met(current_node, result, i) == 0)
+		if (condition_is_met(current_node, result, k) == 0)
 			args_count++;
-		i++;
+		k++;
 	}
 	return (args_count);
 }

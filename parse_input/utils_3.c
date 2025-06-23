@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:13:57 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/20 14:10:00 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/22 11:10:04 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,17 @@ int	condition_is_met(t_node *current_node, char **result, int j_temp)
 	if (ft_strcmp(result[j_temp], "<") == 0
 		|| ft_strcmp(result[j_temp], ">") == 0
 		|| ft_strcmp(result[j_temp], "<<") == 0
-		|| ft_strcmp(result[j_temp], ">>") == 0)
+		|| ft_strcmp(result[j_temp], ">>") == 0
+		|| ft_strcmp(result[j_temp], "|") == 0)
 		return (1);
-	// if (check_for_echo_flag(current_node, result, j_temp) == 0 && result[j_temp][0] != '-'
-	// 	&& is_file_name(current_node, result[j_temp]) == 0)
-	// {
-	// 	return (0);
-	// }
-	if (result[j_temp][0] == '-')
-	{
-		if (check_for_echo_flag(current_node, result, j_temp) == 0)
-		{
-			return (0);	
-		}
+	if (ft_strcmp(retrieve_cmd_name(current_node), result[j_temp]) == 0)
 		return (1);
-	}
+	if (result[j_temp][0] != '-'
+		&& is_file_name(current_node, result[j_temp]) == 0) 
+		return (0);
     if (is_file_name(current_node, result[j_temp]) == 1)
         return (1);
-    return (0); // treat as argument
-	// return (1);
+    return (1);
 }
 
 int	rl_is_space(char *rl)

@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/19 23:58:26 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/22 11:15:29 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ int	handle_pipe(t_node **current_node, char **result, int i, int cmd_idx)
 	(*current_node)->cmd_idx = cmd_idx;
 	if (!*current_node)
 		return (1);
-	(*current_node)->args_count = count_args(result, *current_node, i);
+	(*current_node)->args_count = count_args(result, *current_node, i + 1);
 	if (alloc_mem_for_args_arr(*current_node) == 1)
 		return (1);
+	printf("current_node->args_count_after_pipe: %d\n", (*current_node)->args_count);
 	if (!(*current_node)->args)
 		return (1);
 	return (0);

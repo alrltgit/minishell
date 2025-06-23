@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/20 13:18:45 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:00:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	ft_echo(t_node *command)
 
 	w_n = 0;
 	i = -1;
-	print_node(command);
 	len = ft_strlen(command->fcmd);	
 	i = 4;
 	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
@@ -46,6 +45,16 @@ void	ft_echo(t_node *command)
 	{
 		w_n = 1;
 		i = 7;
+	}
+	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && command->fcmd[7] != '\0')
+	{
+		i = 7;
+		while (command->fcmd[i + 1] == '-' && command->fcmd[i + 2] == 'n' && (command->fcmd[i + 3] == ' '
+			|| command->fcmd[i + 3] == '\0'))
+		{
+			i += 3;
+		}
+		w_n = 1;
 	}
 	while (++i < len)
 		write(1, &command->fcmd[i], 1);

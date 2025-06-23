@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/06/21 13:59:26 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:29:37 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	count_flags(char **result, int j)
 	return (flags_count);
 }
 
+
 void	find_flags(char *result, t_node *current_node, int *i)
 {
 	int n_flag_found;
@@ -43,7 +44,10 @@ void	find_flags(char *result, t_node *current_node, int *i)
 	
 	if (ft_strcmp(current_node->cmd, "echo") == 0 && ft_strcmp(result, "-n") == 0 && !n_flag_found)
 	{
+		if (result[3] && result[4] && result[3] == '-' && result[4] == 'n')
+			result += 2;
 		current_node->flags[*i] = ft_strdup2(result);
+		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result);
 		n_flag_found = 1;
 		(*i)++;
 		return ;

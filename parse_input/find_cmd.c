@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/22 12:07:29 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/23 19:30:07 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,22 @@
 
 void	set_error_status(char *input, t_node *unit)
 {
-	printf("input %s\n", input);
-	if (!fake_perfect(input))
-	{
-		printf("\e[0;31mminishell: syntax error\n");
-		unit->shell->exit_code = 2;
-		return ;
-	}
-	else if(ft_strchr(input, '/'))
+	if (ft_strchr(input, '/'))
 	{
 		if (access(input, F_OK) != 0)
 			printf("\e[0;31mminishell: %s: No such file or directory\n", input);
 		else if (access(input, X_OK) != 0)
 			printf("\e[0;31mminishell: %s: Permission denied\n", input);
-		/* else if (!fake_perfect(input))
-			printf("minishell: syntax error\n"); */
 	}
 	else
 	{
-		if (ft_strcmp(input, " ") == 0)
-			printf("\e[0;31mminishell: ' ': command not found333\n");
+		if (fake_perfect(input) == 0)
+			printf("minishell: %s: syntax error\n", input);
 		else
-			printf("\e[0;31mminishell: %s: command not found333\n", input);
+			ft_printf("minishell: %s: command not found\n", input);	
 	}
 	unit->cmd_status = 127;
-	printf("exit code set with 127 in set_err_status\n");
-	unit->shell->exit_code = 127; //new exit code logic
+	unit->shell->exit_code = 127;
 }
 
 int	check_builtin_command(char *input, t_node *unit)
@@ -63,8 +53,7 @@ void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 	free(temp_result);
 	free_arr(paths);
 	unit->cmd_status = 2;
-	printf("exit code set with 0 in set_err_status\n");
-	unit->shell->exit_code = 0;
+	//unit->shell->exit_code = 2;
 }
 
 int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)
@@ -111,5 +100,6 @@ int	find_command_path(char *input, t_node *unit)
 		return (unit->cmd_status);
 	free_arr(paths);
 	set_error_status(input, unit);
+	printf("path func return -> %d\n", unit->cmd_status);
 	return (unit->cmd_status);
 }
