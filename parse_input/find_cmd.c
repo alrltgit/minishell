@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/24 12:19:05 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 14:40:09 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)
 	while (paths[i])
 	{
 		temp_result = ft_strconcat(paths[i], input);
-		if (access(temp_result, X_OK) == 0)
+		if (access(temp_result, X_OK) == 0 && unit->cmd_is_found == 0)
 		{
 			handle_command_init(unit, temp_result, paths);
 			return (unit->cmd_status);
@@ -80,6 +80,7 @@ int	find_command_path(char *input, t_node *unit)
 {
 	char	**paths;
 
+	printf("input: %s\n", input);
 	if (ft_strcmp(input, "<") == 0 || is_file_name(unit, input) == 1)
 	{
 		unit->cmd_status = 0;
@@ -98,8 +99,9 @@ int	find_command_path(char *input, t_node *unit)
 	}
 	if (resolve_cmd_in_paths(paths, input, unit))
 		return (unit->cmd_status);
+	
 	free_arr(paths);
 	set_error_status(input, unit);
-	printf("path func return -> %d\n", unit->cmd_status);
+	// printf("path func return -> %d\n", unit->cmd_status);
 	return (unit->cmd_status);
 }

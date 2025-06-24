@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/24 12:43:14 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 15:26:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,18 @@ int	check_for_redir_heredoc(t_node *current_node, char **result, int *j)
 
 int	check_for_cmd_flags(t_node *current_node, char *result, int *i)
 {
+	printf("fcmdddd -> %s\n", current_node->fcmd);
+	printf("current_node->cmd_is_found_0: %d\n", current_node->cmd_is_found);
 	if (current_node->cmd_is_found == 0)
 		current_node->cmd_type = find_command_path(result, current_node);
+	printf("current_node->cmd: %s\n", current_node->cmd);
+	printf("current_node->cmd_is_found_1: %d\n", current_node->cmd_is_found);
 	if (current_node->cmd_type > 2)
 	{
 		current_node->cmd = NULL;
 		return (1);
 	}
+	printf("current_node->flags_count: %d\n", current_node->flags_count);
 	if (current_node->flags_count > 0)
 		find_flags(result, current_node, i);
 	return (0);
@@ -158,7 +163,7 @@ void read_the_input(char *rl, t_shell *shll)
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 		return ;
 	add_args_to_linked_list(result, &temp);
-	/* temp = unit;
+	temp = unit;
     int i;
     t_redir *r;
     while (temp)
@@ -183,7 +188,7 @@ void read_the_input(char *rl, t_shell *shll)
             r = r->next;
         }
         temp = temp->next;
-    } */
+    }
 	go_to_execute(unit);
 	free_arr(result);
 }

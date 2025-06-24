@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/24 12:32:20 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 15:01:08 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,20 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	char	*tmp;
 	int		j;
 
+	tmp = NULL;
 	j = -1;
 	if (quote == 1)
 		tmp = ft_substr(var, pos + 1, len - 1);
 	else if (var[pos] == '?')
 	{
 		tmp = ft_itoa(shell->exit_code); //exit code added
-		printf("exit code printed -> %d\n", shell->exit_code);
+		// printf("exit code printed -> %d\n", shell->exit_code);
 	}
 	else
 	{
 		tmp = value_from_key(ft_substr(var, pos, len), shell);
 		if (ft_strcmp(tmp, " ") == 0)
-			return(" ");
+			return(ft_strdup(" "));
 	}
 	while (tmp && tmp[++j])
 		str = update_str(str, tmp[j]);
@@ -186,7 +187,7 @@ int	fake_perfect(char *arr)
 	int	in_sq = 0;
 	int	in_dq = 0;
 
-	printf("AMK COCU -> %s\n", arr);
+	//printf("AMK COCU -> %s\n", arr);
 	while (arr[i])
 	{
 		if (arr[i] == '\'' && in_dq == 0)
@@ -234,7 +235,7 @@ char *process_exp(char **result, t_node *unit)
 
    // printf("result[0] = %s\n", result[0]);
     i = 0;
-    while (result[++i])
+    while (result[i] && result[++i])
     {
        //printf("before exp -> %s\n", result[i]);
         if (!fake_perfect(result[i]))

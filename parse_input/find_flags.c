@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/06/24 12:41:30 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 14:36:57 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	find_flags(char *res, t_node *current_node, int *i)
 	/* int n_flag_found;
 
 	n_flag_found = 0; */
-	printf("first result in find_flags -> %s\n", res);
+	// printf("first result in find_flags -> %s\n", res);
 	if (ft_strcmp(current_node->cmd, "echo") == 0 && ft_strcmp(res, "-n") == 0)
 	{
 		printf("res bloga girdi -> %s\n", res);

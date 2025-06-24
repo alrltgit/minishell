@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:13:57 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/22 11:10:04 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/24 15:37:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ int	condition_is_met(t_node *current_node, char **result, int j_temp)
 		|| ft_strcmp(result[j_temp], "|") == 0)
 		return (1);
 	if (ft_strcmp(retrieve_cmd_name(current_node), result[j_temp]) == 0)
+	{
 		return (1);
+	}
 	if (result[j_temp][0] != '-'
 		&& is_file_name(current_node, result[j_temp]) == 0) 
 		return (0);

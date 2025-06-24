@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/24 11:50:50 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 15:36:36 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	allocate_args_memory(t_node *current_node, char **result, int j_temp)
 
 void	find_and_add_args(t_node *current_node, char **result, int i, int *j)
 {
+	printf("result[i]: %s\n", result[i]);
 	if (current_node && result[i] && current_node->args_count > 0)
 		find_args(current_node, result, i, j);
 }
@@ -54,6 +55,8 @@ int	count_args(char **result, t_node *current_node, int k)
 	else
 	{
 		int res = 0;
+		if (k <= 0)
+			return (0);
 		while (result[k])
 		{
 			if (ft_strcmp(result[k], "|") == 0)
