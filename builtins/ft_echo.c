@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/23 21:00:49 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 11:22:06 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,66 @@
 	try with echo -$abcdefd
 
 */
+/* void	handle_n_flag(t_node *command, int *i, int *w_n)
+{
+	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
+			|| command->fcmd[7] == ' '))
+	{
+		*w_n = 1;
+		*i = 7;
+	}
+	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && command->fcmd[7] != '\0')
+	{
+		*i = 7;
+		while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
+			|| command->fcmd[*i + 3] == '\0'))
+		{
+			*i += 3;
+		}
+		*w_n = 1;
+	}
+} */
+
+void	handle_n_flag(t_node *command, int *i, int *w_n)
+{
+
+	//echo -n fdgdfgd
+	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n')
+	{
+		if (command->fcmd[7] != ' ' && command->fcmd[7] != '\0')
+			return ;
+		// if (command->fcmd[7] == ' ' ||)
+		else
+		{
+			*i = 7;
+			while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
+			|| command->fcmd[*i + 3] == '\0'))
+				*i += 3;
+			*w_n = 1;
+		}
+	}
+
+
+
+
+	
+	/* if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
+			|| command->fcmd[7] == ' '))
+	{
+		*i = 7;
+		while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
+			|| command->fcmd[*i + 3] == '\0'))
+		{
+			*i += 3;
+		}
+		*w_n = 1;
+	} */
+}
 
 void	ft_echo(t_node *command)
 {
 	
-	(void)command;
+	//(void)command;
 	
 	int	i;
 	int	w_n;
@@ -40,22 +95,9 @@ void	ft_echo(t_node *command)
 	i = -1;
 	len = ft_strlen(command->fcmd);	
 	i = 4;
-	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
-			|| command->fcmd[7] == ' '))
-	{
-		w_n = 1;
-		i = 7;
-	}
-	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && command->fcmd[7] != '\0')
-	{
-		i = 7;
-		while (command->fcmd[i + 1] == '-' && command->fcmd[i + 2] == 'n' && (command->fcmd[i + 3] == ' '
-			|| command->fcmd[i + 3] == '\0'))
-		{
-			i += 3;
-		}
-		w_n = 1;
-	}
+	printf("fcmd before handle n flag -> %s\n", command->fcmd);
+	handle_n_flag(command, &i, &w_n);
+	printf("fcmd after handle n flag -> %s\n", command->fcmd);
 	while (++i < len)
 		write(1, &command->fcmd[i], 1);
 	if (!w_n)

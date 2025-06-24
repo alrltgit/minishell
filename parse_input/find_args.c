@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/23 19:14:49 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 11:50:50 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,11 @@ void	find_args(t_node *current_node, char **result, int i, int *j)
 		return ;
 	if (ft_strcmp(current_node->cmd, "echo") == 0)
 	{
+		printf("find args before -> %s\n", current_node->fcmd);
 		current_node->args[*j] = ft_strdup(result[i]);
 		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result[i]);
 		(*j)++;
+		printf("find args after -> %s\n", current_node->fcmd);
 		return ;
 	}
 	if (condition_is_met(current_node, result, i) == 0)

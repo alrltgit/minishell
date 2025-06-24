@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/23 19:30:07 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:19:05 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 	free(temp_result);
 	free_arr(paths);
 	unit->cmd_status = 2;
-	//unit->shell->exit_code = 2;
+	unit->shell->exit_code = 0;
 }
 
 int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)

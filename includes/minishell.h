@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/23 20:15:19 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:19:15 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_node
 	int vars_count;
 	int	cmd_type;
 	int is_pipe;
+	// int	quote_control;
 	int cmd_idx;
 	t_node *next;
 }	t_node;

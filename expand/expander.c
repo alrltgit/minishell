@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/23 21:18:26 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:32:20 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ char	*perfect(t_node *command, char *arr)
 	in_dq = 0;
 	i = 0;
 	str = NULL;
+
 
 	if (!arr)
 	{

@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/23 21:03:39 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:43:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	check_for_cmd_flags(t_node *current_node, char *result, int *i)
 {
 	if (current_node->cmd_is_found == 0)
 		current_node->cmd_type = find_command_path(result, current_node);
-	// if (current_node->cmd_type > 2 && current_node->is_pipe == 0)
 	if (current_node->cmd_type > 2)
 	{
 		current_node->cmd = NULL;
