@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/24 15:36:36 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/25 13:58:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	allocate_args_memory(t_node *current_node, char **result, int j_temp)
 
 void	find_and_add_args(t_node *current_node, char **result, int i, int *j)
 {
-	printf("result[i]: %s\n", result[i]);
+	// printf("result[i]: %s\n", result[i]);
 	if (current_node && result[i] && current_node->args_count > 0)
 		find_args(current_node, result, i, j);
 }
@@ -79,11 +79,11 @@ void	find_args(t_node *current_node, char **result, int i, int *j)
 		return ;
 	if (ft_strcmp(current_node->cmd, "echo") == 0)
 	{
-		printf("find args before -> %s\n", current_node->fcmd);
+		// printf("find args before -> %s\n", current_node->fcmd);
 		current_node->args[*j] = ft_strdup(result[i]);
 		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result[i]);
 		(*j)++;
-		printf("find args after -> %s\n", current_node->fcmd);
+		// printf("find args after -> %s\n", current_node->fcmd);
 		return ;
 	}
 	if (condition_is_met(current_node, result, i) == 0)

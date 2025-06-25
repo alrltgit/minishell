@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/24 12:18:43 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/25 13:24:25 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_redir	*add_new_file(t_redir **head, char *file_name)
 	return (new_node);
 }
 
-t_node	*create_unit(void)
+t_node	*create_unit(t_shell *shell)
 {
 	t_node	*node;
 
@@ -73,7 +73,7 @@ t_node	*create_unit(void)
 	node->fcmd = NULL;
 	node->args = NULL;
 	node->next = NULL;
-	node->shell = malloc(sizeof(t_shell));
+	node->shell = shell;
 	node->shell->exit_code = 0;
 	node->redir_files = NULL;
 	node->cmd_status = 0;
@@ -90,7 +90,7 @@ t_node	*add_unit_to_end(t_node **head)
 	t_node	*temp;
 	t_node	*new_node;
 
-	new_node = create_unit();
+	new_node = create_unit((*head)->shell);
 	if (!new_node)
 		return (NULL);
 	if (!*head)

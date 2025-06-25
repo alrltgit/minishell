@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/24 15:16:16 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/25 13:27:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	execute_other(t_node *node)
 	{
 		argv = build_argv(node);
 		single_command(node, argv);
+		free_double((void **)argv);
 	}
 }
 

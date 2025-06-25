@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/24 15:26:30 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/25 14:10:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ int	check_for_redir_heredoc(t_node *current_node, char **result, int *j)
 int	check_for_cmd_flags(t_node *current_node, char *result, int *i)
 {
 	printf("fcmdddd -> %s\n", current_node->fcmd);
-	printf("current_node->cmd_is_found_0: %d\n", current_node->cmd_is_found);
+	printf("before cmd is found-> %d\n------------------\n", current_node->cmd_is_found);
 	if (current_node->cmd_is_found == 0)
 		current_node->cmd_type = find_command_path(result, current_node);
-	printf("current_node->cmd: %s\n", current_node->cmd);
-	printf("current_node->cmd_is_found_1: %d\n", current_node->cmd_is_found);
+	printf("after cmd is found-> %d\n", current_node->cmd_is_found);
 	if (current_node->cmd_type > 2)
 	{
 		current_node->cmd = NULL;
 		return (1);
 	}
-	printf("current_node->flags_count: %d\n", current_node->flags_count);
+	printf("current_node->flags_count: %d\n-----------------\n", current_node->flags_count);
 	if (current_node->flags_count > 0)
 		find_flags(result, current_node, i);
 	return (0);
@@ -141,7 +140,7 @@ void read_the_input(char *rl, t_shell *shll)
 
 	check_for_empty_line(rl);
 	result = split_args(rl);
-	unit = create_unit();
+	unit = create_unit(shll);
 	unit->shell = shll;
 	shll->cmds = unit;
 	unit->shell->exit_code = 0;
@@ -149,12 +148,13 @@ void read_the_input(char *rl, t_shell *shll)
 	// printf("check-> %s\n", check);
 	if (check != NULL)
 	{
-		if (ft_strcmp(check, "") == 0)
+		set_error_status(check, unit);
+		/* if (ft_strcmp(check, "") == 0)
 		{
 			printf("\e[0;31mminishell: : command not found222\n");
 			free_arr(result);
 			return ;
-		}
+		} */
 		shll->exit_code = 127;
 		free_arr(result);
 		return ;
@@ -163,7 +163,7 @@ void read_the_input(char *rl, t_shell *shll)
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 		return ;
 	add_args_to_linked_list(result, &temp);
-	temp = unit;
+	/* temp = unit;
     int i;
     t_redir *r;
     while (temp)
@@ -188,7 +188,7 @@ void read_the_input(char *rl, t_shell *shll)
             r = r->next;
         }
         temp = temp->next;
-    }
+    } */
 	go_to_execute(unit);
-	free_arr(result);
+	free_double((void **)result);
 }

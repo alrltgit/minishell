@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/24 12:19:15 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/25 14:10:09 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,6 @@ char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);
 int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
 
-//exec.c
-void	execute_other(t_node *command);
-void	execute_builtin(t_node *command);
-char	**build_argv(t_node *node);
-
 // handle_quotes.c
 char 	*handle_quotesv2(char *str);
 
@@ -163,7 +158,7 @@ int		handle_redir_heredoc_append(t_redir *redir);
 // fill_unit_linked_list.c
 t_redir *add_new_file(t_redir **head, char *file_name);
 t_node	*add_unit_to_end(t_node **head);
-t_node	*create_unit(void);
+t_node	*create_unit(t_shell *shell);
 
 // split_readline_utils.c
 void check_for_operator(char *token, char **result, int *count, int len);
@@ -177,6 +172,7 @@ void	skip_whitespace(const char *str, int *i);
 
 // find_cmd.c
 int		find_command_path(char *input, t_node *unit);
+void	set_error_status(char *input, t_node *unit);
 
 // find_args.c
 int		count_args(char **result, t_node *current_node, int k);

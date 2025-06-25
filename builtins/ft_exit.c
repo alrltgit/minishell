@@ -3,18 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:16:52 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/26 14:03:41 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/25 13:54:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+
+//ADD FREE FOR EVERY POSSIBLE PLACE
+void	free_before_exit(t_node *command)
+{
+	free_double((void **)command->shell->env);
+	if (command->flags)
+		free_double((void **)command->flags);
+	free(command->fcmd);
+	free(command->cmd);
+	if (command->redir_files)
+	{
+		if (command->redir_files->file_name)
+			free(command->redir_files->file_name);
+	}
+}
+
+int	has_only_number(char *fcmd)
+{
+	int i = 5;
+
+	if (fcmd[4] == '\0')
+		return (1);
+	while (fcmd[i])
+	{
+		if (!(fcmd[i] >= '0' && fcmd[i] <= '9'))
+			return (0);
+		++i;
+	}
+	return (1);
+}
+
 void	ft_exit(t_node *command)
 {
+	command->shell->exit_code = 0;
+	ft_putstr_fd("exit\n", 2);
+	if (!has_only_number(command->fcmd))
+	{
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(command->fcmd + 4, 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		
+	}
+	else if (command->args_count > 1)
+	{
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(": too many arguments\n", 2);
+		return ;
+	}
 	// rl_clear_history();
-	free_double((void **)command->shell->env);
+	free_before_exit(command);
+	//control the free. it should free properly
 	exit(0);
 }

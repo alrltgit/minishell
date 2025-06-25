@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/24 14:40:09 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/25 14:08:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	set_error_status(char *input, t_node *unit)
 {
-	if (ft_strchr(input, '/'))
+	if (fake_perfect(input) == 0)
+			printf("minishell: %s: syntax error\n", input);
+	else if (ft_strchr(input, '/'))
 	{
 		if (access(input, F_OK) != 0)
 			printf("\e[0;31mminishell: %s: No such file or directory\n", input);
@@ -23,8 +25,9 @@ void	set_error_status(char *input, t_node *unit)
 	}
 	else
 	{
-		if (fake_perfect(input) == 0)
-			printf("minishell: %s: syntax error\n", input);
+		if ((input[0] == '\'' && input[ft_strlen(input) - 1] == '"')
+			|| (input[0] == '"' && input[ft_strlen(input) - 1] == '\''))
+			ft_printf("minishell: ' ': command not found\n", input);	
 		else
 			ft_printf("minishell: %s: command not found\n", input);	
 	}

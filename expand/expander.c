@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/24 15:01:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/25 13:21:08 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ char *process_exp(char **result, t_node *unit)
         else
         {
             free(result[0]);
-            result[0] = ft_strdup(handle_quotesv2(temp));
+            result[0] = handle_quotesv2(temp);
            	// free(temp);
         }
     }
@@ -254,12 +254,11 @@ char *process_exp(char **result, t_node *unit)
         }
 
         free(result[i]);
-        result[i] = ft_strdup(handle_quotesv2(temp2));
+        result[i] = handle_quotesv2(temp2);
        // printf("after exp -> %s\n", result[i]);
 
         // free(temp2);
         free(temp);
     }
-
     return (NULL);
 }
