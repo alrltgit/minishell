@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/10 10:18:22 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/18 19:04:53 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,20 @@ int	check_for_pipe(t_node **current_node, char **result, int *i, int *j)
 void	handle_child(t_node *temp, int *pipe_fd, int prev_fd)
 {
 	t_redir	*redir;
+	// t_redir	*r;
+	int		has_out_redir;
 
 	redir = temp->redir_files;
-	while (redir)
-	{
-		handle_redir_heredoc_append(redir);
-		redir = redir->next;
-	}
+	// r = redir;
+	has_out_redir = handle_redir_heredoc_append(redir);
+	if (has_out_redir == -1)
+		exit (1);
 	if (prev_fd != -1)
 	{
 		dup2(prev_fd, STDIN_FILENO);
 		close(prev_fd);
 	}
-	if (temp->next != NULL)
+	if (!has_out_redir && temp->next != NULL)
 	{
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], STDOUT_FILENO);
@@ -68,9 +69,8 @@ void	execute_depending_on_type(t_node *temp, char **argv, t_node *node)
 	else
 	{
 		execve(temp->cmd, argv, node->shell->env);
-		perror("execve failed");
 		free_arr(argv);
-		exit(EXIT_FAILURE);
+		exit(127); //127 is execve fail code
 	}
 }
 

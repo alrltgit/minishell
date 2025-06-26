@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/04 13:29:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 21:20:50 by apple            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/06/13 12:46:43 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/minishell.h"
 
@@ -61,7 +62,7 @@ char	*handle_double_quotes(const char *str, int *i)
 
 void	init_vars(int *i, int *sq, int *dq, char **temp)
 {
-	*i = -1;
+	*i = 0;
 	*sq = 0;
 	*dq = 0;
 	*temp = NULL;
@@ -74,21 +75,26 @@ char	*handle_quotes(char *str)
 	int		dq;
 	char	*temp;
 
+	if (!str)
+		return (NULL);
 	init_vars(&i, &sq, &dq, &temp);
-	while (str[++i])
+	while (str[i])
 	{
-		if (str[i] == '\'' && dq == 0)
+		if (str[i] && str[i] == '\'' && dq == 0)
 		{
 			sq = 1 - sq;
 			temp = handle_single_quotes(str, &i);
+			continue;
 		}
-		else if (str[i] == '"' && sq == 0)
+		else if (str[i] && str[i] == '"' && sq == 0)
 		{
 			dq = 2 - dq;
 			temp = handle_double_quotes(str, &i);
+			continue;
 		}
 		else
 			temp = update_str(temp, str[i]);
+		i++;
 	}
 	return (temp);
 }

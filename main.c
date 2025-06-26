@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/05/31 17:40:04 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/25 18:11:58 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	shell_loop(t_shell *shell)
 	char	*rl;
 	char	*pwd;
 
+	//shell->exit_code = 0;
 	signal(SIGQUIT, SIG_IGN); //ignore ctrl-'\'
 	//shell->cmds = NULL;
 	while (1)
@@ -70,7 +71,8 @@ void	shell_loop(t_shell *shell)
 		pwd = getcwd(NULL, 0);
 		if (!pwd)
         {
-            perror("getcwd");
+            perror("minishell: getcwd");
+			shell->exit_code = 1;
             break;
         }
 		signal(SIGINT, activate_ctrlc);
@@ -103,6 +105,7 @@ int main(int ac, char **av, char **ev)
 		return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
 	init_env(ev, &shell);
 	//handle $variable expansion
+	shell.exit_code = 0;
 	shell_loop(&shell);
 	//free_double((void **)shell.env);
     return (0);

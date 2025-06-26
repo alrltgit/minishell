@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/09 16:46:17 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/25 13:27:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	handle_redir_heredoc_append(t_redir *redir)
-{
-	if (redir->type->stdin_redir == 1)
-	{
-		if (handle_stdin_redirection(redir) == 1)
-			return ;
-	}
-	else if (redir->type->stdout_redir == 1)
-	{
-		if (handle_stdout_redirection(redir) == 1)
-			return ;
-	}
-	else if (redir->type->heredoc_redir == 1)
-	{
-		if (handle_heredoc_redirection(redir) == 1)
-			return ;
-	}
-	else if (redir->type->append_redir == 1)
-	{
-		if (handle_append_redirection(redir) == 1)
-			return ;
-	}
-}
 
 void	handle_child_process(t_node *node, char **argv)
 {
@@ -47,13 +23,21 @@ void	handle_child_process(t_node *node, char **argv)
 		redir = redir->next;
 	}
 	if (node->cmd == NULL)
+    {
+        printf("\e[0;31m%s: command not found222", argv[0]);
+        node->shell->exit_code = 127; //exit code added
+        exit(127);
+    }
+	if (ft_strcmp(node->cmd, "/usr/local/sbin/") == 0)
 	{
-		printf("%s: command not found", argv[0]);
+		printf("\e[0;31m: command not found222");
+		node->shell->exit_code = 127; //exit code added
 		exit(127);
 	}
 	if (execve(node->cmd, argv, node->shell->env) == -1)
 	{
 		perror("execve failed\n");
+		node->shell->exit_code = 1; //exit code added
 		exit(EXIT_FAILURE);
 	}
 }
@@ -74,6 +58,7 @@ void	single_command(t_node *node, char **argv)
 	else
 	{
 		perror("Fork failed.\n");
+		node->shell->exit_code = 1;
 		exit(1);
 	}
 }
@@ -86,7 +71,7 @@ void	execute_other(t_node *node)
 	{
 		argv = build_argv(node);
 		single_command(node, argv);
-		free_arr(argv);
+		free_double((void **)argv);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/01 16:27:22 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:59:25 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,11 @@ int	index_from_key(char *var_name, char **env_array)
 	i = -1;
 	while (env_array[++i])
 	{
-		// printf("env_array[i]: %s", env_array[i]);
 		var = ft_split(env_array[i], '=');
-		// printf("var[0]: %s - ", var[0]);
-		// printf("var_name: %s", var_name); // ends with \n, that's why ft_strcmp returns 10
 		temp = ft_strcmp(var_name, var[0]);
-		// printf("temp: %d", temp);
 		if (temp == 0)
 		{
-			// printf("TEST\n");
 			free_double((void **)var);
-			// printf("TEST\n");
 			return (i);
 		}
 		free_double((void **)var);
@@ -48,10 +42,11 @@ char	*value_from_key(char *var_name, t_shell *shell)
 {
 	int	index;
 
+	if (ft_strcmp(var_name, "0") == 0)
+		return ("minishell");
 	index = index_from_key(var_name, shell->env);
 	if (index == -1)
-		return (" ");
-		// return (NULL);
+		return ("");
 	return (ft_strchr(shell->env[index], '=') + 1);
 }
 
@@ -76,13 +71,6 @@ int	count_vars(char **ev)
 	return (count);
 }
 
-/*
-	index = index_from_key("OLDPWD", shell->env);
-	free(shell->env[index]);
-	printf("Freeing env[%d]: %s\n", index, shell->env[index]);
-	pwd = getcwd(NULL, 0);
-	shell->env[index] = ft_strjoin("OLDPWD=", pwd);
-*/
 void	init_env(char **ev, t_shell *shell)
 {
 	int	count;

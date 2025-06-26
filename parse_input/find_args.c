@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 21:27:52 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/25 17:04:18 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	allocate_args_memory(t_node *current_node, char **result, int j_temp)
 	return (0);
 }
 
-void	find_and_add_args(t_node *current_node, char **result, int *i, int *j)
+void	find_and_add_args(t_node *current_node, char **result, int i, int *j)
 {
-	if (current_node && result[*i] && current_node->args_count > 0)
+	if (current_node && result[i] && current_node->args_count > 0)
 		find_args(current_node, result, i, j);
 }
 
@@ -35,34 +35,59 @@ char	*retrieve_cmd_name(t_node *node)
 	return (node->cmd);
 }
 
-int	count_args(char **result, t_node *current_node, int j_temp)
+int	count_args(char **result, t_node *current_node, int k)
 {
-	char	*cmd_name;
 	int		args_count;
 
 	args_count = 0;
-	cmd_name = retrieve_cmd_name(current_node);
 	current_node->args_count = 0;
-	while (result[j_temp])
+	// printf("count_args result[%d] %s\n", k, result[k]);
+	if (ft_strcmp(current_node->cmd, "echo") == 0)
 	{
-		if (ft_strcmp(result[j_temp], "|") == 0)
-			break ;
-		if (condition_is_met(current_node, cmd_name, result, j_temp) == 0)
+		while (result[k])
+		{
+			if (ft_strcmp(result[k], "|") == 0)
+				break ;
 			args_count++;
-		j_temp++;
+			k++;
+		}
+	}
+	else
+	{
+		int res = 0;
+		if (k <= 0)
+			return (0);
+		while (result[k])
+		{
+			if (ft_strcmp(result[k], "|") == 0)
+				break ;	
+			res = condition_is_met(current_node, result, k);
+			if (res == 0)
+				args_count++;
+			// if (current_node->cmd_args_count != 0 && current_node->cmd_args_count != 1)
+			// 	args_count++;
+			k++;
+		}	
 	}
 	return (args_count);
 }
 
-void	find_args(t_node *current_node, char **result, int *i, int *j)
+void	find_args(t_node *current_node, char **result, int i, int *j)
 {
-	char	*cmd_name;
-
-	cmd_name = retrieve_cmd_name(current_node);
-	if (condition_is_met(current_node, cmd_name, result, *i) == 0)
+	if (i == current_node->cmd_idx)
+		return ;
+	if (ft_strcmp(current_node->cmd, "echo") == 0)
 	{
-		current_node->args[*j] = ft_strdup(result[*i]);
-		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result[*i]);
+		current_node->args[*j] = ft_strdup(result[i]);
+		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result[i]);
 		(*j)++;
+		return ;
+	}
+	if (condition_is_met(current_node, result, i) == 0)
+	{
+		current_node->args[*j] = ft_strdup(result[i]);
+		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result[i]);
+		(*j)++;
+		return ;
 	}
 }

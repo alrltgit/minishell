@@ -3,49 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/03 12:24:03 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:22:06 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	process_input(char **input_split, int count)
-{
-	int	i;
-
-	if (ft_strcmp(input_split[1], "-n") == 0)
-	{
-		i = 1;
-		while (input_split[++i] && ft_strcmp(input_split[++i], "|") == 0)
-		{
-			if (i + 1 != count && ft_strcmp(input_split[i + 1], "|") != 0)
-				printf("%s ", input_split[i]);
-			else
-				printf("%s", input_split[i]);
-		}
-	}
-	else
-	{
-		i = 1;
-		while (input_split[i] && ft_strcmp(input_split[i], "|") != 0)
-		{
-			// printf("TEST\n");
-			if (i + 1 != count && ft_strcmp(input_split[i + 1], "|") != 0)
-				printf("%s ", input_split[i]);
-			else
-				printf("%s", input_split[i]);
-			i++;
-		}
-		printf("\n");
-	}
-}
-
 /*
 	if there is expansion variable somewhere
-	in the input and if it is not exist expansion,
+	in the command->fcmd and if it is not exist expansion,
 	and if there is command, exrecute the command
 
 	for ex: $abcdef echo abc -> abc
@@ -57,47 +26,80 @@ void	process_input(char **input_split, int count)
 	try with echo -$abcdefd
 
 */
-void	ft_echo(t_node *command)
+/* void	handle_n_flag(t_node *command, int *i, int *w_n)
 {
-	int		count;
-	char	**input_split;
-	int		len;
-	char	*temp;
-
-	(void)command;
-	input_split = split_args(command->fcmd);
-	
-	// int i = 0;
-	// while (input_split[i++])
-	// {
-	// 	printf("input_split[i]: %s\n", input_split[i]);	
-	// }
-
-	count = -1;
-	len = -1;
-	
-	if (ft_strcmp(input_split[0], "echo") == 0 && !input_split[1])
+	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
+			|| command->fcmd[7] == ' '))
 	{
-		printf("\n");
-		return ;
+		*w_n = 1;
+		*i = 7;
 	}
-	while (input_split[++len])
-		;
-	while (++count < len)
+	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && command->fcmd[7] != '\0')
 	{
-		temp = ft_strdup(input_split[count]);
-		free(input_split[count]);
-		input_split[count] = ft_strdup(handle_quotes(perfect(command, &temp)));
-		// printf("input_split[count]: %s\n", input_split[count]);	
-		//trim_outer(input_split[count]);
+		*i = 7;
+		while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
+			|| command->fcmd[*i + 3] == '\0'))
+		{
+			*i += 3;
+		}
+		*w_n = 1;
 	}
-	while (input_split[++count])
-		;
-	process_input(input_split, count);
-	free_double((void **)input_split);
+} */
+
+void	handle_n_flag(t_node *command, int *i, int *w_n)
+{
+
+	//echo -n fdgdfgd
+	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n')
+	{
+		if (command->fcmd[7] != ' ' && command->fcmd[7] != '\0')
+			return ;
+		// if (command->fcmd[7] == ' ' ||)
+		else
+		{
+			*i = 7;
+			while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
+			|| command->fcmd[*i + 3] == '\0'))
+				*i += 3;
+			*w_n = 1;
+		}
+	}
+
+
+
+
+	
+	/* if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
+			|| command->fcmd[7] == ' '))
+	{
+		*i = 7;
+		while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
+			|| command->fcmd[*i + 3] == '\0'))
+		{
+			*i += 3;
+		}
+		*w_n = 1;
+	} */
 }
 
-/* void	ft_echo(t_node *command)
+void	ft_echo(t_node *command)
 {
 	
-} */
+	//(void)command;
+	
+	int	i;
+	int	w_n;
+	int	len;
+
+	w_n = 0;
+	i = -1;
+	len = ft_strlen(command->fcmd);	
+	i = 4;
+	printf("fcmd before handle n flag -> %s\n", command->fcmd);
+	handle_n_flag(command, &i, &w_n);
+	printf("fcmd after handle n flag -> %s\n", command->fcmd);
+	while (++i < len)
+		write(1, &command->fcmd[i], 1);
+	if (!w_n)
+		printf("\n");
+}

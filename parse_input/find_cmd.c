@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/09 17:55:00 by apple            ###   ########.fr       */
+/*   Updated: 2025/06/25 18:11:27 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,30 @@
 
 void	set_error_status(char *input, t_node *unit)
 {
-	if (ft_strchr(input, '/'))
+	if (fake_perfect(input) == 0)
+	{
+		printf("minishell: %s: syntax error\n", input);
+		unit->shell->exit_code = 2;
+		unit->cmd_status = 127;
+		return ;
+	}
+	else if (ft_strchr(input, '/'))
 	{
 		if (access(input, F_OK) != 0)
-			ft_printf("minishell: %s: No such file or directory\n", input);
+			printf("\e[0;31mminishell: %s: No such file or directory\n", input);
 		else if (access(input, X_OK) != 0)
-			ft_printf("minishell: %s: Permission denied\n", input);
+			printf("\e[0;31mminishell: %s: Permission denied\n", input);
 	}
 	else
-		ft_printf("minishell: %s: command not found\n", input);
+	{
+		if ((input[0] == '\'' && input[ft_strlen(input) - 1] == '"')
+			|| (input[0] == '"' && input[ft_strlen(input) - 1] == '\''))
+			ft_printf("minishell: ' ': command not found\n", input);	
+		else
+			ft_printf("minishell: %s: command not found\n", input);	
+		printf("exit code is set to 127\n");
+	}
+	unit->shell->exit_code = 127;
 	unit->cmd_status = 127;
 }
 
@@ -47,6 +62,7 @@ void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 	free(temp_result);
 	free_arr(paths);
 	unit->cmd_status = 2;
+	//unit->shell->exit_code = 0;
 }
 
 int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)
@@ -58,7 +74,7 @@ int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)
 	while (paths[i])
 	{
 		temp_result = ft_strconcat(paths[i], input);
-		if (access(temp_result, X_OK) == 0)
+		if (access(temp_result, X_OK) == 0 && unit->cmd_is_found == 0)
 		{
 			handle_command_init(unit, temp_result, paths);
 			return (unit->cmd_status);
@@ -73,6 +89,7 @@ int	find_command_path(char *input, t_node *unit)
 {
 	char	**paths;
 
+	printf("input: %s\n", input);
 	if (ft_strcmp(input, "<") == 0 || is_file_name(unit, input) == 1)
 	{
 		unit->cmd_status = 0;
@@ -80,6 +97,8 @@ int	find_command_path(char *input, t_node *unit)
 		return (unit->cmd_status);
 	}
 	if (check_builtin_command(input, unit))
+		return (unit->cmd_status);
+	if (check_for_executable(unit, input) != 0)
 		return (unit->cmd_status);
 	paths = get_path();
 	if (!paths)
@@ -89,7 +108,9 @@ int	find_command_path(char *input, t_node *unit)
 	}
 	if (resolve_cmd_in_paths(paths, input, unit))
 		return (unit->cmd_status);
+	
 	free_arr(paths);
 	set_error_status(input, unit);
+	// printf("path func return -> %d\n", unit->cmd_status);
 	return (unit->cmd_status);
 }
