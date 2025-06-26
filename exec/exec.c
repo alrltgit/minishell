@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/25 13:27:49 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/26 13:45:02 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	handle_child_process(t_node *node, char **argv)
+void	handle_child_process(char	**result, t_node *node, char **argv)
 {
 	t_redir	*redir;
 
@@ -24,32 +24,38 @@ void	handle_child_process(t_node *node, char **argv)
 	}
 	if (node->cmd == NULL)
     {
-        printf("\e[0;31m%s: command not found222", argv[0]);
+        // printf("\e[0;31m%s: command not found222", argv[0]);
         node->shell->exit_code = 127; //exit code added
+		free_double((void **)result);
+		free_double((void **)argv);
         exit(127);
     }
 	if (ft_strcmp(node->cmd, "/usr/local/sbin/") == 0)
 	{
 		printf("\e[0;31m: command not found222");
 		node->shell->exit_code = 127; //exit code added
+		free_double((void **)result);
+		free_double((void **)argv);
 		exit(127);
 	}
 	if (execve(node->cmd, argv, node->shell->env) == -1)
 	{
 		perror("execve failed\n");
 		node->shell->exit_code = 1; //exit code added
+		free_double((void **)result);
+		free_double((void **)argv);
 		exit(EXIT_FAILURE);
 	}
 }
 
-void	single_command(t_node *node, char **argv)
+void	single_command(char	**result, t_node *node, char **argv)
 {
 	pid_t	pid;
 	int		status;
 
 	pid = fork();
 	if (pid == 0)
-		handle_child_process(node, argv);
+		handle_child_process(result, node, argv);
 	else if (pid > 0)
 	{
 		wait(&status);
@@ -59,18 +65,20 @@ void	single_command(t_node *node, char **argv)
 	{
 		perror("Fork failed.\n");
 		node->shell->exit_code = 1;
+		free_double((void **)result);
+		free_double((void **)argv);
 		exit(1);
 	}
 }
 
-void	execute_other(t_node *node)
+void	execute_other(char	**result, t_node *node)
 {
 	char	**argv;
 
 	if (node->is_pipe == 0)
 	{
 		argv = build_argv(node);
-		single_command(node, argv);
+		single_command(result, node, argv);
 		free_double((void **)argv);
 	}
 }

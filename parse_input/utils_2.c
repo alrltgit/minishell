@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/25 16:58:30 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/26 13:39:51 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_quotes_in_extract_token(const char *str, int *i,
 	
 }
 
-void	go_to_execute(t_node *unit)
+void	go_to_execute(char	**result, t_node *unit)
 {
 	if (unit->is_pipe)
 		create_pipe(unit);
@@ -31,7 +31,7 @@ void	go_to_execute(t_node *unit)
 		if (unit->cmd_type == B_IN)
 			execute_builtin(unit);
 		else
-			execute_other(unit);
+			execute_other(result, unit);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/25 18:07:10 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/26 14:26:59 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	activate_ctrlc(int sig);
 void	deactivate_ctrlc(int sig);
 
 //exec.c
-void	execute_other(t_node *command);
+void	execute_other(char	**result, t_node *command);
 void	execute_builtin(t_node *command);
 char	**build_argv(t_node *node);
 
@@ -128,7 +128,7 @@ int		check_for_redir_heredoc(t_node *current_node, char **result, int *j);
 char 	*handle_quotesv2(char *str);
 
 // parse_input_utils.c
-void	go_to_execute(t_node *unit);
+void	go_to_execute(char **result, t_node *unit);
 int		check_for_empty_line(char *rl);
 int		is_input_redir(t_node *current_node, char **result, int *j);
 int		is_output_redir(t_node *current_node, char **result, int *j);
@@ -140,6 +140,11 @@ void	free_arr(char **arr);
 void	free_exit(t_shell *shell);
 void	iterate_free_nodes(t_node *head);
 void	free_double_n(void **arr, int n);
+
+void	free_redir_list(t_redir *redir);
+void	free_node_list(t_node *head);
+void	free_shell(t_shell *shell);
+void	free_linked_list(t_node *unit);
 
 
 // split the linked list

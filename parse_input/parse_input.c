@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/25 18:13:25 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/26 15:40:08 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void read_the_input(char *rl, t_shell *shll)
 	//unit->shell->exit_code = 0;
 	check = process_exp(result, unit);
 	// printf("check-> %s\n", check);
+	// printf("result[0]: %s\n", result[0]);
 	if (check != NULL)
 	{
 		set_error_status(check, unit);
@@ -156,14 +157,20 @@ void read_the_input(char *rl, t_shell *shll)
 			free_arr(result);
 			return ;
 		} */
+		free_linked_list(unit);
 		free_double((void **)result);
 		return ;
 	}
 	temp = unit;
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
+	{
+		free_linked_list(unit);
+		free_double((void **)result);
 		return ;
-	add_args_to_linked_list(result, &temp);
-	// temp = unit;
+	}
+	if (result[0])
+		add_args_to_linked_list(result, &temp);
+	temp = unit;
     // int i;
     // t_redir *r;
     // while (temp)
@@ -191,7 +198,9 @@ void read_the_input(char *rl, t_shell *shll)
     //     }
     //     temp = temp->next;
     // }
-	go_to_execute(unit);
+	if (result[0])
+		go_to_execute(result, temp);
 	printf("exit code at the bottom of parse-> %d", shll->exit_code);
 	free_double((void **)result);
+	free_linked_list(unit);
 }
