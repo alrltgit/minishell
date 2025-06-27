@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:13:57 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/25 17:04:14 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:53:50 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int	alloc_mem_for_args_arr(t_node *current_node)
 		current_node->args = malloc(sizeof(char *) * current_node->args_count);
 		if (!current_node->args)
 			return (1);
+		current_node->args[current_node->args_count - 1] = NULL;
 	}
 	else
 	{

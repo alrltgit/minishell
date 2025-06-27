@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/26 13:45:02 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:18:28 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	execute_other(char	**result, t_node *node)
 	}
 }
 
-void	execute_builtin(t_node *command)
+void	execute_builtin(t_node *command, char **result)
 {
 	if (!ft_strcmp(command->cmd, "pwd"))
 		ft_pwd(command);
@@ -96,7 +96,7 @@ void	execute_builtin(t_node *command)
 	else if (!ft_strcmp(command->cmd, "unset"))
 		ft_unset(command);
 	else if (!ft_strcmp(command->cmd, "exit"))
-		ft_exit(command);
+		ft_exit(command, result);
 	else if (!ft_strcmp(command->cmd, "export"))
 		ft_export(command);
 }

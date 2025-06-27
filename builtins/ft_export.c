@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/23 19:10:59 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/27 15:34:38 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,4 @@ void	ft_export(t_node *command)
 		create_and_set_val(command->shell, split[0], split[1]);
 	else
 		change_env_value(split[0], split[1] + 1, command->shell);
-	// free_double((void **)split);
 }

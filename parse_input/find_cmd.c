@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/26 14:25:01 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:19:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ void	set_error_status(char *input, t_node *unit)
 	}
 	else
 	{
-		if ((input[0] == '\'' && input[ft_strlen(input) - 1] == '"')
-			|| (input[0] == '"' && input[ft_strlen(input) - 1] == '\''))
-			ft_printf("minishell: ' ': command not found\n", input);	
-		else
-			ft_printf("minishell: %s: command not found\n", input);	
+		ft_printf("minishell: %s: command not found\n", input);	
 		printf("exit code is set to 127\n");
 	}
 	unit->shell->exit_code = 127;
@@ -45,8 +41,9 @@ int	check_builtin_command(char *input, t_node *unit)
 {
 	if (is_builtin(input))
 	{
+		printf("builtin cmd name %s\n", input);
 		unit->cmd_is_found = 1;
-		unit->cmd = input;
+		unit->cmd = ft_strdup(input);
 		unit->cmd_status = 1;
 		unit->fcmd = ft_strjoin_free(unit->fcmd, input);
 		return (1);
@@ -57,6 +54,7 @@ int	check_builtin_command(char *input, t_node *unit)
 void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 {
 	unit->cmd = ft_strdup(temp_result);
+	printf("handle command init cmd-> %s\n", unit->cmd);
 	unit->fcmd = ft_strjoin_free(unit->fcmd, temp_result);
 	unit->cmd_is_found = 1;
 	free(temp_result);

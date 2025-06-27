@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/26 15:40:08 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:32:04 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	if (ft_strcmp(result[0], "echo") == 0)
 	{
 		j_temp = 1;
-		while (ft_strcmp(result[j_temp], "-n") == 0)
+		while (result[j_temp] && ft_strcmp(result[j_temp], "-n") == 0)
 		{
 			j_temp++;
 		}
@@ -110,7 +110,9 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 		return ;
 	i = 1;
 	int k = i;
-	while (result[i])
+	/* if (!result || result[i])
+		return ; */
+	while (result && result[i])
 	{
 		if (ft_strcmp(result[i], "|") == 0)
 		{
@@ -121,7 +123,7 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 		}
 		if (ft_strcmp(result[k], "-n") == 0)
 		{
-			while (ft_strcmp(result[k], "-n") == 0)
+			while (result[k] && ft_strcmp(result[k], "-n") == 0)
 			{
 				k++;
 				i++;
@@ -146,17 +148,10 @@ void read_the_input(char *rl, t_shell *shll)
 	shll->cmds = unit;
 	//unit->shell->exit_code = 0;
 	check = process_exp(result, unit);
-	// printf("check-> %s\n", check);
-	// printf("result[0]: %s\n", result[0]);
+	printf("check -> %s\n", check);
 	if (check != NULL)
 	{
 		set_error_status(check, unit);
-		/* if (ft_strcmp(check, "") == 0)
-		{
-			printf("\e[0;31mminishell: : command not found222\n");
-			free_arr(result);
-			return ;
-		} */
 		free_linked_list(unit);
 		free_double((void **)result);
 		return ;
@@ -171,36 +166,8 @@ void read_the_input(char *rl, t_shell *shll)
 	if (result[0])
 		add_args_to_linked_list(result, &temp);
 	temp = unit;
-    // int i;
-    // t_redir *r;
-    // while (temp)
-    // {
-	// 	printf("temp->cmd_args_count: %d\n", temp->cmd_args_count);
-	// 	printf("temp->args_count: %d\n", temp->args_count);
-    //     printf("temp->cmd: %s\n", temp->cmd);
-    //     i = 0;
-    //     while (i < temp->flags_count)
-    //     {
-    //         printf("temp->flags[%d]: %s\n", i, temp->flags[i]);
-    //         i++;
-    //     }
-    //     i = 0;
-    //     while (i < temp->args_count)
-    //     {
-    //         printf("temp->args[%d]: %s\n", i, temp->args[i]);
-    //         i++;
-    //     }
-    //     r = temp->redir_files;
-    //     while (r)
-    //     {
-    //         printf("temp->redir_files->file_name: %s\n", r->file_name);
-    //         r = r->next;
-    //     }
-    //     temp = temp->next;
-    // }
 	if (result[0])
 		go_to_execute(result, temp);
-	printf("exit code at the bottom of parse-> %d", shll->exit_code);
 	free_double((void **)result);
 	free_linked_list(unit);
 }

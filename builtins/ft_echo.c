@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/24 11:22:06 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/27 13:31:02 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 	}
 } */
 
-void	handle_n_flag(t_node *command, int *i, int *w_n)
+/* void	handle_n_flag(t_node *command, int *i, int *w_n)
 {
 
 	//echo -n fdgdfgd
@@ -64,23 +64,31 @@ void	handle_n_flag(t_node *command, int *i, int *w_n)
 			*w_n = 1;
 		}
 	}
+} */
 
-
-
-
-	
-	/* if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
-			|| command->fcmd[7] == ' '))
+void	handle_n_flag(t_node *command, int *i, int *w_n)
+{
+	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n')
 	{
-		*i = 7;
-		while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
-			|| command->fcmd[*i + 3] == '\0'))
+		if (command->fcmd[7] != ' ' && command->fcmd[7] != '\0')
+			return ;
+		else
 		{
-			*i += 3;
+			*i = 7;
+			while (command->fcmd[*i + 1] &&
+				   command->fcmd[*i + 2] &&
+				   command->fcmd[*i + 3] &&
+				   command->fcmd[*i + 1] == '-' &&
+				   command->fcmd[*i + 2] == 'n' &&
+				   (command->fcmd[*i + 3] == ' ' || command->fcmd[*i + 3] == '\0'))
+			{
+				*i += 3;
+			}
+			*w_n = 1;
 		}
-		*w_n = 1;
-	} */
+	}
 }
+
 
 void	ft_echo(t_node *command)
 {
@@ -96,6 +104,8 @@ void	ft_echo(t_node *command)
 	len = ft_strlen(command->fcmd);	
 	i = 4;
 	printf("fcmd before handle n flag -> %s\n", command->fcmd);
+	if (command->fcmd[4] && command->fcmd[5] && command->fcmd[6]
+		&& command->fcmd[4] == ' ' && command->fcmd[5] )
 	handle_n_flag(command, &i, &w_n);
 	printf("fcmd after handle n flag -> %s\n", command->fcmd);
 	while (++i < len)

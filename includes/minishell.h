@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/26 14:26:59 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:17:30 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	deactivate_ctrlc(int sig);
 
 //exec.c
 void	execute_other(char	**result, t_node *command);
-void	execute_builtin(t_node *command);
+void	execute_builtin(t_node *command, char **result);
 char	**build_argv(t_node *node);
 
 //BUILTINS
@@ -108,7 +108,7 @@ void	ft_env(t_node *command);
 void	ft_cd(t_node *command);
 void	ft_echo(t_node *command);
 void	ft_export(t_node *command);
-void	ft_exit(t_node *command);
+void	ft_exit(t_node *command, char **result);
 void	ft_unset(t_node *command);
 
 //expand
@@ -223,12 +223,12 @@ char	*subtract_token(char *token, char *str, int start, int len);
 int		check_executable_errors(t_node *unit, char *input, struct stat *sb);
 
 // piping.c
-void	create_pipe(t_node *node);
+void	create_pipe(t_node *node, char **result);
 
 // piping_utils.c
 int		check_for_pipe(t_node **current_node, char **result, int *i, int *j);
 void	handle_child(t_node *temp, int *pipe_fd, int prev_fd);
-void	execute_depending_on_type(t_node *temp, char **argv, t_node *node);
+void	execute_depending_on_type(t_node *temp, char **argv, t_node *node, char **result);
 void	handle_parent(t_node *temp, int prev_fd, int *pipe_fd);
 
 // redirection.c

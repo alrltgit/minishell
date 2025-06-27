@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/18 19:04:53 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/27 13:14:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	handle_child(t_node *temp, int *pipe_fd, int prev_fd)
 	}
 }
 
-void	execute_depending_on_type(t_node *temp, char **argv, t_node *node)
+void	execute_depending_on_type(t_node *temp, char **argv, t_node *node, char **result)
 {
 	if (temp->cmd_type == B_IN)
 	{
-		execute_builtin(temp);
+		execute_builtin(temp, result);
 		exit(EXIT_SUCCESS);
 	}
 	else

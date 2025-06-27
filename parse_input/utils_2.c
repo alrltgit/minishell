@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/26 13:39:51 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:01:51 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	handle_quotes_in_extract_token(const char *str, int *i,
 void	go_to_execute(char	**result, t_node *unit)
 {
 	if (unit->is_pipe)
-		create_pipe(unit);
+		create_pipe(unit, result);
 	else
 	{
 		if (unit->cmd_type == B_IN)
-			execute_builtin(unit);
+			execute_builtin(unit, result);
 		else
 			execute_other(result, unit);
 	}
@@ -61,7 +61,7 @@ char	**get_path(void)
 		return (NULL);
 	return (paths);
 }
-
+/* 
 int	is_valid_command(t_node *current_node, char *rl)
 {
 	if (current_node->cmd == NULL)
@@ -71,4 +71,4 @@ int	is_valid_command(t_node *current_node, char *rl)
 		return (1);
 	}
 	return (0);
-}
+} */

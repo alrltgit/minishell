@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:16:52 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/25 13:54:26 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/27 14:48:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 //ADD FREE FOR EVERY POSSIBLE PLACE
-void	free_before_exit(t_node *command)
+/* void	free_before_exit(t_node *command)
 {
 	free_double((void **)command->shell->env);
 	if (command->flags)
@@ -26,7 +26,7 @@ void	free_before_exit(t_node *command)
 		if (command->redir_files->file_name)
 			free(command->redir_files->file_name);
 	}
-}
+} */
 
 int	has_only_number(char *fcmd)
 {
@@ -43,7 +43,7 @@ int	has_only_number(char *fcmd)
 	return (1);
 }
 
-void	ft_exit(t_node *command)
+void	ft_exit(t_node *command, char **result)
 {
 	command->shell->exit_code = 0;
 	ft_putstr_fd("exit\n", 2);
@@ -60,8 +60,9 @@ void	ft_exit(t_node *command)
 		ft_putstr_fd(": too many arguments\n", 2);
 		return ;
 	}
-	// rl_clear_history();
-	free_before_exit(command);
+	if (result)
+		free_double((void **)result);
+	free_linked_list(command);
 	//control the free. it should free properly
 	exit(0);
 }

@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/18 17:48:58 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:18:59 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 void	manage_child_process(t_node *temp, int pipe_fd[2],
-	int prev_fd, t_node *node)
+	int prev_fd, t_node *node, char **result)
 {
 	char	**argv;
 
 	argv = build_argv(temp);
 	handle_child(temp, pipe_fd, prev_fd);
-	execute_depending_on_type(temp, argv, node);
+	execute_depending_on_type(temp, argv, node, result);
 	free_arr(argv);
 }
 
@@ -60,7 +60,7 @@ pid_t	create_fork(t_node *node)
 	return (pid);
 }
 
-void	create_pipe(t_node *node)
+void	create_pipe(t_node *node, char **result)
 {
 	t_node	*temp;
 	int		prev_fd;
@@ -79,7 +79,7 @@ void	create_pipe(t_node *node)
 		}
 		pid = create_fork(node);
 		if (pid == 0)
-			manage_child_process(temp, pipe_fd, prev_fd, node);
+			manage_child_process(temp, pipe_fd, prev_fd, node, result);
 		else if (pid > 0)
 		{
 			manage_parent_process(temp, pipe_fd, &prev_fd);
