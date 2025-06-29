@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/27 13:31:02 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/29 11:56:51 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,69 +26,31 @@
 	try with echo -$abcdefd
 
 */
-/* void	handle_n_flag(t_node *command, int *i, int *w_n)
-{
-	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && (command->fcmd[7] == '\0'
-			|| command->fcmd[7] == ' '))
-	{
-		*w_n = 1;
-		*i = 7;
-	}
-	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n' && command->fcmd[7] != '\0')
-	{
-		*i = 7;
-		while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
-			|| command->fcmd[*i + 3] == '\0'))
-		{
-			*i += 3;
-		}
-		*w_n = 1;
-	}
-} */
 
-/* void	handle_n_flag(t_node *command, int *i, int *w_n)
+void	handle_n_flag(t_node *command, int *i, int *w_n)
 {
 
 	//echo -n fdgdfgd
 	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n')
 	{
-		if (command->fcmd[7] != ' ' && command->fcmd[7] != '\0')
+		if (command->fcmd[7] && command->fcmd[7] != ' ' && command->fcmd[7] != '\0')
 			return ;
 		// if (command->fcmd[7] == ' ' ||)
 		else
 		{
 			*i = 7;
-			while (command->fcmd[*i + 1] == '-' && command->fcmd[*i + 2] == 'n' && (command->fcmd[*i + 3] == ' '
+			while (command->fcmd[*i + 1] == '-'
+				&& command->fcmd[*i + 2] == 'n' 
+				&& (command->fcmd[*i + 3] == ' '
 			|| command->fcmd[*i + 3] == '\0'))
-				*i += 3;
-			*w_n = 1;
-		}
-	}
-} */
-
-void	handle_n_flag(t_node *command, int *i, int *w_n)
-{
-	if (command->fcmd[5] == '-' && command->fcmd[6] == 'n')
-	{
-		if (command->fcmd[7] != ' ' && command->fcmd[7] != '\0')
-			return ;
-		else
-		{
-			*i = 7;
-			while (command->fcmd[*i + 1] &&
-				   command->fcmd[*i + 2] &&
-				   command->fcmd[*i + 3] &&
-				   command->fcmd[*i + 1] == '-' &&
-				   command->fcmd[*i + 2] == 'n' &&
-				   (command->fcmd[*i + 3] == ' ' || command->fcmd[*i + 3] == '\0'))
 			{
 				*i += 3;
+				
 			}
 			*w_n = 1;
 		}
 	}
 }
-
 
 void	ft_echo(t_node *command)
 {

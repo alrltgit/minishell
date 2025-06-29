@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/26 13:35:54 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/29 11:11:55 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	shell_loop(t_shell *shell)
 
 int main(int ac, char **av, char **ev)
 {
-	t_shell	shell;
+	t_shell	shell = {0};
 	(void)av;
 	
 	if (ac != 1)
@@ -107,6 +107,6 @@ int main(int ac, char **av, char **ev)
 	//handle $variable expansion
 	shell.exit_code = 0;
 	shell_loop(&shell);
-	//free_double((void **)shell.env);
+	free_exit(&shell);
     return (0);
 }

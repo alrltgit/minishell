@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/27 15:32:04 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/29 11:39:42 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	int k = i;
 	/* if (!result || result[i])
 		return ; */
-	while (result && result[i])
+	while (result[i])
 	{
 		if (ft_strcmp(result[i], "|") == 0)
 		{

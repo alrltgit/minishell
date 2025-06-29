@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/23 20:59:25 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/29 11:08:57 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	count_vars(char **ev)
 
 	if (!ev)
 		return (0);
-	count = 0;
-	while (ev[count])
-		count++;
+	count = -1;
+	while (ev[++count])
+		;
 	return (count);
 }
 
@@ -75,6 +75,8 @@ void	init_env(char **ev, t_shell *shell)
 {
 	int	count;
 
+	if (shell->env)
+		free_double((void **)shell->env);
 	count = count_vars(ev);
 	shell->env = malloc((count + 1) * sizeof(char *));
 	if (!shell->env)
