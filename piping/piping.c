@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/30 13:47:39 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:30:47 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void  exit_code(t_node *temp)
-{
-    int status;
-	
-    status = 0;
-    while (wait(&status) > 0)
-    {
-        if (WIFEXITED(status))
-            temp->shell->exit_code = WEXITSTATUS(status);
-        else if (WIFSIGNALED(status))
-            temp->shell->exit_code = 1;
-    }
-}
 
 void	manage_child_process(t_node *temp, int pipe_fd[2],
 	int prev_fd, t_node *node, char **result)
@@ -60,7 +46,6 @@ int	create_pipe_fd(int pipe_fd[2])
 	return (0);
 }
 
-//added t_node as parameter to set shell err code in case of err
 pid_t	create_fork(t_node *node)
 {
 	pid_t	pid;
@@ -85,7 +70,6 @@ void	create_pipe(t_node *node, char **result)
 	prev_fd = -1;
 	while (temp)
 	{
-		//addded errcode line for exit status
 		if (create_pipe_fd(pipe_fd))
 		{
 			node->shell->exit_code = 1;
@@ -104,7 +88,5 @@ void	create_pipe(t_node *node, char **result)
 	}
 	temp = node;
 	exit_code(temp);
-	// while (wait(NULL) > 0)
-	// 	;
 	unlink("fd_temp");
 }

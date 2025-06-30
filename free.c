@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:47:07 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/26 15:08:10 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:48:21 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	iterate_free_nodes(t_node *head)
 void free_linked_list(t_node *unit)
 {
 	// free_shell(unit->shell);
-	free_redir_list(unit->redir_files);
+	// free_redir_list(unit->redir_files);
 	free_node_list(unit);
 }
 

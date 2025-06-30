@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/13 12:46:43 by hceviz           ###   ########.fr       */
+/*   Created: 2025/06/30 17:31:10 by alraltse          #+#    #+#             */
+/*   Updated: 2025/06/30 18:29:50 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 
@@ -84,13 +83,13 @@ char	*handle_quotes(char *str)
 		{
 			sq = 1 - sq;
 			temp = handle_single_quotes(str, &i);
-			continue;
+			continue ;
 		}
 		else if (str[i] && str[i] == '"' && sq == 0)
 		{
 			dq = 2 - dq;
 			temp = handle_double_quotes(str, &i);
-			continue;
+			continue ;
 		}
 		else
 			temp = update_str(temp, str[i]);

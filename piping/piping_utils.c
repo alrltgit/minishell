@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   piping_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 13:45:33 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:49:57 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void  exit_code(t_node *temp)
+{
+    int status;
+	
+    status = 0;
+    while (wait(&status) > 0)
+    {
+        if (WIFEXITED(status))
+            temp->shell->exit_code = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            temp->shell->exit_code = 1;
+    }
+}
 
 int	check_for_pipe(t_node **current_node, char **result, int *i, int *j)
 {

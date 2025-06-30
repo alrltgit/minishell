@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 21:13:57 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/27 14:53:50 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:21:07 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <ctype.h>
-
-int	handle_pipe_and_move(t_node **current_node, char **result, int *i, int *j)
-{
-	(*current_node)->cmd_idx = *i + 1;
-	*j = 0;
-	// printf("current_node->cmd_args_count: %d\n", (*current_node)->cmd_args_count);
-	if (handle_pipe(current_node, result, *i, (*current_node)->cmd_idx) == 1)
-		return (1);
-	// printf("current_node->args_count_after_pipe: %d\n", (*current_node)->args_count);
-	// printf("current_node->cmd_args_count: %d\n", (*current_node)->cmd_args_count);
-	(*i)++;
-	return (0);
-}
 
 int	is_file_name(t_node *current_node, char *result)
 {
@@ -40,10 +26,10 @@ int	is_file_name(t_node *current_node, char *result)
 	return (0);
 }
 
-int check_for_echo_flag(t_node *current_node, char **result, int j_temp)
+int	check_for_echo_flag(t_node *current_node, char **result, int j_temp)
 {
-	int i;
-	int first_n_found;
+	int	i;
+	int	first_n_found;
 
 	i = 0;
 	first_n_found = 0;
@@ -58,45 +44,29 @@ int check_for_echo_flag(t_node *current_node, char **result, int j_temp)
 				continue ;
 			}
 			if (ft_strcmp(current_node->flags[i], "-n") == 0 && first_n_found)
-				return (0); // treat as an argument
+				return (0);
 			i++;
 		}
 	}
-	return (1); // skip as a flag
+	return (1);
 }
 
 int	condition_is_met(t_node *current_node, char **result, int j_temp)
 {
 	if (result[j_temp] == NULL)
 		return (1);
-	if (ft_strcmp(result[j_temp], "<") == 0
-		|| ft_strcmp(result[j_temp], ">") == 0
-		|| ft_strcmp(result[j_temp], "<<") == 0
-		|| ft_strcmp(result[j_temp], ">>") == 0
-		|| ft_strcmp(result[j_temp], "|") == 0)
+	if (is_redir_or_pipe(result[j_temp]))
 		return (1);
-	// printf("Token: %s\n", result[j_temp]);
-	// printf("current_node->cmd_args_count: %d\n", current_node->cmd_args_count);
-	if (current_node->cmd_args_count == 0 && j_temp != 1)
-	{
-		if (ft_strcmp(retrieve_cmd_name(current_node), result[j_temp]) == 0) // wc && current_node_cmd_args == 1 - command is found
-		{
-			current_node->cmd_args_count = 1;
-			return (1);
-		}	
-	}
-	if (current_node->cmd_args_count != 0 && result[j_temp][0] != '-' && is_file_name(current_node, result[j_temp]) == 0)
-	{
-		// printf("ARG FOUND: %s\n", result[j_temp]);
-		current_node->cmd_args_count++;
-		return (0);	
-	}
-	if (result[j_temp][0] != '-'
-		&& is_file_name(current_node, result[j_temp]) == 0) 
+	if (is_cmd_name(current_node, result, j_temp))
+		return (1);
+	if (is_non_flag_non_file_arg(current_node, result, j_temp))
 		return (0);
-    if (is_file_name(current_node, result[j_temp]) == 1)
-        return (1);
-    return (1);
+	if (result[j_temp][0] != '-'
+		&& is_file_name(current_node, result[j_temp]) == 0)
+		return (0);
+	if (is_file_name(current_node, result[j_temp]) == 1)
+		return (1);
+	return (1);
 }
 
 int	rl_is_space(char *rl)
@@ -130,5 +100,3 @@ int	alloc_mem_for_args_arr(t_node *current_node)
 	}
 	return (0);
 }
-
-// char	*is_empty_quote(char **res)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:52:11 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 13:27:57 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:13:42 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	handle_quotes_in_extract_token(const char *str, int *i,
 		*single_q = !(*single_q);
 	else if (str[*i] == '"' && !(*single_q))
 		*double_q = !(*double_q);
-	
 }
 
 void	go_to_execute(char	**result, t_node *unit)
@@ -61,14 +60,3 @@ char	**get_path(void)
 		return (NULL);
 	return (paths);
 }
-/* 
-int	is_valid_command(t_node *current_node, char *rl)
-{
-	if (current_node->cmd == NULL)
-	{
-		printf("\e[0;31mminishell: %s\n", ft_strcat(rl, ": command not found555\n"));
-		current_node->shell->exit_code = 127;
-		return (1);
-	}
-	return (0);
-} */

@@ -6,12 +6,11 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:50:17 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/26 14:57:09 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:23:32 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 char 	*handle_quotesv2(char *str)
 {
@@ -32,10 +31,9 @@ char 	*handle_quotesv2(char *str)
 		if (str[i] && str[i] == '\'' && dq == 0)
 		{
 			sq = 1 - sq;
-			i++; //skip opening quote
-			while (str[i] && str[i] != '\'') //read until closing quote
+			i++;
+			while (str[i] && str[i] != '\'')
 			{
-				//while
 				temp = update_str(temp, str[i]);
 				i++;
 			}
@@ -49,8 +47,8 @@ char 	*handle_quotesv2(char *str)
 		if (str[i] && str[i] == '"' && sq == 0)
 		{
 			dq = 2 - dq;
-			i++; //skip opening quote
-			while (str[i] && str[i] != '"') //while
+			i++;
+			while (str[i] && str[i] != '"')
 			{
 				temp = update_str(temp, str[i]);
 				i++;
@@ -62,13 +60,11 @@ char 	*handle_quotesv2(char *str)
 			}
 			continue;
 		}
-		// printf("temp: %s\n", temp);
 		temp = update_str(temp, str[i]);
 		i++;
 	}
 	free(str);
 	str = ft_strdup(temp);
 	free(temp);
-	// printf("returned-> %s\n", str);
 	return (str);
 }

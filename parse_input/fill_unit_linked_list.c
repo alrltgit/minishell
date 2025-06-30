@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_unit_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/30 12:41:54 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:35:26 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_node	*create_unit(t_shell *shell)
 	node->cmd_is_found = 0;
 	node->cmd_idx = 0;
 	node->cmd_args_count = 0;
+	node->n_flag = 0;
 	return (node);
 }
 

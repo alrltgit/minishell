@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/25 17:04:18 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:39:55 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,11 @@ char	*retrieve_cmd_name(t_node *node)
 
 int	count_args(char **result, t_node *current_node, int k)
 {
-	int		args_count;
-
-	args_count = 0;
 	current_node->args_count = 0;
-	// printf("count_args result[%d] %s\n", k, result[k]);
 	if (ft_strcmp(current_node->cmd, "echo") == 0)
-	{
-		while (result[k])
-		{
-			if (ft_strcmp(result[k], "|") == 0)
-				break ;
-			args_count++;
-			k++;
-		}
-	}
+		return (count_echo_args(result, k));
 	else
-	{
-		int res = 0;
-		if (k <= 0)
-			return (0);
-		while (result[k])
-		{
-			if (ft_strcmp(result[k], "|") == 0)
-				break ;	
-			res = condition_is_met(current_node, result, k);
-			if (res == 0)
-				args_count++;
-			// if (current_node->cmd_args_count != 0 && current_node->cmd_args_count != 1)
-			// 	args_count++;
-			k++;
-		}	
-	}
-	return (args_count);
+		return (count_normal_args(result, current_node, k));
 }
 
 void	find_args(t_node *current_node, char **result, int i, int *j)

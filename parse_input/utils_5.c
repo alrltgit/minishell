@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:51:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/20 12:42:59 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:21:38 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,15 @@ char	*subtract_token(char *token, char *str, int start, int len)
 	token = ft_substr(str, start, len);
 	if (!token)
 		return (NULL);
-	// printf("token[0]: %c\n", token[0]);
-	// printf("token[len]: %c\n", token[len - 1]);
-	// if ((token[0] == '\'' && token[1] == '\'')
-	// 	&& token[len - 1] == '\'' && token[len - 2] == '\'')
-	// {
-	// 	token[len - 2] = '\0';
-	// 	ft_memmove(token, token + 2, len - 2);
-	// }
 	return (token);
+}
+
+int	handle_pipe_and_move(t_node **current_node, char **result, int *i, int *j)
+{
+	(*current_node)->cmd_idx = *i + 1;
+	*j = 0;
+	if (handle_pipe(current_node, result, *i, (*current_node)->cmd_idx) == 1)
+		return (1);
+	(*i)++;
+	return (0);
 }

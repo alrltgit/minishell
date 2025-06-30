@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 13:34:23 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 16:44:25 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	set_error_status(char *input, t_node *unit)
 	}
 	else
 	{
-		ft_printf("minishell: %s: command not found\n", input);	
-		printf("exit code is set to 127\n");
+		ft_printf("minishell: %s: command not found\n", input);
 		unit->shell->exit_code = 127;
 	}
 	unit->cmd_status = 127;
@@ -41,7 +40,6 @@ int	check_builtin_command(char *input, t_node *unit)
 {
 	if (is_builtin(input))
 	{
-		printf("builtin cmd name %s\n", input);
 		unit->cmd_is_found = 1;
 		unit->cmd = ft_strdup(input);
 		unit->cmd_status = 1;
@@ -54,7 +52,6 @@ int	check_builtin_command(char *input, t_node *unit)
 void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 {
 	unit->cmd = ft_strdup(temp_result);
-	printf("handle command init cmd-> %s\n", unit->cmd);
 	unit->fcmd = ft_strjoin_free(unit->fcmd, temp_result);
 	unit->cmd_is_found = 1;
 	free(temp_result);
@@ -87,7 +84,6 @@ int	find_command_path(char *input, t_node *unit)
 {
 	char	**paths;
 
-	printf("input: %s\n", input);
 	if (ft_strcmp(input, "<") == 0 || is_file_name(unit, input) == 1)
 	{
 		unit->cmd_status = 0;
@@ -106,9 +102,7 @@ int	find_command_path(char *input, t_node *unit)
 	}
 	if (resolve_cmd_in_paths(paths, input, unit))
 		return (unit->cmd_status);
-	
 	free_arr(paths);
 	set_error_status(input, unit);
-	// printf("path func return -> %d\n", unit->cmd_status);
 	return (unit->cmd_status);
 }

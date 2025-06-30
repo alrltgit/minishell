@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_readline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 12:19:15 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:12:34 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**split_args(char *str)
 
 	result = malloc(sizeof(char *) * 1024);
 	i = -1;
-	while (++i < 1024) //recently addded
+	while (++i < 1024)
 		result[i] = NULL;
 	if (!result)
 		return (NULL);

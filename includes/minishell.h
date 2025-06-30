@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/27 13:17:30 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:18:15 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_node
 	int is_pipe;
 	int cmd_args_count;
 	int cmd_idx;
+	int n_flag;
 	t_node *next;
 }	t_node;
 
@@ -186,6 +187,10 @@ char	*retrieve_cmd_name(t_node *node);
 int		allocate_args_memory(t_node *current_node, char **result, int j_temp);
 void	find_and_add_args(t_node *current_node, char **result, int i, int *j);
 
+// find_args_utils.c
+int		count_echo_args(char **result, int k);
+int		count_normal_args(char **result, t_node *current_node, int k);
+
 // find_args_v2.c
 int		count_args2(char **result, t_node *current_node, int j_temp);
 
@@ -216,11 +221,21 @@ int		check_for_executable(t_node *unit, char *input);
 void	split_token_on_operator(char *token, char **result, int *count);
 void	extra_token_check(char *token, char **result, int *count, int len);
 
-//utils_5.c
+// utils_5.c
 char	*extract_token_helper(char *token, int *count, char **result, int *i);
 void	init_vars_in_func(int *single_q, int *double_q);
 char	*subtract_token(char *token, char *str, int start, int len);
 int		check_executable_errors(t_node *unit, char *input, struct stat *sb);
+
+// utils_6.c
+int		get_echo_args_start(char **result);
+void	add_args_loop(char **result, t_node **unit, int i, int j);
+int		parse_and_prepare(char *rl, t_shell *shll, char ***result, t_node **unit);
+
+// utils_7.c
+int		is_redir_or_pipe(char *token);
+int		is_cmd_name(t_node *current_node, char **result, int j_temp);
+int		is_non_flag_non_file_arg(t_node *current_node, char **result, int j_temp);
 
 // piping.c
 void	create_pipe(t_node *node, char **result);
@@ -230,6 +245,7 @@ int		check_for_pipe(t_node **current_node, char **result, int *i, int *j);
 void	handle_child(t_node *temp, int *pipe_fd, int prev_fd);
 void	execute_depending_on_type(t_node *temp, char **argv, t_node *node, char **result);
 void	handle_parent(t_node *temp, int prev_fd, int *pipe_fd);
+void 	exit_code(t_node *temp);
 
 // redirection.c
 int		redirect_to_stdin(t_redir *node);

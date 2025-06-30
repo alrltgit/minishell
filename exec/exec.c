@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:42:27 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/27 13:18:28 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 16:06:33 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	handle_child_process(char	**result, t_node *node, char **argv)
+void	handle_child_redirs_and_errors(char **result, t_node *node, char **argv)
 {
 	t_redir	*redir;
 
@@ -23,25 +23,28 @@ void	handle_child_process(char	**result, t_node *node, char **argv)
 		redir = redir->next;
 	}
 	if (node->cmd == NULL)
-    {
-        // printf("\e[0;31m%s: command not found222", argv[0]);
-        node->shell->exit_code = 127; //exit code added
-		free_double((void **)result);
-		free_double((void **)argv);
-        exit(127);
-    }
-	if (ft_strcmp(node->cmd, "/usr/local/sbin/") == 0)
 	{
-		printf("\e[0;31m: command not found222");
-		node->shell->exit_code = 127; //exit code added
+		node->shell->exit_code = 127;
 		free_double((void **)result);
 		free_double((void **)argv);
 		exit(127);
 	}
+	if (ft_strcmp(node->cmd, "/usr/local/sbin/") == 0)
+	{
+		printf("\e[0;31m: command not found222");
+		node->shell->exit_code = 127;
+		free_double((void **)result);
+		free_double((void **)argv);
+		exit(127);
+	}
+}
+
+void	handle_child_process(char	**result, t_node *node, char **argv)
+{
+	handle_child_redirs_and_errors(result, node, argv);
 	if (execve(node->cmd, argv, node->shell->env) == -1)
 	{
-		perror("execve failed\n");
-		node->shell->exit_code = 1; //exit code added
+		node->shell->exit_code = 1;
 		free_double((void **)result);
 		free_double((void **)argv);
 		exit(EXIT_FAILURE);
@@ -51,14 +54,13 @@ void	handle_child_process(char	**result, t_node *node, char **argv)
 void	single_command(char	**result, t_node *node, char **argv)
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork();
 	if (pid == 0)
 		handle_child_process(result, node, argv);
 	else if (pid > 0)
 	{
-		wait(&status);
+		exit_code(node);
 		unlink("fd_temp");
 	}
 	else

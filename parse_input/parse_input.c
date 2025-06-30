@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/30 12:09:16 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:11:33 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,13 @@ int	check_for_redir_heredoc(t_node *current_node, char **result, int *j)
 
 int	check_for_cmd_flags(t_node *current_node, char *result, int *i)
 {
-	printf("fcmdddd -> %s\n", current_node->fcmd);
-	printf("before cmd is found-> %d\n------------------\n", current_node->cmd_is_found);
 	if (current_node->cmd_is_found == 0)
 		current_node->cmd_type = find_command_path(result, current_node);
-	printf("after cmd is found-> %d\n", current_node->cmd_is_found);
 	if (current_node->cmd_type > 2)
 	{
 		current_node->cmd = NULL;
 		return (1);
 	}
-	printf("current_node->flags_count: %d\n-----------------\n", current_node->flags_count);
 	if (current_node->flags_count > 0)
 		find_flags(result, current_node, i);
 	return (0);
@@ -54,7 +50,6 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 	j = 0;
 	j_temp = j;
 	current_node->flags_count = count_flags(result, j_temp);
-	//printf("current_node->flags_count: %d\n", current_node->flags_count);
 	if (alloc_mem_for_flags_arr(current_node) == 1)
 		return (1);
 	i = 0;
@@ -78,65 +73,23 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	int		j_temp;
 	t_node	*current_node;
 
+	i = 1;
 	j = 0;
-	j_temp = j + 1;
+	j_temp = get_echo_args_start(result);
 	current_node = *unit;
-	if (ft_strcmp(result[0], "echo") == 0)
-	{
-		j_temp = 1;
-		while (result[j_temp] && ft_strcmp(result[j_temp], "-n") == 0)
-		{
-			j_temp++;
-		}
-	}
 	if (allocate_args_memory(current_node, result, j_temp) == 1)
 		return ;
-	i = 1;
-	int k = i;
-	while (result[i]) //conditional jump here
-	{
-		if (ft_strcmp(result[i], "|") == 0)
-		{
-			current_node->cmd_args_count = 0;
-			if (handle_pipe_and_move(&current_node, result, &i, &j) == 1)
-				break ;
-			continue ;
-		}
-		if (ft_strcmp(result[k], "-n") == 0)
-		{
-			while (result[k] && ft_strcmp(result[k], "-n") == 0)
-			{
-				k++;
-				i++;
-			}
-		}
-		find_and_add_args(current_node, result, i, &j);
-		i++;
-	}
+	add_args_loop(result, unit, i, j);
 }
 
-void read_the_input(char *rl, t_shell *shll)
+void	read_the_input(char *rl, t_shell *shll)
 {
-    char	**result;
-    t_node 	*unit;
-    t_node 	*temp;
-	char	*check;
+	char	**result;
+	t_node	*unit;
+	t_node	*temp;
 
-	check_for_empty_line(rl);
-	result = split_args(rl);
-	unit = create_unit(shll);
-	unit->shell = shll;
-	shll->cmds = unit;
-	//unit->shell->exit_code = 0;
-	check = process_exp(result, unit);
-	printf("check -> %s\n", check);
-	if (check != NULL)
-	{
-		set_error_status(check, unit);
-		free_linked_list(unit);
-		free_double((void **)result);
+	if (parse_and_prepare(rl, shll, &result, &unit))
 		return ;
-	}
 	temp = unit;
 	if (add_cmds_flags_to_linked_list(result, &temp) == 1)
 	{

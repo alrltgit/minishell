@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/30 13:36:26 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:54:48 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	}
 	while (tmp && tmp[++j])
 		str = update_str(str, tmp[j]);
-	//free(tmp);
+	// free(tmp); commented free(tmp) causes 2 bytes lost in test "echo $?"
 	return (str);
 }
 
