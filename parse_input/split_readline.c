@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:39:40 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/27 14:52:48 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:19:15 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ char	**split_args(char *str)
 	int		count;
 
 	result = malloc(sizeof(char *) * 1024);
-	result[1023] = NULL;
+	i = -1;
+	while (++i < 1024) //recently addded
+		result[i] = NULL;
 	if (!result)
 		return (NULL);
 	i = 0;

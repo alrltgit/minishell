@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:26:49 by apple             #+#    #+#             */
-/*   Updated: 2025/06/29 11:39:42 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:09:16 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,34 +54,18 @@ int	add_cmds_flags_to_linked_list(char **result, t_node **unit)
 	j = 0;
 	j_temp = j;
 	current_node->flags_count = count_flags(result, j_temp);
-	printf("current_node->flags_count: %d\n", current_node->flags_count);
+	//printf("current_node->flags_count: %d\n", current_node->flags_count);
 	if (alloc_mem_for_flags_arr(current_node) == 1)
 		return (1);
 	i = 0;
 	while (result[j])
 	{
-		/* if (fake_perfect(*unit, result[j]))
-			return (1); */
 		if (check_for_pipe(&current_node, result, &i, &j) == 1)
 			return (1);
 		if (check_for_redir_heredoc(current_node, result, &j) == 1)
 			return (1);
 		if (check_for_cmd_flags(current_node, result[j], &i) == 1)
 			return (1);
-		//! if it is not in if block, even it executes incorretly -$PATH echo abc
-
-
-
-		/* if (current_node->is_pipe == 1)
-		{
-			++j;
-			continue;
-		}
-		int res = check_for_cmd_flags(current_node, result[j], &i);
-		if (res == 1)
-			return (1); */
-		/* if (res == 1 && current_node->is_pipe == 0)
-			return (1); */
 		j++;
 	}
 	return (0);
@@ -92,7 +76,6 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 	int		i;
 	int		j;
 	int		j_temp;
-	// int 	r;
 	t_node	*current_node;
 
 	j = 0;
@@ -110,9 +93,7 @@ void	add_args_to_linked_list(char **result, t_node **unit)
 		return ;
 	i = 1;
 	int k = i;
-	/* if (!result || result[i])
-		return ; */
-	while (result[i])
+	while (result[i]) //conditional jump here
 	{
 		if (ft_strcmp(result[i], "|") == 0)
 		{

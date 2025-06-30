@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/06/27 12:50:21 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:18:29 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,16 @@ int	count_flags(char **result, int j)
 
 void	find_flags(char *res, t_node *current_node, int *i)
 {
-	/* int n_flag_found;
-
-	n_flag_found = 0; */
-	// printf("first result in find_flags -> %s\n", res);
 	if (ft_strcmp(current_node->cmd, "echo") == 0 && ft_strcmp(res, "-n") == 0)
 	{
-		printf("res bloga girdi -> %s\n", res);
-		current_node->flags[0] = ft_strdup2(res);
+		current_node->flags[0] = ft_strdup(res); //definitely lost vg error
 		current_node->fcmd = ft_strjoin_free(current_node->fcmd, res);
-		printf("fcmd in findflags -> %s\n", current_node->fcmd);
-		//n_flag_found = 1;
 		(*i)++;
-		printf("fcmd end of func %s and flag count %d\n", current_node->fcmd, current_node->flags_count);
 		return ;
 	}
 	if (res[0] == '-' && res[1] != '$' && (res[2] == ' ' || res[2] == '\0'))
 	{
-		current_node->flags[*i] = ft_strdup2(res);
+		current_node->flags[*i] = ft_strdup(res);
 		current_node->fcmd = ft_strjoin_free(current_node->fcmd, res);
 		(*i)++;
 	}
