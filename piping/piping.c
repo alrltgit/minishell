@@ -6,11 +6,25 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/27 13:18:59 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:47:39 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void  exit_code(t_node *temp)
+{
+    int status;
+	
+    status = 0;
+    while (wait(&status) > 0)
+    {
+        if (WIFEXITED(status))
+            temp->shell->exit_code = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            temp->shell->exit_code = 1;
+    }
+}
 
 void	manage_child_process(t_node *temp, int pipe_fd[2],
 	int prev_fd, t_node *node, char **result)
@@ -88,7 +102,9 @@ void	create_pipe(t_node *node, char **result)
 		else
 			return ;
 	}
-	while (wait(NULL) > 0)
-		;
+	temp = node;
+	exit_code(temp);
+	// while (wait(NULL) > 0)
+	// 	;
 	unlink("fd_temp");
 }

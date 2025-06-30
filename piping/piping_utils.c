@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 13:21:07 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:45:33 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,15 @@ void	execute_depending_on_type(t_node *temp, char **argv, t_node *node, char **r
 	if (temp->cmd_type == B_IN)
 	{
 		execute_builtin(temp, result);
+		printf("ENTERED IF BLOCK\n");
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		execve(temp->cmd, argv, node->shell->env);
+		printf("ENTERED ELSE BLOCK\n");
 		free_arr(argv);
-		temp->shell->exit_code = 127;
+		// temp->shell->exit_code = 127;
 		exit(127); //127 is execve fail code
 	}
 }
