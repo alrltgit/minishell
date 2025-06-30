@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:30:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/18 19:12:29 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:29:18 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_pwd(t_node *cmd)
 {
 	char	*pwd;
 
+	cmd->shell->exit_code = 0;
 	pwd = value_from_key("PWD", cmd->shell);
 	if (ft_strcmp(pwd, "") == 0)
 	{

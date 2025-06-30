@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:31 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 12:40:26 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:25:43 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	shell_loop(t_shell *shell)
 	char	*rl;
 	char	*pwd;
 
-	// shell->exit_code = 0;
+	shell->exit_code = 0;
 	signal(SIGQUIT, SIG_IGN); //ignore ctrl-'\'
 	//shell->cmds = NULL;
 	while (1)
@@ -105,7 +105,6 @@ int main(int ac, char **av, char **ev)
 		return (ft_putstr_fd("Wrong arguments!\n", 2), 1);
 	init_env(ev, &shell);
 	//handle $variable expansion
-	shell.exit_code = 0;
 	shell_loop(&shell);
 	free_exit(&shell);
     return (0);

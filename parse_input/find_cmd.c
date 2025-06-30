@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/27 15:19:19 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:34:23 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	set_error_status(char *input, t_node *unit)
 	{
 		ft_printf("minishell: %s: command not found\n", input);	
 		printf("exit code is set to 127\n");
+		unit->shell->exit_code = 127;
 	}
-	unit->shell->exit_code = 127;
 	unit->cmd_status = 127;
 }
 
@@ -60,7 +60,7 @@ void	handle_command_init(t_node *unit, char *temp_result, char **paths)
 	free(temp_result);
 	free_arr(paths);
 	unit->cmd_status = 2;
-	//unit->shell->exit_code = 0;
+	unit->shell->exit_code = 0;
 }
 
 int	resolve_cmd_in_paths(char **paths, char *input, t_node *unit)

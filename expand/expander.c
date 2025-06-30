@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/30 12:39:49 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:36:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	}
 	while (tmp && tmp[++j])
 		str = update_str(str, tmp[j]);
+	//free(tmp);
 	return (str);
 }
 

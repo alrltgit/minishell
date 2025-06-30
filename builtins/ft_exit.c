@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:16:52 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/27 14:48:14 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:34:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ void	ft_exit(t_node *command, char **result)
 	if (result)
 		free_double((void **)result);
 	free_linked_list(command);
-	//control the free. it should free properly
 	exit(0);
 }

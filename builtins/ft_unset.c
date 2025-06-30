@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:35:45 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/30 12:04:56 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:32:17 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void    ft_unset(t_node *command)
     char    c;
     int     i;
 
+	command->shell->exit_code = 0;
 	if (ft_strcmp(command->fcmd, "unset") == 0)
 		return ;
     split = split_args(command->fcmd);

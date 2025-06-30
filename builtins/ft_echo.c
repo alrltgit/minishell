@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/30 12:33:59 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:28:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ void	ft_echo(t_node *command)
 		write(1, &command->fcmd[i++], 1);
 	if (!w_n)
 		printf("\n");
+	command->shell->exit_code = 0;
 }

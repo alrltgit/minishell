@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/29 11:01:08 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:29:00 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char	**check_invalid_identifier(char *str, t_node *node)
 
 	/* if (!str)
 		return (NULL); */
+	node->shell->exit_code = 0;
 	key_w_skip = 0;
 	after = ft_strchr(str, '=');
 	b_len = ft_strlen(str) - ft_strlen(after);

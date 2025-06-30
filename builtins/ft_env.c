@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 12:04:54 by hceviz            #+#    #+#             */
-/*   Updated: 2025/05/13 16:21:01 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:28:03 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void	ft_env(t_node *cmd)
 	{
 		printf("%s\n", cmd->shell->env[i]);
 	}
+	cmd->shell->exit_code = 0;
 }
