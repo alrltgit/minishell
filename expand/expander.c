@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/26 15:05:57 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:39:49 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 	else if (var[pos] == '?')
 	{
 		tmp = ft_itoa(shell->exit_code); //exit code added
-		printf("exit code printed -> %d\n", shell->exit_code);
+		printf("exit codeeeeeee-> %s\n", tmp);
+		// printf("exit code printed -> %d\n", shell->exit_code);
 	}
 	else
 	{
@@ -141,8 +142,6 @@ char	*perfect(t_node *command, char *arr)
 	in_dq = 0;
 	i = 0;
 	str = NULL;
-
-
 	if (!arr)
 	{
 		arr = update_str(arr, ' ');
@@ -254,6 +253,7 @@ char *process_exp(char **result, t_node *unit)
         }
 
         free(result[i]);
+		printf("dolar girdi\n");
         result[i] = handle_quotesv2(temp2);
        // printf("after exp -> %s\n", result[i]);
 

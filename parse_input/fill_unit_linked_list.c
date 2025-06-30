@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:10:55 by apple             #+#    #+#             */
-/*   Updated: 2025/06/26 13:04:15 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:41:54 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ t_node	*create_unit(t_shell *shell)
 	node->args = NULL;
 	node->next = NULL;
 	node->shell = shell;
-	node->shell->exit_code = 0;
 	node->redir_files = NULL;
 	node->cmd_status = 0;
 	node->cmd_type = 0;
@@ -84,7 +83,6 @@ t_node	*create_unit(t_shell *shell)
 	node->cmd_is_found = 0;
 	node->cmd_idx = 0;
 	node->cmd_args_count = 0;
-	// node->quote_control = 0;
 	return (node);
 }
 

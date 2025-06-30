@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/30 12:02:32 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/06/30 12:33:59 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_echo(t_node *command)
 		&& command->fcmd[4] == ' ' && command->fcmd[5] )
 	handle_n_flag(command, &i, &w_n);
 	printf("fcmd after handle n flag -> %s\n", command->fcmd);
+	(command->fcmd[i] == ' ') && (++i);
 	while (i < len)
 		write(1, &command->fcmd[i++], 1);
 	if (!w_n)
