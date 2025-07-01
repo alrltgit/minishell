@@ -6,13 +6,13 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/30 13:29:00 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/01 14:15:29 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	is_alphanumeric(char *key)
+static int	is_alphanumeric_export(char *key)
 {
 	int	i;
 
@@ -28,65 +28,55 @@ static int	is_alphanumeric(char *key)
 	return (1);
 }
 
-static int	value_syntax_ok(char *val)
-{
-	int	i;
-
-	i = -1;
-	while (val[++i])
-	{
-		if (val[i] == '!' || val[i] == '('
-			|| val[i] == ')' || val[i] == ';')
-			return (0);
-	}
-	return (1);
-}
-/*
-	if there is space after first = sign
-	set empty line to value
-*/
-
-void	create_and_set_val(t_shell *shell, char *key, char *val)
-{
-	int		count;
-	char	**new_env;
-
-	count = count_vars(shell->env);
-	new_env = malloc((count + 2) * sizeof(char *));
-	if (!new_env)
-		return ;
-	copy_vars(shell->env, &new_env);
-	new_env[count] = ft_strjoin(key, val);
-	new_env[count + 1] = NULL;
-	init_env(new_env, shell);
-	free_double((void **)new_env);
-}
-
 int	check_print_error(char *key, char *val, int w_space)
 {
-	if (!is_alphanumeric(key))
+	if (!is_alphanumeric_export(key))
 	{
 		if (w_space)
-		{
-			printf(EXPERR, key);
-			printf(EXPERR, val);
-		}
+			print_seperated_err(key, val, 1);
 		else
-			printf(EXPERR, ft_strcat(key, val));
+			print_seperated_err(key, val, 2);
 	}
 	else
 	{
 		if (w_space)
-			printf(EXPERR, val);
+			print_seperated_err(key, val, 4);
 		else
 		{
 			if (!value_syntax_ok(val))
-				printf(EXPERR, ft_strcat(key, val));
+				print_seperated_err(key, val, 2);
 			else
 				return (1);
 		}
 	}
 	return (0);
+}
+
+char	**check2(t_node *n, int b_l, char **tmp, char *bf, char *af, int w_s)
+{
+	char	**arr;
+
+	while (bf[--b_l] && bf[b_l] != ' ')
+		*tmp = update_str(*tmp, bf[b_l]);
+	free(bf);
+	b_l = ft_strlen(*tmp) + 1;
+	bf = NULL;
+	while (b_l)
+		bf = update_str(bf, (*tmp)[--b_l]);
+	free(*tmp);
+	if (!check_print_error(bf, af, w_s))
+	{
+		n->shell->exit_code = 1;
+		free(bf);
+		free(af);
+		return (NULL);
+	}
+	arr = malloc(sizeof(char *) * 2);
+	arr[0] = ft_strdup(bf);
+	arr[1] = ft_strdup(af);
+	free(bf);
+	free(af);
+	return (arr);
 }
 
 /*
@@ -95,18 +85,15 @@ int	check_print_error(char *key, char *val, int w_space)
 	else return NULL
 */
 // export abc def kggjdfg should do nothing
-char	**check_invalid_identifier(char *str, t_node *node)
+char	**check_invalid_identifier1(char *str, t_node *node)
 {
 	char	*before;
 	char	*after;
 	char	*temp;
-	char	**arr;
 	int		i;
 	int		b_len;
 	int		key_w_skip;
 
-	/* if (!str)
-		return (NULL); */
 	node->shell->exit_code = 0;
 	key_w_skip = 0;
 	after = ft_strchr(str, '=');
@@ -124,25 +111,7 @@ char	**check_invalid_identifier(char *str, t_node *node)
 		key_w_skip = 1;
 		--b_len;
 	}
-	while (before[--b_len] && before[b_len] != ' ')
-		temp = update_str(temp, before[b_len]);
-	free(before);
-	b_len = ft_strlen(temp) + 1;
-	before = NULL;
-	while (b_len)
-		before = update_str(before, temp[--b_len]);
-	free(temp);
-	if (!check_print_error(before, after, key_w_skip))
-	{
-		node->shell->exit_code = 1;
-		return (NULL);
-	}
-	arr = malloc(sizeof(char *) * 2);
-	arr[0] = ft_strdup(before);
-	arr[1] = ft_strdup(after);
-	free(before);
-	free(after);
-	return (arr);
+	return (check2(node, b_len, &temp, before, after, key_w_skip));
 }
 
 //export abc =5
@@ -153,10 +122,6 @@ void	ft_export(t_node *command)
 	int		index;
 	int		count;
 	
-	// process_str_exp(command, &command->fcmd);
-	// printf("Processed fcmd-> %s\n", command->fcmd);
-	/* if (!ft_strchr(command->fcmd, '='))
-		return ; */
 	if (ft_strcmp(command->fcmd, "export") == 0)
 	{
 		index = -1;
@@ -165,11 +130,10 @@ void	ft_export(t_node *command)
 		printf("declare -x %s\n", command->shell->env[index]);
 		return ;
 	}
-	split = check_invalid_identifier(command->fcmd, command);
+	split = check_invalid_identifier1(command->fcmd, command);
 	if (!split)
 		return ;
 	index = index_from_key(split[0], command->shell->env);
-	// printf("index is -> %d\n", index);
 	if (index == -1)
 		create_and_set_val(command->shell, split[0], split[1]);
 	else

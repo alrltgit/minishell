@@ -1,0 +1,28 @@
+export a#bc=afsdfsdf and ctlr-d -> no memory leak
+
+export abc=gfgdgdg and ctlr-d -> no memory leak
+
+export abc=fgdf(fdgdfgdf and ctrl-d -> no memory leak
+
+echo -> no memory leak
+
+echo $dfgdfg -> no memory leak
+
+echo -n -n -n -> no memory leak
+
+unset abc -> no memory leak (abc was exported)
+
+unset -> no memory leak
+
+usnet fdgdfgdfgd -> no memory leak (fdgdfgdfgd is not exist)
+
+echo $SHLVL -> no memory leak
+
+cd ~ and ctrl-d -> no memory leak
+
+cd foldername/ and ctrl-d -> no memory leak
+
+cd -> no memory leak
+
+./minishell and ctrl-d and ctrl-d -> no memory leak
+

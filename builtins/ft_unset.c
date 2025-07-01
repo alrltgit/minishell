@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:35:45 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/30 13:32:17 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/01 11:45:34 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,35 @@
     if first arg doesnt throw error, keep going
 */
 // void    print_environment(t_shell *shell);
-void    update_env(char *key, t_shell *shell)
+void	update_env(char *key, t_shell *shell)
 {
-    int index;
-    int env_size;
+	int	index;
+	int	env_size;
 
-    index = index_from_key(key, shell->env);
-    if (index == -1)
-        return ;
-    free(shell->env[index]);
-    env_size = 0;
-    while (shell->env[env_size])
-        env_size++;
-    while (index < env_size - 1)
-    {
-        shell->env[index] = shell->env[index + 1];
-        index++;
-    }
-    shell->env[index] = NULL;
+	index = index_from_key(key, shell->env);
+	if (index == -1)
+		return ;
+	free(shell->env[index]);
+	env_size = 0;
+	while (shell->env[env_size])
+		env_size++;
+	while (index < env_size - 1)
+	{
+		shell->env[index] = shell->env[index + 1];
+		index++;
+	}
+	shell->env[index] = NULL;
 }
 
-void    ft_unset(t_node *command)
+void	ft_unset(t_node *command)
 {
-    char    **split;
-    char    c;
-    int     i;
+	char	**split;
+	char	c;
+	int		i;
 
-	command->shell->exit_code = 0;
 	if (ft_strcmp(command->fcmd, "unset") == 0)
 		return ;
-    split = split_args(command->fcmd);
+	split = split_args(command->fcmd);
 	i = -1;
 	while (split[1][++i])
 	{
@@ -75,12 +74,14 @@ void    ft_unset(t_node *command)
 		{
 			ft_putstr_fd("\e[0;31mminishell: unset: syntax error\n", 2);
 			command->shell->exit_code = 2;
-			free_double_n((void **)command->args, command->args_count);
-			free_double_n((void **)command->flags, command->flags_count);
+			free_double((void **)split);
 			return ;
 		}
 	}
-    i = 0;
-    while (split[++i])
-        update_env(split[i], command->shell);
+	i = 0;
+	while (split[++i])
+	{
+		update_env(split[i], command->shell);
+	}
+	free_double((void **)split);
 }

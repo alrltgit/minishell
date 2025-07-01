@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 17:18:15 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:12:41 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define B_IN 1
 # define NON_B_IN 2
 # define PROMPT "\033[1;34mminishell\033[38;5;208m$ \033[0m"
-# define EXPERR "\e[0;31mminishell: export: `%s': not a valid identifier\n"
+# define EXPERR "\e[0;31mminishell: export: '%s': not a valid identifier\n"
 
 typedef struct s_node	t_node;
 
@@ -112,12 +112,22 @@ void	ft_export(t_node *command);
 void	ft_exit(t_node *command, char **result);
 void	ft_unset(t_node *command);
 
+//ft_export_utils.c
+int		value_syntax_ok(char *val);
+void	create_and_set_val(t_shell *shell, char *key, char *val);
+void	print_seperated_err(char *key, char *val, int mod);
+
 //expand
 // void	process_exp(t_node *command);
 char	*process_exp(char **result, t_node *unit);
-char	*perfect(t_node *command, char *arr);
+char	*iterate_and_replace(t_node *command, char *arr);
 int		fake_perfect(char *arr);
 
+//expander_utils.c
+void	delete_token_and_shift(char **result, int *count, int index);
+int		is_alphanumeric(char a);
+char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int quote);
+int		fake_perfect(char *arr);
 
 //ALINA
 // parse_input.c

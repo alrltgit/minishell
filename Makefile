@@ -15,7 +15,7 @@ parse_input/split_readline_utils.c \
 exec/exec_utils.c exec/exec_utils_1.c exec/exec.c exec/helpers.c \
 piping/piping.c piping/piping_utils.c \
 redirection/redirection.c redirection/heredoc.c redirection/append.c \
-parse_input/handle_quotes.c \
+parse_input/handle_quotes.c builtins/ft_export_utils.c expand/expander_utils.c\
 
 OBJS = $(SRC:.c=.o)
 

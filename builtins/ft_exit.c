@@ -6,32 +6,17 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:16:52 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/30 13:34:01 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/01 11:43:53 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-//ADD FREE FOR EVERY POSSIBLE PLACE
-/* void	free_before_exit(t_node *command)
-{
-	free_double((void **)command->shell->env);
-	if (command->flags)
-		free_double((void **)command->flags);
-	free(command->fcmd);
-	free(command->cmd);
-	if (command->redir_files)
-	{
-		if (command->redir_files->file_name)
-			free(command->redir_files->file_name);
-	}
-} */
-
 int	has_only_number(char *fcmd)
 {
-	int i = 5;
+	int	i;
 
+	i = 5;
 	if (fcmd[4] == '\0')
 		return (1);
 	while (fcmd[i])
@@ -52,7 +37,6 @@ void	ft_exit(t_node *command, char **result)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(command->fcmd + 4, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		
 	}
 	else if (command->args_count > 1)
 	{
