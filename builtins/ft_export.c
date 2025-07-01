@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 14:15:29 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/01 19:13:13 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,13 @@ void	ft_export(t_node *command)
 	char	**split;
 	int		index;
 	int		count;
-	
+
 	if (ft_strcmp(command->fcmd, "export") == 0)
 	{
 		index = -1;
 		count = count_vars(command->shell->env);
 		while (++index < count)
-		printf("declare -x %s\n", command->shell->env[index]);
+			printf("declare -x %s\n", command->shell->env[index]);
 		return ;
 	}
 	split = check_invalid_identifier1(command->fcmd, command);

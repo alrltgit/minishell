@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:38:33 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 11:42:42 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/01 19:12:15 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_n_flag(t_node *command, int *i, int *w_n)
 	int	j;
 
 	pos = *i;
-	while (command->fcmd[pos] == ' ')
+	if (command->fcmd[pos] == ' ')
 		pos++;
 	while (command->fcmd[pos] == '-' && command->fcmd[pos + 1] == 'n')
 	{
@@ -29,7 +29,7 @@ void	handle_n_flag(t_node *command, int *i, int *w_n)
 			break ;
 		*w_n = 1;
 		pos = j;
-		while (command->fcmd[pos] == ' ')
+		if (command->fcmd[pos] == ' ')
 			pos++;
 	}
 	*i = pos;
@@ -46,7 +46,8 @@ void	ft_echo(t_node *command)
 	len = ft_strlen(command->fcmd);
 	i = 4;
 	if (command->fcmd[4] && command->fcmd[5] && command->fcmd[6]
-		&& command->fcmd[4] == ' ' && command->fcmd[5])
+		&& command->fcmd[4] == ' ' && command->fcmd[5] == '-'
+		&& command->fcmd[6] == 'n')
 		handle_n_flag(command, &i, &w_n);
 	if (command->fcmd[i] == ' ')
 		++i;

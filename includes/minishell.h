@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/01 18:39:58 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/01 19:19:36 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,15 +154,15 @@ int		is_heredoc_redir(t_node *current_node, char **result, int *j);
 int		is_append_redir(t_node *current_node, char **result, int *j);
 
 // free.c
-void	free_arr(char **arr);
-void	free_exit(t_shell *shell);
 void	iterate_free_nodes(t_node *head);
-void	free_double_n(void **arr, int n);
-
 void	free_redir_list(t_redir *redir);
 void	free_node_list(t_node *head);
-void	free_shell(t_shell *shell);
 void	free_linked_list(t_node *unit);
+
+// free_utils.c
+void	free_arr(char **arr);
+void	free_exit(t_shell *shell);
+void	free_shell(t_shell *shell);
 
 // split the linked list
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);
@@ -218,7 +218,8 @@ int		alloc_mem_for_flags_arr(t_node *current_node);
 char	*handle_single_quotes(const char *str, int *i);
 char	*handle_double_quotes(const char *str, int *i);
 void	manage_parent_process(t_node *temp, int pipe_fd[2], int *prev_fd);
-void	manage_child_process(t_node *temp, int pipe_fd[2], int prev_fd, char **result);
+void	manage_child_process(t_node *temp, int pipe_fd[2],
+			int prev_fd, char **result);
 
 // utils_2.c
 char	**get_path(void);

@@ -1,25 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 18:28:50 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 18:55:12 by apple            ###   ########.fr       */
+/*   Created: 2025/07/01 19:17:55 by apple             #+#    #+#             */
+/*   Updated: 2025/07/01 19:23:40 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+void	free_arr(char **arr)
 {
-	if (!s1 || !s2)
-		return (-1);
-	while (*s1 == *s2 && *s1 && *s2)
+	int	i;
+
+	i = 0;
+	while (arr[i])
 	{
-		s1++;
-		s2++;
+		free(arr[i]);
+		i++;
 	}
-	return (*s1 - *s2);
+	free(arr);
+}
+
+void	free_exit(t_shell *shell)
+{
+	if (shell->cmds)
+		iterate_free_nodes(shell->cmds);
+	free_double((void **)shell->env);
+	return ;
+}
+
+void	free_shell(t_shell *shell)
+{
+	if (shell->env)
+		free_arr(shell->env);
+	if (shell->cmds)
+		free_node_list(shell->cmds);
+	free(shell);
 }
