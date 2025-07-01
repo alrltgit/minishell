@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:50:17 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 16:14:15 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/01 18:51:07 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,58 +64,3 @@ char	*handle_quotesv2(char *str)
 	}
 	return (temp);
 }
-
-// char 	*handle_quotesv2(char *str)
-// {
-// 	int		i;
-// 	int		sq;
-// 	int		dq;
-// 	char	*temp;
-// 	i = 0;
-// 	sq = 0;
-// 	dq = 0;
-// 	temp = NULL;
-// 	if (!str)
-// 		return ("");
-// 	while (str[i])
-// 	{
-// 		if (str[i] && str[i] == '\'' && dq == 0)
-// 		{
-// 			sq = 1 - sq;
-// 			i++;
-// 			while (str[i] && str[i] != '\'')
-// 			{
-// 				temp = update_str(temp, str[i]);
-// 				i++;
-// 			}
-// 			if (str[i] == '\'' && str[i + 1] == '\0')
-// 			{
-// 				temp = update_str(temp, ' ');
-// 				++i;
-// 			}
-// 			continue;
-// 		}
-// 		if (str[i] && str[i] == '"' && sq == 0)
-// 		{
-// 			dq = 2 - dq;
-// 			i++;
-// 			while (str[i] && str[i] != '"')
-// 			{
-// 				temp = update_str(temp, str[i]);
-// 				i++;
-// 			}
-// 			if (str[i] == '"' && str[i + 1] == '\0')
-// 			{
-// 				temp = update_str(temp, ' ');
-// 				++i;
-// 			}
-// 			continue;
-// 		}
-// 		temp = update_str(temp, str[i]);
-// 		i++;
-// 	}
-// 	free(str);
-// 	str = ft_strdup(temp);
-// 	free(temp);
-// 	return (str);
-// }

@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:31:10 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/01 16:10:28 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/01 18:46:40 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,42 +82,3 @@ void	manage_parent_process(t_node *temp, int pipe_fd[2], int *prev_fd)
 	else
 		close(pipe_fd[0]);
 }
-
-// void	init_vars(int *i, int *sq, int *dq, char **temp)
-// {
-// 	*i = 0;
-// 	*sq = 0;
-// 	*dq = 0;
-// 	*temp = NULL;
-// }
-
-// char	*handle_quotes(char *str)
-// {
-// 	int		i;
-// 	int		sq;
-// 	int		dq;
-// 	char	*temp;
-
-// 	if (!str)
-// 		return (NULL);
-// 	init_vars(&i, &sq, &dq, &temp);
-// 	while (str[i])
-// 	{
-// 		if (str[i] && str[i] == '\'' && dq == 0)
-// 		{
-// 			sq = 1 - sq;
-// 			temp = handle_single_quotes(str, &i);
-// 			continue ;
-// 		}
-// 		else if (str[i] && str[i] == '"' && sq == 0)
-// 		{
-// 			dq = 2 - dq;
-// 			temp = handle_double_quotes(str, &i);
-// 			continue ;
-// 		}
-// 		else
-// 			temp = update_str(temp, str[i]);
-// 		i++;
-// 	}
-// 	return (temp);
-// }

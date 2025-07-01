@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 15:47:48 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/01 18:45:01 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,31 +147,31 @@ char	*process_exp3(char ***result, t_node *unit, char **temp, char **temp2)
 	return (NULL);
 }
 
-char	*process_exp2(char ***result, t_node *unit, char **temp)
+char    *process_exp2(char ***result, t_node *unit, char **temp)
 {
-	int	count;
-
-	count = -1;
-	while ((*result)[++count])
-		;
-	if ((*result)[0])
-	{
-		if (!fake_perfect((*result)[0]) || ft_strcmp((*result)[0], "") == 0)
-			return ((*result)[0]);
-		*temp = iterate_and_replace(unit, (*result)[0]);
-		if ((*temp) == NULL || (*temp)[0] == '\0')
-		{
-			delete_token_and_shift(*result, &count, 0);
-			free(*temp);
-			return (process_exp(*result, unit));
-		}
-		else
-		{
-			free((*result)[0]);
-			(*result)[0] = handle_quotesv2(*temp);
-		}
-	}
-	return (NULL);
+    int count;
+    count = -1;
+    while ((*result)[++count])
+        ;
+    if ((*result)[0])
+    {
+        if (!fake_perfect((*result)[0]) || ((((*result)[0][0] == '"' && (*result)[0][1] == '"')
+        || ((*result)[0][0] == '\'' && (*result)[0][1] == '\'')) && !(*result)[2]))
+            return ((*result)[0]);
+        *temp = iterate_and_replace(unit, (*result)[0]);
+        if ((*temp) == NULL || (*temp)[0] == '\0')
+        {
+            delete_token_and_shift(*result, &count, 0);
+            free(*temp);
+            return (process_exp(*result, unit));
+        }
+        else
+        {
+            free((*result)[0]);
+            (*result)[0] = handle_quotesv2(*temp);
+        }
+    }
+    return (NULL);
 }
 
 char	*process_exp(char **result, t_node *unit)

@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/01 17:12:14 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/01 18:39:58 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ int		value_syntax_ok(char *val);
 void	create_and_set_val(t_shell *shell, char *key, char *val);
 void	print_seperated_err(char *key, char *val, int mod);
 
-// expand
+// expander
+char	*process_exp2(char ***result, t_node *unit, char **temp);
 char	*process_exp(char **result, t_node *unit);
 char	*iterate_and_replace(t_node *command, char *arr);
 int		fake_perfect(char *arr);
