@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:38:42 by apple             #+#    #+#             */
-/*   Updated: 2025/06/30 18:30:47 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:15:13 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	manage_child_process(t_node *temp, int pipe_fd[2],
-	int prev_fd, t_node *node, char **result)
-{
-	char	**argv;
-
-	argv = build_argv(temp);
-	handle_child(temp, pipe_fd, prev_fd);
-	execute_depending_on_type(temp, argv, node, result);
-	free_arr(argv);
-}
-
-void	manage_parent_process(t_node *temp, int pipe_fd[2], int *prev_fd)
-{
-	if (*prev_fd != -1)
-		close(*prev_fd);
-	if (temp->next)
-	{
-		close(pipe_fd[1]);
-		*prev_fd = pipe_fd[0];
-	}
-	else
-		close(pipe_fd[0]);
-}
 
 int	create_pipe_fd(int pipe_fd[2])
 {
@@ -59,31 +35,49 @@ pid_t	create_fork(t_node *node)
 	return (pid);
 }
 
+int	handle_pipe_and_fork(t_node *node, int pipe_fd[2], pid_t *pid)
+{
+	if (create_pipe_fd(pipe_fd))
+	{
+		node->shell->exit_code = 1;
+		return (1);
+	}
+	*pid = create_fork(node);
+	return (0);
+}
+
+int	handle_iteration(t_node **temp, int pipe_fd[2], int *prev_fd, char **result)
+{
+	pid_t	pid;
+
+	if (handle_pipe_and_fork(*temp, pipe_fd, &pid))
+		return (1);
+	if (pid == 0)
+	{
+		manage_child_process(*temp, pipe_fd, *prev_fd, result);
+		return (1);
+	}
+	else if (pid > 0)
+	{
+		manage_parent_process(*temp, pipe_fd, prev_fd);
+		*temp = (*temp)->next;
+	}
+	else
+		return (1);
+	return (0);
+}
+
 void	create_pipe(t_node *node, char **result)
 {
 	t_node	*temp;
 	int		prev_fd;
 	int		pipe_fd[2];
-	pid_t	pid;
 
 	temp = node;
 	prev_fd = -1;
 	while (temp)
 	{
-		if (create_pipe_fd(pipe_fd))
-		{
-			node->shell->exit_code = 1;
-			return ;
-		}
-		pid = create_fork(node);
-		if (pid == 0)
-			manage_child_process(temp, pipe_fd, prev_fd, node, result);
-		else if (pid > 0)
-		{
-			manage_parent_process(temp, pipe_fd, &prev_fd);
-			temp = temp->next;
-		}
-		else
+		if (handle_iteration(&temp, pipe_fd, &prev_fd, result))
 			return ;
 	}
 	temp = node;

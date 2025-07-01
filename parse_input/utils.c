@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:31:10 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 18:29:50 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:10:28 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,65 @@ char	*handle_double_quotes(const char *str, int *i)
 	return (temp);
 }
 
-void	init_vars(int *i, int *sq, int *dq, char **temp)
+void	manage_child_process(t_node *temp, int pipe_fd[2],
+	int prev_fd, char **result)
 {
-	*i = 0;
-	*sq = 0;
-	*dq = 0;
-	*temp = NULL;
+	char	**argv;
+
+	argv = build_argv(temp);
+	handle_child(temp, pipe_fd, prev_fd);
+	execute_depending_on_type(temp, argv, result);
+	free_arr(argv);
 }
 
-char	*handle_quotes(char *str)
+void	manage_parent_process(t_node *temp, int pipe_fd[2], int *prev_fd)
 {
-	int		i;
-	int		sq;
-	int		dq;
-	char	*temp;
-
-	if (!str)
-		return (NULL);
-	init_vars(&i, &sq, &dq, &temp);
-	while (str[i])
+	if (*prev_fd != -1)
+		close(*prev_fd);
+	if (temp->next)
 	{
-		if (str[i] && str[i] == '\'' && dq == 0)
-		{
-			sq = 1 - sq;
-			temp = handle_single_quotes(str, &i);
-			continue ;
-		}
-		else if (str[i] && str[i] == '"' && sq == 0)
-		{
-			dq = 2 - dq;
-			temp = handle_double_quotes(str, &i);
-			continue ;
-		}
-		else
-			temp = update_str(temp, str[i]);
-		i++;
+		close(pipe_fd[1]);
+		*prev_fd = pipe_fd[0];
 	}
-	return (temp);
+	else
+		close(pipe_fd[0]);
 }
+
+// void	init_vars(int *i, int *sq, int *dq, char **temp)
+// {
+// 	*i = 0;
+// 	*sq = 0;
+// 	*dq = 0;
+// 	*temp = NULL;
+// }
+
+// char	*handle_quotes(char *str)
+// {
+// 	int		i;
+// 	int		sq;
+// 	int		dq;
+// 	char	*temp;
+
+// 	if (!str)
+// 		return (NULL);
+// 	init_vars(&i, &sq, &dq, &temp);
+// 	while (str[i])
+// 	{
+// 		if (str[i] && str[i] == '\'' && dq == 0)
+// 		{
+// 			sq = 1 - sq;
+// 			temp = handle_single_quotes(str, &i);
+// 			continue ;
+// 		}
+// 		else if (str[i] && str[i] == '"' && sq == 0)
+// 		{
+// 			dq = 2 - dq;
+// 			temp = handle_double_quotes(str, &i);
+// 			continue ;
+// 		}
+// 		else
+// 			temp = update_str(temp, str[i]);
+// 		i++;
+// 	}
+// 	return (temp);
+// }

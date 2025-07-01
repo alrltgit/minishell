@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   piping_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 22:22:56 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 14:49:57 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:15:01 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void  exit_code(t_node *temp)
+void	exit_code(t_node *temp)
 {
-    int status;
-	
-    status = 0;
-    while (wait(&status) > 0)
-    {
-        if (WIFEXITED(status))
-            temp->shell->exit_code = WEXITSTATUS(status);
-        else if (WIFSIGNALED(status))
-            temp->shell->exit_code = 1;
-    }
+	int	status;
+
+	status = 0;
+	while (wait(&status) > 0)
+	{
+		if (WIFEXITED(status))
+			temp->shell->exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			temp->shell->exit_code = 1;
+	}
 }
 
 int	check_for_pipe(t_node **current_node, char **result, int *i, int *j)
@@ -52,11 +52,9 @@ int	check_for_pipe(t_node **current_node, char **result, int *i, int *j)
 void	handle_child(t_node *temp, int *pipe_fd, int prev_fd)
 {
 	t_redir	*redir;
-	// t_redir	*r;
 	int		has_out_redir;
 
 	redir = temp->redir_files;
-	// r = redir;
 	has_out_redir = handle_redir_heredoc_append(redir);
 	if (has_out_redir == -1)
 		exit (1);
@@ -73,21 +71,18 @@ void	handle_child(t_node *temp, int *pipe_fd, int prev_fd)
 	}
 }
 
-void	execute_depending_on_type(t_node *temp, char **argv, t_node *node, char **result)
+void	execute_depending_on_type(t_node *temp, char **argv, char **result)
 {
 	if (temp->cmd_type == B_IN)
 	{
 		execute_builtin(temp, result);
-		printf("ENTERED IF BLOCK\n");
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		execve(temp->cmd, argv, node->shell->env);
-		printf("ENTERED ELSE BLOCK\n");
+		execve(temp->cmd, argv, temp->shell->env);
 		free_arr(argv);
-		// temp->shell->exit_code = 127;
-		exit(127); //127 is execve fail code
+		exit(127);
 	}
 }
 
