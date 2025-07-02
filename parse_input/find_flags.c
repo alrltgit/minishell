@@ -6,7 +6,7 @@
 /*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/06/30 16:56:29 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:17:07 by alraltse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	find_flags(char *res, t_node *current_node, int *i)
 		return ;
 	}
 	if (res[0] == '-' && res[1] != '$'
-		&& current_node->n_flag == 0
-		&& (res[2] == ' ' || res[2] == '\0'))
+		&& current_node->n_flag == 0)
+		// && (res[2] == ' ' || res[2] == '\0'))
 	{
 		current_node->flags[*i] = ft_strdup(res);
 		current_node->fcmd = ft_strjoin_free(current_node->fcmd, res);
