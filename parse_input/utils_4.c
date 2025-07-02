@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:13:08 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/25 17:48:53 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/02 15:21:01 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	check_for_executable(t_node *unit, char *input)
 	if (ft_strchr(input, '/') != NULL)
 	{
 		err = check_executable_errors(unit, input, &sb);
-		printf("executable error-> %d\n", err);
 		if (err)
 			return (err);
 		unit->cmd = ft_strdup(input);
