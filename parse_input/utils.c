@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:31:10 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/01 18:46:40 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/02 14:51:55 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	alloc_mem_for_flags_arr(t_node *current_node)
+/* int	alloc_mem_for_flags_arr(t_node *current_node)
 {
 	if (current_node->flags_count > 0)
 	{
@@ -20,6 +20,30 @@ int	alloc_mem_for_flags_arr(t_node *current_node)
 				* (current_node->flags_count + 1));
 		if (!current_node->flags)
 			return (1);
+	}
+	else
+	{
+		current_node->flags = malloc(sizeof(char *));
+		if (!current_node->flags)
+			return (1);
+		current_node->flags[0] = NULL;
+	}
+	return (0);
+} */
+
+int	alloc_mem_for_flags_arr(t_node *current_node)
+{
+	int	i;
+
+	if (current_node->flags_count > 0)
+	{
+		current_node->flags = malloc(sizeof(char *)
+				* (current_node->flags_count + 1));
+		if (!current_node->flags)
+			return (1);
+		i = 0;
+		while (i < current_node->flags_count + 1)
+			current_node->flags[i++] = NULL;
 	}
 	else
 	{

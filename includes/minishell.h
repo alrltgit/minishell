@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/01 19:19:36 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:13:23 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@
 # define EXPERR "\e[0;31mminishell: export: '%s': not a valid identifier\n"
 
 typedef struct s_node	t_node;
+
+typedef struct s_arg
+{
+	char	*str;
+	char	*arr;
+}	t_arg;
 
 typedef struct s_quotes
 {
@@ -124,17 +130,16 @@ void	create_and_set_val(t_shell *shell, char *key, char *val);
 void	print_seperated_err(char *key, char *val, int mod);
 
 // expander
-char	*process_exp2(char ***result, t_node *unit, char **temp);
+char	*process_exp2(char ***result, t_node *unit, char **temp, int *count);
 char	*process_exp(char **result, t_node *unit);
 char	*iterate_and_replace(t_node *command, char *arr);
-int		fake_perfect(char *arr);
 
 // expander_utils.c
 void	delete_token_and_shift(char **result, int *count, int index);
 int		is_alphanumeric(char a);
 char	*replace_var(t_shell *shell, char *str, char *var, int pos,
 			int len, int quote);
-int		fake_perfect(char *arr);
+int		q_ok(char *arr);
 
 // ALINA
 // parse_input.c
@@ -163,6 +168,7 @@ void	free_linked_list(t_node *unit);
 void	free_arr(char **arr);
 void	free_exit(t_shell *shell);
 void	free_shell(t_shell *shell);
+void	safe_free(char **temp, char **temp2, int mod);
 
 // split the linked list
 int		add_cmds_flags_to_linked_list(char **result, t_node **unit);

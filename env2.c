@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:19:19 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/23 20:59:15 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/02 15:06:43 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*key_from_index(int pos, t_shell *shell)
 	free_double((void **)var);
 	return (key);
 }
+
 void	add_key_val(t_shell *shell, char *key, char *val)
 {
 	char	**temp;
@@ -53,7 +54,6 @@ void	add_key_val(t_shell *shell, char *key, char *val)
 	temp = malloc(sizeof(char *) * (count + 2));
 	copy_vars(shell->env, &temp);
 	temp[count] = ft_strjoin(key, val);
-	printf("temp[count] -> %s\n", temp[count]);
 	temp[count + 1] = NULL;
 	free_double((void **)shell->env);
 	shell->env = temp;

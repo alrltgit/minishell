@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/06/29 11:08:57 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/02 15:05:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	index_from_key(char *var_name, char **env_array)
 {
 	int		i;
 	char	**var;
-	int temp; // delete after debugging
+	int		temp;
 
 	i = -1;
 	while (env_array[++i])

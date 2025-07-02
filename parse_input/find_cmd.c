@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:19:17 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/01 17:22:59 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/02 14:45:42 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_error_status(char *input, t_node *unit)
 {
-	if (fake_perfect(input) == 0)
+	if (q_ok(input) == 0)
 	{
 		printf("minishell: %s: syntax error\n", input);
 		unit->shell->exit_code = 2;

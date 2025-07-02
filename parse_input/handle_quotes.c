@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:50:17 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 18:51:07 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/02 14:51:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,33 @@ void	init_vars(int *i, t_quotes *q, char **temp)
 
 void	handle_single_quote(char *str, int *i, t_quotes *q, char **temp)
 {
+	char	*old_temp;
+
 	q->sq = 1 - q->sq;
+	old_temp = *temp;
 	*temp = handle_single_quotes(str, i);
+	free(old_temp);
 }
 
 void	handle_double_quote(char *str, int *i, t_quotes *q, char **temp)
 {
+	char	*old_temp;
+
 	q->dq = 2 - q->dq;
+	old_temp = *temp;
 	*temp = handle_double_quotes(str, i);
+	free(old_temp);
 }
 
-void	handle_regular_char(char **temp, char c)
+/* void	handle_regular_char(char **temp, char c)
 {
-	*temp = update_str(*temp, c);
-}
+	char *old_temp;
+
+	old_temp = update_str(*temp, c);
+	free(*temp);
+	*temp = ft_strdup(old_temp);
+	free(old_temp);
+} */
 
 char	*handle_quotesv2(char *str)
 {
@@ -43,6 +56,7 @@ char	*handle_quotesv2(char *str)
 	t_quotes		q;
 	char			*temp;
 
+	temp = NULL;
 	if (!str)
 		return (NULL);
 	init_vars(&i, &q, &temp);
@@ -59,7 +73,7 @@ char	*handle_quotesv2(char *str)
 			continue ;
 		}
 		else
-			handle_regular_char(&temp, str[i]);
+			temp = update_str(temp, str[i]);
 		i++;
 	}
 	return (temp);

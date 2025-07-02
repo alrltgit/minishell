@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 18:45:01 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:03:14 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,47 +49,24 @@
 	for ex: $PATH echo abc -> it will print value of $PATH with error
 */
 
-//**arr will be reference of *arr */
-
-/*
-try with
-
-	-$PATH echo abc -> - sign with paths with error
-	$PATH echo abc -> paths with error
-	echo abc $PATH -> abc with path WITHOUT error
-	echo abc'$PATH' -> abc$PATH it doesnt replace expansion
-	echo '"$PATH"' -> "$PATH" doesnt replace expansion
-	echo $PATH"abc"
-	echo $PATH'abc'
-	echo $
-
-	so if echo after valid expansion variable, add error
-	and everything concatenated with expansion variable
-	in examples it is -$PATH
-
-	if echo is before than invalid expansion variable, 
-	print everythin after echo
-
-*/
-
-char	*handle_dollar(t_node *cmd, char *str, char *arr, int *i, int qte)
+char	*handle_dollar(t_node *cmd, t_arg *arg, int *i, int qte)
 {
 	int		j;
 	int		len;
 
 	j = *i;
 	len = 0;
-	if (arr[*i + 1] == '?')
+	if (arg->arr[*i + 1] == '?')
 	{
-		str = replace_var(cmd->shell, str, arr, *i + 1, 1, qte);
+		arg->str = replace_var(cmd->shell, arg->str, arg->arr, *i + 1, 1, qte);
 		*i += 1;
-		return (str);
+		return (arg->str);
 	}
-	while (is_alphanumeric(arr[++j]))
+	while (is_alphanumeric(arg->arr[++j]))
 		++len;
-	str = replace_var(cmd->shell, str, arr, *i + 1, len, qte);
+	arg->str = replace_var(cmd->shell, arg->str, arg->arr, *i + 1, len, qte);
 	*i += len;
-	return (str);
+	return (arg->str);
 }
 
 char	*iterate_and_replace(t_node *command, char *arr)
@@ -97,38 +74,39 @@ char	*iterate_and_replace(t_node *command, char *arr)
 	int		in_sq;
 	int		in_dq;
 	int		i;
-	char	*str;
+	t_arg	args;
 
 	in_sq = 0;
 	in_dq = 0;
 	i = -1;
-	str = NULL;
-	(void) ((!arr) && (update_str(arr, ' ')));
+	args.str = NULL;
+	args.arr = arr;
 	while (arr[++i])
 	{
-		if (arr[i] == '\'' && !in_dq)
-			in_sq = 1 - in_sq;
-		else if (arr[i] == '"' && !in_sq)
-			in_dq = 2 - in_dq;
-		else if (arr[i] == '$' && !in_sq && is_alphanumeric(arr[i + 1]))
+		(void)((arr[i] == '\'') && (!in_dq) && (in_sq = 1 - in_sq));
+		(void)((arr[i] == '"') && (!in_sq) && (in_dq = 2 - in_dq));
+		if (arr[i] == '$' && !in_sq && is_alphanumeric(arr[i + 1]))
 		{
-			str = handle_dollar(command, str, arr, &i, in_sq + in_dq);
+			args.str = handle_dollar(command, &args, &i, in_sq + in_dq);
 			continue ;
 		}
 		else
-			str = update_str(str, arr[i]);
+			args.str = update_str(args.str, arr[i]);
 	}
-	return (str);
+	return (args.str);
 }
 
 char	*process_exp3(char ***result, t_node *unit, char **temp, char **temp2)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
+	*temp = NULL;
+	*temp2 = NULL;
 	while ((*result)[i] && (*result)[++i])
 	{
-		if (!fake_perfect((*result)[i]))
+		if (!q_ok((*result)[i]))
 			return ((*result)[i]);
 		*temp = ft_strdup((*result)[i]);
 		*temp2 = iterate_and_replace(unit, *temp);
@@ -136,42 +114,40 @@ char	*process_exp3(char ***result, t_node *unit, char **temp, char **temp2)
 		{
 			free((*result)[i]);
 			(*result)[i] = ft_strdup("");
-			free(*temp2);
-			free(*temp);
+			safe_free(temp, temp2, 3);
 			continue ;
 		}
 		free((*result)[i]);
-		(*result)[i] = handle_quotesv2(*temp2);
-		free(*temp);
+		tmp = handle_quotesv2(*temp2);
+		safe_free(temp, temp2, 3);
+		(*result)[i] = tmp;
 	}
 	return (NULL);
 }
 
-char    *process_exp2(char ***result, t_node *unit, char **temp)
+char	*process_exp2(char ***res, t_node *unit, char **temp, int *count)
 {
-    int count;
-    count = -1;
-    while ((*result)[++count])
-        ;
-    if ((*result)[0])
-    {
-        if (!fake_perfect((*result)[0]) || ((((*result)[0][0] == '"' && (*result)[0][1] == '"')
-        || ((*result)[0][0] == '\'' && (*result)[0][1] == '\'')) && !(*result)[2]))
-            return ((*result)[0]);
-        *temp = iterate_and_replace(unit, (*result)[0]);
-        if ((*temp) == NULL || (*temp)[0] == '\0')
-        {
-            delete_token_and_shift(*result, &count, 0);
-            free(*temp);
-            return (process_exp(*result, unit));
-        }
-        else
-        {
-            free((*result)[0]);
-            (*result)[0] = handle_quotesv2(*temp);
-        }
-    }
-    return (NULL);
+	*temp = NULL;
+	if ((*res)[0])
+	{
+		if (!q_ok((*res)[0]) || ((((*res)[0][0] == '"' && (*res)[0][1] == '"')
+			|| ((*res)[0][0] == '\'' && (*res)[0][1] == '\'')) && !(*res)[2]))
+			return ((*res)[0]);
+		*temp = iterate_and_replace(unit, (*res)[0]);
+		if ((*temp) == NULL || (*temp)[0] == '\0')
+		{
+			delete_token_and_shift(*res, count, 0);
+			safe_free(temp, NULL, 1);
+			return (process_exp(*res, unit));
+		}
+		else
+		{
+			free((*res)[0]);
+			(*res)[0] = handle_quotesv2(*temp);
+		}
+	}
+	safe_free(temp, NULL, 1);
+	return (NULL);
 }
 
 char	*process_exp(char **result, t_node *unit)
@@ -179,8 +155,12 @@ char	*process_exp(char **result, t_node *unit)
 	char	*temp;
 	char	*temp2;
 	char	*res;
+	int		count;
 
-	res = process_exp2(&result, unit, &temp);
+	count = -1;
+	while (result[++count])
+		;
+	res = process_exp2(&result, unit, &temp, &count);
 	if (res != NULL)
 		return (res);
 	free(res);

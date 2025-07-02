@@ -6,14 +6,13 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:37:47 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 14:23:56 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/02 15:12:59 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-int	fake_perfect(char *arr)
+int	q_ok(char *arr)
 {
 	int	i;
 	int	in_sq;
@@ -35,23 +34,20 @@ int	fake_perfect(char *arr)
 	return (1);
 }
 
-void delete_token_and_shift(char **result, int *count, int index)
+void	delete_token_and_shift(char **result, int *count, int index)
 {
-    int j;
+	int	j;
 
-    free(result[index]);
-
-    j = index;
-    while (result[j + 1])
-    {
-        result[j] = result[j + 1];
-        j++;
-    }
-
-    result[j] = NULL;
-    (*count)--;
+	free(result[index]);
+	j = index;
+	while (result[j + 1])
+	{
+		result[j] = result[j + 1];
+		j++;
+	}
+	result[j] = NULL;
+	(*count)--;
 }
-
 
 int	is_alphanumeric(char a)
 {
@@ -81,7 +77,7 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 		if (ft_strcmp(tmp, " ") == 0)
 		{
 			free(tmp);
-			return(ft_strdup(" "));
+			return (ft_strdup(" "));
 		}
 	}
 	while (tmp && tmp[++j])
