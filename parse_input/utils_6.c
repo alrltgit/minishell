@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:02:45 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/01 18:43:18 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/03 13:01:29 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	get_echo_args_start(char **result)
 	int	j_temp;
 
 	j_temp = 1;
-	if (ft_strcmp(result[0], "echo") == 0)
+	if (ft_strcmp(result[0], "echo") == 0
+		|| ft_strcmp(result[0], "/bin/echo") == 0)
 	{
 		while (result[j_temp] && ft_strcmp(result[j_temp], "-n") == 0)
 			j_temp++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:13:08 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/02 15:21:01 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/03 12:04:04 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	check_for_executable(t_node *unit, char *input)
 			return (err);
 		unit->cmd = ft_strdup(input);
 		unit->cmd_status = 2;
+		unit->cmd_is_found = 1;
 		return (unit->cmd_status);
 	}
 	return (0);

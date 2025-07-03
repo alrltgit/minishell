@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 14:43:30 by alraltse          #+#    #+#             */
-/*   Updated: 2025/06/30 16:39:55 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:04:36 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ char	*retrieve_cmd_name(t_node *node)
 int	count_args(char **result, t_node *current_node, int k)
 {
 	current_node->args_count = 0;
-	if (ft_strcmp(current_node->cmd, "echo") == 0)
+	if ((ft_strcmp(current_node->cmd, "echo") == 0
+			|| ft_strcmp(current_node->cmd, "/bin/echo") == 0))
+	{
 		return (count_echo_args(result, k));
+	}
 	else
 		return (count_normal_args(result, current_node, k));
 }
@@ -48,7 +51,8 @@ void	find_args(t_node *current_node, char **result, int i, int *j)
 {
 	if (i == current_node->cmd_idx)
 		return ;
-	if (ft_strcmp(current_node->cmd, "echo") == 0)
+	if ((ft_strcmp(current_node->cmd, "echo") == 0
+			|| ft_strcmp(current_node->cmd, "/bin/echo") == 0))
 	{
 		current_node->args[*j] = ft_strdup(result[i]);
 		current_node->fcmd = ft_strjoin_free(current_node->fcmd, result[i]);

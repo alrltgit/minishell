@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alraltse <alraltse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/07/02 16:17:07 by alraltse         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:03:21 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	is_flag_for_echo(char **result, int *n_flag_found)
 {
-	if (ft_strcmp(result[0], "echo") == 0
+	if ((ft_strcmp(result[0], "echo") == 0
+			|| ft_strcmp(result[0], "/bin/echo") == 0)
 		&& ft_strcmp(result[1], "-n") == 0 && !(*n_flag_found))
 	{
 		*n_flag_found = 1;
@@ -25,7 +26,8 @@ int	is_flag_for_echo(char **result, int *n_flag_found)
 
 int	is_flag_for_other(char **result, int j, int *n_flag_found)
 {
-	if (ft_strcmp(result[0], "echo") != 0
+	if ((ft_strcmp(result[0], "echo") != 0
+			&& ft_strcmp(result[0], "/bin/echo") != 0)
 		&& ft_strcmp(result[1], "-n") == 0
 		&& !(*n_flag_found) && result[j][0] == '-' && result[j][1] != '$')
 		return (1);
@@ -58,7 +60,8 @@ int	count_flags(char **result, int j)
 
 void	find_flags(char *res, t_node *current_node, int *i)
 {
-	if (ft_strcmp(current_node->cmd, "echo") == 0
+	if ((ft_strcmp(current_node->cmd, "echo") == 0
+			|| ft_strcmp(current_node->cmd, "/bin/echo") == 0)
 		&& ft_strcmp(res, "-n") == 0 && current_node->n_flag == 0)
 	{
 		current_node->flags[0] = ft_strdup(res);
