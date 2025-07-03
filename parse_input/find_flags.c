@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:58:08 by apple             #+#    #+#             */
-/*   Updated: 2025/07/03 13:03:21 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/03 15:04:57 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	find_flags(char *res, t_node *current_node, int *i)
 	}
 	if (res[0] == '-' && res[1] != '$'
 		&& current_node->n_flag == 0)
-		// && (res[2] == ' ' || res[2] == '\0'))
 	{
 		current_node->flags[*i] = ft_strdup(res);
 		current_node->fcmd = ft_strjoin_free(current_node->fcmd, res);

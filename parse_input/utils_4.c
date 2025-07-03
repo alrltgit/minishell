@@ -6,7 +6,7 @@
 /*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 19:13:08 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/03 12:04:04 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/03 15:05:34 by apple            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	extra_token_check(char *token, char **result, int *count, int len)
 {
-	if (ft_strchr(token, '<') || ft_strchr(token, '>'))
+	if ((ft_strchr(token, '<') || ft_strchr(token, '>'))
+		&& ft_strcmp(result[0], "echo") != 0
+		&& ft_strcmp(result[0], "/bin/echo") != 0)
 		split_token_on_operator(token, result, count);
 	else
 		check_for_operator(token, result, count, len);
