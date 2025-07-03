@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:37:47 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/02 15:12:59 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/03 15:25:56 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ int	is_alphanumeric(char a)
 	return (0);
 }
 
-char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int quote)
+//var arr
+//str str
+char	*replace_var(t_arg *arg, int pos, int len, int q)
 {
 	char	*tmp;
 	int		j;
@@ -65,14 +67,14 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 
 	tmp = NULL;
 	j = -1;
-	if (quote == 1)
-		tmp = ft_substr(var, pos + 1, len - 1);
-	else if (var[pos] == '?')
-		tmp = ft_itoa(shell->exit_code);
+	if (q == 1)
+		tmp = ft_substr(arg->arr, pos + 1, len - 1);
+	else if (arg->arr[pos] == '?')
+		tmp = ft_itoa(arg->shell->exit_code);
 	else
 	{
-		tmp2 = ft_substr(var, pos, len);
-		tmp = ft_strdup(value_from_key(tmp2, shell));
+		tmp2 = ft_substr(arg->arr, pos, len);
+		tmp = ft_strdup(value_from_key(tmp2, arg->shell));
 		free(tmp2);
 		if (ft_strcmp(tmp, " ") == 0)
 		{
@@ -81,7 +83,7 @@ char	*replace_var(t_shell *shell, char *str, char *var, int pos, int len, int qu
 		}
 	}
 	while (tmp && tmp[++j])
-		str = update_str(str, tmp[j]);
+		arg->str = update_str(arg->str, tmp[j]);
 	free(tmp);
-	return (str);
+	return (arg->str);
 }

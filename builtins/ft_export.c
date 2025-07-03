@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 19:13:13 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/03 15:42:35 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,30 @@ int	check_print_error(char *key, char *val, int w_space)
 	return (0);
 }
 
-char	**check2(t_node *n, int b_l, char **tmp, char *bf, char *af, int w_s)
+char	**check2(t_arg *arg, int b_l, char **tmp)
 {
 	char	**arr;
 
-	while (bf[--b_l] && bf[b_l] != ' ')
-		*tmp = update_str(*tmp, bf[b_l]);
-	free(bf);
+	while (arg->arr[--b_l] && arg->arr[b_l] != ' ')
+		*tmp = update_str(*tmp, arg->arr[b_l]);
+	free(arg->arr);
 	b_l = ft_strlen(*tmp) + 1;
-	bf = NULL;
+	arg->arr = NULL;
 	while (b_l)
-		bf = update_str(bf, (*tmp)[--b_l]);
+		arg->arr = update_str(arg->arr, (*tmp)[--b_l]);
 	free(*tmp);
-	if (!check_print_error(bf, af, w_s))
+	if (!check_print_error(arg->arr, arg->str, arg->w_s))
 	{
-		n->shell->exit_code = 1;
-		free(bf);
-		free(af);
+		arg->shell->exit_code = 1;
+		free(arg->arr);
+		free(arg->str);
 		return (NULL);
 	}
 	arr = malloc(sizeof(char *) * 2);
-	arr[0] = ft_strdup(bf);
-	arr[1] = ft_strdup(af);
-	free(bf);
-	free(af);
+	arr[0] = ft_strdup(arg->arr);
+	arr[1] = ft_strdup(arg->str);
+	free(arg->arr);
+	free(arg->str);
 	return (arr);
 }
 
@@ -87,34 +87,31 @@ char	**check2(t_node *n, int b_l, char **tmp, char *bf, char *af, int w_s)
 // export abc def kggjdfg should do nothing
 char	**check_invalid_identifier1(char *str, t_node *node)
 {
-	char	*before;
-	char	*after;
+	t_arg	arg;
 	char	*temp;
 	int		i;
 	int		b_len;
-	int		key_w_skip;
 
 	node->shell->exit_code = 0;
-	key_w_skip = 0;
-	after = ft_strchr(str, '=');
-	b_len = ft_strlen(str) - ft_strlen(after);
-	before = ft_substr(str, 0, b_len);
+	arg.shell = node->shell;
+	arg.w_s = 0;
+	arg.str = ft_strchr(str, '=');
+	b_len = ft_strlen(str) - ft_strlen(arg.str);
+	arg.arr = ft_substr(str, 0, b_len);
 	i = -1;
 	temp = NULL;
-	while (after[++i] && after[i] != ' ')
-		temp = update_str(temp, after[i]);
-	after = ft_strdup(temp);
+	while (arg.str[++i] && arg.str[i] != ' ')
+		temp = update_str(temp, arg.str[i]);
+	arg.str = ft_strdup(temp);
 	free(temp);
 	temp = NULL;
-	if (before[b_len - 1] && before[b_len - 1] == ' ')
+	if (arg.arr[b_len - 1] && arg.arr[b_len - 1] == ' ')
 	{
-		key_w_skip = 1;
+		arg.w_s = 1;
 		--b_len;
 	}
-	return (check2(node, b_len, &temp, before, after, key_w_skip));
+	return (check2(&arg, b_len, &temp));
 }
-
-//export abc =5
 
 void	ft_export(t_node *command)
 {

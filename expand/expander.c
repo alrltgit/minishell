@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/02 15:03:14 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/03 15:40:37 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 	for ex: $PATH echo abc -> it will print value of $PATH with error
 */
 
-char	*handle_dollar(t_node *cmd, t_arg *arg, int *i, int qte)
+char	*handle_dollar(t_arg *arg, int *i, int qte)
 {
 	int		j;
 	int		len;
@@ -58,13 +58,13 @@ char	*handle_dollar(t_node *cmd, t_arg *arg, int *i, int qte)
 	len = 0;
 	if (arg->arr[*i + 1] == '?')
 	{
-		arg->str = replace_var(cmd->shell, arg->str, arg->arr, *i + 1, 1, qte);
+		arg->str = replace_var(arg, *i + 1, 1, qte);
 		*i += 1;
 		return (arg->str);
 	}
 	while (is_alphanumeric(arg->arr[++j]))
 		++len;
-	arg->str = replace_var(cmd->shell, arg->str, arg->arr, *i + 1, len, qte);
+	arg->str = replace_var(arg, *i + 1, len, qte);
 	*i += len;
 	return (arg->str);
 }
@@ -81,13 +81,14 @@ char	*iterate_and_replace(t_node *command, char *arr)
 	i = -1;
 	args.str = NULL;
 	args.arr = arr;
+	args.shell = command->shell;
 	while (arr[++i])
 	{
 		(void)((arr[i] == '\'') && (!in_dq) && (in_sq = 1 - in_sq));
 		(void)((arr[i] == '"') && (!in_sq) && (in_dq = 2 - in_dq));
 		if (arr[i] == '$' && !in_sq && is_alphanumeric(arr[i + 1]))
 		{
-			args.str = handle_dollar(command, &args, &i, in_sq + in_dq);
+			args.str = handle_dollar(&args, &i, in_sq + in_dq);
 			continue ;
 		}
 		else

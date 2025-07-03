@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:45:24 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/02 15:13:23 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/03 15:43:09 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@
 # define EXPERR "\e[0;31mminishell: export: '%s': not a valid identifier\n"
 
 typedef struct s_node	t_node;
-
-typedef struct s_arg
-{
-	char	*str;
-	char	*arr;
-}	t_arg;
 
 typedef struct s_quotes
 {
@@ -89,7 +83,14 @@ typedef struct s_node
 	t_node	*next;
 }	t_node;
 
-// HASAN
+typedef struct s_arg
+{
+	int		w_s;
+	char	*str;
+	char	*arr;
+	t_shell	*shell;
+}	t_arg;
+
 // main.c
 void	shell_loop(t_shell *shell);
 void	print_node(t_node *command);
@@ -137,11 +138,9 @@ char	*iterate_and_replace(t_node *command, char *arr);
 // expander_utils.c
 void	delete_token_and_shift(char **result, int *count, int index);
 int		is_alphanumeric(char a);
-char	*replace_var(t_shell *shell, char *str, char *var, int pos,
-			int len, int quote);
+char	*replace_var(t_arg *arg, int pos, int len, int q);
 int		q_ok(char *arr);
 
-// ALINA
 // parse_input.c
 char	**split_args(char *str);
 void	read_the_input(char *rl, t_shell *shll);

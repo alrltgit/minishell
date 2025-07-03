@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"*.dbclient-js": "javascript",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"typeinfo": "c"
 	}
 }
