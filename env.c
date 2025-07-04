@@ -6,14 +6,12 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:24:03 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/02 15:05:19 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/04 13:29:28 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
-#include <string.h>
 
-/*check if the free double works properly*/
 int	index_from_key(char *var_name, char **env_array)
 {
 	int		i;
@@ -35,9 +33,6 @@ int	index_from_key(char *var_name, char **env_array)
 	return (-1);
 }
 
-/*
-	Handle what if the key is not valid	
-*/
 char	*value_from_key(char *var_name, t_shell *shell)
 {
 	int	index;

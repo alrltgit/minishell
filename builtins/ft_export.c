@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:24:48 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/03 15:42:35 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/04 13:31:40 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,6 @@ char	**check2(t_arg *arg, int b_l, char **tmp)
 	return (arr);
 }
 
-/*
-	if there is invalid identifier for export
-	return the array of invalid identifiers,
-	else return NULL
-*/
-// export abc def kggjdfg should do nothing
 char	**check_invalid_identifier1(char *str, t_node *node)
 {
 	t_arg	arg;

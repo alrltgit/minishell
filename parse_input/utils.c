@@ -6,30 +6,11 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:31:10 by alraltse          #+#    #+#             */
-/*   Updated: 2025/07/02 14:51:55 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/04 13:28:28 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/* int	alloc_mem_for_flags_arr(t_node *current_node)
-{
-	if (current_node->flags_count > 0)
-	{
-		current_node->flags = malloc(sizeof(char *)
-				* (current_node->flags_count + 1));
-		if (!current_node->flags)
-			return (1);
-	}
-	else
-	{
-		current_node->flags = malloc(sizeof(char *));
-		if (!current_node->flags)
-			return (1);
-		current_node->flags[0] = NULL;
-	}
-	return (0);
-} */
 
 int	alloc_mem_for_flags_arr(t_node *current_node)
 {

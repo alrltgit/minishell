@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:46:53 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/01 12:30:43 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/04 13:31:45 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ int	value_syntax_ok(char *val)
 	return (1);
 }
 
-/*
-	if there is space after first = sign
-	set empty line to value
-*/
 void	create_and_set_val(t_shell *shell, char *key, char *val)
 {
 	int		count;

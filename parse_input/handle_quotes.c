@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:50:17 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/02 14:51:19 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/04 13:27:46 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ void	handle_double_quote(char *str, int *i, t_quotes *q, char **temp)
 	*temp = handle_double_quotes(str, i);
 	free(old_temp);
 }
-
-/* void	handle_regular_char(char **temp, char c)
-{
-	char *old_temp;
-
-	old_temp = update_str(*temp, c);
-	free(*temp);
-	*temp = ft_strdup(old_temp);
-	free(old_temp);
-} */
 
 char	*handle_quotesv2(char *str)
 {

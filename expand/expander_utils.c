@@ -6,7 +6,7 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:37:47 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/03 15:25:56 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/04 13:27:26 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	is_alphanumeric(char a)
 	return (0);
 }
 
-//var arr
-//str str
 char	*replace_var(t_arg *arg, int pos, int len, int q)
 {
 	char	*tmp;

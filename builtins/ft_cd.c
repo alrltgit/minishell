@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apple <apple@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:37:21 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/03 12:48:39 by apple            ###   ########.fr       */
+/*   Updated: 2025/07/04 12:34:06 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	change_to_folder(t_node *command)
 	oldpwd = getcwd(NULL, 0);
 	res = chdir(command->args[0]);
 	if (res != 0 && print_err(command, 2))
+	{
+		free(oldpwd);
 		return ;
+	}
 	pwd = getcwd(NULL, 0);
 	check_init_oldpwd(command->shell, oldpwd);
 	change_env_value("OLDPWD", oldpwd, command->shell);

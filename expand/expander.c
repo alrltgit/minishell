@@ -6,48 +6,11 @@
 /*   By: hceviz <hceviz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:28:07 by hceviz            #+#    #+#             */
-/*   Updated: 2025/07/03 15:40:37 by hceviz           ###   ########.fr       */
+/*   Updated: 2025/07/04 13:27:19 by hceviz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*
-	Search flags, args. if you catch variable
-	starts with $ sign, take the value from env
-	and print.
-
-	if there is variable with $ in command->cmd,
-	print the value but add the error to the end
-
-	if the variable with $ is in args or flags and
-	it is not set in env, it will print empty line
-	for ex: echo $abcdef
-
-	for ex: $PATH
-	bash: /nfs/homes/hceviz/bin:/usr/local/sbin:
-	/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
-	/usr/games:/usr/local/games:/snap/bin: No such file or directory
-
-
-	echo "-n" $PATH -> in this flag is valid
-		and
-	echo "-n $PATH" -> in this flag is not valid (takes it as arg)
-	are not same!!
-
-	check -n $PATH
-
-
-	for $PATH $PWD, it will just give value of $PATH with error
-	so, if cmd is expansion type, return the value with error and
-	continue to shell loop
-
-	if the expansion in the place of cmd is not exist and if it has
-	something more after the expansion variable, execute them
-	for ex: $abcde qwerty -> it will print qwerty: command not found
-	for ex: $abcde echo abc -> it will print abc
-	for ex: $PATH echo abc -> it will print value of $PATH with error
-*/
 
 char	*handle_dollar(t_arg *arg, int *i, int qte)
 {

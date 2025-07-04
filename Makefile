@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c env.c env2.c signals.c free.c free_utils.c \
 builtins/ft_pwd.c builtins/ft_env.c builtins/ft_cd.c \
